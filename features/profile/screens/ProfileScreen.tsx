@@ -7,10 +7,11 @@
 
 import { useRouter } from 'expo-router';
 import React, { useMemo } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TextStyle, Alert } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, TextStyle, Alert, Dimensions } from 'react-native';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
+import { ui } from '@/config/theme/ui';
 import Routes from '@/constants/routes';
 import { useMode } from '@/features/mode/hooks/useMode';
 import { useThemeColor } from '@/hooks/useThemeColor';
@@ -19,20 +20,39 @@ import { PlusButton } from '@/shared-components/button/PlusButton';
 import { SettingsIcon } from '@/shared-components/button/SettingsIcon';
 import { ProfileImage, UserroleBadge, UserRole, HeaderMedia } from '@/shared-components/media';
 import { useUserStore } from '@/stores';
+import { UserProfile } from '@/types/userTypes';
 import { createProfileInitialsFromName, ProfileImageData } from '@/utils/profileImageUtils';
 
 
 type ProfileImageSource = ProfileImageData | { uri: string } | null;
 
+// Erweiterter Profiltyp mit allen benötigten Eigenschaften
+interface ExtendedUserProfile extends Partial<Omit<UserProfile, 'profileImage'>> {
+  name?: string;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  role: UserRole;
+  profileImage?: string | ProfileImageData | null;
+  headline?: string;
+  companyName?: string;
+  description?: string;
+  industry?: string;
+  location?: string;
+  website?: string;
+  phone?: string;
+  rating?: number;
+}
+
 // Demo-Benutzer Alexander Becker für den Demo-Modus
-const DEMO_PROFILE = {
+const DEMO_PROFILE: ExtendedUserProfile = {
   id: 'u2',
   username: 'abecker',
   email: 'info@beckerundpartner.de',
   name: 'Alexander Becker',
   firstName: 'Alexander',
   lastName: 'Becker',
-  role: 'free' as UserRole,
+  role: 'free',
   profileImage: null, // Wir nutzen Initialen
   isVerified: true,
   description: 'Ich zeige Selbstständigen & Unternehmern, wie sie mit legaler Steueroptimierung 5-stellig sparen können – jedes Jahr.',
@@ -45,6 +65,9 @@ const DEMO_PROFILE = {
   rating: 5.0
 };
 
+// Bildschirmbreite für responsives Design
+const SCREEN_WIDTH = Dimensions.get('window').width;
+
 /**
  * Hauptkomponente für den neuen Profilbildschirm
  * @returns {React.ReactNode} Der gerenderte ProfileScreen
@@ -53,25 +76,24 @@ export default function ProfileScreen() {
   // Hole die Theme-Farben für die Komponente
   const colors = useThemeColor();
   const router = useRouter();
-  const { getCurrentUser } = useUserStore();
+  const userStore = useUserStore();
   
   // Verwende den neuen useMode-Hook für Modusinformationen
   const { isDemoMode } = useMode();
   
   // Aktive Benutzerdaten abhängig vom Modus
-  const profile = useMemo(() => {
+  const profile = useMemo<ExtendedUserProfile>(() => {
     // Im Demo-Modus verwenden wir immer Alexander Becker
     if (isDemoMode()) {
       return DEMO_PROFILE;
     }
     
     // Im Live-Modus den aktuellen Benutzer aus dem Store verwenden
-    const currentUser = getCurrentUser();
-    return currentUser || {
+    return userStore.user as ExtendedUserProfile || {
       name: 'Unbekannter Benutzer',
-      role: 'free' as UserRole
+      role: 'free'
     };
-  }, [isDemoMode, getCurrentUser]);
+  }, [isDemoMode, userStore.user]);
   
   // State für Button-Text und Icon mit useMemo, um Render-Loops zu vermeiden
   const buttonConfig = useMemo(() => ({
@@ -114,51 +136,20 @@ export default function ProfileScreen() {
   
   // Zusätzliche Profilinformationen nur für Demo-Modus anzeigen
   const renderAdditionalInfo = () => {
-    if (!isDemoMode()) return null;
-    
-    return (
-      <View style={styles.additionalInfoContainer}>
-        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-          Über mich
-        </Text>
-        <Text style={[styles.description, { color: colors.textSecondary }]}>
-          {profile.description}
-        </Text>
-        
-        <View style={styles.infoRow}>
-          <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Branche:</Text>
-          <Text style={[styles.infoValue, { color: colors.textPrimary }]}>{profile.industry}</Text>
-        </View>
-        
-        <View style={styles.infoRow}>
-          <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Standort:</Text>
-          <Text style={[styles.infoValue, { color: colors.textPrimary }]}>{profile.location}</Text>
-        </View>
-        
-        {profile.website && (
-          <View style={styles.infoRow}>
-            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>Website:</Text>
-            <Text style={[styles.infoValue, { color: colors.primary }]}>{profile.website}</Text>
-          </View>
-        )}
-        
-        <Text style={[styles.demoHint, { color: colors.textTertiary }]}>
-          Hinweis: Im Demo-Modus werden Beispieldaten von Alexander Becker angezeigt.
-        </Text>
-      </View>
-    );
+    // Keine zusätzlichen Informationen anzeigen
+    return null;
   };
   
-  // KEINE LOADING/ERROR STATES MEHR - NUR DIE HAUPTANSICHT
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
       >
         {/* Container für Header und Profilbild mit relativer Positionierung */}
         <View style={styles.headerProfileContainer}>
-          {/* 16:9 Header-Bereich mit HeaderMedia */}
+          {/* Header-Bereich mit HeaderMedia */}
           <View style={styles.headerContainer}>
             <HeaderMedia 
               imageUrl=""
@@ -175,7 +166,7 @@ export default function ProfileScreen() {
             </View>
           </View>
           
-          {/* Profilbild links am Rand überlappend mit dem Header */}
+          {/* Profilbild leicht überlappend mit dem Header */}
           <View style={styles.profileImageContainer}>
             <ProfileImage
               source={profileImageData || fallbackInitials}
@@ -187,7 +178,7 @@ export default function ProfileScreen() {
             />
           </View>
           
-          {/* SettingsIcon rechts unter der HeaderMedia */}
+          {/* SettingsIcon rechts am Rand */}
           <View style={styles.settingsIconContainer}>
             <SettingsIcon size={26} />
           </View>
@@ -270,11 +261,14 @@ const styles = StyleSheet.create({
     left: spacing.l,
     bottom: -50, // Negative Wert für Überlappung mit dem Header
     backgroundColor: 'transparent',
-    elevation: 3,
+    elevation: 5,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3,
+    borderWidth: 3,
+    borderColor: 'white',
+    borderRadius: 50,
   },
   profileImage: {
     borderWidth: 0,
@@ -285,7 +279,7 @@ const styles = StyleSheet.create({
     paddingTop: spacing.xxxl + 20, // Extra Platz für das Profilbild
   },
   userInfoContainer: {
-    marginBottom: spacing.m,
+    marginBottom: spacing.l,
   },
   userName: {
     fontSize: typography.fontSize.xl,
@@ -308,40 +302,13 @@ const styles = StyleSheet.create({
     bottom: -30,
     right: 20,
     zIndex: 10,
-  },
-  additionalInfoContainer: {
-    marginTop: spacing.l,
-    paddingTop: spacing.m,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(0,0,0,0.06)',
-  },
-  sectionTitle: {
-    fontSize: typography.fontSize.l,
-    fontWeight: typography.fontWeight.semiBold as TextStyle['fontWeight'],
-    marginBottom: spacing.m,
-  },
-  description: {
-    fontSize: typography.fontSize.m,
-    lineHeight: 22,
-    marginBottom: spacing.l,
-  },
-  infoRow: {
-    flexDirection: 'row',
-    marginBottom: spacing.s,
-  },
-  infoLabel: {
-    fontSize: typography.fontSize.s,
-    fontWeight: typography.fontWeight.medium as TextStyle['fontWeight'],
-    width: 80,
-  },
-  infoValue: {
-    fontSize: typography.fontSize.s,
-    flex: 1,
-  },
-  demoHint: {
-    fontSize: typography.fontSize.xs,
-    fontStyle: 'italic',
-    marginTop: spacing.l,
-    opacity: 0.7,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 6,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
   }
 }); 
