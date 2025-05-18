@@ -1,0 +1,298 @@
+{
+  "tabs": {
+    "home": "Home",
+    "mysolvbox": "MySolvbox",
+    "chats": "Chats",
+    "solvboxai": "SolvboxAI",
+    "profile": "Profil",
+    "save": "Sichern",
+    "grow": "Wachsen",
+    "foresight": "Vorausdenken",
+    "bonus": "Bonus"
+  },
+  "common": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "yes": "Ja",
+    "no": "Nein",
+    "ok": "OK",
+    "search": "Suchen",
+    "loading": "Wird geladen",
+    "pleaseWait": "Bitte warten...",
+    "noResults": "Keine Ergebnisse",
+    "error": "Fehler",
+    "success": "Erfolg"
+  },
+  "auth": {
+    "common": {
+      "email": "E-Mail",
+      "password": "Passwort",
+      "confirmPassword": "Passwort bestätigen",
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "forgotPassword": "Passwort vergessen?",
+      "error": "Fehler bei der Authentifizierung",
+      "success": "Authentifizierung erfolgreich",
+      "orText": "Oder"
+    },
+    "login": {
+      "title": "Anmelden",
+      "subtitle": "Melden Sie sich an, um auf Ihr Konto zuzugreifen",
+      "button": "Anmelden",
+      "noAccount": "Noch kein Konto?",
+      "createAccount": "Registrieren",
+      "googleLogin": "Mit Google anmelden",
+      "placeholders": {
+        "email": "Ihre E-Mail-Adresse",
+        "password": "Ihr Passwort"
+      },
+      "errors": {
+        "invalidCredentials": "Ungültige E-Mail oder Passwort",
+        "googleLogin": "Bei der Anmeldung mit Google ist ein Fehler aufgetreten"
+      }
+    },
+    "register": {
+      "title": "Registrieren",
+      "subtitle": "Erstellen Sie ein neues Konto",
+      "button": "Registrieren",
+      "alreadyAccount": "Bereits ein Konto?",
+      "login": "Anmelden",
+      "placeholders": {
+        "email": "Ihre E-Mail-Adresse",
+        "password": "Ihr Passwort",
+        "confirmPassword": "Passwort bestätigen",
+        "firstName": "Ihr Vorname (optional)",
+        "lastName": "Ihr Nachname (optional)"
+      },
+      "errors": {
+        "emailExists": "Diese E-Mail-Adresse wird bereits verwendet",
+        "passwordMismatch": "Die Passwörter stimmen nicht überein",
+        "weakPassword": "Das Passwort ist zu schwach",
+        "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+      }
+    },
+    "forgotPassword": {
+      "title": "Passwort vergessen",
+      "subtitle": "Geben Sie Ihre E-Mail-Adresse ein, um einen Link zum Zurücksetzen Ihres Passworts zu erhalten",
+      "button": "Link senden",
+      "backToLogin": "Zurück zur Anmeldung",
+      "success": "Wir haben Ihnen einen Link zum Zurücksetzen Ihres Passworts gesendet",
+      "placeholders": {
+        "email": "Ihre E-Mail-Adresse"
+      }
+    },
+    "validation": {
+      "required": "Dieses Feld ist erforderlich",
+      "email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+      "password": {
+        "minLength": "Das Passwort muss mindestens {{length}} Zeichen lang sein",
+        "requireNumber": "Das Passwort muss mindestens eine Zahl enthalten",
+        "requireUppercase": "Das Passwort muss mindestens einen Großbuchstaben enthalten",
+        "requireSpecialChar": "Das Passwort muss mindestens ein Sonderzeichen enthalten"
+      },
+      "passwordMatch": "Die Passwörter stimmen nicht überein"
+    },
+    "logout": {
+      "button": "Abmelden",
+      "confirm": "Möchten Sie sich wirklich abmelden?",
+      "success": "Sie wurden erfolgreich abgemeldet"
+    },
+    "session": {
+      "expired": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an",
+      "invalid": "Ungültige Sitzung. Bitte melden Sie sich erneut an"
+    },
+    "demo": {
+      "title": "Demo-Modus",
+      "description": "Sie verwenden die App im Demo-Modus",
+      "switchToLive": "Zum Live-Modus wechseln",
+      "stayInDemo": "Im Demo-Modus bleiben"
+    }
+  },
+  "developerTools": {
+    "fillDemoData": "Demo-Daten einfügen",
+    "fillDemoDataHint": "Füllt die Formularfelder mit Testdaten",
+    "fillDemoDataButton": "Demo-Daten einfügen",
+    "clearStorage": "Speicher löschen",
+    "clearStorageButton": "Speicher löschen",
+    "storageClearedSuccess": "Speicher erfolgreich gelöscht",
+    "storageClearError": "Fehler beim Löschen des Speichers",
+    "demoLogin": "Demo-Login",
+    "demoLoginButton": "Demo-Login ausführen"
+  },
+  "mysolvbox": {
+    "title": "Meine Lösungen",
+    "categories": {
+      "all": "Alle",
+      "finance": "Finanzen",
+      "tax": "Steuern",
+      "investment": "Investitionen",
+      "retirement": "Altersvorsorge",
+      "expansion": "Expansion",
+      "strategy": "Strategie",
+      "planning": "Planung",
+      "innovation": "Innovation",
+      "reward": "Belohnung"
+    },
+    "errorMessages": {
+      "generic": "Ein Fehler ist aufgetreten: {message}",
+      "save": "Fehler beim Laden der Spardaten",
+      "grow": "Fehler beim Laden der Wachstumsdaten",
+      "foresight": "Fehler beim Laden der Vorausschau-Daten",
+      "bonus": "Fehler beim Laden der Bonus-Daten"
+    },
+    "emptyStates": {
+      "save": "Keine Sparkacheln verfügbar",
+      "grow": "Keine Wachstumskacheln verfügbar",
+      "foresight": "Keine Vorausschau-Kacheln verfügbar",
+      "bonus": "Keine Bonuskacheln verfügbar",
+      "searchResults": "Keine Ergebnisse für '{query}' gefunden"
+    }
+  },
+  "solvboxai": {
+    "title": "SolvboxAI",
+    "tabs": {
+      "gigs": "Gigs",
+      "casestudies": "Fallstudien"
+    },
+    "categories": {
+      "all": "Alle",
+      "basic": "Einfach",
+      "advanced": "Fortgeschritten",
+      "expert": "Experte",
+      "finance": "Finanzen",
+      "marketing": "Marketing",
+      "legal": "Recht",
+      "technology": "Technologie",
+      "operations": "Betrieb",
+      "hr": "Personal"
+    },
+    "errorMessages": {
+      "generic": "Ein Fehler ist aufgetreten: {message}",
+      "invalidTabId": "Ungültige Tab-ID: {tabId}",
+      "gigs": "Fehler beim Laden der Gigs",
+      "casestudies": "Fehler beim Laden der Fallstudien"
+    },
+    "emptyStates": {
+      "gigs": "Keine Gigs verfügbar",
+      "casestudies": "Keine Fallstudien verfügbar",
+      "searchResults": "Keine Ergebnisse für '{query}' gefunden"
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "general": "Allgemeine Einstellungen",
+    "tutorial": "Tutorial",
+    "learnApp": "Lernen Sie die App kennen",
+    "savedContent": "Gespeicherte Inhalte",
+    "yourSavedContent": "Ihre gespeicherten Gigs und Artikel",
+    "support": "Support",
+    "helpAndContact": "Hilfe und Kontakt",
+    "feedback": "Feedback",
+    "yourOpinionMatters": "Ihre Meinung ist uns wichtig",
+    "membership": "Mitgliedschaft",
+    "manageSubscription": "Ihr Abonnement verwalten",
+    "payment": "Bezahlung",
+    "paymentMethods": "Zahlungsmethoden & Rechnungen",
+    "accountSettings": "Konto-Einstellungen",
+    "accountAndPrivacy": "Konto & Datenschutz",
+    "account": "Konto",
+    "logout": "Abmelden",
+
+    "accountSecurity": "Konto & Sicherheit",
+    "changePassword": "Passwort ändern",
+    "changePasswordDescription": "Ändern Sie Ihr Passwort, um die Sicherheit Ihres Kontos zu erhöhen.",
+    "changeEmail": "E-Mail ändern",
+    "changeEmailDescription": "Aktualisieren Sie Ihre E-Mail-Adresse für Ihr Konto.",
+    "privacySecurity": "Datenschutz & Sicherheit",
+    "privacySecurityDescription": "Verwalten Sie Ihre Datenschutz- und Sicherheitseinstellungen.",
+    "protectPrivacy": "Ihre Privatsphäre schützen",
+
+    "accountManagement": "Konto-Verwaltung",
+    "pauseAccount": "Konto pausieren",
+    "pauseAccountDescription": "Ihr Konto wird temporär deaktiviert. Sie können sich jederzeit wieder anmelden, um es zu reaktivieren.",
+    "pauseAccountConfirm": "Konto pausieren",
+    "tempDeactivate": "Temporär deaktivieren",
+    "deactivateAccount": "Konto deaktivieren",
+    "deactivateAccountDescription": "Ihr Konto wird deaktiviert, bleibt aber für eine spätere Verwendung erhalten.",
+    "deactivateAccountConfirm": "Deaktivieren",
+    "accountDeactivate": "Konto vorübergehend deaktivieren",
+    "deleteAccount": "Konto löschen",
+    "deleteAccountDescription": "WARNUNG: Dies wird Ihr Konto und alle damit verbundenen Daten permanent löschen. Diese Aktion kann nicht rückgängig gemacht werden.",
+    "deleteAccountConfirm": "Permanent löschen",
+    "permanentlyDelete": "Konto dauerhaft löschen"
+  },
+  "profile": {
+    "editProfile": "Profil bearbeiten",
+    "sendMessage": "Nachricht senden",
+    "personalInfo": "Persönliche Informationen",
+    "profileInfo": "Profil-Informationen",
+    "contactAndLocation": "Kontakt & Standort",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "username": "Benutzername",
+    "company": "Unternehmen",
+    "headline": "Überschrift",
+    "description": "Beschreibung",
+    "website": "Webseite",
+    "location": "Standort",
+    "industry": "Branche",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "changeHeaderImage": "Titelbild ändern",
+    "changeProfileImage": "Profilbild ändern",
+    "addHeaderMedia": "Titelbild/Video hinzufügen",
+    "addThumbnail": "Thumbnail hinzufügen",
+    "changeThumbnail": "Thumbnail ändern",
+    "uploadThumbnail": "Thumbnail hochladen",
+    "uploadThumbnailQuestion": "Möchten Sie ein Vorschaubild für dieses Video hochladen?",
+    "profileUpdated": "Profil aktualisiert",
+    "profileUpdatedMessage": "Ihre Profildaten wurden erfolgreich aktualisiert.",
+    "firstNamePlaceholder": "Geben Sie Ihren Vornamen ein",
+    "lastNamePlaceholder": "Geben Sie Ihren Nachnamen ein",
+    "usernamePlaceholder": "Geben Sie Ihren Benutzernamen ein",
+    "companyPlaceholder": "Geben Sie Ihre Firma ein",
+    "headlinePlaceholder": "Kurze Beschreibung über Sie",
+    "descriptionPlaceholder": "Detaillierte Beschreibung über Sie und Ihre Arbeit",
+    "websitePlaceholder": "Ihre Website-URL",
+    "locationPlaceholder": "Ihr Standort (z.B. Berlin, Deutschland)",
+    "industryPlaceholder": "Ihre Branche",
+    "emailPlaceholder": "Ihre E-Mail-Adresse",
+    "phonePlaceholder": "Ihre Telefonnummer"
+  },
+  "home": {
+    "searchHeader": "Wie können wir helfen?",
+    "searchSubtitle": "Suchst du nach Expertise oder Lösungen?",
+    "searchPlaceholder": "Hier nach Lösung suchen...",
+    "defaultSuggestions": {
+      "taxOptions": "Steueroptionen",
+      "saveMoney": "Geld sparen",
+      "growth": "Wachstumsstrategien",
+      "businessPlan": "Geschäftsplan",
+      "investment": "Anlageberatung",
+      "insurance": "Versicherungen",
+      "retirement": "Altersvorsorge"
+    }
+  },
+  "permissions": {
+    "mediaLibraryTitle": "Medien-Zugriff erforderlich",
+    "mediaLibraryMessage": "Wir benötigen Zugriff auf Ihre Medien, um Bilder und Videos auszuwählen."
+  },
+  "errors": {
+    "mediaPickerError": "Bei der Auswahl des Mediums ist ein Fehler aufgetreten.",
+    "networkErrorTitle": "Netzwerkfehler",
+    "networkErrorMessage": "Bitte überprüfe deine Internetverbindung und versuche es später erneut.",
+    "notFoundTitle": "Daten nicht gefunden",
+    "notFoundMessage": "Die angeforderten Daten konnten nicht gefunden werden.",
+    "serverErrorTitle": "Serverfehler",
+    "serverErrorMessage": "Es ist ein Serverfehler aufgetreten. Unser Team wurde informiert.",
+    "genericErrorTitle": "Fehler aufgetreten"
+  },
+  "app": {
+    "loading": "Solvbox wird geladen...",
+    "splash": {
+      "title": "Willkommen bei Solvbox",
+      "subtitle": "Ihre Finanzlösungsplattform"
+    }
+  }
+}

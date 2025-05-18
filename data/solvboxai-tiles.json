@@ -1,0 +1,150 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2024-03-14",
+  "tiles": [
+    {
+      "id": 8001,
+      "title": "KI-Agenten für Alltagsaufgaben",
+      "tabId": "gigs",
+      "isActive": true,
+      "sortOrder": 1,
+      "complexity": "basic"
+    },
+    {
+      "id": 8002,
+      "title": "KI-Agenten für mehr PR & Podcasts",
+      "tabId": "gigs",
+      "isActive": true,
+      "sortOrder": 2,
+      "complexity": "advanced"
+    },
+    {
+      "id": 8003,
+      "title": "KI-Agenten im Marketing",
+      "tabId": "gigs",
+      "isActive": true,
+      "sortOrder": 3,
+      "complexity": "advanced"
+    },
+    {
+      "id": 8004,
+      "title": "KI-Agenten für perfekten Kundenservice",
+      "tabId": "gigs",
+      "isActive": true,
+      "sortOrder": 4,
+      "complexity": "advanced"
+    },
+    {
+      "id": 8005,
+      "title": "KI-Agenten im Vertrieb",
+      "tabId": "gigs",
+      "isActive": true,
+      "sortOrder": 5,
+      "complexity": "expert"
+    },
+    {
+      "id": 8006,
+      "title": "KI als Rechtsberater",
+      "tabId": "gigs",
+      "isActive": true,
+      "sortOrder": 6,
+      "complexity": "expert"
+    },
+    {
+      "id": 8007,
+      "title": "KI als Unternehmensberater",
+      "tabId": "gigs",
+      "isActive": true,
+      "sortOrder": 7,
+      "complexity": "expert"
+    },
+    {
+      "id": 8008,
+      "title": "KI Anwendungen um Zeit & Geld zu sparen",
+      "tabId": "gigs",
+      "isActive": true,
+      "sortOrder": 8,
+      "complexity": "basic"
+    },
+    {
+      "id": 8009,
+      "title": "Zukunfsaussichten",
+      "tabId": "gigs",
+      "isActive": true,
+      "sortOrder": 9,
+      "complexity": "basic"
+    },
+    {
+      "id": 8010,
+      "title": "Sicherheit & Datenschutz",
+      "tabId": "gigs",
+      "isActive": true,
+      "sortOrder": 10,
+      "complexity": "advanced"
+    },
+    {
+      "id": 9001,
+      "title": "Lästige Alltagsaufgaben automatisieren",
+      "tabId": "casestudies",
+      "isActive": true,
+      "sortOrder": 1,
+      "complexity": "basic"
+    },
+    {
+      "id": 9002,
+      "title": "Marketing",
+      "tabId": "casestudies",
+      "isActive": true,
+      "sortOrder": 2,
+      "complexity": "advanced"
+    },
+    {
+      "id": 9003,
+      "title": "PR & Podcasts",
+      "tabId": "casestudies",
+      "isActive": true,
+      "sortOrder": 3,
+      "complexity": "advanced"
+    },
+    {
+      "id": 9004,
+      "title": "Kundenservice",
+      "tabId": "casestudies",
+      "isActive": true,
+      "sortOrder": 4,
+      "complexity": "basic"
+    },
+    {
+      "id": 9005,
+      "title": "Vertrieb",
+      "tabId": "casestudies",
+      "isActive": true,
+      "sortOrder": 5,
+      "complexity": "advanced"
+    },
+    {
+      "id": 9006,
+      "title": "Recht",
+      "tabId": "casestudies",
+      "isActive": true,
+      "sortOrder": 6,
+      "complexity": "expert"
+    },
+    {
+      "id": 9007,
+      "title": "Recruiting",
+      "tabId": "casestudies",
+      "isActive": true,
+      "sortOrder": 7,
+      "complexity": "advanced"
+    },
+    {
+      "id": 9008,
+      "title": "Allgemein hilfreich & kostensenkend",
+      "tabId": "casestudies",
+      "isActive": true,
+      "sortOrder": 8,
+      "complexity": "basic"
+    }
+  ]
+} 

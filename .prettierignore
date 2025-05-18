@@ -1,0 +1,11 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# Build-Artefakte
+dist/
+build/
+.expo/
+
+# Reports
+reports/unused-exports.json 

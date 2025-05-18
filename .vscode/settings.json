@@ -1,0 +1,123 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": [
+    "typescript",
+    "typescriptreact"
+  ],
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  
+  // Hilfreiche VS Code-Erweiterungen für das Projekt
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#2c384a",
+    "statusBar.foreground": "#ffffff"
+  },
+  
+  // Füge eine Erinnerung an den Architektur-Guide hinzu
+  "workbench.startupEditor": "welcomePage",
+  "workbench.welcomePage.walkthroughs.openWalkthrough": "solvbox-app-guide",
+  
+  // Schnellansicht des Architektur-Guides als Hotkey Ctrl+Shift+G
+  "keybindings": [
+    {
+      "key": "ctrl+shift+g",
+      "command": "workbench.action.openDocumentationUrl",
+      "args": {
+        "url": "${workspaceFolder}/docs/architecture-guide.md"
+      }
+    }
+  ],
+  
+  // Snippets basierend auf den Richtlinien
+  "editor.snippets": {
+    "Screen Component": {
+      "prefix": "screen",
+      "body": [
+        "import React from 'react';",
+        "import { View, StyleSheet } from 'react-native';",
+        "import { useThemeColor } from '@/hooks/useThemeColor';",
+        "",
+        "/**",
+        " * ${1:ScreenName} - ${2:Kurze Beschreibung}",
+        " */",
+        "export default function ${1:ScreenName}() {",
+        "  const colors = useThemeColor();",
+        "  ",
+        "  return (",
+        "    <View style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>",
+        "      $0",
+        "    </View>",
+        "  );",
+        "}",
+        "",
+        "const styles = StyleSheet.create({",
+        "  container: {",
+        "    flex: 1,",
+        "  },",
+        "});"
+      ],
+      "description": "Screen-Komponente mit Standard-Struktur"
+    },
+    "Component": {
+      "prefix": "component",
+      "body": [
+        "import React from 'react';",
+        "import { View, StyleSheet } from 'react-native';",
+        "import { useThemeColor } from '@/hooks/useThemeColor';",
+        "",
+        "interface ${1:ComponentName}Props {",
+        "  $2",
+        "}",
+        "",
+        "/**",
+        " * ${1:ComponentName} - ${3:Kurze Beschreibung}",
+        " */",
+        "export function ${1:ComponentName}({ $4 }: ${1:ComponentName}Props) {",
+        "  const colors = useThemeColor();",
+        "  ",
+        "  return (",
+        "    <View style={styles.container}>",
+        "      $0",
+        "    </View>",
+        "  );",
+        "}",
+        "",
+        "const styles = StyleSheet.create({",
+        "  container: {",
+        "    $5",
+        "  },",
+        "});"
+      ],
+      "description": "Wiederverwendbare Komponente mit Standard-Struktur"
+    },
+    "Hook": {
+      "prefix": "hook",
+      "body": [
+        "import { useState, useEffect } from 'react';",
+        "",
+        "/**",
+        " * ${1:hookName} - ${2:Kurze Beschreibung}",
+        " * ",
+        " * @returns ${3:Beschreibung des Rückgabewerts}",
+        " */",
+        "export function ${1:hookName}() {",
+        "  const [state, setState] = useState($4);",
+        "  ",
+        "  useEffect(() => {",
+        "    $0",
+        "  }, []);",
+        "  ",
+        "  return {",
+        "    state,",
+        "    setState,",
+        "  };",
+        "}"
+      ],
+      "description": "Custom Hook mit Standard-Struktur"
+    }
+  }
+} 

@@ -1,0 +1,311 @@
+{
+  "tabs": {
+    "home": "Home",
+    "mysolvbox": "MySolvbox",
+    "chats": "Chats",
+    "solvboxai": "SolvboxAI",
+    "profile": "Profile",
+    "save": "Save",
+    "grow": "Grow",
+    "foresight": "Foresight",
+    "bonus": "Bonus"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "search": "Search",
+    "loading": "Loading",
+    "pleaseWait": "Please wait...",
+    "noResults": "No results",
+    "error": "Error",
+    "success": "Success"
+  },
+  "auth": {
+    "common": {
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "forgotPassword": "Forgot password?",
+      "error": "Authentication error",
+      "success": "Authentication successful",
+      "orText": "Or"
+    },
+    "login": {
+      "title": "Login",
+      "subtitle": "Sign in to access your account",
+      "button": "Sign in",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Register",
+      "googleLogin": "Sign in with Google",
+      "placeholders": {
+        "email": "Your email address",
+        "password": "Your password"
+      },
+      "errors": {
+        "invalidCredentials": "Invalid email or password",
+        "googleLogin": "An error occurred during Google login"
+      }
+    },
+    "register": {
+      "title": "Register",
+      "subtitle": "Create a new account",
+      "button": "Register",
+      "alreadyAccount": "Already have an account?",
+      "login": "Sign in",
+      "placeholders": {
+        "email": "Your email address",
+        "password": "Your password",
+        "confirmPassword": "Confirm password",
+        "firstName": "Your first name (optional)",
+        "lastName": "Your last name (optional)"
+      },
+      "errors": {
+        "emailExists": "This email address is already in use",
+        "passwordMismatch": "Passwords do not match",
+        "weakPassword": "Password is too weak",
+        "invalidEmail": "Please enter a valid email address"
+      }
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "subtitle": "Enter your email address to receive a link to reset your password",
+      "button": "Send link",
+      "backToLogin": "Back to login",
+      "success": "We have sent you a link to reset your password",
+      "placeholders": {
+        "email": "Your email address"
+      }
+    },
+    "validation": {
+      "required": "This field is required",
+      "email": "Please enter a valid email address",
+      "password": {
+        "minLength": "Password must be at least {{length}} characters long",
+        "requireNumber": "Password must contain at least one number",
+        "requireUppercase": "Password must contain at least one uppercase letter",
+        "requireSpecialChar": "Password must contain at least one special character"
+      },
+      "passwordMatch": "Passwords do not match"
+    },
+    "logout": {
+      "button": "Sign out",
+      "confirm": "Are you sure you want to sign out?",
+      "success": "You have been successfully signed out"
+    },
+    "session": {
+      "expired": "Your session has expired. Please sign in again",
+      "invalid": "Invalid session. Please sign in again"
+    },
+    "demo": {
+      "title": "Demo Mode",
+      "description": "You are using the app in demo mode",
+      "switchToLive": "Switch to live mode",
+      "stayInDemo": "Stay in demo mode"
+    }
+  },
+  "developerTools": {
+    "fillDemoData": "Insert demo data",
+    "fillDemoDataHint": "Fills form fields with test data",
+    "fillDemoDataButton": "Insert demo data",
+    "clearStorage": "Clear storage",
+    "clearStorageButton": "Clear storage",
+    "storageClearedSuccess": "Storage successfully cleared",
+    "storageClearError": "Error clearing storage",
+    "demoLogin": "Demo login",
+    "demoLoginButton": "Perform demo login"
+  },
+  "mysolvbox": {
+    "title": "My Solutions",
+    "categories": {
+      "all": "All",
+      "finance": "Finance",
+      "tax": "Tax",
+      "investment": "Investment",
+      "retirement": "Retirement",
+      "expansion": "Expansion",
+      "strategy": "Strategy",
+      "planning": "Planning",
+      "innovation": "Innovation",
+      "reward": "Reward"
+    },
+    "errorMessages": {
+      "generic": "An error occurred: {message}",
+      "save": "Error loading savings data",
+      "grow": "Error loading growth data",
+      "foresight": "Error loading foresight data",
+      "bonus": "Error loading bonus data"
+    },
+    "emptyStates": {
+      "save": "No savings tiles available",
+      "grow": "No growth tiles available",
+      "foresight": "No foresight tiles available",
+      "bonus": "No bonus tiles available",
+      "searchResults": "No results found for '{query}'"
+    }
+  },
+  "solvboxai": {
+    "title": "SolvboxAI",
+    "tabs": {
+      "gigs": "Gigs",
+      "casestudies": "Case Studies"
+    },
+    "categories": {
+      "all": "All",
+      "basic": "Basic",
+      "advanced": "Advanced",
+      "expert": "Expert",
+      "finance": "Finance",
+      "marketing": "Marketing",
+      "legal": "Legal",
+      "technology": "Technology",
+      "operations": "Operations",
+      "hr": "Human Resources"
+    },
+    "errorMessages": {
+      "generic": "An error occurred: {message}",
+      "invalidTabId": "Invalid tab ID: {tabId}",
+      "gigs": "Error loading gigs",
+      "casestudies": "Error loading case studies"
+    },
+    "emptyStates": {
+      "gigs": "No gigs available",
+      "casestudies": "No case studies available",
+      "searchResults": "No results found for '{query}'"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "general": "General Settings",
+    "tutorial": "Tutorial",
+    "learnApp": "Learn about the app",
+    "savedContent": "Saved Content",
+    "yourSavedContent": "Your saved gigs and articles",
+    "support": "Support",
+    "helpAndContact": "Help and contact",
+    "feedback": "Feedback",
+    "yourOpinionMatters": "Your opinion matters to us",
+    "membership": "Membership",
+    "manageSubscription": "Manage your subscription",
+    "payment": "Payment",
+    "paymentMethods": "Payment methods & invoices",
+    "accountSettings": "Account Settings",
+    "accountAndPrivacy": "Account & privacy",
+    "account": "Account",
+    "logout": "Sign out",
+
+    "accountSecurity": "Account & Security",
+    "changePassword": "Change password",
+    "changePasswordDescription": "Change your password to increase your account security.",
+    "changeEmail": "Change email",
+    "changeEmailDescription": "Update the email address for your account.",
+    "privacySecurity": "Privacy & Security",
+    "privacySecurityDescription": "Manage your privacy and security settings.",
+    "protectPrivacy": "Protect your privacy",
+
+    "accountManagement": "Account Management",
+    "pauseAccount": "Pause account",
+    "pauseAccountDescription": "Your account will be temporarily deactivated. You can sign in anytime to reactivate it.",
+    "pauseAccountConfirm": "Pause account",
+    "tempDeactivate": "Temporarily deactivate",
+    "deactivateAccount": "Deactivate account",
+    "deactivateAccountDescription": "Your account will be deactivated but retained for future use.",
+    "deactivateAccountConfirm": "Deactivate",
+    "accountDeactivate": "Temporarily deactivate account",
+    "deleteAccount": "Delete account",
+    "deleteAccountDescription": "WARNING: This will permanently delete your account and all associated data. This action cannot be undone.",
+    "deleteAccountConfirm": "Permanently delete",
+    "permanentlyDelete": "Permanently delete account"
+  },
+  "profile": {
+    "editProfile": "Edit profile",
+    "sendMessage": "Send message",
+    "personalInfo": "Personal information",
+    "profileInfo": "Profile information",
+    "contactAndLocation": "Contact & location",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "username": "Username",
+    "company": "Company",
+    "headline": "Headline",
+    "description": "Description",
+    "website": "Website",
+    "location": "Location",
+    "industry": "Industry",
+    "email": "Email",
+    "phone": "Phone",
+    "changeHeaderImage": "Change header image",
+    "changeProfileImage": "Change profile image",
+    "addHeaderMedia": "Add header image/video",
+    "addThumbnail": "Add thumbnail",
+    "changeThumbnail": "Change thumbnail",
+    "uploadThumbnail": "Upload thumbnail",
+    "uploadThumbnailQuestion": "Would you like to upload a preview image for this video?",
+    "profileUpdated": "Profile updated",
+    "profileUpdatedMessage": "Your profile data has been successfully updated."
+  },
+  "home": {
+    "searchHeader": "How can we help?",
+    "searchSubtitle": "Looking for expertise or solutions?",
+    "searchPlaceholder": "Search for a solution here...",
+    "defaultSuggestions": {
+      "taxOptions": "Tax options",
+      "saveMoney": "Save money",
+      "growth": "Growth strategies",
+      "businessPlan": "Business plan",
+      "investment": "Investment advice",
+      "insurance": "Insurance",
+      "retirement": "Retirement planning"
+    }
+  },
+  "search": {
+    "noResults": "No search results",
+    "loading": "Searching...",
+    "error": "Error during search",
+    "tryAgain": "Please try again or refine your search query",
+    "recentSearches": "Recent searches",
+    "clearHistory": "Clear history",
+    "suggestions": "Suggestions",
+    "results": "Results",
+    "categories": {
+      "all": "All",
+      "documents": "Documents",
+      "experts": "Experts",
+      "services": "Services",
+      "articles": "Articles",
+      "videos": "Videos",
+      "other": "Other"
+    },
+    "sortOptions": {
+      "relevance": "Relevance",
+      "newest": "Newest",
+      "oldest": "Oldest",
+      "az": "A-Z",
+      "za": "Z-A"
+    },
+    "filterLabels": {
+      "categories": "Categories",
+      "date": "Date",
+      "type": "Type",
+      "tags": "Tags",
+      "filter": "Filter",
+      "dateRange": "Date range",
+      "from": "From",
+      "to": "To",
+      "apply": "Apply filters",
+      "reset": "Reset filters"
+    }
+  },
+  "language": {
+    "selection": "Language selection",
+    "de": "German",
+    "en": "English",
+    "currentLanguage": "Current language: {{language}}",
+    "changeLanguage": "Change language"
+  }
+} 

@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    ".eslintrc.js",
+    "babel.config.cjs",
+    "metro.config.js",
+    ".lintstagedrc.js"
+  ],
+  "exclude": ["node_modules", "build", "dist", ".expo", "reports"]
+}

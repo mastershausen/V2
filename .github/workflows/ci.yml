@@ -1,0 +1,70 @@
+name: CI
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Checkout
+      - uses: actions/checkout@v3
+
+      # 2. Node.js & Cache
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      # 3. Install Dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Verify Code Quality
+      - name: Run Type-Check, Lint and Tests
+        run: npm run verify
+
+      # 6. Build for Web (Sanity)
+      - name: Build for Web
+        run: npx expo export:web
+
+      # 7. Cache Expo CLI (optional)
+      - name: Cache Expo CLI
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm/global
+          key: ${{ runner.os }}-expo-cli-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-expo-cli-
+
+      # 8. Notify on success (optional)
+      - name: Notify on success
+        if: success()
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            if (context.eventName === 'pull_request') {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: '✅ CI erfolgreich! Build & Tests sind grün.'
+              });
+            }
+
+      # 9. Notify on failure (optional)
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            if (context.eventName === 'pull_request') {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: '❌ CI fehlgeschlagen! Bitte Logs prüfen.'
+              });
+            }

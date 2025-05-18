@@ -1,0 +1,19 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",         // ESLint-Integration
+    "esbenp.prettier-vscode",         // Prettier für Formatierung
+    "davidanson.vscode-markdownlint", // Markdown-Linting für die Dokumentation
+    "streetsidesoftware.code-spell-checker", // Rechtschreibprüfung im Code
+    "ms-vscode.vscode-typescript-next", // TypeScript-Unterstützung
+    "formulahendry.auto-rename-tag",  // Automatisches Umbenennen von HTML/JSX-Tags
+    "aaron-bond.better-comments",     // Farbige Kommentare
+    "wayou.vscode-todo-highlight",    // TODO-Highlights
+    "naumovs.color-highlight",        // Farb-Highlights für CSS
+    "coenraads.bracket-pair-colorizer-2", // Farbige Klammern
+    "pkief.material-icon-theme",      // Icon-Theme für bessere Unterscheidung von Dateitypen
+    "gruntfuggly.todo-tree",          // TODO-Kommentare in einer Baumansicht
+    "eamodio.gitlens",                // Git-Erweiterung
+    "github.vscode-pull-request-github", // GitHub-Integration
+    "vscode-icons-team.vscode-icons"  // Bessere Icons für die Datei-Ansicht
+  ]
+} 

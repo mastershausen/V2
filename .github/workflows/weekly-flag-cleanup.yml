@@ -1,0 +1,71 @@
+name: Weekly Feature Flag Cleanup
+
+on:
+  schedule:
+    # Jeden Montag um 04:00 UTC
+    - cron: '0 4 * * 1'
+  # Manuelle Ausführung über GitHub UI erlauben
+  workflow_dispatch:
+
+jobs:
+  cleanup-feature-flags:
+    name: Cleanup abgelaufene Feature Flags
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # Volle Git-History für Branches
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Generate Flag Audit Report
+        run: npm run flag-audit > flag-audit-report.txt
+      
+      - name: Upload Flag Audit Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: feature-flag-audit-report
+          path: flag-audit-report.txt
+      
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+      
+      - name: Create GitHub App Token
+        id: create-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+      
+      - name: Run Flag Cleanup
+        env:
+          GITHUB_TOKEN: ${{ steps.create-token.outputs.token }}
+        run: |
+          # Hole den Repository-Namen aus der GitHub-Umgebung
+          REPO_OWNER=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 1)
+          REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)
+          
+          # Führe das Cleanup-Script mit PR-Erstellung aus
+          # Setze Repository-Informationen als Umgebungsvariablen
+          GITHUB_OWNER=$REPO_OWNER GITHUB_REPO=$REPO_NAME npm run flag-cleanup:pr
+      
+      - name: Send Notification
+        if: always()
+        # Hier könnte eine Slack/Teams/Email-Benachrichtigung eingebaut werden
+        run: |
+          echo "Feature Flag Cleanup abgeschlossen."
+          echo "Flag Audit Report ist als Artifact verfügbar." 

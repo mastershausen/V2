@@ -1,0 +1,58 @@
+name: Architecture Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  architecture-check:
+    name: Check Architectural Guidelines
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Install chalk and glob (for check-architecture script)
+      run: npm install chalk glob
+    
+    - name: Run architecture check
+      run: node scripts/check-architecture.js
+    
+    - name: ESLint check
+      run: npm run lint
+      
+    # Optional: Kommentare auf PR mit gefundenen Problemen
+    - name: Comment on PR
+      if: github.event_name == 'pull_request' && failure()
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const fs = require('fs');
+          const path = require('path');
+          
+          let comment = '## Architecture Check Failed ❌\n\n';
+          comment += 'Please review our [Architecture Guide](../blob/main/docs/architecture-guide.md) and fix the issues.\n\n';
+          comment += 'Common issues include:\n';
+          comment += '- Screen components should use default exports with function declarations\n';
+          comment += '- Other components should use named exports with function declarations\n';
+          comment += '- Avoid direct store access in components\n';
+          comment += '- Use helper functions for app mode checks\n\n';
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          }); 

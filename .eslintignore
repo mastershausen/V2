@@ -1,0 +1,18 @@
+# build output
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+public/
+**/node_modules/
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+app-example/
+
+# temporär ignorierte Problemdateien
+/backups/
+scripts/flag-cleanup.js 

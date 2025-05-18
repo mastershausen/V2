@@ -1,0 +1,47 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run lint
+        run: npm run lint
+        
+  feature-flag-audit:
+    name: Feature Flag Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Audit Feature Flags
+        run: npm run flag-audit
+        # Im Moment nur Warnungen ausgeben, nicht fehlschlagen lassen
+        # Später kann man auf flag-audit:strict umstellen, wenn das Team bereit ist
+      - name: Generate Flag Audit Report
+        if: always()
+        run: npm run flag-audit > flag-audit-report.txt
+      - name: Upload Flag Audit Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: feature-flag-audit-report
+          path: flag-audit-report.txt 

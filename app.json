@@ -1,0 +1,65 @@
+{
+  "expo": {
+    "name": "Frontend5",
+    "slug": "Frontend5",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/Solvbox Icon transparent.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/Solvbox Icon transparent.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Diese App benötigt Zugriff auf Ihre Fotobibliothek, um Bilder und Videos für Ihr Profil auszuwählen.",
+        "NSCameraUsageDescription": "Diese App benötigt Zugriff auf Ihre Kamera, um Fotos für Ihr Profil aufzunehmen."
+      },
+      "bundleIdentifier": "com.anonymous.Frontend5"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/Solvbox Icon transparent.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.anonymous.Frontend5"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/Solvbox Icon transparent.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/Solvbox Icon transparent.png",
+          "imageWidth": 300,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Diese App benötigt Zugriff auf Ihre Fotos, um Bilder für Ihr Profil auszuwählen.",
+          "cameraPermission": "Diese App benötigt Zugriff auf Ihre Kamera, um Fotos für Ihr Profil aufzunehmen."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

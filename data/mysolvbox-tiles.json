@@ -1,0 +1,286 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2024-03-14",
+  "tiles": [
+    {
+      "id": 1001,
+      "title": "Kunden kurzfristig gewinnen",
+      "tabId": "save",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "id": 1002,
+      "title": "Fixkosten senken",
+      "tabId": "save",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "id": 1003,
+      "title": "Vermögen schützen",
+      "tabId": "save",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "id": 1004,
+      "title": "Unternehmen kernsanieren",
+      "tabId": "save",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "id": 1005,
+      "title": "Recht & Sicherheit",
+      "tabId": "save",
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "id": 1006,
+      "title": "Kunden langfristig binden",
+      "tabId": "save",
+      "isActive": true,
+      "sortOrder": 6
+    },
+    {
+      "id": 1007,
+      "title": "Fremdkapital beschaffen",
+      "tabId": "save",
+      "isActive": true,
+      "sortOrder": 7
+    },
+    {
+      "id": 1008,
+      "title": "Mitarbeiter führen",
+      "tabId": "save",
+      "isActive": true,
+      "sortOrder": 8
+    },
+    {
+      "id": 1009,
+      "title": "Cyber- und IT-Sicherheit",
+      "tabId": "save",
+      "isActive": true,
+      "sortOrder": 9
+    },
+    {
+      "id": 1010,
+      "title": "Kunde ist insolvent. Was tun?",
+      "tabId": "save",
+      "isActive": true,
+      "sortOrder": 10
+    },
+    {
+      "id": 2001,
+      "title": "Steuern auf ein Minimum",
+      "tabId": "grow",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "id": 2002,
+      "title": "A-Mitarbeiter gewinnen und halten",
+      "tabId": "grow",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "id": 2003,
+      "title": "Dauerhaften Kundenstrom aufbauen",
+      "tabId": "grow",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "id": 2004,
+      "title": "Vertrieb der verkauft",
+      "tabId": "grow",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "id": 2005,
+      "title": "Brot & Butter Geschäft aufbauen",
+      "tabId": "grow",
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "id": 2006,
+      "title": "Max. Marge Produkt aufbauen",
+      "tabId": "grow",
+      "isActive": true,
+      "sortOrder": 6
+    },
+    {
+      "id": 2007,
+      "title": "Steuern vom Finanzamt zurückholen",
+      "tabId": "grow",
+      "isActive": true,
+      "sortOrder": 7
+    },
+    {
+      "id": 2008,
+      "title": "Bitte, bitte nutze KI",
+      "tabId": "grow",
+      "isActive": true,
+      "sortOrder": 8
+    },
+    {
+      "id": 2009,
+      "title": "Investoren finden",
+      "tabId": "grow",
+      "isActive": true,
+      "sortOrder": 9
+    },
+    {
+      "id": 3001,
+      "title": "Erbschafts- & Schenkungssteuer vermeiden",
+      "tabId": "foresight",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "id": 3002,
+      "title": "Unternehmen das ohne dich funktioniert",
+      "tabId": "foresight",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "id": 3003,
+      "title": "Vermögen im Inland schützen",
+      "tabId": "foresight",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "id": 3004,
+      "title": "Unternehmen verkaufen",
+      "tabId": "foresight",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "id": 3005,
+      "title": "Nachfolge regeln",
+      "tabId": "foresight",
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "id": 3006,
+      "title": "Unternehmen kaufen",
+      "tabId": "foresight",
+      "isActive": true,
+      "sortOrder": 6
+    },
+    {
+      "id": 3007,
+      "title": "Steuerfrei durch Immobilien",
+      "tabId": "foresight",
+      "isActive": true,
+      "sortOrder": 7
+    },
+    {
+      "id": 3008,
+      "title": "Immobilien allgemein",
+      "tabId": "foresight",
+      "isActive": true,
+      "sortOrder": 8
+    },
+    {
+      "id": 3009,
+      "title": "Off-market Immobilien",
+      "tabId": "foresight",
+      "isActive": true,
+      "sortOrder": 9
+    },
+    {
+      "id": 3010,
+      "title": "Onlinegeschäft aufbauen",
+      "tabId": "foresight",
+      "isActive": true,
+      "sortOrder": 10
+    },
+    {
+      "id": 4001,
+      "title": "Lange und glücklich Leben",
+      "tabId": "bonus",
+      "isActive": true,
+      "sortOrder": 1
+    },
+    {
+      "id": 4002,
+      "title": "Besser verhandeln",
+      "tabId": "bonus",
+      "isActive": true,
+      "sortOrder": 2
+    },
+    {
+      "id": 4003,
+      "title": "Rhetorik & Kommunikation meistern",
+      "tabId": "bonus",
+      "isActive": true,
+      "sortOrder": 3
+    },
+    {
+      "id": 4004,
+      "title": "Zukunftsforschung",
+      "tabId": "bonus",
+      "isActive": true,
+      "sortOrder": 4
+    },
+    {
+      "id": 4005,
+      "title": "Ideen und neue Märkte entwickeln",
+      "tabId": "bonus",
+      "isActive": true,
+      "sortOrder": 5
+    },
+    {
+      "id": 4006,
+      "title": "Allgemeine Goldnuggets",
+      "tabId": "bonus",
+      "isActive": true,
+      "sortOrder": 6
+    },
+    {
+      "id": 4007,
+      "title": "Auswandern als Unternehmer",
+      "tabId": "bonus",
+      "isActive": true,
+      "sortOrder": 7
+    },
+    {
+      "id": 4008,
+      "title": "Alternative Investments",
+      "tabId": "bonus",
+      "isActive": true,
+      "sortOrder": 8
+    },
+    {
+      "id": 4009,
+      "title": "Unternehmen ins Ausland verlagern",
+      "tabId": "bonus",
+      "isActive": true,
+      "sortOrder": 9
+    },
+    {
+      "id": 4010,
+      "title": "Auswandern mit Familie",
+      "tabId": "bonus",
+      "isActive": true,
+      "sortOrder": 10
+    },
+    {
+      "id": 4011,
+      "title": "Vermögen schützen im Ausland",
+      "tabId": "bonus",
+      "isActive": true,
+      "sortOrder": 11
+    }
+  ]
+} 
