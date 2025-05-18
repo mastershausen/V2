@@ -60,7 +60,7 @@ const FIXED_CHATS = [
 const REGULAR_CHATS = [
   {
     id: '4',
-    name: 'Steuerexperte',
+    name: 'Thomas Müller',
     avatar: solvboxAvatar, 
     isBot: true,
     lastMessage: 'Hier sind die Informationen zu Ihrer Steuererklärung...',
@@ -70,7 +70,7 @@ const REGULAR_CHATS = [
   },
   {
     id: '5',
-    name: 'Finanz-Coach',
+    name: 'Laura Schmidt',
     avatar: solvboxAvatar,
     isBot: true, 
     lastMessage: 'Ich habe Ihre Anlagestrategie analysiert.',
@@ -80,7 +80,7 @@ const REGULAR_CHATS = [
   },
   {
     id: '6',
-    name: 'Business-Mentor',
+    name: 'Markus Weber',
     avatar: solvboxAvatar,
     isBot: true,
     lastMessage: 'Hier sind einige Tipps für Ihr nächstes Meeting...',
@@ -90,7 +90,7 @@ const REGULAR_CHATS = [
   },
   {
     id: '7',
-    name: 'Kundenservice',
+    name: 'Sophia Becker',
     avatar: solvboxAvatar,
     isBot: false,
     lastMessage: 'Vielen Dank für Ihre Anfrage. Wir werden...',
@@ -168,9 +168,9 @@ export default function ChatsScreen() {
           {item.isFixed ? (
             <Image source={item.avatar} style={styles.avatarImage} />
           ) : (
-            <View style={[styles.avatar, { backgroundColor: item.isBot ? colors.secondary : colors.primary }]}>
+            <View style={[styles.avatar, { backgroundColor: colors.primary }]}>
               <Ionicons 
-                name={item.isBot ? "cube-outline" : "person-outline"} 
+                name="person-outline" 
                 size={24} 
                 color="white" 
               />
