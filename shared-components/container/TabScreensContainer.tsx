@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { View, StyleSheet, SafeAreaView, useWindowDimensions, StyleProp, ViewStyle, TextStyle, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, SafeAreaView, useWindowDimensions, StyleProp, ViewStyle, TextStyle, TouchableOpacity, Text, TextInput, FlatList, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { TabSwipe, TabSwipeRef } from '@/shared-components/gesture/TabSwipe';
 import { BaseTabConfig } from '@/shared-components/navigation/BaseTabbar';
 import { SearchInput } from '@/shared-components/searchinput/SearchInput';
+import { BottomScreen } from '@/shared-components/navigation/BottomScreen';
 
 /**
  * Erweiterte Tab-Konfiguration mit Komponenten-Information
@@ -98,6 +99,17 @@ export function TabScreensContainer({
   const [scrollOffset, setScrollOffset] = useState<number>(0);
   const { width } = useWindowDimensions();
   const swipeRef = useRef<TabSwipeRef>(null);
+  
+  // State für den Assistenten-Chat
+  const [chatVisible, setChatVisible] = useState(false);
+  const [chatMessage, setChatMessage] = useState('');
+  const [chatHistory, setChatHistory] = useState([
+    { 
+      id: '1', 
+      type: 'assistant', 
+      message: 'Hallo! Ich bin der Solvbox-Assistent. Wie kann ich dir heute helfen?'
+    }
+  ]);
 
   // Kombinierte Styles
   const containerStyles = [
@@ -138,6 +150,70 @@ export function TabScreensContainer({
     onSearchChange?.(text);
   };
 
+  // Event Handler für den Chat
+  const handleChatButtonPress = () => {
+    setChatVisible(true);
+  };
+
+  const handleCloseChatModal = () => {
+    setChatVisible(false);
+  };
+
+  const handleSendMessage = () => {
+    if (chatMessage.trim() === '') return;
+    
+    // Nachricht des Nutzers hinzufügen
+    const userMessage = {
+      id: Date.now().toString(),
+      type: 'user',
+      message: chatMessage
+    };
+    
+    setChatHistory(prev => [...prev, userMessage]);
+    setChatMessage('');
+    
+    // Simulierte Antwort des Assistenten
+    setTimeout(() => {
+      const assistantMessage = {
+        id: (Date.now() + 1).toString(),
+        type: 'assistant',
+        message: `Ich verstehe deine Frage zu "${chatMessage}". Kann ich dir noch etwas anderes erklären?`
+      };
+      setChatHistory(prev => [...prev, assistantMessage]);
+    }, 1000);
+  };
+
+  // Rendering der Chat-Nachricht
+  const renderChatMessage = ({ item }: any) => {
+    const isUser = item.type === 'user';
+    return (
+      <View style={[
+        styles.chatMessageContainer, 
+        isUser ? styles.userMessageContainer : styles.assistantMessageContainer
+      ]}>
+        {!isUser && (
+          <View style={styles.assistantAvatarContainer}>
+            <View style={styles.assistantAvatar}>
+              <Ionicons name="laptop" size={16} color="white" />
+            </View>
+          </View>
+        )}
+        <View style={[
+          styles.chatMessage, 
+          isUser ? [styles.userMessage, { backgroundColor: colors.primary }] : 
+          [styles.assistantMessage, { backgroundColor: colors.backgroundSecondary }]
+        ]}>
+          <Text style={[
+            styles.messageText, 
+            { color: isUser ? 'white' : colors.textPrimary }
+          ]}>
+            {item.message}
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <View 
       style={containerStyles}
@@ -175,11 +251,62 @@ export function TabScreensContainer({
       {/* Floating Action Button für Chat */}
       <TouchableOpacity
         style={[styles.chatButton, { backgroundColor: `${colors.secondary}CC` }]}
-        onPress={() => console.log('Chat geöffnet')}
+        onPress={handleChatButtonPress}
         activeOpacity={0.8}
       >
         <Ionicons name="chatbubble" size={24} color="white" />
       </TouchableOpacity>
+      
+      {/* Chat Popup Modal */}
+      <BottomScreen
+        visible={chatVisible}
+        onClose={handleCloseChatModal}
+        title=""
+      >
+        {/* Benutzerdefinierter Titel mit Logo */}
+        <View style={styles.customHeaderContainer}>
+          <View style={[styles.logoContainer, { backgroundColor: colors.secondary }]}>
+            <Ionicons name="cube-outline" size={20} color="white" />
+          </View>
+          <Text style={[styles.customHeaderTitle, { color: colors.textPrimary }]}>
+            Solvbox-Assistent
+          </Text>
+        </View>
+        
+        <View style={styles.chatContainer}>
+          {/* Chat-Verlauf */}
+          <FlatList
+            data={chatHistory}
+            renderItem={renderChatMessage}
+            keyExtractor={item => item.id}
+            style={styles.chatList}
+            contentContainerStyle={styles.chatListContent}
+          />
+          
+          {/* Eingabebereich */}
+          <View style={[styles.inputContainer, { borderTopColor: colors.divider }]}>
+            <TextInput
+              style={[styles.chatInput, { 
+                backgroundColor: colors.backgroundSecondary,
+                color: colors.textPrimary,
+                borderColor: colors.divider
+              }]}
+              value={chatMessage}
+              onChangeText={setChatMessage}
+              placeholder="Frage den Solvbox-Assistenten..."
+              placeholderTextColor={colors.textTertiary}
+              multiline
+            />
+            <TouchableOpacity 
+              style={[styles.sendButton, { backgroundColor: colors.primary }]}
+              onPress={handleSendMessage}
+              disabled={chatMessage.trim() === ''}
+            >
+              <Ionicons name="send" size={18} color="white" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </BottomScreen>
     </View>
   );
 }
@@ -211,5 +338,98 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
+  },
+  // Chat Styles
+  chatContainer: {
+    flex: 1,
+    height: 500, // Höhe des Chat-Containers
+  },
+  chatList: {
+    flex: 1,
+  },
+  chatListContent: {
+    paddingVertical: 16,
+    paddingHorizontal: 8,
+  },
+  chatMessageContainer: {
+    marginBottom: 16,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  userMessageContainer: {
+    justifyContent: 'flex-end',
+  },
+  assistantMessageContainer: {
+    justifyContent: 'flex-start',
+  },
+  chatMessage: {
+    maxWidth: '80%',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 20,
+  },
+  userMessage: {
+    borderBottomRightRadius: 4,
+    marginLeft: 'auto',
+  },
+  assistantMessage: {
+    borderBottomLeftRadius: 4,
+  },
+  messageText: {
+    fontSize: 15,
+    lineHeight: 20,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 8,
+    borderTopWidth: 1,
+  },
+  chatInput: {
+    flex: 1,
+    minHeight: 40,
+    maxHeight: 100,
+    borderRadius: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderWidth: 1,
+    fontSize: 15,
+  },
+  sendButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 8,
+  },
+  assistantAvatarContainer: {
+    marginRight: 8,
+  },
+  assistantAvatar: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#34C759',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  // Neue Styles für den Header
+  customHeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  customHeaderTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginLeft: 10,
+  },
+  logoContainer: {
+    width: 36,
+    height: 36,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }); 
