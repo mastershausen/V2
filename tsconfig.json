@@ -8,24 +8,45 @@
     "skipLibCheck": true,
     "module": "esnext",
     "paths": {
-      "@/*": ["./*"],
-      "@features/*": ["./features/*"],
-      "@i18n/*": ["./i18n/*"],
-      "@config/*": ["./config/*"],
-      "@services/*": ["./services/*"],
-      "@mock/*": ["./mock/*"],
-      "@stores/*": ["./stores/*"],
-      "@contexts/*": ["./contexts/*"],
-      "@shared-components/*": ["./shared-components/*"],
-      "@hooks/*": ["./hooks/*"]
+      "@/*": [
+        "./*"
+      ],
+      "@features/*": [
+        "./features/*"
+      ],
+      "@i18n/*": [
+        "./i18n/*"
+      ],
+      "@config/*": [
+        "./config/*"
+      ],
+      "@services/*": [
+        "./services/*"
+      ],
+      "@mock/*": [
+        "./mock/*"
+      ],
+      "@stores/*": [
+        "./stores/*"
+      ],
+      "@contexts/*": [
+        "./contexts/*"
+      ],
+      "@shared-components/*": [
+        "./shared-components/*"
+      ],
+      "@hooks/*": [
+        "./hooks/*"
+      ]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts",
     "types.d.ts"
   ],
-  "exclude": ["backups/**/*", "types/auth/examples/**/*"]
+  "exclude": [
+    "backups/**/*",
+    "types/auth/examples/**/*"
+  ]
 }

@@ -1,5 +1,5 @@
 {
-  "name": "frontend5",
+  "name": "design-only",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "type": "commonjs",
@@ -8,6 +8,7 @@
     "start:dev": "env-cmd -f .env.development expo start --dev-client",
     "start:demo": "env-cmd -f .env.demo expo start --dev-client",
     "start:live": "env-cmd -f .env.production expo start --dev-client",
+    "expo-go": "npx expo start --clear",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "env-cmd -f .env.development expo start --android --dev-client",
     "android:demo": "env-cmd -f .env.demo expo start --android --dev-client",

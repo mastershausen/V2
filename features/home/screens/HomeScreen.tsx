@@ -108,10 +108,10 @@ function HomeScreen() {
           <View style={[styles.contentContainer, layoutStyles]}>
             <View style={styles.header}>
               <Text style={styles.headerTitle}>
-                {t('home.searchHeader')}
+                Wie können wir helfen?
               </Text>
               <Text style={styles.headerSubtitle}>
-                {t('home.searchSubtitle')}
+                Suchst du nach Expertise oder Lösungen?
               </Text>
             </View>
             
@@ -129,11 +129,15 @@ function HomeScreen() {
             </View>
             
             <View style={styles.suggestionsContainer}>
+              <Text style={styles.suggestionsTitle}>
+                Meistgesuchte Lösungen
+              </Text>
               <SuggestionList
                 suggestions={suggestions}
                 onSuggestionPress={handleSuggestionPress}
                 colors={colors}
                 horizontal={false}
+                maxItems={5}
               />
             </View>
           </View>
@@ -168,17 +172,21 @@ const createStyles = (colors: HomeScreenColors) => StyleSheet.create({
     paddingHorizontal: spacing.m,
     paddingTop: spacing.m,
     paddingBottom: spacing.s,
+    alignItems: 'center', // Zentriert den Text horizontal
   },
   headerTitle: {
-    fontSize: typography.fontSize.largeTitle,
+    fontSize: typography.fontSize.title,
     fontWeight: typography.fontWeight.bold,
     color: colors.textPrimary,
     marginBottom: spacing.xs,
+    textAlign: 'center', // Zentriert den Text
+    width: '100%', // Stellt sicher, dass der Text die volle Breite einnimmt
   },
   headerSubtitle: {
     fontSize: typography.fontSize.l,
     color: colors.textSecondary,
     marginBottom: spacing.m,
+    textAlign: 'center', // Zentriert den Text
   },
   
   // Such-/Vorschlagsstile
@@ -186,11 +194,17 @@ const createStyles = (colors: HomeScreenColors) => StyleSheet.create({
     marginBottom: spacing.m,
   },
   suggestionsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: 'column',
     marginTop: spacing.s,
-    marginHorizontal: -spacing.xs, // Kompensiert den horizontalen Margin der Chips
     paddingHorizontal: spacing.m,
+  },
+  suggestionsTitle: {
+    fontSize: typography.fontSize.m,
+    color: colors.textSecondary,
+    marginBottom: spacing.s,
+    paddingHorizontal: spacing.xs,
+    textAlign: 'center',
+    width: '100%',
   },
 });
 

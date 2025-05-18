@@ -131,7 +131,7 @@ function SuggestionListBase({
           {displayedSuggestions.map(renderSuggestionItem)}
         </ScrollView>
       ) : (
-        <View style={styles.flexContainer}>
+        <View style={styles.verticalContainer}>
           {displayedSuggestions.map(renderSuggestionItem)}
         </View>
       )}
@@ -154,6 +154,11 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     paddingHorizontal: spacing.s,
+  },
+  verticalContainer: {
+    flexDirection: 'column',
+    paddingHorizontal: spacing.s,
+    alignItems: 'center',
   },
   chipContainer: {
     marginBottom: spacing.s,

@@ -1,6 +1,5 @@
 import { SearchSuggestion } from '../types/search';
 import i18n from '@/i18n/config';
-import { Ionicons } from '@expo/vector-icons';
 
 /**
  * Standard-Suchvorschläge für den Home-Screen
@@ -15,37 +14,37 @@ export const DEFAULT_SUGGESTIONS: SearchSuggestion[] = [
   { 
     id: '1', 
     label: i18n.t('home.defaultSuggestions.taxOptions'), 
-    icon: 'cash-outline' 
+    icon: 'money' 
   },
   { 
     id: '2', 
     label: i18n.t('home.defaultSuggestions.saveMoney'), 
-    icon: 'calculator-outline' 
+    icon: 'piggy-bank' 
   },
   { 
     id: '3', 
     label: i18n.t('home.defaultSuggestions.growth'), 
-    icon: 'trending-up-outline' 
+    icon: 'line-chart' 
   },
   { 
     id: '4', 
     label: i18n.t('home.defaultSuggestions.businessPlan'), 
-    icon: 'document-text-outline' 
+    icon: 'file-text-o' 
   },
   { 
     id: '5', 
     label: i18n.t('home.defaultSuggestions.investment'), 
-    icon: 'trending-up-outline' 
+    icon: 'briefcase' 
   },
   { 
     id: '6', 
     label: i18n.t('home.defaultSuggestions.insurance'), 
-    icon: 'shield-outline' 
+    icon: 'shield' 
   },
   { 
     id: '7', 
     label: i18n.t('home.defaultSuggestions.retirement'), 
-    icon: 'hourglass-outline' 
+    icon: 'clock-o' 
   },
 ];
 

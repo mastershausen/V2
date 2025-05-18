@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 /**
  * Fehlertypen für die Suche
@@ -43,7 +44,7 @@ export interface SearchError extends Error {
 export interface SearchSuggestion {
   id: string;
   label: string;
-  icon: keyof typeof Ionicons.glyphMap;
+  icon: string;
 }
 
 /**

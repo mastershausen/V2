@@ -1,65 +1,30 @@
 {
   "expo": {
-    "name": "Frontend5",
-    "slug": "Frontend5",
+    "name": "design-only",
+    "slug": "design-only",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/Solvbox Icon transparent.png",
-    "scheme": "myapp",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/Solvbox Icon transparent.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "newArchEnabled": true,
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true,
-      "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "Diese App benötigt Zugriff auf Ihre Fotobibliothek, um Bilder und Videos für Ihr Profil auszuwählen.",
-        "NSCameraUsageDescription": "Diese App benötigt Zugriff auf Ihre Kamera, um Fotos für Ihr Profil aufzunehmen."
-      },
-      "bundleIdentifier": "com.anonymous.Frontend5"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/Solvbox Icon transparent.png",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#ffffff"
-      },
-      "permissions": [
-        "android.permission.READ_EXTERNAL_STORAGE",
-        "android.permission.WRITE_EXTERNAL_STORAGE",
-        "android.permission.CAMERA",
-        "android.permission.RECORD_AUDIO"
-      ],
-      "package": "com.anonymous.Frontend5"
+      }
     },
     "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/Solvbox Icon transparent.png"
-    },
-    "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/Solvbox Icon transparent.png",
-          "imageWidth": 300,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ],
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "Diese App benötigt Zugriff auf Ihre Fotos, um Bilder für Ihr Profil auszuwählen.",
-          "cameraPermission": "Diese App benötigt Zugriff auf Ihre Kamera, um Fotos für Ihr Profil aufzunehmen."
-        }
-      ]
-    ],
-    "experiments": {
-      "typedRoutes": true
+      "favicon": "./assets/logo.png"
     }
   }
 }

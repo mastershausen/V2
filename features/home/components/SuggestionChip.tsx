@@ -91,11 +91,14 @@ function SuggestionChipBase({
       disabled={disabled}
       activeOpacity={0.7}
     >
-      {icon && (
-        <View style={styles.iconContainer}>
-          <FontAwesome name={icon as any} size={14} color={colors.textSecondary} style={styles.icon} />
-        </View>
-      )}
+      <View style={styles.iconContainer}>
+        <FontAwesome 
+          name={(icon as any) || 'question-circle'} 
+          size={15} 
+          color="#3B82F6" 
+          style={styles.icon} 
+        />
+      </View>
       <Text style={labelStyle} numberOfLines={1} ellipsizeMode="tail">
         {label}
       </Text>
@@ -113,33 +116,40 @@ const createStyles = (colors: ThemeColors) => StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.backgroundSecondary,
-    paddingHorizontal: spacing.m,
-    paddingVertical: spacing.s,
-    borderRadius: borderRadius.m,
+    backgroundColor: 'rgba(243, 244, 246, 0.8)',
+    paddingHorizontal: spacing.s,
+    paddingVertical: spacing.xs / 2,
+    borderRadius: borderRadius.l,
     marginRight: spacing.xs,
-    marginBottom: spacing.xs,
-    maxWidth: 180,
-    minWidth: 80,
-    height: 36,
-    justifyContent: 'center',
-    // Subtiler Schatten für bessere visuelle Abgrenzung
-    shadowColor: '#00000020',
+    marginBottom: spacing.s,
+    maxWidth: 200,
+    minWidth: 60,
+    height: 34,
+    justifyContent: 'flex-start',
+    // Moderner, subtiler Schatten
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
+    shadowOpacity: 0.03,
+    shadowRadius: 2,
     elevation: 1,
+    borderWidth: 0.5,
+    borderColor: 'rgba(229, 231, 235, 0.8)',
   },
   label: {
-    color: colors.textPrimary,
-    fontSize: 14,
-    fontWeight: '500',
+    color: colors.textSecondary,
+    fontSize: 13,
+    fontWeight: '400',
+    marginLeft: spacing.xs,
   },
   iconContainer: {
-    marginRight: spacing.xs,
+    marginRight: spacing.xxs,
+    width: 16,
+    height: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   icon: {
-    marginTop: 1,
+    marginTop: 0,
   }
 });
 
