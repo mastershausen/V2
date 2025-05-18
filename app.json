@@ -15,16 +15,84 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.designonly"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.designonly"
     },
     "web": {
       "favicon": "./assets/logo.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "design-only"
+      }
+    },
+    "scheme": "com.anonymous.designonly",
+    "jsEngine": "hermes",
+    "fonts": [
+      {
+        "asset": "./assets/fonts/AntDesign.ttf"
+      },
+      {
+        "asset": "./assets/fonts/Entypo.ttf"
+      },
+      {
+        "asset": "./assets/fonts/EvilIcons.ttf"
+      },
+      {
+        "asset": "./assets/fonts/Feather.ttf"
+      },
+      {
+        "asset": "./assets/fonts/FontAwesome.ttf"
+      },
+      {
+        "asset": "./assets/fonts/FontAwesome5_Brands.ttf"
+      },
+      {
+        "asset": "./assets/fonts/FontAwesome5_Regular.ttf"
+      },
+      {
+        "asset": "./assets/fonts/FontAwesome5_Solid.ttf"
+      },
+      {
+        "asset": "./assets/fonts/FontAwesome6_Brands.ttf"
+      },
+      {
+        "asset": "./assets/fonts/FontAwesome6_Regular.ttf"
+      },
+      {
+        "asset": "./assets/fonts/FontAwesome6_Solid.ttf"
+      },
+      {
+        "asset": "./assets/fonts/Fontisto.ttf"
+      },
+      {
+        "asset": "./assets/fonts/Foundation.ttf"
+      },
+      {
+        "asset": "./assets/fonts/Ionicons.ttf"
+      },
+      {
+        "asset": "./assets/fonts/MaterialCommunityIcons.ttf"
+      },
+      {
+        "asset": "./assets/fonts/MaterialIcons.ttf"
+      },
+      {
+        "asset": "./assets/fonts/Octicons.ttf"
+      },
+      {
+        "asset": "./assets/fonts/SimpleLineIcons.ttf"
+      },
+      {
+        "asset": "./assets/fonts/Zocial.ttf"
+      }
+    ]
   }
 }

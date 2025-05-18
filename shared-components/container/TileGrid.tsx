@@ -113,17 +113,27 @@ export function TileGrid<T extends TileData>({
       ) : (
         // Wenn Kacheln vorhanden sind, rendere sie
         <View style={[styles.container, style]}>
-          {tiles.map(tile => (
-            <TileCard
-              key={`tile-${tile.id}`}
-              id={tile.id}
-              title={tile.title || 'Unbenannter Eintrag'}
-              onPress={onTilePress}
-              tilesPerRow={calculatedValues.tilesPerRow}
-              tileSpacing={calculatedValues.tileSpacing}
-              horizontalPadding={calculatedValues.horizontalPadding}
-            />
-          ))}
+          {tiles.map((tile, index) => {
+            // Array in Gruppen von je 3 Elementen aufteilen
+            const rowIndex = Math.floor(index / 3);
+            const columnIndex = index % 3;
+            
+            return (
+              <View 
+                key={`tile-${tile.id}`} 
+                style={styles.tileWrapper}
+              >
+                <TileCard
+                  id={tile.id}
+                  title={tile.title || 'Unbenannter Eintrag'}
+                  onPress={onTilePress}
+                  tilesPerRow={3}
+                  tileSpacing={calculatedValues.tileSpacing}
+                  horizontalPadding={calculatedValues.horizontalPadding}
+                />
+              </View>
+            );
+          })}
         </View>
       )}
     </ErrorBoundary>
@@ -137,8 +147,15 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     width: '100%',
+    padding: spacing.xs,
+  },
+  tileWrapper: {
+    width: '30%',
+    marginBottom: spacing.m,
+    marginHorizontal: spacing.xxs,
   },
   errorContainer: {
     padding: spacing.m,

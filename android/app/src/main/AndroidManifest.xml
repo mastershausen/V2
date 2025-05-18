@@ -29,6 +29,7 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="myapp"/>
         <data android:scheme="com.anonymous.Frontend5"/>
+        <data android:scheme="com.anonymous.designonly"/>
       </intent-filter>
     </activity>
   </application>

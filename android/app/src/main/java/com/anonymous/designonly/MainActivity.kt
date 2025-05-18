@@ -1,4 +1,4 @@
-package com.anonymous.Frontend5
+package com.anonymous.designonly
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

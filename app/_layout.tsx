@@ -26,6 +26,8 @@ const APP_INSTALLATION_KEY = 'app_installation';
 LogBox.ignoreLogs([
   'Constants.platform.ios.model has been deprecated',
   'The navigation state parsed',
+  'Unable to resolve module',
+  './vendor/react-native-vector-icons'
 ]);
 
 // SplashScreen vorhalten, bis das Layout vollständig geladen ist

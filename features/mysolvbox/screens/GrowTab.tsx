@@ -54,6 +54,7 @@ export function GrowTab() {
           onTilePress={handleTilePress}
           errorFallback={error ? renderErrorMessage() : undefined}
           emptyComponent={renderEmptyState()}
+          tilesPerRow={3}
         />
       )}
     </BaseTabScreen>

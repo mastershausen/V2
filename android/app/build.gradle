@@ -86,9 +86,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.anonymous.Frontend5'
+    namespace 'com.anonymous.designonly'
     defaultConfig {
-        applicationId 'com.anonymous.Frontend5'
+        applicationId 'com.anonymous.designonly'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

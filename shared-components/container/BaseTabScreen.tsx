@@ -4,8 +4,9 @@ import { View, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import { spacing } from '@/config/theme/spacing';
 import { TileData, MySolvboxTabId } from '@/features/mysolvbox/types';
 
-export const TILE_SPACING = spacing.xs * 2; // 8 (spacing.s)
-export const HORIZONTAL_PADDING = spacing.m; // 16
+// Optimierte Abstände für 3 Kacheln pro Zeile
+export const TILE_SPACING = spacing.m; // 16
+export const HORIZONTAL_PADDING = spacing.m; // Reduziert von spacing.l (24) auf spacing.m (16)
 
 /**
  * Props für die BaseTabScreen-Komponente
@@ -82,6 +83,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     paddingHorizontal: HORIZONTAL_PADDING - (TILE_SPACING / 2),
     paddingVertical: TILE_SPACING,
+    justifyContent: 'flex-start',
   },
   loadingContainer: {
     flex: 1,

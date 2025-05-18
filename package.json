@@ -27,7 +27,9 @@
     "flag-cleanup": "node scripts/flag-cleanup.js",
     "flag-cleanup:pr": "node scripts/flag-cleanup.js --create-pr",
     "type-check": "tsc --noEmit",
-    "fix:imports": "node scripts/fix-imports.js"
+    "fix:imports": "node scripts/fix-imports.js",
+    "clear-cache": "rm -rf node_modules/.cache && rm -rf $TMPDIR/metro-* && watchman watch-del-all 2>/dev/null || true",
+    "restart": "npm run clear-cache && env-cmd -f .env.development expo start --dev-client --clear"
   },
   "dependencies": {
     "@babel/runtime": "^7.27.1",
@@ -37,8 +39,8 @@
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/netinfo": "^11.4.1",
     "@react-native-community/slider": "^4.5.5",
-    "@react-navigation/native": "^7.1.6",
-    "@react-navigation/native-stack": "^7.3.10",
+    "@react-navigation/native": "^7.0.14",
+    "@react-navigation/native-stack": "^7.2.0",
     "@supabase/supabase-js": "^2.49.4",
     "@types/react-dom": "~18.3.1",
     "ajv": "^8.17.1",

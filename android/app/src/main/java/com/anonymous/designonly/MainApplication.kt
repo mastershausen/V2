@@ -1,4 +1,4 @@
-package com.anonymous.Frontend5
+package com.anonymous.designonly
 
 import android.app.Application
 import android.content.res.Configuration

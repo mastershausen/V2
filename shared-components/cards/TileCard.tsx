@@ -48,8 +48,11 @@ export function TileCard({
   const screenWidth = Dimensions.get('window').width;
   const TILE_SPACING = tileSpacing;
   const HORIZONTAL_PADDING = horizontalPadding ?? TILE_SPACING;
+  
+  // Korrigierte Berechnung für die verfügbare Breite und Kachelgrößen
   const availableWidth = screenWidth - (2 * HORIZONTAL_PADDING);
-  const tileWidth = Math.floor((availableWidth - ((tilesPerRow - 1) * TILE_SPACING)) / tilesPerRow);
+  const totalSpacingWidth = (tilesPerRow - 1) * TILE_SPACING;
+  const tileWidth = Math.floor((availableWidth - totalSpacingWidth) / tilesPerRow);
 
   // Schriftgrößenberechnung
   const baseFontSize = tileWidth * 0.12;
@@ -67,12 +70,12 @@ export function TileCard({
   const shadowStyle = Platform.select({
     ios: {
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.2,
-      shadowRadius: 8,
+      shadowOffset: { width: 0, height: 6 },
+      shadowOpacity: 0.25,
+      shadowRadius: 12,
     },
     android: {
-      elevation: 6,
+      elevation: 10,
     },
   });
 
@@ -80,14 +83,14 @@ export function TileCard({
   const tileStyles = [
     styles.tile, 
     shadowStyle,
-    { 
-      width: tileWidth,
-      height: tileWidth,
-      marginHorizontal: TILE_SPACING / 2,
-      marginBottom: TILE_SPACING,
+    {
+      width: '100%' as any,
+      aspectRatio: 1,
+      marginHorizontal: 0,
+      marginBottom: 0,
       backgroundColor: colors.backgroundSecondary,
       borderColor: colors.cardBorder,
-      transform: [{ translateY: -2 }],
+      transform: [{ translateY: -4 }],
       borderRadius: ui.borderRadius.xl,
     },
     style
