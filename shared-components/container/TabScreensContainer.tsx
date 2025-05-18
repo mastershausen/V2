@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { View, StyleSheet, SafeAreaView, useWindowDimensions, StyleProp, ViewStyle, TextStyle } from 'react-native';
+import { View, StyleSheet, SafeAreaView, useWindowDimensions, StyleProp, ViewStyle, TextStyle, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { TabSwipe, TabSwipeRef } from '@/shared-components/gesture/TabSwipe';
@@ -170,6 +171,15 @@ export function TabScreensContainer({
         onTabChange={handleTabPress}
         onScroll={handleScroll}
       />
+
+      {/* Floating Action Button für Chat */}
+      <TouchableOpacity
+        style={[styles.chatButton, { backgroundColor: `${colors.secondary}CC` }]}
+        onPress={() => console.log('Chat geöffnet')}
+        activeOpacity={0.8}
+      >
+        <Ionicons name="chatbubble" size={24} color="white" />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -186,5 +196,20 @@ const styles = StyleSheet.create({
   compactSearchInput: {
     fontSize: 14,
     height: 38, // Niedrigere Höhe für kompakteres Suchfeld
+  },
+  chatButton: {
+    position: 'absolute',
+    bottom: 24,
+    right: 24,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
   },
 }); 

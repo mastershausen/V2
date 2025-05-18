@@ -185,7 +185,6 @@ export function BaseTabbar({
                 { color: isActive ? colors.primary : colors.textSecondary },
                 tabLabelStyle
               ]}
-              numberOfLines={1}
             >
               {tab.label}
             </Text>
@@ -214,7 +213,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 48,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: 0,
+    justifyContent: 'space-around',
+    paddingHorizontal: spacing.m,
   },
   containerShadow: {
     shadowColor: 'rgba(0, 0, 0, 0.1)',
@@ -224,10 +225,10 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   tabItem: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: spacing.xs,
+    paddingHorizontal: spacing.m,
+    minWidth: 80,
   },
   tabLabel: {
     fontSize: 14,
