@@ -27,49 +27,153 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 // Avatar-Bild importieren
 const solvboxAvatar = require('@/assets/small rounded Icon.png') as ImageSourcePropType;
 
-// Mock-Daten für einen Chat
-const MOCK_CHAT = {
-  id: '1',
-  name: 'Solvbox-Assistent',
-  avatar: solvboxAvatar,
-  isBot: true,
-  messages: [
-    {
-      id: '1',
-      text: 'Hallo! Ich bin der Solvbox-Assistent. Wie kann ich dir heute helfen?',
-      time: '14:30',
-      isUser: false,
-      date: 'Heute'
-    },
-    {
-      id: '2',
-      text: 'Ich interessiere mich für Steueroptimierung für mein kleines Unternehmen. Kannst du mir Tipps geben?',
-      time: '14:32',
-      isUser: true,
-      date: 'Heute'
-    },
-    {
-      id: '3',
-      text: 'Natürlich! Hier sind einige wichtige Punkte zur Steueroptimierung für kleine Unternehmen:\n\n1. Überlege, ob eine GmbH oder eine Personengesellschaft steuerlich vorteilhafter ist\n2. Achte auf abzugsfähige Betriebsausgaben\n3. Optimiere deine Gehaltsstruktur bei einer GmbH\n4. Nutze steuerliche Vorteile durch Investitionen\n5. Plane Entnahmen und Ausschüttungen strategisch\n\nMöchtest du mehr Details zu einem dieser Punkte?',
-      time: '14:33',
-      isUser: false,
-      date: 'Heute'
-    },
-  ]
-};
-
 /**
  * Chat-Detail Screen zur Anzeige einer Konversation
  */
 export default function ChatDetailScreen() {
   const colors = useThemeColor();
   const router = useRouter();
-  const params = useLocalSearchParams<{ id: string }>();
+  const params = useLocalSearchParams<{ id: string, name: string }>();
   const [message, setMessage] = useState('');
-  const [chat, setChat] = useState(MOCK_CHAT);
   const [isTyping, setIsTyping] = useState(false);
   const flatListRef = useRef<FlatList>(null);
   const typingDots = useRef(new Animated.Value(0)).current;
+
+  // Bestimme, ob es sich um einen Solvbox-Chat handelt
+  const isSolvboxChat = params.name?.includes('Solvbox-');
+
+  // Mock-Daten für den aktuellen Chat
+  const [chat, setChat] = useState({
+    id: params.id || '1',
+    name: params.name || 'Chat',
+    isSolvboxChat: isSolvboxChat,
+    messages: isSolvboxChat ? 
+      // Nachrichten für Solvbox-Chats
+      [
+        {
+          id: '1',
+          text: `Hallo! Ich bin der ${params.name}. Wie kann ich Ihnen heute helfen?`,
+          time: '14:30',
+          isUser: false,
+          date: 'Heute'
+        }
+      ] : 
+      // Ausführlichere Nachrichten für reguläre Chats (wie Thomas Müller)
+      [
+        {
+          id: '0-1',
+          text: 'Guten Tag, ich freue mich, dass Sie unseren Steuerberatungsservice in Anspruch nehmen möchten.',
+          time: '14:15',
+          isUser: false,
+          date: '15.09.2023'
+        },
+        {
+          id: '0-2',
+          text: 'Vielen Dank! Ich würde gerne einen Termin für eine erste Beratung vereinbaren.',
+          time: '14:30',
+          isUser: true,
+          date: '15.09.2023'
+        },
+        {
+          id: '0-3',
+          text: 'Natürlich. Ich kann Ihnen den 22. September um 10 Uhr anbieten. Würde das passen?',
+          time: '14:45',
+          isUser: false,
+          date: '15.09.2023'
+        },
+        {
+          id: '0-4',
+          text: 'Ja, der Termin passt mir gut. Welche Unterlagen sollte ich mitbringen?',
+          time: '15:20',
+          isUser: true,
+          date: '15.09.2023'
+        },
+        {
+          id: '1-1',
+          text: 'Guten Morgen, ich hoffe, Sie hatten ein schönes Wochenende. Für unseren Termin morgen bringen Sie bitte Ihre letzte Steuererklärung und aktuelle Einkommensunterlagen mit.',
+          time: '09:20',
+          isUser: false,
+          date: '21.09.2023'
+        },
+        {
+          id: '1-2',
+          text: 'Guten Morgen, danke der Nachfrage. Ich werde die Unterlagen zusammenstellen.',
+          time: '10:15',
+          isUser: true,
+          date: '21.09.2023'
+        },
+        {
+          id: '2-1',
+          text: 'Vielen Dank für das Gespräch heute. Ich habe Ihre Unterlagen durchgesehen und werde in den nächsten Tagen einen ersten Entwurf Ihrer Steuererklärung erstellen.',
+          time: '15:10',
+          isUser: false,
+          date: '22.09.2023'
+        },
+        {
+          id: '2-2',
+          text: 'Das Gespräch war sehr hilfreich, danke. Ich freue mich auf Ihren Entwurf.',
+          time: '16:40',
+          isUser: true,
+          date: '22.09.2023'
+        },
+        {
+          id: '3-1',
+          text: 'Hallo! Wie kann ich Ihnen helfen?',
+          time: '10:15',
+          isUser: false,
+          date: 'Gestern'
+        },
+        {
+          id: '3-2',
+          text: 'Guten Tag Herr Müller, ich hätte eine Frage zu meiner letzten Steuererklärung.',
+          time: '10:22',
+          isUser: true,
+          date: 'Gestern'
+        },
+        {
+          id: '3-3',
+          text: 'Natürlich, worum geht es genau? Haben Sie Fragen zu bestimmten Abschreibungen oder Angaben?',
+          time: '10:30',
+          isUser: false,
+          date: 'Gestern'
+        },
+        {
+          id: '3-4',
+          text: 'Ich bin unsicher, ob ich alle meine Homeoffice-Kosten korrekt angegeben habe. Können Sie mir erklären, welche Kosten genau absetzbar sind?',
+          time: '10:45',
+          isUser: true,
+          date: 'Gestern'
+        },
+        {
+          id: '3-5',
+          text: 'Gerne. Bei Homeoffice-Kosten können Sie folgende Ausgaben berücksichtigen:\n\n1. Pauschale von 5€ pro Tag (max. 600€ im Jahr)\n2. Anteilige Mietkosten bei separatem Arbeitszimmer\n3. Internetkosten (anteilig)\n4. Büromaterial\n5. Arbeitsmittel wie PC, Drucker, etc.\n\nHaben Sie diese Posten in Ihrer Steuererklärung berücksichtigt?',
+          time: '11:03',
+          isUser: false,
+          date: 'Gestern'
+        },
+        {
+          id: '3-6',
+          text: 'Die Pauschale und Arbeitsmittel ja, aber die anteiligen Mietkosten hatte ich nicht angegeben. Kann ich das noch nachträglich korrigieren?',
+          time: '11:10',
+          isUser: true,
+          date: 'Gestern'
+        },
+        {
+          id: '4-1',
+          text: 'Guten Morgen. Haben Sie Ihre Unterlagen für die Steuererklärung schon vorbereitet?',
+          time: '09:20',
+          isUser: false,
+          date: 'Heute'
+        },
+        {
+          id: '4-2',
+          text: 'Ja, ich habe alle Dokumente zusammengestellt. Wann könnten wir einen Termin vereinbaren?',
+          time: '14:30',
+          isUser: true,
+          date: 'Heute'
+        }
+      ]
+  });
 
   // Animiere die Schreibindikator-Punkte
   useEffect(() => {
@@ -122,9 +226,19 @@ export default function ChatDetailScreen() {
     // Simulierte Bot-Antwort
     setIsTyping(true);
     setTimeout(() => {
+      const responseOptions = [
+        "Das ist eine interessante Frage. Ich habe einige Informationen für Sie zu diesem Thema.",
+        "Gerne helfe ich Ihnen dabei. Hier sind einige relevante Informationen.",
+        "Ich verstehe Ihr Anliegen. Lassen Sie mich nachschauen.",
+        "Ich habe zu diesem Thema verschiedene Informationen für Sie zusammengestellt.",
+        "Vielen Dank für Ihre Anfrage. Ich schaue gleich nach den passenden Informationen.",
+      ];
+      
+      const randomIndex = Math.floor(Math.random() * responseOptions.length);
+      
       const botResponse = {
         id: (Date.now() + 1).toString(),
-        text: 'Das ist eine sehr interessante Frage. Ich habe einige hilfreiche Informationen zu diesem Thema, die ich gerne mit dir teilen möchte. Lass mich das für dich recherchieren...',
+        text: responseOptions[randomIndex],
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         isUser: false,
         date: 'Heute'
@@ -135,7 +249,7 @@ export default function ChatDetailScreen() {
         messages: [...prev.messages, botResponse]
       }));
       setIsTyping(false);
-    }, 2000);
+    }, 1500);
   };
 
   // Zurück zur Chat-Übersicht
@@ -161,40 +275,46 @@ export default function ChatDetailScreen() {
   };
 
   // Rendert eine einzelne Nachricht
-  const renderMessage = ({ item }: { item: typeof chat.messages[0] }) => {
+  const renderMessage = ({ item, index }: { item: typeof chat.messages[0], index: number }) => {
     const isUser = item.isUser;
     
+    // Überprüfen, ob eine Datumstrenner-Linie angezeigt werden soll
+    const shouldShowDateSeparator = index > 0 && 
+      chat.messages[index].date !== chat.messages[index-1].date;
+    
     return (
-      <View style={[
-        styles.messageContainer,
-        isUser ? styles.userMessageContainer : styles.botMessageContainer
-      ]}>
-        {!isUser && (
-          <View style={styles.avatarContainer}>
-            <Image source={solvboxAvatar} style={styles.avatarImage} />
-          </View>
-        )}
-        
+      <>
+        {shouldShowDateSeparator && renderDateSeparator(item.date)}
         <View style={[
-          styles.messageBubble,
-          isUser 
-            ? [styles.userBubble, { backgroundColor: colors.primary }] 
-            : [styles.botBubble, { backgroundColor: colors.backgroundSecondary }]
+          styles.messageContainer,
+          isUser ? styles.userMessageContainer : styles.botMessageContainer
         ]}>
-          <Text style={[
-            styles.messageText,
-            { color: isUser ? 'white' : colors.textPrimary }
-          ]}>
-            {item.text}
-          </Text>
-          <Text style={[
-            styles.timeText,
-            { color: isUser ? 'rgba(255, 255, 255, 0.7)' : colors.textTertiary }
-          ]}>
-            {item.time}
-          </Text>
+          <View style={styles.messageContentContainer}>
+            <View style={[
+              styles.messageBubble,
+              isUser 
+                ? [styles.userBubble, { backgroundColor: colors.primary }] 
+                : [styles.botBubble, { backgroundColor: colors.divider + '30' }]
+            ]}>
+              <Text style={[
+                styles.messageText,
+                { color: isUser ? 'white' : colors.textPrimary }
+              ]}>
+                {item.text}
+              </Text>
+            </View>
+            <Text style={[
+              styles.timeText, 
+              { 
+                color: colors.textTertiary,
+                alignSelf: isUser ? 'flex-end' : 'flex-start' 
+              }
+            ]}>
+              {item.time}
+            </Text>
+          </View>
         </View>
-      </View>
+      </>
     );
   };
 
@@ -231,10 +351,6 @@ export default function ChatDetailScreen() {
     
     return (
       <View style={styles.messageContainer}>
-        <View style={styles.avatarContainer}>
-          <Image source={solvboxAvatar} style={styles.avatarImage} />
-        </View>
-        
         <View style={[styles.typingContainer, { backgroundColor: colors.backgroundSecondary }]}>
           <Animated.View style={[styles.typingDot, { opacity: dot1Opacity, backgroundColor: colors.textTertiary }]} />
           <Animated.View style={[styles.typingDot, { opacity: dot2Opacity, backgroundColor: colors.textTertiary }]} />
@@ -259,7 +375,13 @@ export default function ChatDetailScreen() {
         
         <View style={styles.headerTitleContainer}>
           <View style={styles.headerAvatarContainer}>
-            <Image source={solvboxAvatar} style={styles.headerAvatarImage} />
+            {chat.isSolvboxChat ? (
+              <Image source={solvboxAvatar} style={styles.headerAvatarImage} />
+            ) : (
+              <View style={[styles.headerAvatar, { backgroundColor: colors.primary }]}>
+                <Ionicons name="person-outline" size={20} color="white" />
+              </View>
+            )}
           </View>
           <View>
             <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
@@ -285,22 +407,36 @@ export default function ChatDetailScreen() {
         contentContainerStyle={styles.chatContent}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={() => (
-          <View style={styles.chatStartContainer}>
-            <LinearGradient
-              colors={[colors.secondary + '40', colors.secondary + '10']}
-              style={styles.chatStartBackground}
-            >
-              <View style={styles.chatStartAvatarContainer}>
-                <Image source={solvboxAvatar} style={styles.chatStartAvatarImage} />
-              </View>
-              <Text style={[styles.chatStartTitle, { color: colors.textPrimary }]}>
-                {chat.name}
-              </Text>
-              <Text style={[styles.chatStartSubtitle, { color: colors.textSecondary }]}>
-                Dein persönlicher Assistent für Unternehmensberatung und Problemlösungen.
-              </Text>
-            </LinearGradient>
-          </View>
+          chat.isSolvboxChat ? (
+            <View style={styles.chatStartContainer}>
+              <LinearGradient
+                colors={[
+                  chat.isSolvboxChat ? colors.secondary + '40' : colors.primary + '30', 
+                  chat.isSolvboxChat ? colors.secondary + '10' : colors.primary + '10'
+                ]}
+                style={styles.chatStartBackground}
+              >
+                <View style={styles.chatStartAvatarContainer}>
+                  {chat.isSolvboxChat ? (
+                    <Image source={solvboxAvatar} style={styles.chatStartAvatarImage} />
+                  ) : (
+                    <View style={[styles.chatStartAvatar, { backgroundColor: colors.primary }]}>
+                      <Ionicons name="person-outline" size={28} color="white" />
+                    </View>
+                  )}
+                </View>
+                <Text style={[styles.chatStartTitle, { color: colors.textPrimary }]}>
+                  {chat.name}
+                </Text>
+                <Text style={[styles.chatStartSubtitle, { color: colors.textSecondary }]}>
+                  {chat.isSolvboxChat 
+                    ? 'Ihr persönlicher Assistent für Unternehmensberatung und Problemlösungen.'
+                    : 'Willkommen im Chat. Wie kann ich Ihnen heute helfen?'
+                  }
+                </Text>
+              </LinearGradient>
+            </View>
+          ) : null
         )}
         ListFooterComponent={renderTypingIndicator}
       />
@@ -320,7 +456,7 @@ export default function ChatDetailScreen() {
               style={[styles.input, { color: colors.textPrimary }]}
               value={message}
               onChangeText={setMessage}
-              placeholder="Frage den Solvbox-Assistenten..."
+              placeholder={`Nachricht an ${chat.name}...`}
               placeholderTextColor={colors.textTertiary}
               multiline
               maxLength={1000}
@@ -374,6 +510,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: spacing.s,
   },
+  headerAvatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   headerAvatarImage: {
     width: 40,
     height: 40,
@@ -411,6 +554,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: spacing.m,
   },
+  chatStartAvatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   chatStartAvatarImage: {
     width: 60,
     height: 60,
@@ -445,34 +595,26 @@ const styles = StyleSheet.create({
     marginBottom: spacing.m,
     alignItems: 'flex-end',
   },
+  messageContentContainer: {
+    flexDirection: 'column',
+    maxWidth: '80%',
+  },
   userMessageContainer: {
     justifyContent: 'flex-end',
   },
   botMessageContainer: {
     justifyContent: 'flex-start',
   },
-  avatarContainer: {
-    width: 30,
-    height: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: spacing.xs,
-  },
-  avatarImage: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-  },
   messageBubble: {
-    maxWidth: '80%',
     padding: spacing.m,
     borderRadius: ui.borderRadius.l,
   },
   userBubble: {
-    marginLeft: 'auto',
+    alignSelf: 'flex-end',
     borderBottomRightRadius: 0,
   },
   botBubble: {
+    alignSelf: 'flex-start',
     borderBottomLeftRadius: 0,
   },
   messageText: {
@@ -481,8 +623,8 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: typography.fontSize.xs,
-    marginTop: spacing.xs,
-    alignSelf: 'flex-end',
+    marginTop: 4,
+    marginHorizontal: 4,
   },
   typingContainer: {
     flexDirection: 'row',
