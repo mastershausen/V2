@@ -1,3 +1,5 @@
+# ESLint-Ignores deaktiviert für Design-Only-Projekt
+
 # build output
 dist/
 build/
