@@ -207,9 +207,9 @@ const DEMO_GIGS: GigData[] = [
     title: 'Steueroptimierung für Freiberufler',
     description: 'Maximiere deine Steuervorteile als Freiberufler. Ich zeige dir, wie du deine Abgaben legal minimierst und mehr vom verdienten Geld behältst.',
     imageUrl: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-    price: 199,
+    price: 0,
     rating: 4.8,
-    currency: '€'
+    currency: 'Kostenlos'
   },
   {
     id: 'g3',
@@ -219,7 +219,34 @@ const DEMO_GIGS: GigData[] = [
     price: 399,
     rating: 5.0,
     currency: '€'
-  }
+  },
+  {
+    id: 'g4',
+    title: 'Erstgespräch für Gründer',
+    description: 'Unverbindliches Kennenlernen und erste steuerliche Einschätzung für Gründer. Stelle deine Fragen und erhalte eine erste Orientierung.',
+    imageUrl: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    price: 0,
+    rating: 4.7,
+    currency: 'Kostenlos'
+  },
+  {
+    id: 'g5',
+    title: 'Jahresabschluss-Check',
+    description: 'Lass deinen Jahresabschluss von einem Profi prüfen. Ich gebe dir Feedback und Hinweise auf Optimierungsmöglichkeiten.',
+    imageUrl: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    price: 0,
+    rating: 4.6,
+    currency: 'Auf Anfrage'
+  },
+  {
+    id: 'g6',
+    title: 'Steuerliche Kurzberatung',
+    description: 'Du hast eine konkrete Frage? In der Kurzberatung bekommst du schnell und unkompliziert eine professionelle Antwort.',
+    imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    price: 0,
+    rating: 4.5,
+    currency: 'Kostenlos'
+  },
 ];
 
 // Bildschirmbreite für responsives Design
@@ -507,6 +534,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingTop: spacing.xxxl + 20, // Extra Platz für das Profilbild
+    paddingHorizontal: spacing.m, // Einheitlicher Abstand für alle Inhalte
   },
   userInfoContainer: {
     marginBottom: spacing.m,
@@ -573,5 +601,6 @@ const styles = StyleSheet.create({
   },
   tabContentContainer: {
     width: '100%',
+    // Kein paddingHorizontal oder marginHorizontal mehr
   },
 }); 

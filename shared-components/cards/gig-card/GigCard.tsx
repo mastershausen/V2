@@ -41,11 +41,27 @@ interface GigCardProps {
 export function GigCard({ gig, onPress }: GigCardProps): React.ReactElement {
   const colors = useThemeColor();
 
+  // Hilfsfunktion für Preis-Rendering
+  const renderPrice = () => {
+    if (gig.currency === 'Kostenlos' || gig.currency === 'Auf Anfrage') {
+      return (
+        <Text style={[styles.price, { color: colors.textPrimary, fontWeight: 'bold' }]}> 
+          {gig.currency}
+        </Text>
+      );
+    }
+    return (
+      <Text style={[styles.price, { color: colors.textPrimary }]}> 
+        {gig.currency || '€'}{gig.price.toLocaleString('de-DE')}
+      </Text>
+    );
+  };
+
   return (
     <TouchableOpacity 
       style={[
         styles.container,
-        { backgroundColor: colors.backgroundSecondary, maxHeight: 130, minHeight: 130, marginHorizontal: spacing.m },
+        { backgroundColor: colors.backgroundSecondary, maxHeight: 130, minHeight: 130 },
       ]}
       onPress={onPress}
       activeOpacity={0.7}
@@ -77,12 +93,11 @@ export function GigCard({ gig, onPress }: GigCardProps): React.ReactElement {
           </Text>
           {/* Fußzeile mit Preis und Bewertung */}
           <View style={styles.footer}>
-            <Text style={[styles.price, { color: colors.primary }]}>
-              {gig.currency || '€'}{gig.price.toLocaleString('de-DE')}
-            </Text>
+            {renderPrice()}
             <View style={styles.ratingContainer}>
+              <Ionicons name="star" size={16} color="#FFD600" style={{ marginRight: 2 }} />
               <Text style={[styles.rating, { color: colors.textSecondary }]}>
-                ★ {gig.rating.toFixed(1)}
+                {gig.rating.toFixed(1)}
               </Text>
             </View>
           </View>
@@ -134,11 +149,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     height: '100%',
+    marginLeft: spacing.s,
+    paddingRight: spacing.s,
   },
   title: {
     fontSize: typography.fontSize.m,
     fontWeight: typography.fontWeight.bold,
     marginBottom: spacing.xs,
+    marginTop: spacing.s,
   },
   description: {
     fontSize: typography.fontSize.s,
@@ -149,6 +167,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: spacing.s,
   },
   price: {
     fontSize: typography.fontSize.m,
