@@ -498,8 +498,8 @@ export default function ProfileScreen() {
             </View>
           </View>
           
-          {/* Großer Abstand */}
-          <View style={{height: 100}} />
+          {/* Sehr kleiner Abstand */}
+          <View style={{height: 10}} />
           
           {/* DoubleButton für Nachricht senden und Kontaktinformationen */}
           <DoubleButton 
@@ -628,15 +628,11 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
     marginBottom: spacing.s,
   },
-  bioHeadline: {
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.semiBold as TextStyle['fontWeight'],
-    marginBottom: spacing.xs,
-  },
   bioDescription: {
-    fontSize: typography.fontSize.s,
-    lineHeight: 20,
-    marginBottom: spacing.xs,
+    fontSize: typography.fontSize.l,
+    fontWeight: 'normal',
+    lineHeight: 24,
+    marginBottom: spacing.s,
   },
   bioCompany: {
     fontSize: typography.fontSize.s,
