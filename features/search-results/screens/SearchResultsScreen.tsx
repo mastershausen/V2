@@ -1,203 +1,289 @@
-import { useEffect, useState, useMemo } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
+/**
+ * SearchResultsScreen.tsx
+ * 
+ * Zeigt Suchergebnisse basierend auf der Suchanfrage an.
+ */
 
-import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-import { themeColors, spacing, typography } from '@/config/theme';
-import SearchService from '@/features/home/services/SearchService';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import { 
-  SearchFilterOptions, 
-  SearchResponse, 
-  SearchResult, 
-  SearchSortOption, 
-  SearchResultsUrlParams
-} from '@/features/home/types/search';
+  View, 
+  Text, 
+  StyleSheet, 
+  SafeAreaView, 
+  ScrollView, 
+  TouchableOpacity, 
+  ActivityIndicator,
+  Alert
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+import { spacing } from '@/config/theme/spacing';
+import { typography } from '@/config/theme/typography';
+import { ui } from '@/config/theme/ui';
+import { useThemeColor } from '@/hooks/useThemeColor';
+import { FilterTabs, FilterTabItem } from '@/shared-components/navigation/FilterTabs';
+import { NuggetCard } from '@/shared-components/cards/nugget-card/NuggetCard';
+import { GigCard } from '@/shared-components/cards/gig-card/GigCard';
+import { ExpertCard } from '@/shared-components/cards/expert-card/ExpertCard';
+import { SearchInput } from '@/shared-components/searchinput/SearchInput';
+import mockNuggets from '@/mock/data/mockNuggets';
+import mockGigs from '@/mock/data/mockGigs';
+import mockCasestudies from '@/mock/data/mockCasestudies';
+import mockExperts from '@/mock/data/mockExperts';
+
+// Vordefinierte Filter-Tabs
+const FILTER_TABS: FilterTabItem[] = [
+  { id: 'all', label: 'Alles' },
+  { id: 'experts', label: 'Experten' },
+  { id: 'gigs', label: 'Gigs' },
+  { id: 'nuggets', label: 'Nuggets' },
+  { id: 'casestudies', label: 'Fallstudien' },
+];
 
 /**
- * SearchResults Screen
+ * SearchResultsScreen
  * 
- * Zeigt Suchergebnisse basierend auf den übergebenen Parametern an.
- * Wird von HomeScreen mittels expo-router navigiert.
+ * Zeigt Suchergebnisse basierend auf der Suchanfrage an.
  */
 export default function SearchResultsScreen() {
-  const router = useRouter();
-  const navigation = useNavigation();
-
-  // Parameter aus der Route extrahieren und validieren
   const params = useLocalSearchParams<{
     query?: string;
     initialFilters?: string;
     sortOption?: string;
     source?: string;
   }>();
+  const router = useRouter();
+  const colors = useThemeColor();
+  const [isLoading, setIsLoading] = useState(false);
+  const [activeFilter, setActiveFilter] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState(params.query || '');
+  const [totalResults, setTotalResults] = useState(
+    mockExperts.length + mockGigs.length + mockNuggets.length + mockCasestudies.length
+  );
   
-  // State für die Suchergebnisse
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
-  const [response, setResponse] = useState<SearchResponse | null>(null);
-  
-  // Validiere die Parameter und extrahiere sie
-  const searchParams = useMemo(() => {
-    // Überprüfe, ob eine Suchanfrage vorhanden ist
-    if (!params.query) {
-      return { valid: false, errorMessage: 'Keine Suchanfrage angegeben' };
-    }
-    
-    // Parse die optionalen Filter 
-    let parsedFilters: SearchFilterOptions | undefined;
-    if (params.initialFilters) {
-      try {
-        parsedFilters = JSON.parse(params.initialFilters);
-      } catch (e) {
-        console.warn('Fehler beim Parsen der Filter-Parameter, verwende Standard-Filter', e);
-      }
-    }
-    
-    // Validiere die Sortierungsoption
-    const sortOption = params.sortOption 
-      ? (params.sortOption as SearchSortOption) 
-      : SearchSortOption.RELEVANCE;
-    
-    // Validiere die Quelle
-    const source = params.source || 'home';
-    
-    return {
-      valid: true,
-      query: params.query,
-      filters: parsedFilters,
-      sortOption,
-      source
-    };
-  }, [params]);
-  
-  // Suche bei Initialisierung oder Parameteränderung durchführen
-  useEffect(() => {
-    // Wenn die Parameter ungültig sind, zeige einen Fehler an
-    if (!searchParams.valid) {
-      setError(new Error(searchParams.errorMessage || 'Ungültige Suchparameter'));
-      setIsLoading(false);
-      return;
-    }
-    
-    const performSearch = async () => {
-      setIsLoading(true);
-      setError(null);
-      
-      try {
-        // Suche durchführen
-        const searchResponse = await SearchService.search({
-          query: searchParams.query || '',
-          sort: searchParams.sortOption,
-          filters: searchParams.filters,
-        });
-        
-        setResults(searchResponse.results);
-        setResponse(searchResponse);
-      } catch (err) {
-        setError(err as Error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    performSearch();
-  }, [searchParams]);
-  
-  // Ergebniskarte für ein Suchergebnis
-  const ResultCard = ({ result }: { result: SearchResult }) => {
-    return (
-      <View style={styles.resultCard}>
-        <Text style={styles.resultTitle}>{result.title}</Text>
-        <Text style={styles.resultCategory}>{result.category}</Text>
-        {result.category === 'article' && (
-          <Text style={styles.resultDetails}>
-            {(result as any).readTime} min Lesezeit • {(result as any).publishDate}
-          </Text>
-        )}
-        {result.category === 'expert' && (
-          <Text style={styles.resultDetails}>
-            {(result as any).specialty} • Bewertung: {(result as any).rating}
-          </Text>
-        )}
-        {result.category === 'nugget' && (
-          <Text style={styles.resultContent} numberOfLines={2}>
-            {(result as any).content}
-          </Text>
-        )}
-      </View>
-    );
+  // Zurück-Navigation
+  const handleGoBack = () => {
+    router.back();
   };
   
-  // Wenn die Parameter ungültig sind, zeige einen Fehler an und eine Möglichkeit zurückzukehren
-  if (!searchParams.valid) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>
-            {searchParams.errorMessage || 'Ungültige Suchparameter'}
-          </Text>
-          <Text 
-            style={styles.backLink}
-            onPress={() => router.back()}
-          >
-            Zurück zur Suche
+  // Filter-Tab-Änderung
+  const handleFilterChange = (filterId: string) => {
+    console.log(`Filter geändert auf: ${filterId}`);
+    setActiveFilter(filterId);
+  };
+  
+  // Suche ausführen
+  const handleSearch = () => {
+    console.log(`Suche nach: ${searchQuery}`);
+    // Hier würde normalerweise die Suche ausgeführt werden
+    // Für diesen Prototyp simulieren wir nur kurz das Laden
+    setIsLoading(true);
+    
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  };
+
+  // Standard-Handlers für verschiedene Kartentypen
+  const handleNuggetPress = (nuggetId: string) => {
+    Alert.alert('Nugget', `Nugget ${nuggetId} wurde angeklickt`);
+  };
+
+  const handleGigPress = (gigId: string) => {
+    Alert.alert('Gig', `Gig ${gigId} wurde angeklickt`);
+  };
+
+  const handleExpertPress = (expertId: string) => {
+    Alert.alert('Experte', `Experte ${expertId} wurde angeklickt`);
+  };
+  
+  // Rendere Inhalte basierend auf aktivem Filter
+  const renderFilterContent = () => {
+    if (isLoading) {
+      return (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={colors.primary} />
+          <Text style={[styles.loadingText, { color: colors.textSecondary }]}>
+            Suche läuft...
           </Text>
         </View>
-      </SafeAreaView>
-    );
-  }
+      );
+    }
+
+    // Alle verfügbaren Inhalte basierend auf dem ausgewählten Filter anzeigen
+    switch (activeFilter) {
+      case 'nuggets':
+        return (
+          <View style={styles.filterContentContainer}>
+            {mockNuggets.map(nugget => (
+              <View key={nugget.id} style={styles.cardContainer}>
+                <NuggetCard 
+                  nugget={nugget}
+                  onHelpfulPress={() => {}}
+                  onCommentPress={() => {}}
+                  onSharePress={() => {}}
+                  onSavePress={() => {}}
+                  onUserPress={() => handleNuggetPress(nugget.id)}
+                />
+              </View>
+            ))}
+          </View>
+        );
+        
+      case 'gigs':
+        return (
+          <View style={styles.filterContentContainer}>
+            {mockGigs.map(gig => (
+              <View key={gig.id} style={styles.cardContainer}>
+                <GigCard 
+                  gig={gig}
+                  onPress={() => handleGigPress(gig.id)}
+                />
+              </View>
+            ))}
+          </View>
+        );
+        
+      case 'casestudies':
+        return (
+          <View style={styles.filterContentContainer}>
+            {mockCasestudies.map(casestudy => (
+              <View key={casestudy.id} style={styles.cardContainer}>
+                <GigCard 
+                  gig={casestudy}
+                  showPrice={false}
+                  onPress={() => handleGigPress(casestudy.id)}
+                />
+              </View>
+            ))}
+          </View>
+        );
+        
+      case 'experts':
+        return (
+          <View style={styles.filterContentContainer}>
+            {mockExperts.map(expert => (
+              <View key={expert.id} style={styles.expertCardContainer}>
+                <ExpertCard 
+                  expert={expert}
+                  onPress={() => handleExpertPress(expert.id)}
+                />
+              </View>
+            ))}
+          </View>
+        );
+        
+      case 'all':
+      default:
+        // Bei "Alles" zeigen wir eine Mischung aus allen Inhaltstypen an
+        return (
+          <View style={styles.filterContentContainer}>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Experten
+            </Text>
+            {mockExperts.slice(0, 2).map(expert => (
+              <View key={expert.id} style={styles.expertCardContainer}>
+                <ExpertCard 
+                  expert={expert}
+                  onPress={() => handleExpertPress(expert.id)}
+                />
+              </View>
+            ))}
+
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Gigs
+            </Text>
+            {mockGigs.slice(0, 2).map(gig => (
+              <View key={gig.id} style={styles.cardContainer}>
+                <GigCard 
+                  gig={gig}
+                  onPress={() => handleGigPress(gig.id)}
+                />
+              </View>
+            ))}
+
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Nuggets
+            </Text>
+            {mockNuggets.slice(0, 2).map(nugget => (
+              <View key={nugget.id} style={styles.cardContainer}>
+                <NuggetCard 
+                  nugget={nugget}
+                  onHelpfulPress={() => {}}
+                  onCommentPress={() => {}}
+                  onSharePress={() => {}}
+                  onSavePress={() => {}}
+                  onUserPress={() => handleNuggetPress(nugget.id)}
+                />
+              </View>
+            ))}
+
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Fallstudien
+            </Text>
+            {mockCasestudies.slice(0, 2).map(casestudy => (
+              <View key={casestudy.id} style={styles.cardContainer}>
+                <GigCard 
+                  gig={casestudy}
+                  showPrice={false}
+                  onPress={() => handleGigPress(casestudy.id)}
+                />
+              </View>
+            ))}
+          </View>
+        );
+    }
+  };
   
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>
-          Ergebnisse für "{searchParams.query || ''}"
-        </Text>
-        {response && (
-          <Text style={styles.resultCount}>
-            {response.totalResults} Treffer
-          </Text>
-        )}
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
+      {/* Header mit Suchfeld und Zurück-Button */}
+      <View style={styles.searchHeaderContainer}>
+        <TouchableOpacity 
+          style={styles.backButton} 
+          onPress={handleGoBack}
+          hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
+        >
+          <Ionicons name="chevron-back" size={24} color={colors.textPrimary} />
+        </TouchableOpacity>
+        
+        <View style={styles.searchInputWrapper}>
+          <SearchInput
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            placeholder="Suchen..."
+            onSubmitEditing={handleSearch}
+            shadowLevel="none"
+            containerStyle={styles.searchInputContainer}
+            isLoading={isLoading}
+          />
+        </View>
       </View>
       
-      {isLoading ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={themeColors.light.primary} />
-          <Text style={styles.loadingText}>Suche läuft...</Text>
-        </View>
-      ) : error ? (
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>
-            Fehler bei der Suche: {error.message}
-          </Text>
-          <Text 
-            style={styles.backLink}
-            onPress={() => router.back()}
-          >
-            Zurück zur Suche
-          </Text>
-        </View>
-      ) : results.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>
-            Keine Ergebnisse für "{searchParams.query || ''}" gefunden
-          </Text>
-          <Text 
-            style={styles.backLink}
-            onPress={() => router.back()}
-          >
-            Zurück zur Suche
-          </Text>
-        </View>
-      ) : (
-        <ScrollView style={styles.resultsList}>
-          {results.map((result) => (
-            <ResultCard key={result.id} result={result} />
-          ))}
-        </ScrollView>
-      )}
+      {/* Ergebnisanzahl */}
+      <View style={styles.resultsCountContainer}>
+        <Text style={[styles.resultCount, { color: colors.textSecondary }]}>
+          {totalResults} Treffer
+        </Text>
+      </View>
+      
+      {/* Filter-Tabs */}
+      <View style={styles.filterContainer}>
+        <FilterTabs 
+          tabs={FILTER_TABS}
+          activeTabId={activeFilter}
+          onTabChange={handleFilterChange}
+        />
+      </View>
+      
+      <ScrollView 
+        style={styles.scrollView} 
+        contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        {renderFilterContent()}
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -205,86 +291,76 @@ export default function SearchResultsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: themeColors.light.backgroundPrimary,
   },
-  header: {
-    padding: spacing.m,
-    borderBottomWidth: 1,
-    borderBottomColor: themeColors.light.divider,
+  searchHeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: spacing.s,
+    paddingRight: spacing.m,
+    paddingTop: spacing.s,
+    paddingBottom: spacing.xs,
   },
-  headerTitle: {
-    fontSize: typography.fontSize.l,
-    fontWeight: typography.fontWeight.semiBold,
-    color: themeColors.light.textPrimary,
+  backButton: {
+    padding: spacing.xs,
+    marginRight: spacing.xs,
+  },
+  searchInputWrapper: {
+    flex: 1,
+  },
+  searchInputContainer: {
+    paddingHorizontal: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  resultsCountContainer: {
+    paddingHorizontal: spacing.m,
+    paddingBottom: spacing.xs,
   },
   resultCount: {
     fontSize: typography.fontSize.m,
-    color: themeColors.light.textSecondary,
-    marginTop: spacing.xs,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  contentContainer: {
+    paddingBottom: spacing.xxxl,
   },
   loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
+    paddingVertical: spacing.xxxl,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   loadingText: {
     marginTop: spacing.m,
-    color: themeColors.light.textSecondary,
+    fontSize: typography.fontSize.m,
   },
-  errorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: spacing.m,
-  },
-  errorText: {
-    textAlign: 'center',
-    color: themeColors.light.error,
-    marginBottom: spacing.m,
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: spacing.m,
-  },
-  emptyText: {
-    textAlign: 'center',
-    color: themeColors.light.textSecondary,
-    marginBottom: spacing.m,
-  },
-  backLink: {
-    color: themeColors.light.primary,
-    fontWeight: typography.fontWeight.medium,
-    marginTop: spacing.m,
-  },
-  resultsList: {
-    flex: 1,
-  },
-  resultCard: {
-    padding: spacing.m,
+  filterContainer: {
+    backgroundColor: 'white',
+    paddingVertical: spacing.xs,
     borderBottomWidth: 1,
-    borderBottomColor: themeColors.light.divider,
+    borderBottomColor: 'rgba(0, 0, 0, 0.05)',
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 3,
+    shadowOpacity: 1,
+    elevation: 2,
   },
-  resultTitle: {
+  filterContentContainer: {
+    flex: 1,
+    width: '100%',
+    marginBottom: spacing.l,
+    padding: spacing.m,
+  },
+  cardContainer: {
+    marginBottom: 0, // Entfernt den zusätzlichen Abstand, da die Card-Komponenten bereits marginBottom haben
+  },
+  expertCardContainer: {
+    marginBottom: 0, // Entfernt den zusätzlichen Abstand, da die ExpertCard-Komponenten bereits marginBottom haben
+  },
+  sectionTitle: {
     fontSize: typography.fontSize.l,
     fontWeight: typography.fontWeight.semiBold,
-    color: themeColors.light.textPrimary,
-  },
-  resultCategory: {
-    fontSize: typography.fontSize.s,
-    color: themeColors.light.primary,
-    marginTop: spacing.xs,
-    textTransform: 'capitalize',
-  },
-  resultDetails: {
-    fontSize: typography.fontSize.s,
-    color: themeColors.light.textSecondary,
-    marginTop: spacing.xs,
-  },
-  resultContent: {
-    fontSize: typography.fontSize.m,
-    color: themeColors.light.textPrimary,
-    marginTop: spacing.s,
+    marginTop: spacing.m,
+    marginBottom: spacing.s,
   },
 }); 

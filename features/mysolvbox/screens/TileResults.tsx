@@ -351,9 +351,9 @@ const styles = StyleSheet.create({
     padding: spacing.m,
   },
   cardContainer: {
-    marginBottom: spacing.m,
+    marginBottom: 0, // Entfernt den zusätzlichen Abstand, da die Card-Komponenten bereits marginBottom haben
   },
   expertCardContainer: {
-    marginBottom: 0, // Entfernt den zusätzlichen Abstand für ExpertCards, die bereits ein marginBottom haben
+    marginBottom: 0, // Entfernt den zusätzlichen Abstand, da die ExpertCard-Komponenten bereits marginBottom haben
   },
 }); 

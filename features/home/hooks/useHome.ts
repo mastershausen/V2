@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { getAnalyticsManager, SearchAnalyticsEventParams, SearchAnalyticsEventType } from '../types/analytics';
 import { DEFAULT_SUGGESTIONS, getPersonalizedSuggestions } from '../constants/suggestions';
-import SearchService from '../services/SearchService';
+import { SearchService } from '../services/SearchService';
 import {
   SearchFilterOptions,
   SearchOptions,
@@ -181,7 +181,8 @@ export const useHome: UseHomeHook = (options = {}) => {
       }
       
       // Neue Suche starten
-      cancelSearchRef.current = SearchService.searchWithDelay(
+      const searchServiceInstance = new SearchService();
+      cancelSearchRef.current = searchServiceInstance.searchWithDelay(
         { ...options, debounceMs: searchDebounceMs },
         (response) => {
           if (!isMountedRef.current) return;
@@ -254,27 +255,54 @@ export const useHome: UseHomeHook = (options = {}) => {
   }, [router, activeFilters, sortOptionState, trackSearch]);
 
   /**
-   * Führt eine Suche mit dem aktuellen Query durch
+   * Führt eine Suche aus basierend auf der aktuellen Abfrage
    */
-  const handleSearch = useCallback(() => {
-    Keyboard.dismiss();
-    
+  const handleSearch = useCallback(async () => {
     if (!searchQuery.trim()) return;
     
-    // Zum Suchverlauf hinzufügen
+    // Suchbegriff zum Verlauf hinzufügen
     addToSearchHistory(searchQuery);
     
-    // Suche durchführen
-    performSearch({
-      query: searchQuery,
-      page: 1,
-      sort: sortOptionState,
-      filters: activeFilters,
-    });
-    
-    // Setze CurrentPage zurück, da dies eine neue Suche ist
-    setCurrentPage(1);
-  }, [searchQuery, addToSearchHistory, performSearch, sortOptionState, activeFilters]);
+    if (autoNavigateToResults) {
+      // Zu den Suchergebnissen navigieren
+      try {
+        // Erstelle typensichere Parameter
+        const params: SearchResultsParams = {
+          query: searchQuery,
+          initialFilters: activeFilters,
+          sortOption: sortOptionState,
+          source: 'home'
+        };
+        
+        // Konvertiere Parameter in URL-Parameter mit Hilfsfunktion
+        const urlParams = createSearchUrlParams(params);
+        
+        // Typkonvertierung für URLSearchParams
+        const urlParamsStringRecord: Record<string, string> = Object.fromEntries(
+          Object.entries(urlParams).filter(([_, v]) => v !== undefined)
+        );
+        
+        const searchParams = new URLSearchParams(urlParamsStringRecord).toString();
+        router.push(`/search-results?${searchParams}`);
+        
+        // Tracking für erfolgreiche Navigation
+        trackSearch(searchQuery, true);
+      } catch (error) {
+        console.error('Fehler bei der Navigation zu den Suchergebnissen:', error);
+      }
+    } else {
+      // Suche durchführen, ohne zu navigieren
+      const cancelSearch = await performSearch({
+        query: searchQuery,
+        filters: activeFilters,
+        sort: sortOptionState,
+      });
+      
+      return () => {
+        if (cancelSearch) cancelSearch();
+      };
+    }
+  }, [searchQuery, autoNavigateToResults, router, activeFilters, sortOptionState, addToSearchHistory, performSearch, trackSearch]);
 
   /**
    * Lädt weitere Suchergebnisse (für Pagination)
