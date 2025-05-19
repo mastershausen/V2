@@ -18,6 +18,7 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { DoubleButton } from '@/shared-components/button/DoubleButton';
 import { PlusButton } from '@/shared-components/button/PlusButton';
 import { SettingsIcon } from '@/shared-components/button/SettingsIcon';
+import { RatingPlusButton } from '@/features/profile/screens/RatingPlusButton';
 import { NuggetCard } from '@/shared-components/cards/nugget-card/NuggetCard';
 import { NuggetData } from '@/shared-components/cards/nugget-card/types';
 import { GigCard } from '@/shared-components/cards/gig-card/GigCard';
@@ -563,11 +564,25 @@ export default function ProfileScreen() {
         </View>
       </ScrollView>
       
-      {/* PlusButton über der TabBar (nur im Live-Modus anzeigen) */}
+      {/* PlusButton über der TabBar */}
+      {/* Im Live-Modus für alle Tabs anzeigen */}
       {!isDemoMode() && (
         <PlusButton
           onPress={handlePlusButtonPress}
           style={styles.plusButton}
+        />
+      )}
+      
+      {/* Im Demo-Modus NUR im Bewertungs-Tab anzeigen mit spezieller Komponente */}
+      {isDemoMode() && activeTab === 'ratings' && (
+        <RatingPlusButton
+          onPress={() => router.push({
+            pathname: '/reviews/createReview',
+            params: {
+              expertId: 'u2',
+              expertName: 'Alexander Becker'
+            }
+          })}
         />
       )}
       
@@ -679,6 +694,13 @@ const styles = StyleSheet.create({
     marginBottom: spacing.xxs,
   },
   plusButton: {
+    position: 'absolute',
+    bottom: 90, // Höherer Wert, damit er über der TabBar schwebt
+    right: spacing.m,
+    zIndex: 1000, // Hoher zIndex, damit er über allem anderen liegt
+    elevation: 10, // Für Android
+  },
+  ratingPlusButton: {
     position: 'absolute',
     bottom: 90, // Höherer Wert, damit er über der TabBar schwebt
     right: spacing.m,
