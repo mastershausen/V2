@@ -20,6 +20,8 @@ import { PlusButton } from '@/shared-components/button/PlusButton';
 import { SettingsIcon } from '@/shared-components/button/SettingsIcon';
 import { NuggetCard } from '@/shared-components/cards/nugget-card/NuggetCard';
 import { NuggetData } from '@/shared-components/cards/nugget-card/types';
+import { GigCard } from '@/shared-components/cards/gig-card/GigCard';
+import { GigData } from '@/shared-components/cards/gig-card/GigCard';
 import { BaseTabbar, BaseTabConfig } from '@/shared-components/navigation/BaseTabbar';
 import { ProfileImage, UserroleBadge, UserRole, HeaderMedia } from '@/shared-components/media';
 import { useUserStore } from '@/stores';
@@ -134,7 +136,7 @@ const DEMO_NUGGET: NuggetData = {
   tags: ['Steuern', 'Selbstständige', 'Tipps']
 };
 
-// Zusätzliche Mock-Nuggets
+// Demo-Nugget für den Demo-Modus
 const DEMO_NUGGET_2: NuggetData = {
   id: 'n2',
   user: {
@@ -188,6 +190,37 @@ const DEMO_NUGGET_4: NuggetData = {
   isSaved: true,
   tags: ['Gründer', 'Steuersparen', 'Rechtsform']
 };
+
+// Demo-Gigs für den Demo-Modus
+const DEMO_GIGS: GigData[] = [
+  {
+    id: 'g1',
+    title: 'Steuerberatung für Startups',
+    description: 'Professionelle Steuerberatung speziell für junge Unternehmen. Von der Gründung bis zur ersten Bilanz - ich begleite dich durch alle steuerlichen Herausforderungen.',
+    imageUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+    price: 299,
+    rating: 4.9,
+    currency: '€'
+  },
+  {
+    id: 'g2',
+    title: 'Steueroptimierung für Freiberufler',
+    description: 'Maximiere deine Steuervorteile als Freiberufler. Ich zeige dir, wie du deine Abgaben legal minimierst und mehr vom verdienten Geld behältst.',
+    imageUrl: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+    price: 199,
+    rating: 4.8,
+    currency: '€'
+  },
+  {
+    id: 'g3',
+    title: 'Bilanzanalyse & Optimierung',
+    description: 'Detaillierte Analyse deiner aktuellen Bilanz mit konkreten Optimierungsvorschlägen. Identifiziere versteckte Potenziale und spare bares Geld.',
+    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+    price: 399,
+    rating: 5.0,
+    currency: '€'
+  }
+];
 
 // Bildschirmbreite für responsives Design
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -318,6 +351,20 @@ export default function ProfileScreen() {
               onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
               onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
             />
+          </View>
+        );
+      case 'gigs':
+        return (
+          <View style={[styles.tabContentContainer, { marginTop: spacing.s }]}>
+            {DEMO_GIGS.map((gig, index) => (
+              <React.Fragment key={gig.id}>
+                <GigCard 
+                  gig={gig}
+                  onPress={() => Alert.alert('Gig', 'Gig-Details werden angezeigt')}
+                />
+                {index < DEMO_GIGS.length - 1 && <View style={{ height: spacing.m }} />}
+              </React.Fragment>
+            ))}
           </View>
         );
       default:
@@ -460,7 +507,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingTop: spacing.xxxl + 20, // Extra Platz für das Profilbild
-    paddingHorizontal: spacing.m, // Mittlerer horizontaler Abstand wie im Chat-Screen
   },
   userInfoContainer: {
     marginBottom: spacing.m,
@@ -526,7 +572,6 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
   },
   tabContentContainer: {
-    paddingHorizontal: 0, // Kein zusätzlicher Padding, da bereits im content definiert
     width: '100%',
   },
 }); 

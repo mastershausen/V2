@@ -1,17 +1,26 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
-
-// Verwende ein einfaches leeres Objekt als Fallback
-const placeholderImage = {};
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { spacing } from '@/config/theme/spacing';
+import { typography } from '@/config/theme/typography';
+import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ProfileImage } from '@/shared-components/media';
 
-import { styles } from './styles';
-import { GigCardProps } from './types';
+export interface GigData {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  price: number;
+  rating: number;
+  currency?: string;
+}
 
-
-
+interface GigCardProps {
+  gig: GigData;
+  onPress?: () => void;
+}
 
 /**
  * Eine Karte zur Anzeige eines Gigs mit wichtigen Informationen
@@ -29,214 +38,137 @@ import { GigCardProps } from './types';
  * @returns {React.ReactElement} Die gerenderte GigCard-Komponente
  */
 // Umbenannt zu _GigCard, um anzuzeigen, dass es eine interne Komponente ist
-export function _GigCard({ 
-  gig,
-  onPress,
-  onLikePress,
-  onUserPress,
-  onSharePress,
-  style,
-  compact = false,
-}: GigCardProps): React.ReactElement {
+export function GigCard({ gig, onPress }: GigCardProps): React.ReactElement {
   const colors = useThemeColor();
-  
-  // Formatiere den Preis je nach Währung
-  const formatPrice = (amount: number, currency: string) => {
-    if (currency === 'EUR') {
-      return `${amount.toLocaleString('de-DE')} €`;
-    } else if (currency === 'USD') {
-      return `$${amount.toLocaleString('en-US')}`;
-    } else {
-      return `${amount} ${currency}`;
-    }
-  };
 
-  // Generiere Text für Ort/Arbeitsweise
-  const getLocationText = () => {
-    if (!gig.location) return 'Ortsunabhängig';
-    
-    if (gig.location.type === 'remote') {
-      return 'Remote';
-    } else if (gig.location.type === 'onsite') {
-      return gig.location.city || 'Vor Ort';
-    } else {
-      return 'Hybrid' + (gig.location.city ? ` (${gig.location.city})` : '');
-    }
-  };
-
-  // Handhabung für Klicks
-  const handleCardPress = () => {
-    if (onPress) {
-      onPress(gig.id);
-    }
-  };
-
-  const handleLikePress = () => {
-    if (onLikePress) {
-      onLikePress(gig.id);
-    }
-  };
-
-  const handleUserPress = () => {
-    if (onUserPress) {
-      onUserPress(gig.userId);
-    }
-  };
-
-  const handleSharePress = () => {
-    if (onSharePress) {
-      onSharePress(gig.id);
-    }
-  };
-
-  // Erstellung der kompakten Darstellung für Suchergebnisse oder Listen
-  if (compact) {
-    return (
-      <TouchableOpacity 
-        style={[styles.container, styles.compactContainer, style]}
-        onPress={handleCardPress}
-        activeOpacity={0.8}
-      >
-        <Image 
-          source={{ uri: gig.coverImage }}
-          style={styles.compactMedia}
-          defaultSource={placeholderImage}
-        />
-        <View style={styles.compactContent}>
-          <Text style={[styles.compactTitle, { color: colors.textPrimary }]} numberOfLines={1}>
-            {gig.title}
-          </Text>
-          <Text style={[styles.compactPrice, { color: colors.textPrimary }]}>
-            {formatPrice(gig.price.amount, gig.price.currency)}
-            {gig.price.unit && <Text style={styles.priceUnit}> / {gig.price.unit}</Text>}
-          </Text>
-          <Text style={styles.compactDescription} numberOfLines={2}>
-            {gig.shortDescription || gig.description}
-          </Text>
-          <View style={styles.userInfo}>
-            <ProfileImage
-              fallbackText={gig.userInfo.name}
-              source={gig.userInfo.avatarUrl ? { uri: gig.userInfo.avatarUrl } : null}
-              size={32}
-            />
-            <Text style={styles.userName}>{gig.userInfo.name}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-
-  // Standard Gig-Karte (vollständige Ansicht)
   return (
-    <View style={[styles.container, style]}>
-      {/* Header mit Titel und Preis */}
-      <View style={styles.header}>
-        <View style={styles.titleContainer}>
-          <Text style={[styles.title, { color: colors.textPrimary }]}>
+    <TouchableOpacity 
+      style={[
+        styles.container,
+        { backgroundColor: colors.backgroundSecondary, maxHeight: 130, minHeight: 130, marginHorizontal: spacing.m },
+      ]}
+      onPress={onPress}
+      activeOpacity={0.7}
+    >
+      <View style={styles.content}>
+        {/* Bild im 4:3 Format */}
+        <View style={styles.imageContainer}>
+          <Image 
+            source={{ uri: gig.imageUrl }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        </View>
+        {/* Text-Content */}
+        <View style={styles.textContainer}>
+          {/* Überschrift (1 Zeile) */}
+          <Text 
+            style={[styles.title, { color: colors.textPrimary }]}
+            numberOfLines={1}
+          >
             {gig.title}
           </Text>
-          <Text style={styles.category}>
-            {gig.category}{gig.subcategory ? ` | ${gig.subcategory}` : ''}
+          {/* Beschreibung (3 Zeilen) */}
+          <Text 
+            style={[styles.description, { color: colors.textSecondary }]}
+            numberOfLines={3}
+          >
+            {gig.description}
           </Text>
-        </View>
-        <View style={styles.priceContainer}>
-          <Text style={[styles.price, { color: colors.textPrimary }]}>
-            {formatPrice(gig.price.amount, gig.price.currency)}
-          </Text>
-          {gig.price.unit && (
-            <Text style={styles.priceUnit}>pro {gig.price.unit}</Text>
-          )}
-        </View>
-      </View>
-
-      {/* Media (Bild des Gigs) */}
-      <TouchableOpacity onPress={handleCardPress} activeOpacity={0.9}>
-        <Image 
-          source={{ uri: gig.coverImage }}
-          style={styles.media}
-          defaultSource={placeholderImage}
-          resizeMode="cover"
-        />
-      </TouchableOpacity>
-
-      {/* Tags und Ort */}
-      <View style={styles.infoContainer}>
-        {gig.tags.slice(0, 3).map((tag, index) => (
-          <View key={index} style={styles.tag}>
-            <Text style={styles.tagText}>{tag}</Text>
-          </View>
-        ))}
-        
-        <View style={styles.location}>
-          <Ionicons 
-            name={gig.location?.type === 'remote' ? 'globe-outline' : 'location-outline'} 
-            size={14} 
-            color="#666" 
-          />
-          <Text style={styles.locationText}>{getLocationText()}</Text>
-        </View>
-      </View>
-
-      {/* Kurzbeschreibung */}
-      <View style={styles.description}>
-        <Text style={styles.descriptionText} numberOfLines={3}>
-          {gig.shortDescription || gig.description}
-        </Text>
-      </View>
-
-      {/* Aktionsbuttons */}
-      <View style={styles.actionContainer}>
-        <TouchableOpacity style={styles.actionButton} onPress={handleLikePress}>
-          <Ionicons 
-            name="heart-outline" 
-            size={24} 
-            color={colors.textSecondary} 
-          />
-        </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.actionButton} onPress={handleSharePress}>
-          <Ionicons 
-            name="share-outline" 
-            size={24} 
-            color={colors.textSecondary} 
-          />
-        </TouchableOpacity>
-      </View>
-
-      {/* Footer mit Benutzerinfo und Stats */}
-      <View style={styles.footer}>
-        <TouchableOpacity style={styles.userInfo} onPress={handleUserPress}>
-          <ProfileImage
-            fallbackText={gig.userInfo.name}
-            source={gig.userInfo.avatarUrl ? { uri: gig.userInfo.avatarUrl } : null}
-            size={32}
-          />
-          <View>
-            <Text style={[styles.userName, { color: colors.textPrimary }]}>
-              {gig.userInfo.name}
+          {/* Fußzeile mit Preis und Bewertung */}
+          <View style={styles.footer}>
+            <Text style={[styles.price, { color: colors.primary }]}>
+              {gig.currency || '€'}{gig.price.toLocaleString('de-DE')}
             </Text>
-            {gig.userInfo.rating !== undefined && (
-              <View style={styles.rating}>
-                <Ionicons name="star" size={12} color="#FFC107" />
-                <Text style={styles.ratingText}>
-                  {gig.userInfo.rating.toFixed(1)}
-                </Text>
-              </View>
-            )}
-          </View>
-        </TouchableOpacity>
-        
-        <View style={styles.stats}>
-          <View style={styles.statItem}>
-            <Ionicons name="eye-outline" size={16} color="#666" />
-            <Text style={styles.statText}>{gig.stats.views}</Text>
-          </View>
-          <View style={styles.statItem}>
-            <Ionicons name="checkmark-circle-outline" size={16} color="#666" />
-            <Text style={styles.statText}>{gig.stats.completedJobs}</Text>
+            <View style={styles.ratingContainer}>
+              <Text style={[styles.rating, { color: colors.textSecondary }]}>
+                ★ {gig.rating.toFixed(1)}
+              </Text>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
-} 
+}
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: ui.borderRadius.l,
+    overflow: 'hidden',
+    marginBottom: spacing.m,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+  },
+  content: {
+    flexDirection: 'row',
+    paddingRight: spacing.m,
+    paddingLeft: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    height: '100%',
+    alignItems: 'center',
+  },
+  imageContainer: {
+    width: 90,
+    height: '100%',
+    borderTopLeftRadius: ui.borderRadius.l,
+    borderBottomLeftRadius: ui.borderRadius.l,
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    overflow: 'hidden',
+    marginRight: spacing.m,
+    backgroundColor: '#eee',
+    marginLeft: 0,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+    height: '100%',
+  },
+  title: {
+    fontSize: typography.fontSize.m,
+    fontWeight: typography.fontWeight.bold,
+    marginBottom: spacing.xs,
+  },
+  description: {
+    fontSize: typography.fontSize.s,
+    lineHeight: typography.lineHeight.m,
+    marginBottom: spacing.s,
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  price: {
+    fontSize: typography.fontSize.m,
+    fontWeight: typography.fontWeight.bold,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  rating: {
+    fontSize: typography.fontSize.s,
+    marginLeft: spacing.xs,
+  },
+  userInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  userName: {
+    fontSize: typography.fontSize.s,
+    fontWeight: typography.fontWeight.bold,
+    marginLeft: spacing.xs,
+  },
+}); 
