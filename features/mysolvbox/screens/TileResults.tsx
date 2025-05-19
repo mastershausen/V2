@@ -52,6 +52,14 @@ const FILTER_TABS: FilterTabItem[] = [
 ];
 
 /**
+ * Hilfsfunktion zum Kürzen des Titels auf maximal 25 Zeichen
+ */
+const truncateTitle = (title: string | undefined): string => {
+  if (!title) return 'Ergebnisse';
+  return title.length > 25 ? `${title.substring(0, 25)}...` : title;
+};
+
+/**
  * TileResults Screen
  * 
  * Zeigt detaillierte Ergebnisse für eine angeklickte Kachel aus MySolvbox an.
@@ -66,11 +74,6 @@ export default function TileResults() {
   
   // Parameter aus der Route extrahieren
   const { tileId, title, imageUrl } = params || {};
-  
-  // Titel auf 20 Zeichen begrenzen
-  const truncatedTitle = title && title.length > 20 
-    ? `${title.substring(0, 20)}...` 
-    : title || 'Ergebnisse';
   
   // Daten laden (simuliert)
   useEffect(() => {
@@ -247,7 +250,7 @@ export default function TileResults() {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       {/* Header-Navigation mit der vorhandenen Komponente */}
       <HeaderNavigation 
-        title={truncatedTitle} 
+        title={truncateTitle(title)} 
         showBackButton={true}
         onBackPress={handleGoBack}
       />

@@ -103,12 +103,46 @@ export function useTabTileHandler(tabId: MySolvboxTabId, customHandler?: (tileId
     // Log-Ausgabe
     console.log(`${tabId} Tile pressed: ${tileId}`);
     
+    // Den tatsächlichen Titel der Kachel aus den Mockup-Daten holen
+    let tileTitle = "Ergebnisse";
+    
+    // Import der Hilfsfunktionen für Kacheldaten
+    const { 
+      getSaveTileById, 
+      getGrowTileById, 
+      getForesightTileById, 
+      getBonusTileById 
+    } = require('../config/data');
+    
+    // Je nach Tab-ID die entsprechende Hilfsfunktion verwenden
+    if (tabId === 'save') {
+      const tile = getSaveTileById(tileId);
+      if (tile) {
+        tileTitle = tile.title;
+      }
+    } else if (tabId === 'grow') {
+      const tile = getGrowTileById(tileId);
+      if (tile) {
+        tileTitle = tile.title;
+      }
+    } else if (tabId === 'foresight') {
+      const tile = getForesightTileById(tileId);
+      if (tile) {
+        tileTitle = tile.title;
+      }
+    } else if (tabId === 'bonus') {
+      const tile = getBonusTileById(tileId);
+      if (tile) {
+        tileTitle = tile.title;
+      }
+    }
+    
     // Zum TileResults Screen navigieren
     router.push({
       pathname: '/mysolvbox/tileResults',
       params: { 
         tileId: tileId.toString(),
-        title: `${tabId.charAt(0).toUpperCase() + tabId.slice(1)}-Ergebnisse #${tileId}`,
+        title: tileTitle,
         imageUrl: ''
       }
     });
