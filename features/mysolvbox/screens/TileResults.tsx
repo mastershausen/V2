@@ -255,28 +255,28 @@ export default function TileResults() {
         onBackPress={handleGoBack}
       />
       
-      {/* Header mit HeaderMedia-Komponente */}
-      <View style={styles.headerContainer}>
-        <HeaderMedia 
-          imageUrl={imageUrl || null}
-          borderRadius={0}
-        />
-      </View>
-      
-      {/* Filter-Tabs direkt unter dem Header */}
-      <View style={styles.filterContainer}>
-        <FilterTabs 
-          tabs={FILTER_TABS}
-          activeTabId={activeFilter}
-          onTabChange={handleFilterChange}
-        />
-      </View>
-      
       <ScrollView 
         style={styles.scrollView} 
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
+        {/* Header mit HeaderMedia-Komponente */}
+        <View style={styles.headerContainer}>
+          <HeaderMedia 
+            imageUrl={imageUrl || null}
+            borderRadius={0}
+          />
+        </View>
+        
+        {/* Filter-Tabs direkt unter dem Header */}
+        <View style={styles.filterContainer}>
+          <FilterTabs 
+            tabs={FILTER_TABS}
+            activeTabId={activeFilter}
+            onTabChange={handleFilterChange}
+          />
+        </View>
+        
         {renderFilterContent()}
       </ScrollView>
     </SafeAreaView>
@@ -295,7 +295,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    padding: spacing.m,
     paddingBottom: spacing.xxxl,
   },
   loadingContainer: {
@@ -341,5 +340,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     marginBottom: spacing.l,
+    padding: spacing.m,
   },
 }); 
