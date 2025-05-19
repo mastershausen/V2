@@ -48,8 +48,8 @@ export function NuggetCard({
       style={[
         styles.container, 
         { 
-          backgroundColor: colors.backgroundPrimary,
-          borderColor: colors.divider 
+          backgroundColor: colors.backgroundSecondary,
+          borderColor: 'rgba(0, 0, 0, 0.08)' 
         }
       ]}
     >
@@ -78,13 +78,16 @@ export function NuggetCard({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: borderRadius.l,
+    borderRadius: borderRadius.m,
     overflow: 'hidden',
-    borderWidth: 1,
-    shadowColor: '#000',
+    borderWidth: 0.5,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
     shadowRadius: 4,
+    shadowOpacity: 1,
     elevation: 2,
+    marginBottom: spacing.m,
+    padding: spacing.s,
+    position: 'relative',
   },
 }); 

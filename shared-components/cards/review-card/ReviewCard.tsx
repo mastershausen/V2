@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
@@ -20,12 +19,7 @@ export function ReviewCard({ name, initials, rating, text, date, imageUrl }: Rev
   const colors = useThemeColor();
 
   return (
-    <LinearGradient
-      colors={['#FFFFFF', '#F1F3F6']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.card}
-    >
+    <View style={[styles.card, { backgroundColor: colors.backgroundSecondary }]}>
       <View style={styles.headerRow}>
         <View style={styles.row}>
           {imageUrl ? (
@@ -52,15 +46,24 @@ export function ReviewCard({ name, initials, rating, text, date, imageUrl }: Rev
         )}
       </View>
       <Text style={[styles.text, { color: colors.textSecondary }]} numberOfLines={4}>{text}</Text>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: ui.borderRadius.l,
+    borderRadius: ui.borderRadius.m,
     padding: spacing.m,
-    backgroundColor: 'transparent',
+    marginBottom: spacing.m,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    shadowOpacity: 1,
+    elevation: 2,
+    borderWidth: 0.5,
+    borderColor: 'rgba(0, 0, 0, 0.08)',
+    overflow: 'hidden',
+    position: 'relative',
   },
   headerRow: {
     flexDirection: 'row',
@@ -81,10 +84,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: spacing.m,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.10,
-    shadowRadius: 2,
+    backgroundColor: '#FFFFFF',
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    shadowOpacity: 1,
     elevation: 2,
     overflow: 'hidden',
   },

@@ -140,6 +140,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     elevation: 2,
     position: 'relative', // Wichtig für die absolute Positionierung des Badges
+    borderWidth: 0.5,
+    borderColor: 'rgba(0, 0, 0, 0.08)',
+    overflow: 'hidden',
   },
   cardHeader: {
     flexDirection: 'row',

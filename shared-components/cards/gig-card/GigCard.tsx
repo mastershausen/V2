@@ -1,7 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
@@ -64,79 +63,70 @@ export function GigCard({ gig, onPress, showPrice = true }: GigCardProps): React
 
   return (
     <TouchableOpacity 
-      style={styles.container}
+      style={[styles.container, { backgroundColor: colors.backgroundSecondary }]}
       onPress={onPress}
       activeOpacity={0.7}
     >
-      <LinearGradient
-        colors={['#FFFFFF', '#F8F9FA']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.gradientContainer}
-      >
-        <View style={styles.content}>
-          {/* Bild im 4:3 Format */}
-          <View style={styles.imageContainer}>
-            <Image 
-              source={{ uri: gig.imageUrl }}
-              style={styles.image}
-              resizeMode="cover"
-            />
-          </View>
-          {/* Text-Content */}
-          <View style={styles.textContainer}>
-            {/* Überschrift (1 Zeile) */}
-            <Text 
-              style={[styles.title, { color: colors.textPrimary }]}
-              numberOfLines={1}
-            >
-              {gig.title}
-            </Text>
-            {/* Beschreibung (3 Zeilen) */}
-            <Text 
-              style={[styles.description, { color: colors.textSecondary }]}
-              numberOfLines={3}
-            >
-              {gig.description}
-            </Text>
-            {/* Fußzeile mit Preis und Bewertung */}
-            <View style={styles.footer}>
-              {showPrice ? (
-                renderPrice()
-              ) : (
-                <View style={{ width: 48 }} />
-              )}
-              <View style={styles.ratingContainer}>
-                <Ionicons name="star" size={16} color="#FFD600" style={{ marginRight: 2 }} />
-                <Text style={[styles.rating, { color: colors.textSecondary }]}>
-                  {gig.rating.toFixed(1)}
-                </Text>
-              </View>
+      <View style={styles.content}>
+        {/* Bild im 4:3 Format */}
+        <View style={styles.imageContainer}>
+          <Image 
+            source={{ uri: gig.imageUrl }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        </View>
+        {/* Text-Content */}
+        <View style={styles.textContainer}>
+          {/* Überschrift (1 Zeile) */}
+          <Text 
+            style={[styles.title, { color: colors.textPrimary }]}
+            numberOfLines={1}
+          >
+            {gig.title}
+          </Text>
+          {/* Beschreibung (3 Zeilen) */}
+          <Text 
+            style={[styles.description, { color: colors.textSecondary }]}
+            numberOfLines={3}
+          >
+            {gig.description}
+          </Text>
+          {/* Fußzeile mit Preis und Bewertung */}
+          <View style={styles.footer}>
+            {showPrice ? (
+              renderPrice()
+            ) : (
+              <View style={{ width: 48 }} />
+            )}
+            <View style={styles.ratingContainer}>
+              <Ionicons name="star" size={16} color="#FFD600" style={{ marginRight: 2 }} />
+              <Text style={[styles.rating, { color: colors.textSecondary }]}>
+                {gig.rating.toFixed(1)}
+              </Text>
             </View>
           </View>
         </View>
-      </LinearGradient>
+      </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: ui.borderRadius.l,
+    borderRadius: ui.borderRadius.m,
     overflow: 'hidden',
-    elevation: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.05)',
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    shadowOpacity: 1,
+    elevation: 2,
+    borderWidth: 0.5,
+    borderColor: 'rgba(0, 0, 0, 0.08)',
     maxHeight: 130,
     minHeight: 130,
-  },
-  gradientContainer: {
-    flex: 1,
-    width: '100%',
+    marginBottom: spacing.m,
+    position: 'relative',
   },
   content: {
     flexDirection: 'row',
@@ -150,8 +140,8 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: 90,
     height: '100%',
-    borderTopLeftRadius: ui.borderRadius.l,
-    borderBottomLeftRadius: ui.borderRadius.l,
+    borderTopLeftRadius: ui.borderRadius.m,
+    borderBottomLeftRadius: ui.borderRadius.m,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
     overflow: 'hidden',
