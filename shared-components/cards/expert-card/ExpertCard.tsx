@@ -67,11 +67,6 @@ export function ExpertCard({ expert, onPress }: ExpertCardProps) {
             <Text style={[styles.name, { color: colors.textPrimary }]}>
               {expert.name}
             </Text>
-            <UserroleBadge
-              userRole={expert.role}
-              position="topRight"
-              size="small"
-            />
           </View>
           
           {expert.headline && (
@@ -103,14 +98,24 @@ export function ExpertCard({ expert, onPress }: ExpertCardProps) {
         </View>
       )}
       
-      {expert.rating !== undefined && (
-        <View style={styles.ratingContainer}>
-          <Ionicons name="star" size={16} color="#FFD700" />
-          <Text style={[styles.ratingText, { color: colors.textSecondary }]}>
-            {expert.rating.toFixed(1)}
-          </Text>
+      <View style={styles.footerContainer}>
+        {expert.rating !== undefined && (
+          <View style={styles.ratingContainer}>
+            <Ionicons name="star" size={16} color="#FFD700" />
+            <Text style={[styles.ratingText, { color: colors.textSecondary }]}>
+              {expert.rating.toFixed(1)}
+            </Text>
+          </View>
+        )}
+        
+        <View style={styles.badgeContainer}>
+          <UserroleBadge
+            userRole={expert.role}
+            position="topRight"
+            size="small"
+          />
         </View>
-      )}
+      </View>
     </TouchableOpacity>
   );
 }
@@ -154,7 +159,7 @@ const styles = StyleSheet.create({
   nameContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     marginBottom: spacing.xxs,
   },
   name: {
@@ -184,10 +189,21 @@ const styles = StyleSheet.create({
   specialtyText: {
     fontSize: typography.fontSize.xs,
   },
+  footerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: spacing.s,
+  },
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: spacing.s,
+  },
+  badgeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'relative',
+    height: 24,
   },
   ratingText: {
     fontSize: typography.fontSize.s,

@@ -135,15 +135,16 @@ export default function TileResults() {
         return (
           <View style={styles.filterContentContainer}>
             {mockNuggets.map(nugget => (
-              <NuggetCard 
-                key={nugget.id}
-                nugget={nugget}
-                onHelpfulPress={() => {}}
-                onCommentPress={() => {}}
-                onSharePress={() => {}}
-                onSavePress={() => {}}
-                onUserPress={() => handleNuggetPress(nugget.id)}
-              />
+              <View key={nugget.id} style={styles.cardContainer}>
+                <NuggetCard 
+                  nugget={nugget}
+                  onHelpfulPress={() => {}}
+                  onCommentPress={() => {}}
+                  onSharePress={() => {}}
+                  onSavePress={() => {}}
+                  onUserPress={() => handleNuggetPress(nugget.id)}
+                />
+              </View>
             ))}
           </View>
         );
@@ -152,11 +153,12 @@ export default function TileResults() {
         return (
           <View style={styles.filterContentContainer}>
             {mockGigs.map(gig => (
-              <GigCard 
-                key={gig.id}
-                gig={gig}
-                onPress={() => handleGigPress(gig.id)}
-              />
+              <View key={gig.id} style={styles.cardContainer}>
+                <GigCard 
+                  gig={gig}
+                  onPress={() => handleGigPress(gig.id)}
+                />
+              </View>
             ))}
           </View>
         );
@@ -165,12 +167,13 @@ export default function TileResults() {
         return (
           <View style={styles.filterContentContainer}>
             {mockCasestudies.map(casestudy => (
-              <GigCard 
-                key={casestudy.id}
-                gig={casestudy}
-                showPrice={false}
-                onPress={() => handleGigPress(casestudy.id)}
-              />
+              <View key={casestudy.id} style={styles.cardContainer}>
+                <GigCard 
+                  gig={casestudy}
+                  showPrice={false}
+                  onPress={() => handleGigPress(casestudy.id)}
+                />
+              </View>
             ))}
           </View>
         );
@@ -179,11 +182,12 @@ export default function TileResults() {
         return (
           <View style={styles.filterContentContainer}>
             {mockExperts.map(expert => (
-              <ExpertCard 
-                key={expert.id}
-                expert={expert}
-                onPress={() => handleExpertPress(expert.id)}
-              />
+              <View key={expert.id} style={styles.expertCardContainer}>
+                <ExpertCard 
+                  expert={expert}
+                  onPress={() => handleExpertPress(expert.id)}
+                />
+              </View>
             ))}
           </View>
         );
@@ -197,49 +201,53 @@ export default function TileResults() {
               Experten
             </Text>
             {mockExperts.slice(0, 2).map(expert => (
-              <ExpertCard 
-                key={expert.id}
-                expert={expert}
-                onPress={() => handleExpertPress(expert.id)}
-              />
+              <View key={expert.id} style={styles.expertCardContainer}>
+                <ExpertCard 
+                  expert={expert}
+                  onPress={() => handleExpertPress(expert.id)}
+                />
+              </View>
             ))}
 
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
               Gigs
             </Text>
             {mockGigs.slice(0, 2).map(gig => (
-              <GigCard 
-                key={gig.id}
-                gig={gig}
-                onPress={() => handleGigPress(gig.id)}
-              />
+              <View key={gig.id} style={styles.cardContainer}>
+                <GigCard 
+                  gig={gig}
+                  onPress={() => handleGigPress(gig.id)}
+                />
+              </View>
             ))}
 
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
               Nuggets
             </Text>
             {mockNuggets.slice(0, 2).map(nugget => (
-              <NuggetCard 
-                key={nugget.id}
-                nugget={nugget}
-                onHelpfulPress={() => {}}
-                onCommentPress={() => {}}
-                onSharePress={() => {}}
-                onSavePress={() => {}}
-                onUserPress={() => handleNuggetPress(nugget.id)}
-              />
+              <View key={nugget.id} style={styles.cardContainer}>
+                <NuggetCard 
+                  nugget={nugget}
+                  onHelpfulPress={() => {}}
+                  onCommentPress={() => {}}
+                  onSharePress={() => {}}
+                  onSavePress={() => {}}
+                  onUserPress={() => handleNuggetPress(nugget.id)}
+                />
+              </View>
             ))}
 
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
               Fallstudien
             </Text>
             {mockCasestudies.slice(0, 2).map(casestudy => (
-              <GigCard 
-                key={casestudy.id}
-                gig={casestudy}
-                showPrice={false}
-                onPress={() => handleGigPress(casestudy.id)}
-              />
+              <View key={casestudy.id} style={styles.cardContainer}>
+                <GigCard 
+                  gig={casestudy}
+                  showPrice={false}
+                  onPress={() => handleGigPress(casestudy.id)}
+                />
+              </View>
             ))}
           </View>
         );
@@ -341,5 +349,11 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: spacing.l,
     padding: spacing.m,
+  },
+  cardContainer: {
+    marginBottom: spacing.m,
+  },
+  expertCardContainer: {
+    marginBottom: 0, // Entfernt den zusätzlichen Abstand für ExpertCards, die bereits ein marginBottom haben
   },
 }); 
