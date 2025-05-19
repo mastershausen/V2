@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
@@ -12,18 +13,32 @@ export interface ReviewCardProps {
   rating: number;
   text: string;
   date?: string; // z.B. 'vor 2 Wochen'
+  imageUrl?: string;
 }
 
-export function ReviewCard({ name, initials, rating, text, date }: ReviewCardProps) {
+export function ReviewCard({ name, initials, rating, text, date, imageUrl }: ReviewCardProps) {
   const colors = useThemeColor();
 
   return (
-    <View style={styles.card}>
+    <LinearGradient
+      colors={['#FFFFFF', '#F1F3F6']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={styles.card}
+    >
       <View style={styles.headerRow}>
         <View style={styles.row}>
-          <View style={[styles.avatar, { backgroundColor: colors.primary }]}> 
-            <Text style={styles.avatarText}>{initials}</Text>
-          </View>
+          {imageUrl ? (
+            <View style={styles.avatar}>
+              <View style={styles.avatarImageWrapper}>
+                <Image source={{ uri: imageUrl }} style={styles.avatarImage} />
+              </View>
+            </View>
+          ) : (
+            <View style={[styles.avatar, { backgroundColor: colors.primary }]}> 
+              <Text style={styles.avatarText}>{initials}</Text>
+            </View>
+          )}
           <View style={styles.headerContent}>
             <Text style={[styles.name, { color: colors.textPrimary }]} numberOfLines={1}>{name}</Text>
             <View style={styles.ratingRow}>
@@ -37,7 +52,7 @@ export function ReviewCard({ name, initials, rating, text, date }: ReviewCardPro
         )}
       </View>
       <Text style={[styles.text, { color: colors.textSecondary }]} numberOfLines={4}>{text}</Text>
-    </View>
+    </LinearGradient>
   );
 }
 
@@ -45,13 +60,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: ui.borderRadius.l,
     padding: spacing.m,
-    marginBottom: spacing.m,
-    backgroundColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    elevation: 2,
+    backgroundColor: 'transparent',
   },
   headerRow: {
     flexDirection: 'row',
@@ -72,6 +81,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: spacing.m,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.10,
+    shadowRadius: 2,
+    elevation: 2,
+    overflow: 'hidden',
+  },
+  avatarImageWrapper: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    overflow: 'hidden',
+  },
+  avatarImage: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    resizeMode: 'cover',
   },
   avatarText: {
     color: 'white',

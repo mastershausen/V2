@@ -32,6 +32,7 @@ import mockNuggets from '@/mock/data/mockNuggets';
 import mockGigs from '@/mock/data/mockGigs';
 import mockCasestudies from '@/mock/data/mockCasestudies';
 import { ReviewCard } from '@/shared-components/cards/review-card/ReviewCard';
+import mockReviews from '@/mock/data/mockReviews';
 
 // Typ für Profile-Tabs
 type ProfileTabId = 'nuggets' | 'gigs' | 'casestudies' | 'ratings';
@@ -442,11 +443,12 @@ export default function ProfileScreen() {
       case 'ratings':
         return (
           <ProfileTabListContainer>
-            {DEMO_RATINGS.map((r, idx) => (
+            {mockReviews.map((r, idx) => (
               <ReviewCard
                 key={r.id}
                 name={r.user.name}
                 initials={r.user.profileImage.initials}
+                imageUrl={r.user.profileImage.imageUrl}
                 rating={r.rating}
                 text={r.text}
                 date={idx === 0 ? 'vor 2 Wochen' : idx === 1 ? 'vor 3 Tagen' : 'vor 1 Monat'}
