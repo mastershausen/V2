@@ -27,6 +27,7 @@ import { ProfileImage, UserroleBadge, UserRole, HeaderMedia } from '@/shared-com
 import { useUserStore } from '@/stores';
 import { UserProfile } from '@/types/userTypes';
 import { createProfileInitialsFromName, ProfileImageData } from '@/utils/profileImageUtils';
+import { ProfileTabListContainer } from '@/shared-components/ProfileTabListContainer';
 
 // Typ für Profile-Tabs
 type ProfileTabId = 'nuggets' | 'gigs' | 'casestudies' | 'ratings';
@@ -249,6 +250,59 @@ const DEMO_GIGS: GigData[] = [
   },
 ];
 
+// Mock-Fallstudien für den Demo-Modus
+const DEMO_CASESTUDIES: GigData[] = [
+  {
+    id: 'c1',
+    title: 'Steuerliche Optimierung eines Startups',
+    description: 'Wie ein Tech-Startup durch gezielte Maßnahmen seine Steuerlast um 30% senken konnte. Einblicke in Strategie und Umsetzung.',
+    imageUrl: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    price: 0,
+    rating: 4.9,
+    currency: ''
+  },
+  {
+    id: 'c2',
+    title: 'Erfolgreiche Betriebsprüfung',
+    description: 'Fallstudie: Wie ein Freiberufler mit guter Vorbereitung und Beratung eine Betriebsprüfung ohne Nachzahlung gemeistert hat.',
+    imageUrl: 'https://images.unsplash.com/photo-1503676382389-4809596d5290?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    price: 0,
+    rating: 4.8,
+    currency: ''
+  },
+  {
+    id: 'c3',
+    title: 'Gründerberatung: Von der Idee zur GmbH',
+    description: 'Ein Gründer berichtet, wie die richtige steuerliche Begleitung den Weg zur eigenen GmbH erleichtert und Fehler vermieden hat.',
+    imageUrl: 'https://images.unsplash.com/photo-1515168833906-d2a3b82b302b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+    price: 0,
+    rating: 5.0,
+    currency: ''
+  },
+];
+
+// Mock-Bewertungen für den Demo-Modus
+const DEMO_RATINGS = [
+  {
+    id: 'r1',
+    user: { name: 'Katrin Müller', profileImage: { initials: 'KM' } },
+    rating: 5,
+    text: 'Sehr kompetente Beratung, schnelle Rückmeldung und viele Steuertipps!'
+  },
+  {
+    id: 'r2',
+    user: { name: 'Jonas Weber', profileImage: { initials: 'JW' } },
+    rating: 4.5,
+    text: 'Freundlich, zuverlässig und sehr hilfreich bei der Steuererklärung.'
+  },
+  {
+    id: 'r3',
+    user: { name: 'Sophie Becker', profileImage: { initials: 'SB' } },
+    rating: 5,
+    text: 'Top Steuerberater! Ich konnte viel sparen und fühle mich bestens betreut.'
+  },
+];
+
 // Bildschirmbreite für responsives Design
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -342,7 +396,7 @@ export default function ProfileScreen() {
     switch (activeTab) {
       case 'nuggets':
         return (
-          <View style={[styles.tabContentContainer, { marginTop: spacing.s }]}>
+          <ProfileTabListContainer>
             <NuggetCard 
               nugget={DEMO_NUGGET}
               onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
@@ -351,7 +405,6 @@ export default function ProfileScreen() {
               onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
               onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
             />
-            <View style={{ height: spacing.m }} />
             <NuggetCard 
               nugget={DEMO_NUGGET_2}
               onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
@@ -360,7 +413,6 @@ export default function ProfileScreen() {
               onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
               onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
             />
-            <View style={{ height: spacing.m }} />
             <NuggetCard 
               nugget={DEMO_NUGGET_3}
               onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
@@ -369,7 +421,6 @@ export default function ProfileScreen() {
               onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
               onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
             />
-            <View style={{ height: spacing.m }} />
             <NuggetCard 
               nugget={DEMO_NUGGET_4}
               onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
@@ -378,21 +429,54 @@ export default function ProfileScreen() {
               onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
               onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
             />
-          </View>
+          </ProfileTabListContainer>
         );
       case 'gigs':
         return (
-          <View style={[styles.tabContentContainer, { marginTop: spacing.s }]}>
-            {DEMO_GIGS.map((gig, index) => (
-              <React.Fragment key={gig.id}>
-                <GigCard 
-                  gig={gig}
-                  onPress={() => Alert.alert('Gig', 'Gig-Details werden angezeigt')}
-                />
-                {index < DEMO_GIGS.length - 1 && <View style={{ height: spacing.m }} />}
-              </React.Fragment>
+          <ProfileTabListContainer>
+            {DEMO_GIGS.map((gig) => (
+              <GigCard
+                key={gig.id}
+                gig={gig}
+                onPress={() => Alert.alert('Gig', 'Gig-Details öffnen')}
+              />
             ))}
-          </View>
+          </ProfileTabListContainer>
+        );
+      case 'casestudies':
+        return (
+          <ProfileTabListContainer>
+            {DEMO_CASESTUDIES.map((gig) => (
+              <GigCard 
+                key={gig.id}
+                gig={gig}
+                showPrice={false}
+                onPress={() => Alert.alert('Fallstudie', 'Fallstudien-Details werden angezeigt')}
+              />
+            ))}
+          </ProfileTabListContainer>
+        );
+      case 'ratings':
+        return (
+          <ProfileTabListContainer>
+            {DEMO_RATINGS.map((r) => (
+              <View key={r.id} style={{ backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#E0E0E0', padding: spacing.m, flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ marginRight: spacing.m }}>
+                  <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: '#F0F0F0', alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ fontWeight: 'bold', color: '#888' }}>{r.user.profileImage.initials}</Text>
+                  </View>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontWeight: 'bold', marginBottom: 2 }}>{r.user.name}</Text>
+                  <Text style={{ color: '#666', marginBottom: 4 }}>{r.text}</Text>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={{ color: '#FFD600', fontWeight: 'bold', marginRight: 4 }}>★</Text>
+                    <Text style={{ color: '#888' }}>{r.rating.toFixed(1)}</Text>
+                  </View>
+                </View>
+              </View>
+            ))}
+          </ProfileTabListContainer>
         );
       default:
         return null;
@@ -443,8 +527,8 @@ export default function ProfileScreen() {
           </View>
         </View>
         
-        {/* Hauptinhalt */}
-        <View style={styles.content}>
+        {/* EINHEITLICHER SafeSpace-Container für alle Inhalte */}
+        <View style={styles.safeSpaceContent}>
           {/* Name und Info */}
           <View style={styles.userInfoContainer}>
             <Text style={[styles.userName, { color: colors.textPrimary }]}>
@@ -465,16 +549,18 @@ export default function ProfileScreen() {
               />
             </View>
           </View>
-          
-          {/* Tabs unter den Buttons */}
-          <View style={styles.tabbarContainer}>
-            <ProfileTabbar 
-              activeTab={activeTab}
-              onTabPress={handleTabPress}
-            />
-          </View>
-          
-          {/* Tab-Inhalte */}
+        </View>
+        
+        {/* Tabs außerhalb des SafeSpace-Containers für Full Width */}
+        <View style={styles.tabbarContainer}>
+          <ProfileTabbar 
+            activeTab={activeTab}
+            onTabPress={handleTabPress}
+          />
+        </View>
+        
+        {/* Tab-Inhalte wieder im SafeSpace-Container */}
+        <View style={styles.safeSpaceContent}>
           {renderTabContent()}
           
           {/* Zusätzliche Profilinformationen (nur im Demo-Modus) */}
@@ -517,7 +603,7 @@ const styles = StyleSheet.create({
   profileImageContainer: {
     position: 'absolute',
     left: spacing.l,
-    bottom: -50, // Negative Wert für Überlappung mit dem Header
+    bottom: -50,
     backgroundColor: 'transparent',
     elevation: 5,
     shadowColor: '#000',
@@ -531,14 +617,16 @@ const styles = StyleSheet.create({
   profileImage: {
     borderWidth: 0,
   },
+  safeSpaceContent: {
+    paddingHorizontal: 16,
+    width: '100%',
+  },
   content: {
     flex: 1,
-    paddingTop: spacing.xxxl + 20, // Extra Platz für das Profilbild
-    paddingHorizontal: spacing.m, // Einheitlicher Abstand für alle Inhalte
+    paddingTop: spacing.xxxl + 20,
   },
   userInfoContainer: {
     marginBottom: spacing.m,
-    paddingHorizontal: 0, // Kein zusätzlicher Padding, da bereits im content definiert
   },
   userName: {
     fontSize: typography.fontSize.xl,
@@ -569,8 +657,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0,0,0,0.1)',
     width: '100%',
-    paddingHorizontal: 0,
-    marginHorizontal: -spacing.m, // Negativer Margin um den Header in voller Breite zu zeigen
+    backgroundColor: '#FFFFFF',
   },
   tabbarOuterContainer: {
     flexDirection: 'row',
@@ -601,6 +688,5 @@ const styles = StyleSheet.create({
   },
   tabContentContainer: {
     width: '100%',
-    // Kein paddingHorizontal oder marginHorizontal mehr
   },
 }); 

@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
@@ -20,6 +21,7 @@ export interface GigData {
 interface GigCardProps {
   gig: GigData;
   onPress?: () => void;
+  showPrice?: boolean;
 }
 
 /**
@@ -30,6 +32,7 @@ interface GigCardProps {
  * @param {object} props - Die Komponenteneigenschaften
  * @param {object} props.gig - Die Daten des anzuzeigenden Gigs
  * @param {Function} [props.onPress] - Callback bei Klick auf die Karte
+ * @param {boolean} [props.showPrice=true] - Ob der Preis angezeigt werden soll
  * @param {Function} [props.onLikePress] - Callback bei Klick auf Like-Button
  * @param {Function} [props.onUserPress] - Callback bei Klick auf Benutzer
  * @param {Function} [props.onSharePress] - Callback bei Klick auf Teilen-Button
@@ -38,11 +41,13 @@ interface GigCardProps {
  * @returns {React.ReactElement} Die gerenderte GigCard-Komponente
  */
 // Umbenannt zu _GigCard, um anzuzeigen, dass es eine interne Komponente ist
-export function GigCard({ gig, onPress }: GigCardProps): React.ReactElement {
+export function GigCard({ gig, onPress, showPrice = true }: GigCardProps): React.ReactElement {
   const colors = useThemeColor();
 
   // Hilfsfunktion für Preis-Rendering
   const renderPrice = () => {
+    if (!showPrice) return null;
+    
     if (gig.currency === 'Kostenlos' || gig.currency === 'Auf Anfrage') {
       return (
         <Text style={[styles.price, { color: colors.textPrimary, fontWeight: 'bold' }]}> 
@@ -59,50 +64,54 @@ export function GigCard({ gig, onPress }: GigCardProps): React.ReactElement {
 
   return (
     <TouchableOpacity 
-      style={[
-        styles.container,
-        { backgroundColor: colors.backgroundSecondary, maxHeight: 130, minHeight: 130 },
-      ]}
+      style={styles.container}
       onPress={onPress}
       activeOpacity={0.7}
     >
-      <View style={styles.content}>
-        {/* Bild im 4:3 Format */}
-        <View style={styles.imageContainer}>
-          <Image 
-            source={{ uri: gig.imageUrl }}
-            style={styles.image}
-            resizeMode="cover"
-          />
-        </View>
-        {/* Text-Content */}
-        <View style={styles.textContainer}>
-          {/* Überschrift (1 Zeile) */}
-          <Text 
-            style={[styles.title, { color: colors.textPrimary }]}
-            numberOfLines={1}
-          >
-            {gig.title}
-          </Text>
-          {/* Beschreibung (3 Zeilen) */}
-          <Text 
-            style={[styles.description, { color: colors.textSecondary }]}
-            numberOfLines={3}
-          >
-            {gig.description}
-          </Text>
-          {/* Fußzeile mit Preis und Bewertung */}
-          <View style={styles.footer}>
-            {renderPrice()}
-            <View style={styles.ratingContainer}>
-              <Ionicons name="star" size={16} color="#FFD600" style={{ marginRight: 2 }} />
-              <Text style={[styles.rating, { color: colors.textSecondary }]}>
-                {gig.rating.toFixed(1)}
-              </Text>
+      <LinearGradient
+        colors={['#FFFFFF', '#F8F9FA']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.gradientContainer}
+      >
+        <View style={styles.content}>
+          {/* Bild im 4:3 Format */}
+          <View style={styles.imageContainer}>
+            <Image 
+              source={{ uri: gig.imageUrl }}
+              style={styles.image}
+              resizeMode="cover"
+            />
+          </View>
+          {/* Text-Content */}
+          <View style={styles.textContainer}>
+            {/* Überschrift (1 Zeile) */}
+            <Text 
+              style={[styles.title, { color: colors.textPrimary }]}
+              numberOfLines={1}
+            >
+              {gig.title}
+            </Text>
+            {/* Beschreibung (3 Zeilen) */}
+            <Text 
+              style={[styles.description, { color: colors.textSecondary }]}
+              numberOfLines={3}
+            >
+              {gig.description}
+            </Text>
+            {/* Fußzeile mit Preis und Bewertung */}
+            <View style={styles.footer}>
+              {renderPrice()}
+              <View style={styles.ratingContainer}>
+                <Ionicons name="star" size={16} color="#FFD600" style={{ marginRight: 2 }} />
+                <Text style={[styles.rating, { color: colors.textSecondary }]}>
+                  {gig.rating.toFixed(1)}
+                </Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      </LinearGradient>
     </TouchableOpacity>
   );
 }
@@ -111,13 +120,19 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: ui.borderRadius.l,
     overflow: 'hidden',
-    elevation: 2,
+    elevation: 1,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     shadowRadius: 2,
     borderWidth: 1,
-    borderColor: '#E0E0E0',
+    borderColor: 'rgba(0,0,0,0.05)',
+    maxHeight: 130,
+    minHeight: 130,
+  },
+  gradientContainer: {
+    flex: 1,
+    width: '100%',
   },
   content: {
     flexDirection: 'row',
@@ -150,12 +165,13 @@ const styles = StyleSheet.create({
     height: '100%',
     marginLeft: spacing.s,
     paddingRight: spacing.s,
+    paddingTop: spacing.s,
+    paddingBottom: spacing.s,
   },
   title: {
     fontSize: typography.fontSize.m,
     fontWeight: typography.fontWeight.bold,
     marginBottom: spacing.xs,
-    marginTop: spacing.s,
   },
   description: {
     fontSize: typography.fontSize.s,
@@ -166,7 +182,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: spacing.s,
   },
   price: {
     fontSize: typography.fontSize.m,
@@ -175,10 +190,14 @@ const styles = StyleSheet.create({
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: 'rgba(255, 214, 0, 0.1)',
+    paddingHorizontal: spacing.xs,
+    paddingVertical: 2,
+    borderRadius: ui.borderRadius.s,
   },
   rating: {
     fontSize: typography.fontSize.s,
-    marginLeft: spacing.xs,
+    marginLeft: spacing.xxs,
   },
   userInfo: {
     flexDirection: 'row',
