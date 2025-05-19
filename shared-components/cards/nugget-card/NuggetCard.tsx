@@ -79,7 +79,6 @@ export function NuggetCard({
 const styles = StyleSheet.create({
   container: {
     borderRadius: borderRadius.l,
-    marginBottom: spacing.m,
     overflow: 'hidden',
     borderWidth: 1,
     shadowColor: '#000',
