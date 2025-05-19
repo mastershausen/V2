@@ -471,16 +471,31 @@ export default function ProfileScreen() {
         
         {/* EINHEITLICHER SafeSpace-Container für alle Inhalte */}
         <View style={styles.safeSpaceContent}>
-          {/* Großer Abstand, damit der Name und alle Inhalte weit genug nach unten rutschen */}
-          <View style={{height: 150}} />
+          {/* Abstand für Profilbild */}
+          <View style={{height: 70}} />
           
           {/* Name und Info */}
           <View style={styles.userInfoContainer}>
             <Text style={[styles.userName, { color: colors.textPrimary }]}>
               {profile.firstName && profile.lastName 
-                ? `${profile.firstName} ${profile.lastName}`
-                : profile.name || profile.username}
+                ? `${profile.firstName} ${profile.lastName}${profile.headline ? ` | ${profile.headline}` : ''}`
+                : `${profile.name || profile.username}${profile.headline ? ` | ${profile.headline}` : ''}`}
             </Text>
+            
+            {/* Bio-Sektion */}
+            <View style={styles.bioContainer}>
+              {profile.description && (
+                <Text style={[styles.bioDescription, { color: colors.textSecondary }]} numberOfLines={5}>
+                  {profile.description}
+                </Text>
+              )}
+              
+              {profile.companyName && (
+                <Text style={[styles.bioCompany, { color: colors.textSecondary }]}>
+                  {profile.companyName}
+                </Text>
+              )}
+            </View>
           </View>
           
           {/* Großer Abstand */}
@@ -608,5 +623,27 @@ const styles = StyleSheet.create({
     marginBottom: spacing.s,
     width: '100%',
     backgroundColor: '#FFFFFF',
+  },
+  bioContainer: {
+    marginTop: spacing.xs,
+    marginBottom: spacing.s,
+  },
+  bioHeadline: {
+    fontSize: typography.fontSize.m,
+    fontWeight: typography.fontWeight.semiBold as TextStyle['fontWeight'],
+    marginBottom: spacing.xs,
+  },
+  bioDescription: {
+    fontSize: typography.fontSize.s,
+    lineHeight: 20,
+    marginBottom: spacing.xs,
+  },
+  bioCompany: {
+    fontSize: typography.fontSize.s,
+    marginBottom: spacing.xxs,
+  },
+  bioLocation: {
+    fontSize: typography.fontSize.s,
+    marginBottom: spacing.xxs,
   },
 }); 
