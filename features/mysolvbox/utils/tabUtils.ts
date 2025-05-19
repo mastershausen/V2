@@ -77,6 +77,9 @@ export function useTabDataLoader<T extends TileData>({
  * @param customHandler
  */
 export function useTabTileHandler(tabId: MySolvboxTabId, customHandler?: (tileId: number) => void) {
+  // Import router from expo-router
+  const router = require('expo-router').useRouter();
+
   return useCallback((tileId: number) => {
     // Wenn ein benutzerdefinierter Handler bereitgestellt wurde, verwende diesen
     if (customHandler) {
@@ -99,7 +102,17 @@ export function useTabTileHandler(tabId: MySolvboxTabId, customHandler?: (tileId
 
     // Log-Ausgabe
     console.log(`${tabId} Tile pressed: ${tileId}`);
-  }, [tabId, customHandler]);
+    
+    // Zum TileResults Screen navigieren
+    router.push({
+      pathname: '/mysolvbox/tileResults',
+      params: { 
+        tileId: tileId.toString(),
+        title: `${tabId.charAt(0).toUpperCase() + tabId.slice(1)}-Ergebnisse #${tileId}`,
+        imageUrl: ''
+      }
+    });
+  }, [tabId, customHandler, router]);
 }
 
 /**
