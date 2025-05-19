@@ -28,6 +28,9 @@ import { useUserStore } from '@/stores';
 import { UserProfile } from '@/types/userTypes';
 import { createProfileInitialsFromName, ProfileImageData } from '@/utils/profileImageUtils';
 import { ProfileTabListContainer } from '@/shared-components/ProfileTabListContainer';
+import mockNuggets from '@/mock/data/mockNuggets';
+import mockGigs from '@/mock/data/mockGigs';
+import mockCasestudies from '@/mock/data/mockCasestudies';
 
 // Typ für Profile-Tabs
 type ProfileTabId = 'nuggets' | 'gigs' | 'casestudies' | 'ratings';
@@ -397,44 +400,23 @@ export default function ProfileScreen() {
       case 'nuggets':
         return (
           <ProfileTabListContainer>
-            <NuggetCard 
-              nugget={DEMO_NUGGET}
-              onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
-              onCommentPress={() => Alert.alert('Kommentar', 'Kommentarfunktion öffnen')}
-              onSharePress={() => Alert.alert('Teilen', 'Teilen-Dialog öffnen')}
-              onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
-              onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
-            />
-            <NuggetCard 
-              nugget={DEMO_NUGGET_2}
-              onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
-              onCommentPress={() => Alert.alert('Kommentar', 'Kommentarfunktion öffnen')}
-              onSharePress={() => Alert.alert('Teilen', 'Teilen-Dialog öffnen')}
-              onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
-              onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
-            />
-            <NuggetCard 
-              nugget={DEMO_NUGGET_3}
-              onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
-              onCommentPress={() => Alert.alert('Kommentar', 'Kommentarfunktion öffnen')}
-              onSharePress={() => Alert.alert('Teilen', 'Teilen-Dialog öffnen')}
-              onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
-              onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
-            />
-            <NuggetCard 
-              nugget={DEMO_NUGGET_4}
-              onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
-              onCommentPress={() => Alert.alert('Kommentar', 'Kommentarfunktion öffnen')}
-              onSharePress={() => Alert.alert('Teilen', 'Teilen-Dialog öffnen')}
-              onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
-              onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
-            />
+            {mockNuggets.map((nugget) => (
+              <NuggetCard
+                key={nugget.id}
+                nugget={nugget}
+                onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
+                onCommentPress={() => Alert.alert('Kommentar', 'Kommentarfunktion öffnen')}
+                onSharePress={() => Alert.alert('Teilen', 'Teilen-Dialog öffnen')}
+                onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
+                onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
+              />
+            ))}
           </ProfileTabListContainer>
         );
       case 'gigs':
         return (
           <ProfileTabListContainer>
-            {DEMO_GIGS.map((gig) => (
+            {mockGigs.map((gig) => (
               <GigCard
                 key={gig.id}
                 gig={gig}
@@ -446,8 +428,8 @@ export default function ProfileScreen() {
       case 'casestudies':
         return (
           <ProfileTabListContainer>
-            {DEMO_CASESTUDIES.map((gig) => (
-              <GigCard 
+            {mockCasestudies.map((gig) => (
+              <GigCard
                 key={gig.id}
                 gig={gig}
                 showPrice={false}

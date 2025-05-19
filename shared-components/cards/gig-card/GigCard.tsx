@@ -101,7 +101,11 @@ export function GigCard({ gig, onPress, showPrice = true }: GigCardProps): React
             </Text>
             {/* Fußzeile mit Preis und Bewertung */}
             <View style={styles.footer}>
-              {renderPrice()}
+              {showPrice ? (
+                renderPrice()
+              ) : (
+                <View style={{ width: 48 }} />
+              )}
               <View style={styles.ratingContainer}>
                 <Ionicons name="star" size={16} color="#FFD600" style={{ marginRight: 2 }} />
                 <Text style={[styles.rating, { color: colors.textSecondary }]}>
