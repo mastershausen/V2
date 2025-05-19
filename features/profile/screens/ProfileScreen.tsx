@@ -37,53 +37,6 @@ import mockReviews from '@/mock/data/mockReviews';
 // Typ für Profile-Tabs
 type ProfileTabId = 'nuggets' | 'gigs' | 'casestudies' | 'ratings';
 
-// ProfileTabbar-Props
-interface ProfileTabbarProps {
-  activeTab: ProfileTabId;
-  onTabPress: (tabId: ProfileTabId) => void;
-}
-
-// ProfileTabbar-Komponente
-function ProfileTabbar({ activeTab, onTabPress }: ProfileTabbarProps) {
-  const colors = useThemeColor();
-  
-  const tabs: BaseTabConfig[] = [
-    { id: 'nuggets', label: 'Nuggets' },
-    { id: 'gigs', label: 'Gigs' },
-    { id: 'casestudies', label: 'Fallstudien' },
-    { id: 'ratings', label: 'Bewertungen' }
-  ];
-
-  return (
-    <View style={styles.tabbarOuterContainer}>
-      <View style={styles.tabbarInnerContainer}>
-        {tabs.map((tab) => {
-          const isActive = tab.id === activeTab;
-          return (
-            <TouchableOpacity 
-              key={tab.id}
-              style={styles.tabItem}
-              onPress={() => onTabPress(tab.id as ProfileTabId)}
-            >
-              <Text 
-                style={[
-                  styles.tabLabel, 
-                  { color: isActive ? colors.primary : colors.textSecondary }
-                ]}
-              >
-                {tab.label}
-              </Text>
-              {isActive && <View style={[styles.tabIndicator, { backgroundColor: colors.primary }]} />}
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    </View>
-  );
-}
-
-type ProfileImageSource = ProfileImageData | { uri: string } | null;
-
 // Erweiterter Profiltyp mit allen benötigten Eigenschaften
 interface ExtendedUserProfile extends Partial<Omit<UserProfile, 'profileImage'>> {
   name?: string;
@@ -311,6 +264,9 @@ const DEMO_RATINGS = [
 // Bildschirmbreite für responsives Design
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
+// Added type definition
+type ProfileImageSource = ProfileImageData | { uri: string } | null;
+
 /**
  * Hauptkomponente für den neuen Profilbildschirm
  * @returns {React.ReactNode} Der gerenderte ProfileScreen
@@ -381,8 +337,8 @@ export default function ProfileScreen() {
   };
   
   // Tab-Wechsel-Handler
-  const handleTabPress = (tabId: ProfileTabId) => {
-    setActiveTab(tabId);
+  const handleTabPress = (tabId: string) => {
+    setActiveTab(tabId as ProfileTabId);
   };
   
   // Zusätzliche Profilinformationen nur für Demo-Modus anzeigen
@@ -461,6 +417,14 @@ export default function ProfileScreen() {
     }
   };
   
+  // Tabs für das Profil
+  const profileTabs: BaseTabConfig[] = [
+    { id: 'nuggets', label: 'Nuggets' },
+    { id: 'gigs', label: 'Gigs' },
+    { id: 'casestudies', label: 'Fallstudien' },
+    { id: 'ratings', label: 'Bewertungen' }
+  ];
+  
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <ScrollView
@@ -531,14 +495,20 @@ export default function ProfileScreen() {
         
         {/* Tabs außerhalb des SafeSpace-Containers für Full Width */}
         <View style={styles.tabbarContainer}>
-          <ProfileTabbar 
+          <BaseTabbar
+            tabs={profileTabs}
             activeTab={activeTab}
             onTabPress={handleTabPress}
+            indicatorStyle="line"
+            showShadow={false}
+            tabContainerStyle={{ width: '100%', justifyContent: 'center', backgroundColor: '#fff' }}
+            tabItemStyle={{ alignItems: 'center', paddingHorizontal: 8 }}
+            tabLabelStyle={{ fontSize: 14, fontWeight: '500' }}
           />
         </View>
         
         {/* Tab-Inhalte wieder im SafeSpace-Container */}
-        <View style={styles.safeSpaceContent}>
+        <View style={[styles.safeSpaceContent, { marginTop: 20 }]}>
           {renderTabContent()}
           
           {/* Zusätzliche Profilinformationen (nur im Demo-Modus) */}
@@ -632,39 +602,7 @@ const styles = StyleSheet.create({
   tabbarContainer: {
     marginTop: spacing.l,
     marginBottom: spacing.s,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0,0,0,0.1)',
     width: '100%',
     backgroundColor: '#FFFFFF',
-  },
-  tabbarOuterContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-  },
-  tabbarInnerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-  },
-  tabItem: {
-    padding: spacing.s,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  tabLabel: {
-    fontSize: 14,
-    fontWeight: typography.fontWeight.medium as TextStyle['fontWeight'],
-  },
-  tabIndicator: {
-    height: 2,
-    width: '100%',
-    marginTop: spacing.xs,
-  },
-  tabContentContainer: {
-    width: '100%',
   },
 }); 
