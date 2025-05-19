@@ -13,7 +13,10 @@ import {
   SafeAreaView, 
   ScrollView, 
   TouchableOpacity, 
-  ActivityIndicator 
+  ActivityIndicator,
+  Alert,
+  StatusBar,
+  Platform
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -23,6 +26,14 @@ import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderMedia } from '@/shared-components/media';
 import { FilterTabs, FilterTabItem } from '@/shared-components/navigation/FilterTabs';
+import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
+import { NuggetCard } from '@/shared-components/cards/nugget-card/NuggetCard';
+import { GigCard } from '@/shared-components/cards/gig-card/GigCard';
+import { ExpertCard } from '@/shared-components/cards/expert-card/ExpertCard';
+import mockNuggets from '@/mock/data/mockNuggets';
+import mockGigs from '@/mock/data/mockGigs';
+import mockCasestudies from '@/mock/data/mockCasestudies';
+import mockExperts from '@/mock/data/mockExperts';
 
 // Typ für die Route-Parameter
 interface TileResultsParams {
@@ -56,6 +67,11 @@ export default function TileResults() {
   // Parameter aus der Route extrahieren
   const { tileId, title, imageUrl } = params || {};
   
+  // Titel auf 20 Zeichen begrenzen
+  const truncatedTitle = title && title.length > 20 
+    ? `${title.substring(0, 20)}...` 
+    : title || 'Ergebnisse';
+  
   // Daten laden (simuliert)
   useEffect(() => {
     // Hier würden normalerweise die Daten für die angeklickte Kachel geladen
@@ -83,23 +99,165 @@ export default function TileResults() {
     console.log(`Filter geändert auf: ${filterId}`);
     setActiveFilter(filterId);
   };
+
+  // Standard-Handlers für verschiedene Kartentypen
+  const handleNuggetPress = (nuggetId: string) => {
+    Alert.alert('Nugget', `Nugget ${nuggetId} wurde angeklickt`);
+  };
+
+  const handleGigPress = (gigId: string) => {
+    Alert.alert('Gig', `Gig ${gigId} wurde angeklickt`);
+  };
+
+  const handleExpertPress = (expertId: string) => {
+    Alert.alert('Experte', `Experte ${expertId} wurde angeklickt`);
+  };
+  
+  // Rendere Inhalte basierend auf aktivem Filter
+  const renderFilterContent = () => {
+    if (isLoading) {
+      return (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color={colors.primary} />
+          <Text style={[styles.loadingText, { color: colors.textSecondary }]}>
+            Daten werden geladen...
+          </Text>
+        </View>
+      );
+    }
+
+    // Alle verfügbaren Inhalte basierend auf dem ausgewählten Filter anzeigen
+    switch (activeFilter) {
+      case 'nuggets':
+        return (
+          <View style={styles.filterContentContainer}>
+            {mockNuggets.map(nugget => (
+              <NuggetCard 
+                key={nugget.id}
+                nugget={nugget}
+                onHelpfulPress={() => {}}
+                onCommentPress={() => {}}
+                onSharePress={() => {}}
+                onSavePress={() => {}}
+                onUserPress={() => handleNuggetPress(nugget.id)}
+              />
+            ))}
+          </View>
+        );
+        
+      case 'gigs':
+        return (
+          <View style={styles.filterContentContainer}>
+            {mockGigs.map(gig => (
+              <GigCard 
+                key={gig.id}
+                gig={gig}
+                onPress={() => handleGigPress(gig.id)}
+              />
+            ))}
+          </View>
+        );
+        
+      case 'casestudies':
+        return (
+          <View style={styles.filterContentContainer}>
+            {mockCasestudies.map(casestudy => (
+              <GigCard 
+                key={casestudy.id}
+                gig={casestudy}
+                showPrice={false}
+                onPress={() => handleGigPress(casestudy.id)}
+              />
+            ))}
+          </View>
+        );
+        
+      case 'experts':
+        return (
+          <View style={styles.filterContentContainer}>
+            {mockExperts.map(expert => (
+              <ExpertCard 
+                key={expert.id}
+                expert={expert}
+                onPress={() => handleExpertPress(expert.id)}
+              />
+            ))}
+          </View>
+        );
+        
+      case 'all':
+      default:
+        // Bei "Alles" zeigen wir eine Mischung aus allen Inhaltstypen an
+        return (
+          <View style={styles.filterContentContainer}>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Experten
+            </Text>
+            {mockExperts.slice(0, 2).map(expert => (
+              <ExpertCard 
+                key={expert.id}
+                expert={expert}
+                onPress={() => handleExpertPress(expert.id)}
+              />
+            ))}
+
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Gigs
+            </Text>
+            {mockGigs.slice(0, 2).map(gig => (
+              <GigCard 
+                key={gig.id}
+                gig={gig}
+                onPress={() => handleGigPress(gig.id)}
+              />
+            ))}
+
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Nuggets
+            </Text>
+            {mockNuggets.slice(0, 2).map(nugget => (
+              <NuggetCard 
+                key={nugget.id}
+                nugget={nugget}
+                onHelpfulPress={() => {}}
+                onCommentPress={() => {}}
+                onSharePress={() => {}}
+                onSavePress={() => {}}
+                onUserPress={() => handleNuggetPress(nugget.id)}
+              />
+            ))}
+
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Fallstudien
+            </Text>
+            {mockCasestudies.slice(0, 2).map(casestudy => (
+              <GigCard 
+                key={casestudy.id}
+                gig={casestudy}
+                showPrice={false}
+                onPress={() => handleGigPress(casestudy.id)}
+              />
+            ))}
+          </View>
+        );
+    }
+  };
   
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
+      {/* Header-Navigation mit der vorhandenen Komponente */}
+      <HeaderNavigation 
+        title={truncatedTitle} 
+        showBackButton={true}
+        onBackPress={handleGoBack}
+      />
+      
       {/* Header mit HeaderMedia-Komponente */}
       <View style={styles.headerContainer}>
         <HeaderMedia 
           imageUrl={imageUrl || null}
           borderRadius={0}
         />
-        
-        {/* Zurück-Button */}
-        <TouchableOpacity 
-          style={[styles.backButton, { backgroundColor: colors.backgroundPrimary }]} 
-          onPress={handleGoBack}
-        >
-          <Ionicons name="arrow-back" size={24} color={colors.textPrimary} />
-        </TouchableOpacity>
       </View>
       
       {/* Filter-Tabs direkt unter dem Header */}
@@ -111,45 +269,12 @@ export default function TileResults() {
         />
       </View>
       
-      {/* Titel */}
-      <View style={styles.titleContainer}>
-        <Text style={[styles.title, { color: colors.textPrimary }]}>
-          {title || 'Ergebnisse'}
-        </Text>
-      </View>
-      
       <ScrollView 
         style={styles.scrollView} 
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
-        {isLoading ? (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color={colors.primary} />
-            <Text style={[styles.loadingText, { color: colors.textSecondary }]}>
-              Daten werden geladen...
-            </Text>
-          </View>
-        ) : (
-          /* Ergebnisinhalt */
-          <View style={styles.resultsContainer}>
-            {/* Hier können verschiedene Ergebnistypen angezeigt werden */}
-            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              {activeFilter === 'all' 
-                ? `Ergebnisse für "${title}"`
-                : `${FILTER_TABS.find(tab => tab.id === activeFilter)?.label} für "${title}"`}
-            </Text>
-            
-            <View style={[styles.infoCard, { backgroundColor: colors.backgroundSecondary }]}>
-              <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-                Dieser Bereich zeigt die detaillierten Ergebnisse für die ausgewählte Kachel.
-                Aktuell wird der Filter "{FILTER_TABS.find(tab => tab.id === activeFilter)?.label}" angezeigt.
-              </Text>
-            </View>
-            
-            {/* Weitere Inhaltsbereiche können hier hinzugefügt werden */}
-          </View>
-        )}
+        {renderFilterContent()}
       </ScrollView>
     </SafeAreaView>
   );
@@ -162,32 +287,6 @@ const styles = StyleSheet.create({
   headerContainer: {
     position: 'relative',
     width: '100%',
-  },
-  backButton: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: 'rgba(0, 0, 0, 0.3)',
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    shadowOpacity: 1,
-    elevation: 4,
-    zIndex: 10,
-  },
-  titleContainer: {
-    paddingHorizontal: spacing.l,
-    paddingVertical: spacing.m,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
-  },
-  title: {
-    fontSize: typography.fontSize.xl,
-    fontWeight: typography.fontWeight.bold,
   },
   scrollView: {
     flex: 1,
@@ -234,5 +333,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     elevation: 2,
     zIndex: 1,
+  },
+  filterContentContainer: {
+    flex: 1,
+    width: '100%',
+    marginBottom: spacing.l,
   },
 }); 
