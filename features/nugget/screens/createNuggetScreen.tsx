@@ -216,7 +216,7 @@ export default function CreateNuggetScreen(): React.ReactElement {
       <HeaderNavigation 
         title="Neues Nugget" 
         rightContent={renderCreateButton()}
-        onBackPress={() => router.back()}
+        onBackPress={() => router.replace('/(tabs)/profile')}
       />
       
       <KeyboardAvoidingView 
