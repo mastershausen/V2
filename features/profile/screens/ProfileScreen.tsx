@@ -6,8 +6,8 @@
  */
 
 import { useRouter } from 'expo-router';
-import React, { useMemo } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TextStyle, Alert, Dimensions } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, TextStyle, Alert, Dimensions, TouchableOpacity } from 'react-native';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -18,11 +18,61 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { DoubleButton } from '@/shared-components/button/DoubleButton';
 import { PlusButton } from '@/shared-components/button/PlusButton';
 import { SettingsIcon } from '@/shared-components/button/SettingsIcon';
+import { NuggetCard } from '@/shared-components/cards/nugget-card/NuggetCard';
+import { NuggetData } from '@/shared-components/cards/nugget-card/types';
+import { BaseTabbar, BaseTabConfig } from '@/shared-components/navigation/BaseTabbar';
 import { ProfileImage, UserroleBadge, UserRole, HeaderMedia } from '@/shared-components/media';
 import { useUserStore } from '@/stores';
 import { UserProfile } from '@/types/userTypes';
 import { createProfileInitialsFromName, ProfileImageData } from '@/utils/profileImageUtils';
 
+// Typ für Profile-Tabs
+type ProfileTabId = 'nuggets' | 'gigs' | 'casestudies' | 'ratings';
+
+// ProfileTabbar-Props
+interface ProfileTabbarProps {
+  activeTab: ProfileTabId;
+  onTabPress: (tabId: ProfileTabId) => void;
+}
+
+// ProfileTabbar-Komponente
+function ProfileTabbar({ activeTab, onTabPress }: ProfileTabbarProps) {
+  const colors = useThemeColor();
+  
+  const tabs: BaseTabConfig[] = [
+    { id: 'nuggets', label: 'Nuggets' },
+    { id: 'gigs', label: 'Gigs' },
+    { id: 'casestudies', label: 'Fallstudien' },
+    { id: 'ratings', label: 'Bewertungen' }
+  ];
+
+  return (
+    <View style={styles.tabbarOuterContainer}>
+      <View style={styles.tabbarInnerContainer}>
+        {tabs.map((tab) => {
+          const isActive = tab.id === activeTab;
+          return (
+            <TouchableOpacity 
+              key={tab.id}
+              style={styles.tabItem}
+              onPress={() => onTabPress(tab.id as ProfileTabId)}
+            >
+              <Text 
+                style={[
+                  styles.tabLabel, 
+                  { color: isActive ? colors.primary : colors.textSecondary }
+                ]}
+              >
+                {tab.label}
+              </Text>
+              {isActive && <View style={[styles.tabIndicator, { backgroundColor: colors.primary }]} />}
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
 
 type ProfileImageSource = ProfileImageData | { uri: string } | null;
 
@@ -65,6 +115,80 @@ const DEMO_PROFILE: ExtendedUserProfile = {
   rating: 5.0
 };
 
+// Demo-Nugget für den Demo-Modus
+const DEMO_NUGGET: NuggetData = {
+  id: 'n1',
+  user: {
+    id: 'u2',
+    name: 'Alexander Becker',
+    profileImage: {
+      initials: 'AB'
+    }
+  },
+  timestamp: new Date(2023, 5, 15),
+  content: 'Mit diesen 3 Steuertipps können Selbstständige jährlich bis zu 5.000€ sparen. Besonders Tipp #2 wird oft übersehen!',
+  helpfulCount: 42,
+  commentCount: 7,
+  isHelpful: true,
+  isSaved: false,
+  tags: ['Steuern', 'Selbstständige', 'Tipps']
+};
+
+// Zusätzliche Mock-Nuggets
+const DEMO_NUGGET_2: NuggetData = {
+  id: 'n2',
+  user: {
+    id: 'u2',
+    name: 'Alexander Becker',
+    profileImage: {
+      initials: 'AB'
+    }
+  },
+  timestamp: new Date(2023, 6, 20),
+  content: 'Wusstet ihr, dass ihr als Freiberufler bis zu 50% eurer Büromiete als Betriebsausgabe absetzen könnt? Hier sind die wichtigsten Voraussetzungen...',
+  helpfulCount: 28,
+  commentCount: 5,
+  isHelpful: false,
+  isSaved: true,
+  tags: ['Freiberufler', 'Büromiete', 'Betriebsausgaben']
+};
+
+const DEMO_NUGGET_3: NuggetData = {
+  id: 'n3',
+  user: {
+    id: 'u2',
+    name: 'Alexander Becker',
+    profileImage: {
+      initials: 'AB'
+    }
+  },
+  timestamp: new Date(2023, 7, 5),
+  content: 'Die neue Regelung zur Umsatzsteuer für digitale Dienstleistungen ab 2024: Was ihr jetzt schon wissen und vorbereiten solltet.',
+  helpfulCount: 35,
+  commentCount: 12,
+  isHelpful: true,
+  isSaved: false,
+  tags: ['Umsatzsteuer', 'Digitale Dienstleistungen', '2024']
+};
+
+const DEMO_NUGGET_4: NuggetData = {
+  id: 'n4',
+  user: {
+    id: 'u2',
+    name: 'Alexander Becker',
+    profileImage: {
+      initials: 'AB'
+    }
+  },
+  timestamp: new Date(2023, 8, 10),
+  content: 'Meine Top 5 Steuerspar-Tipps für Gründer im ersten Jahr. Besonders wichtig: Die richtige Rechtsform wählen und Investitionsabzugsbetrag nutzen!',
+  helpfulCount: 56,
+  commentCount: 8,
+  isHelpful: true,
+  isSaved: true,
+  tags: ['Gründer', 'Steuersparen', 'Rechtsform']
+};
+
 // Bildschirmbreite für responsives Design
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -73,6 +197,9 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
  * @returns {React.ReactNode} Der gerenderte ProfileScreen
  */
 export default function ProfileScreen() {
+  // State für den aktiven Tab
+  const [activeTab, setActiveTab] = useState<ProfileTabId>('nuggets');
+  
   // Hole die Theme-Farben für die Komponente
   const colors = useThemeColor();
   const router = useRouter();
@@ -134,10 +261,68 @@ export default function ProfileScreen() {
     router.push('/nuggets/create/createNugget');
   };
   
+  // Tab-Wechsel-Handler
+  const handleTabPress = (tabId: ProfileTabId) => {
+    setActiveTab(tabId);
+  };
+  
   // Zusätzliche Profilinformationen nur für Demo-Modus anzeigen
   const renderAdditionalInfo = () => {
     // Keine zusätzlichen Informationen anzeigen
     return null;
+  };
+  
+  // Tab-Inhalte rendern basierend auf aktivem Tab
+  const renderTabContent = () => {
+    // Wenn nicht im Demo-Modus, zeigen wir keine Inhalte an
+    if (!isDemoMode()) {
+      return null;
+    }
+    
+    switch (activeTab) {
+      case 'nuggets':
+        return (
+          <View style={[styles.tabContentContainer, { marginTop: spacing.s }]}>
+            <NuggetCard 
+              nugget={DEMO_NUGGET}
+              onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
+              onCommentPress={() => Alert.alert('Kommentar', 'Kommentarfunktion öffnen')}
+              onSharePress={() => Alert.alert('Teilen', 'Teilen-Dialog öffnen')}
+              onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
+              onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
+            />
+            <View style={{ height: spacing.m }} />
+            <NuggetCard 
+              nugget={DEMO_NUGGET_2}
+              onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
+              onCommentPress={() => Alert.alert('Kommentar', 'Kommentarfunktion öffnen')}
+              onSharePress={() => Alert.alert('Teilen', 'Teilen-Dialog öffnen')}
+              onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
+              onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
+            />
+            <View style={{ height: spacing.m }} />
+            <NuggetCard 
+              nugget={DEMO_NUGGET_3}
+              onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
+              onCommentPress={() => Alert.alert('Kommentar', 'Kommentarfunktion öffnen')}
+              onSharePress={() => Alert.alert('Teilen', 'Teilen-Dialog öffnen')}
+              onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
+              onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
+            />
+            <View style={{ height: spacing.m }} />
+            <NuggetCard 
+              nugget={DEMO_NUGGET_4}
+              onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
+              onCommentPress={() => Alert.alert('Kommentar', 'Kommentarfunktion öffnen')}
+              onSharePress={() => Alert.alert('Teilen', 'Teilen-Dialog öffnen')}
+              onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
+              onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
+            />
+          </View>
+        );
+      default:
+        return null;
+    }
   };
   
   return (
@@ -194,18 +379,6 @@ export default function ProfileScreen() {
                 : profile.name || profile.username}
             </Text>
             
-            {profile.headline && (
-              <Text style={[styles.headline, { color: colors.textSecondary }]}>
-                {profile.headline}
-              </Text>
-            )}
-            
-            {profile.companyName && (
-              <Text style={[styles.company, { color: colors.textSecondary }]}>
-                {profile.companyName}
-              </Text>
-            )}
-            
             {/* DoubleButton für Nachricht senden und Kontaktinformationen */}
             <View style={styles.actionButtonsContainer}>
               <DoubleButton 
@@ -218,6 +391,17 @@ export default function ProfileScreen() {
               />
             </View>
           </View>
+          
+          {/* Tabs unter den Buttons */}
+          <View style={styles.tabbarContainer}>
+            <ProfileTabbar 
+              activeTab={activeTab}
+              onTabPress={handleTabPress}
+            />
+          </View>
+          
+          {/* Tab-Inhalte */}
+          {renderTabContent()}
           
           {/* Zusätzliche Profilinformationen (nur im Demo-Modus) */}
           {renderAdditionalInfo()}
@@ -275,27 +459,21 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: spacing.l,
     paddingTop: spacing.xxxl + 20, // Extra Platz für das Profilbild
+    paddingHorizontal: spacing.m, // Mittlerer horizontaler Abstand wie im Chat-Screen
   },
   userInfoContainer: {
-    marginBottom: spacing.l,
+    marginBottom: spacing.m,
+    paddingHorizontal: 0, // Kein zusätzlicher Padding, da bereits im content definiert
   },
   userName: {
     fontSize: typography.fontSize.xl,
     fontWeight: typography.fontWeight.bold as TextStyle['fontWeight'],
     marginBottom: spacing.xs,
   },
-  headline: {
-    fontSize: typography.fontSize.m,
-    marginBottom: spacing.xs,
-  },
-  company: {
-    fontSize: typography.fontSize.s,
-    marginBottom: spacing.s,
-  },
   actionButtonsContainer: {
     marginTop: spacing.m,
+    marginBottom: spacing.m,
   },
   settingsIconContainer: {
     position: 'absolute',
@@ -310,5 +488,45 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
-  }
+  },
+  tabbarContainer: {
+    marginTop: spacing.l,
+    marginBottom: spacing.s,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0,0,0,0.1)',
+    width: '100%',
+    paddingHorizontal: 0,
+    marginHorizontal: -spacing.m, // Negativer Margin um den Header in voller Breite zu zeigen
+  },
+  tabbarOuterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  },
+  tabbarInnerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+  },
+  tabItem: {
+    padding: spacing.s,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  tabLabel: {
+    fontSize: 14,
+    fontWeight: typography.fontWeight.medium as TextStyle['fontWeight'],
+  },
+  tabIndicator: {
+    height: 2,
+    width: '100%',
+    marginTop: spacing.xs,
+  },
+  tabContentContainer: {
+    paddingHorizontal: 0, // Kein zusätzlicher Padding, da bereits im content definiert
+    width: '100%',
+  },
 }); 
