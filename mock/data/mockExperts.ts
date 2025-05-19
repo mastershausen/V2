@@ -1,7 +1,25 @@
 import { ExpertData } from '@/shared-components/cards/expert-card/ExpertCard';
+import { FounderType } from '@/shared-components/media';
+
+// Erweiterte ExpertData-Definition mit founderType
+interface ExtendedExpertData extends ExpertData {
+  founderType?: FounderType;
+}
 
 // Mock-Daten für Experten
-const mockExperts: ExpertData[] = [
+const mockExperts: ExtendedExpertData[] = [
+  {
+    id: 'exp6',
+    name: 'Michael Steiner',
+    role: 'premium',
+    founderType: 'founder',
+    headline: 'Gründer & CEO | Digitalisierungsexperte',
+    specialties: ['Unternehmensführung', 'Digitale Transformation', 'Innovation'],
+    rating: 5.0,
+    verified: true,
+    company: 'Digital Solutions AG',
+    profileImage: { initials: 'MS' }
+  },
   {
     id: 'exp1',
     name: 'Dr. Eva Schmidt',

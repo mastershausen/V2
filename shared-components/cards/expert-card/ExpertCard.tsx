@@ -7,7 +7,7 @@ import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ProfileImage } from '@/shared-components/media';
-import { UserRole, UserroleBadge } from '@/shared-components/media';
+import { UserRole, UserroleBadge, FounderType, FoundersBadge } from '@/shared-components/media';
 
 // Expertentyp für die Karte
 export interface ExpertData {
@@ -20,6 +20,7 @@ export interface ExpertData {
   rating?: number;
   verified?: boolean;
   company?: string;
+  founderType?: FounderType;
 }
 
 // Props für die ExpertCard-Komponente
@@ -109,11 +110,19 @@ export function ExpertCard({ expert, onPress }: ExpertCardProps) {
         )}
         
         <View style={styles.badgeContainer}>
-          <UserroleBadge
-            userRole={expert.role}
-            position="topRight"
-            size="small"
-          />
+          {/* Je nach Status entweder Founder-Badge oder UserroleBadge anzeigen */}
+          {expert.founderType ? (
+            <FoundersBadge
+              founderType={expert.founderType}
+              size="small"
+            />
+          ) : (
+            <UserroleBadge
+              userRole={expert.role}
+              position="topRight"
+              size="small"
+            />
+          )}
         </View>
       </View>
     </TouchableOpacity>
@@ -130,6 +139,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOpacity: 1,
     elevation: 2,
+    position: 'relative', // Wichtig für die absolute Positionierung des Badges
   },
   cardHeader: {
     flexDirection: 'row',

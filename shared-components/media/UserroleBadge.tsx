@@ -3,8 +3,10 @@ import {
   View, 
   Text, 
   StyleSheet,
-  Platform 
+  Platform,
+  TextStyle
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -19,6 +21,13 @@ interface UserroleBadgeProps {
   position?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
   size?: 'small' | 'medium' | 'large';
 }
+
+type BadgeColorType = {
+  gradient?: [string, string]; // Explizit als Tupel mit zwei Strings definieren
+  background?: string;
+  text: string;
+  useGradient: boolean;
+};
 
 /**
  * Eine Komponente, die ein Badge für die Nutzerrolle anzeigt.
@@ -35,28 +44,32 @@ export function UserroleBadge({
   const colors = useThemeColor();
 
   // Bestimme die Badge-Farben basierend auf der Nutzerrolle
-  const getBadgeColors = () => {
+  const getBadgeColors = (): BadgeColorType => {
     switch (userRole) {
       case 'premium':
         return {
-          background: '#FFD700',
-          text: '#000000'
+          gradient: ['#5E35B1', '#4527A0'], // Dunkelviolett mit Farbverlauf
+          text: '#FFFFFF',
+          useGradient: true
         };
       case 'pro':
         return {
-          background: '#007AFF',
-          text: '#FFFFFF'
+          gradient: ['#00796B', '#00695C'], // Petrol/Teal mit Farbverlauf
+          text: '#FFFFFF',
+          useGradient: true
         };
       case 'admin':
         return {
-          background: '#FF2D55',
-          text: '#FFFFFF'
+          gradient: ['#D81B60', '#C2185B'], // Dunkleres Rot mit Farbverlauf
+          text: '#FFFFFF',
+          useGradient: true
         };
       case 'free':
       default:
         return {
           background: colors.backgroundSecondary,
-          text: colors.textSecondary
+          text: colors.textSecondary,
+          useGradient: false
         };
     }
   };
@@ -120,13 +133,14 @@ export function UserroleBadge({
   const containerStyle = {
     ...styles.container,
     ...positionStyle,
-    backgroundColor: badgeColors.background,
+    backgroundColor: badgeColors.useGradient ? 'transparent' : badgeColors.background,
   };
 
-  const textStyle = {
+  const textStyle: TextStyle = {
     ...styles.text,
     color: badgeColors.text,
     fontSize: sizeStyle.fontSize,
+    fontWeight: userRole === 'free' ? 'normal' : 'bold',
   };
 
   const badgeStyle = {
@@ -136,6 +150,19 @@ export function UserroleBadge({
 
   // Text für die Anzeige formatieren
   const displayText = userRole.charAt(0).toUpperCase() + userRole.slice(1);
+
+  if (badgeColors.useGradient && badgeColors.gradient) {
+    return (
+      <LinearGradient
+        colors={badgeColors.gradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={[containerStyle, badgeStyle, styles.gradientContainer]}
+      >
+        <Text style={textStyle}>{displayText}</Text>
+      </LinearGradient>
+    );
+  }
 
   return (
     <View style={[containerStyle, badgeStyle]}>
@@ -157,6 +184,19 @@ const styles = StyleSheet.create({
       },
       android: {
         elevation: 3,
+      },
+    }),
+  },
+  gradientContainer: {
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 5,
       },
     }),
   },
