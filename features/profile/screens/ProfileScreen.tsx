@@ -33,6 +33,8 @@ import mockGigs from '@/mock/data/mockGigs';
 import mockCasestudies from '@/mock/data/mockCasestudies';
 import { ReviewCard } from '@/shared-components/cards/review-card/ReviewCard';
 import mockReviews from '@/mock/data/mockReviews';
+import { BottomScreen } from '@/shared-components/navigation/BottomScreen';
+import { CreateContentBottomSheet } from '@/shared-components/bottomsheet/CreateContentBottomSheet';
 
 // Typ für Profile-Tabs
 type ProfileTabId = 'nuggets' | 'gigs' | 'casestudies' | 'ratings';
@@ -274,6 +276,7 @@ type ProfileImageSource = ProfileImageData | { uri: string } | null;
 export default function ProfileScreen() {
   // State für den aktiven Tab
   const [activeTab, setActiveTab] = useState<ProfileTabId>('nuggets');
+  const [contentSheetVisible, setContentSheetVisible] = useState(false);
   
   // Hole die Theme-Farben für die Komponente
   const colors = useThemeColor();
@@ -332,8 +335,13 @@ export default function ProfileScreen() {
   
   // Handler für PlusButton
   const handlePlusButtonPress = () => {
-    // Navigiere zum CreateNuggetScreen
-    router.push('/nuggets/create/createNugget');
+    // BottomSheet öffnen statt direkt zu navigieren
+    setContentSheetVisible(true);
+  };
+  
+  // Handler zum Schließen des BottomSheets
+  const handleCloseContentSheet = () => {
+    setContentSheetVisible(false);
   };
   
   // Tab-Wechsel-Handler
@@ -535,10 +543,18 @@ export default function ProfileScreen() {
         </View>
       </ScrollView>
       
-      {/* PlusButton in der unteren rechten Ecke */}
-      <PlusButton
-        onPress={handlePlusButtonPress}
-        bottomOffset={100} // Höher positioniert, um über der BottomTabBar zu sein
+      {/* PlusButton über der TabBar (nur im Live-Modus anzeigen) */}
+      {!isDemoMode() && (
+        <PlusButton
+          onPress={handlePlusButtonPress}
+          style={styles.plusButton}
+        />
+      )}
+      
+      {/* CreateContentBottomSheet für Auswahl des Inhaltstyps */}
+      <CreateContentBottomSheet 
+        visible={contentSheetVisible}
+        onClose={handleCloseContentSheet}
       />
     </SafeAreaView>
   );
@@ -642,4 +658,11 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.s,
     marginBottom: spacing.xxs,
   },
+  plusButton: {
+    position: 'absolute',
+    bottom: 90, // Höherer Wert, damit er über der TabBar schwebt
+    right: spacing.m,
+    zIndex: 1000, // Hoher zIndex, damit er über allem anderen liegt
+    elevation: 10, // Für Android
+  }
 }); 

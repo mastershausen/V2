@@ -10,6 +10,14 @@ export const themeColors = {
     // Primärfarben
     primary: '#007AFF', // Blau als Hauptfarbe
     secondary: '#34C759', // Grün als Sekundärfarbe
+    
+    // Pastel-Varianten
+    pastel: {
+      primary: 'rgba(0, 122, 255, 0.15)', // Pastellversion der Primärfarbe
+      primaryBorder: 'rgba(0, 122, 255, 0.5)', // Pastellversion für Ränder
+      secondary: 'rgba(52, 199, 89, 0.15)', // Pastellversion der Sekundärfarbe
+      secondaryBorder: 'rgba(52, 199, 89, 0.5)', // Pastellversion für Ränder
+    },
 
     // Statusfarben
     success: '#34C759',
@@ -76,6 +84,14 @@ export const themeColors = {
     // Primärfarben
     primary: '#007AFF', // Blau als Hauptfarbe für dunkles Theme
     secondary: '#30D158', // Angepasstes Grün für dunkles Theme
+    
+    // Pastel-Varianten für das dunkle Theme
+    pastel: {
+      primary: 'rgba(0, 122, 255, 0.25)', // Pastellversion der Primärfarbe (dunkler Modus)
+      primaryBorder: 'rgba(0, 122, 255, 0.6)', // Pastellversion für Ränder (dunkler Modus)
+      secondary: 'rgba(48, 209, 88, 0.25)', // Pastellversion der Sekundärfarbe (dunkler Modus)
+      secondaryBorder: 'rgba(48, 209, 88, 0.6)', // Pastellversion für Ränder (dunkler Modus)
+    },
     
     // Statusfarben
     success: '#30D158',

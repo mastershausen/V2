@@ -17,7 +17,6 @@ interface PlusButtonProps {
   onPress: () => void;
   style?: StyleProp<ViewStyle>;
   size?: number;
-  bottomOffset?: number;
 }
 
 /**
@@ -27,16 +26,13 @@ interface PlusButtonProps {
  * @param onPress - Callback-Funktion für den Button-Press
  * @param style - Zusätzliche Styles für den Button
  * @param size - Größe des Buttons (optional)
- * @param bottomOffset - Abstand von unten (optional)
  * @param onPress.style
  * @param onPress.size
- * @param onPress.bottomOffset
  */
 export function PlusButton({ 
   onPress, 
   style, 
-  size = 56,
-  bottomOffset = 16 // Standard-Abstand über der TabBar auf 16px reduziert
+  size = 56
 }: PlusButtonProps) {
   const colors = useThemeColor();
   const { isDemoMode } = useMode();
@@ -46,12 +42,18 @@ export function PlusButton({
     return null;
   }
   
+  // Verwende Pastellfarben aus dem Theme statt harter Codierung
+  const pastelPrimary = colors.pastel.primary;
+  const pastelBorder = colors.pastel.primaryBorder;
+  
   // Dynamische Styles basierend auf der Größe
   const buttonStyle = {
     width: size,
     height: size,
     borderRadius: size / 2,
-    backgroundColor: colors.primary,
+    borderWidth: 1,
+    borderColor: pastelBorder,
+    backgroundColor: pastelPrimary,
     // Schatten für den schwebenden Effekt
     shadowColor: colors.textPrimary,
     shadowOffset: {
@@ -64,7 +66,7 @@ export function PlusButton({
   };
 
   return (
-    <View style={[styles.container, { bottom: bottomOffset }, style]}>
+    <View style={[styles.container, style]}>
       <TouchableOpacity
         style={[styles.button, buttonStyle]}
         onPress={onPress}
@@ -76,7 +78,7 @@ export function PlusButton({
         <Ionicons 
           name="add" 
           size={size * 0.5} 
-          color={colors.backgroundPrimary} 
+          color={colors.primary} 
         />
       </TouchableOpacity>
     </View>
@@ -88,6 +90,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: spacing.m,
     alignSelf: 'center',
+    bottom: 15, // Direkt über der BottomTabbar mit minimalem Abstand
+    zIndex: 1000, // Hoher z-Index, damit der Button über allen anderen Elementen liegt
   },
   button: {
     justifyContent: 'center',

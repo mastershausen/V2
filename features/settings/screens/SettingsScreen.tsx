@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, ScrollView, SafeAreaView, Text } from 'react-native';
 
 import { spacing } from '@/config/theme/spacing';
 import { SettingsItem } from '@/features/settings/components/SettingsItem';
@@ -22,7 +22,9 @@ export default function SettingsScreen() {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
         title="Einstellungen"
-        showBackButton={false}
+        showBackButton={true}
+        titleStyle={styles.headerTitle}
+        containerStyle={styles.headerContainer}
       />
       
       <ScrollView 
@@ -69,6 +71,14 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  headerContainer: {
+    height: 56,
+    paddingTop: 0,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '600',
   },
   scrollView: {
     flex: 1,

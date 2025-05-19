@@ -57,9 +57,9 @@ export function FilterTabs({ tabs, activeTabId, onTabChange, containerStyle }: F
     onTabChange(tabId);
   };
   
-  // Pastellversion der Primärfarbe für einen dezenten Look
-  const pastelPrimary = 'rgba(0, 122, 255, 0.15)';  // Annahme einer blauen Primärfarbe
-  const pastelBorder = 'rgba(0, 122, 255, 0.5)';
+  // Verwende Pastellfarben aus dem Theme statt harter Codierung
+  const pastelPrimary = colors.pastel.primary;
+  const pastelBorder = colors.pastel.primaryBorder;
   
   return (
     <ScrollView 

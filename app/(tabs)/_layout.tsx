@@ -14,7 +14,7 @@ import { DEMO_USERS } from '@/features/auth/config/demo-users';
 import { AppModeToggle } from '@/features/mode/components';
 import { useMode } from '@/features/mode/hooks/useMode';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { StorageService } from '@/services/StorageService';
+import StorageService from '@/services/StorageService';
 import { BottomTabIcon } from '@/shared-components/navigation/icons/BottomTabIcon';
 import { ProfileTabIcon } from '@/shared-components/navigation/icons/ProfileTabIcon';
 import { useUserStore } from '@/stores';

@@ -22,7 +22,7 @@ import Routes from '@/constants/routes';
 import { useAppNavigation } from '@/hooks/navigation/useAppNavigation';
 import { usePhotoSelection } from '@/hooks/usePhotoSelection';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { MediaService } from '@/services/MediaService';
+import MediaService from '@/services/MediaService';
 import { PermissionService } from '@/services/permissions';
 import { ProfileImage } from '@/shared-components/media';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
@@ -203,35 +203,39 @@ export default function EditProfileScreen() {
         // 4. Bild auf den Server hochladen mit spezieller Fehlerbehandlung
         console.log(`[EditProfileScreen] Starte Bildupload mit Typ: ${type || 'image/jpeg'}`);
         
-        const uploadResult = await mediaService.uploadProfileImage(
-          uri, 
-          fileName || 'profile.jpg', 
-          type || 'image/jpeg'
+        // Bereite das MediaAsset-Objekt vor
+        const mediaAsset = {
+          uri,
+          type: type || 'image/jpeg'
+        };
+        
+        // Nutzerdaten aus dem user-Objekt extrahieren oder Fallback verwenden
+        const userId = user?.id || 'temp-user-id';
+        
+        // Rufe uploadProfileImage auf, welches ein String zurückgibt
+        const imageUrl = await mediaService.uploadProfileImage(
+          mediaAsset,
+          userId,
+          isDemoMode() ? 'demo' : 'live'
         );
         
-        console.log(`[EditProfileScreen] Upload-Ergebnis erhalten:`, uploadResult ? 'Erfolgreich' : 'Fehlgeschlagen');
+        console.log(`[EditProfileScreen] Upload-Ergebnis erhalten:`, imageUrl ? 'Erfolgreich' : 'Fehlgeschlagen');
         
-        if (uploadResult && uploadResult.imageUrl) {
-          console.log(`[EditProfileScreen] Upload erfolgreich: ${uploadResult.imageUrl.substring(0, 30)}...`);
+        if (imageUrl) {
+          console.log(`[EditProfileScreen] Upload erfolgreich: ${imageUrl.substring(0, 30)}...`);
           
-          // Prüfe, ob es ein simulierter Upload im Entwicklungsmodus ist
-          const isSimulated = uploadResult.metadata?.simulated === true;
-          if (isSimulated) {
-            console.log('[EditProfileScreen] Hinweis: Simulierter Upload im Entwicklungsmodus');
-          }
-          
-          // 5. Lokalen Formzustand aktualisieren - jetzt mit String statt Objekt
+          // 5. Lokalen Formzustand aktualisieren
           updateFormData({
-            profileImage: uploadResult.imageUrl
+            profileImage: imageUrl
           });
           
           // 6. Cache-Update (vereinfacht)
           if (user?.id) {
             console.log(`[EditProfileScreen] Aktualisiere Profilbild für ${user.id} im ${isDemoMode() ? 'demo' : 'real'}-Modus`);
-            updateProfileImageCacheGlobally(user.id, uploadResult.imageUrl, isDemoMode() ? 'demo' : 'real');
+            updateProfileImageCacheGlobally(user.id, imageUrl, isDemoMode() ? 'demo' : 'real');
           }
         } else {
-          console.error('[EditProfileScreen] Fehler beim Upload: Kein Ergebnis oder keine Image-URL');
+          console.error('[EditProfileScreen] Fehler beim Upload: Keine Image-URL erhalten');
           setError(t('profileEdit.uploadFailed'));
         }
       } catch (uploadError) {
@@ -284,7 +288,8 @@ export default function EditProfileScreen() {
       
       // User-Store aktualisieren
       if (user?.id) {
-        await updateProfile(updateData);
+        // Typecasting für updateProfile, da es als 'unknown' markiert wird
+        await (updateProfile as (data: any) => Promise<void>)(updateData);
       }
       
       // Profilbild-Cache mit dem neuen Wert aktualisieren
