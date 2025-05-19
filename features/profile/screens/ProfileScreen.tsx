@@ -471,6 +471,9 @@ export default function ProfileScreen() {
         
         {/* EINHEITLICHER SafeSpace-Container für alle Inhalte */}
         <View style={styles.safeSpaceContent}>
+          {/* Großer Abstand, damit der Name und alle Inhalte weit genug nach unten rutschen */}
+          <View style={{height: 150}} />
+          
           {/* Name und Info */}
           <View style={styles.userInfoContainer}>
             <Text style={[styles.userName, { color: colors.textPrimary }]}>
@@ -478,19 +481,20 @@ export default function ProfileScreen() {
                 ? `${profile.firstName} ${profile.lastName}`
                 : profile.name || profile.username}
             </Text>
-            
-            {/* DoubleButton für Nachricht senden und Kontaktinformationen */}
-            <View style={styles.actionButtonsContainer}>
-              <DoubleButton 
-                primaryLabel={buttonConfig.label}
-                secondaryLabel="Kontaktinfo"
-                onPrimaryPress={handlePrimaryButtonPress}
-                onSecondaryPress={handleSecondaryButtonPress}
-                primaryIcon={buttonConfig.icon}
-                secondaryIcon="information-circle-outline"
-              />
-            </View>
           </View>
+          
+          {/* Großer Abstand */}
+          <View style={{height: 100}} />
+          
+          {/* DoubleButton für Nachricht senden und Kontaktinformationen */}
+          <DoubleButton 
+            primaryLabel={buttonConfig.label}
+            secondaryLabel="Kontaktinfo"
+            onPrimaryPress={handlePrimaryButtonPress}
+            onSecondaryPress={handleSecondaryButtonPress}
+            primaryIcon={buttonConfig.icon}
+            secondaryIcon="information-circle-outline"
+          />
         </View>
         
         {/* Tabs außerhalb des SafeSpace-Containers für Full Width */}
@@ -553,13 +557,13 @@ const styles = StyleSheet.create({
     left: spacing.l,
     bottom: -50,
     backgroundColor: 'transparent',
-    elevation: 5,
+    elevation: 2,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3,
-    borderWidth: 3,
-    borderColor: 'white',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.15,
+    shadowRadius: 2,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.8)',
     borderRadius: 50,
   },
   profileImage: {
