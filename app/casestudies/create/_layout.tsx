@@ -2,7 +2,7 @@ import { Stack } from 'expo-router';
 import React from "react";
 
 /**
- *
+ * Layout für Fallstudien-Erstellungsscreens
  */
 export default function CaseStudiesCreateLayout() {
   return (
@@ -11,6 +11,13 @@ export default function CaseStudiesCreateLayout() {
         name="createCasestudyList"
         options={{
           presentation: 'modal',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="createCasestudyDetails"
+        options={{
+          presentation: 'card',
           headerShown: false,
         }}
       />

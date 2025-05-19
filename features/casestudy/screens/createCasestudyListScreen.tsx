@@ -78,15 +78,19 @@ export default function CreateCasestudyListScreen() {
       rating: 5.0, // Neue Fallstudien starten mit 5.0 Sternen
     };
     
-    Alert.alert(
-      'Fallstudie erstellt',
-      'Deine Fallstudie wurde erfolgreich erstellt.',
-      [{ text: 'OK', onPress: () => router.back() }]
-    );
+    // Statt direkt zu erstellen, zum Details-Screen navigieren
+    router.push({
+      pathname: '/casestudies/create/createCasestudyDetails',
+      params: {
+        title,
+        description,
+        imageUrl: imageUrl || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb'
+      }
+    });
   };
 
-  // Erstellen-Button für HeaderNavigation
-  const renderErstellenButton = () => (
+  // Weiter-Button für HeaderNavigation
+  const renderWeiterButton = () => (
     <TouchableOpacity 
       onPress={createCaseStudy}
       disabled={!canCreateCaseStudy}
@@ -97,7 +101,7 @@ export default function CreateCasestudyListScreen() {
           { color: canCreateCaseStudy ? colors.primary : colors.textSecondary }
         ]}
       >
-        Erstellen
+        Weiter
       </Text>
     </TouchableOpacity>
   );
@@ -111,7 +115,7 @@ export default function CreateCasestudyListScreen() {
       />
       <HeaderNavigation 
         title="Neue Fallstudie" 
-        rightContent={renderErstellenButton()}
+        rightContent={renderWeiterButton()}
         onBackPress={() => router.back()}
       />
       

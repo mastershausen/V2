@@ -386,7 +386,17 @@ export default function ProfileScreen() {
               <GigCard
                 key={gig.id}
                 gig={gig}
-                onPress={() => Alert.alert('Gig', 'Gig-Details öffnen')}
+                onPress={() => router.push({
+                  pathname: '/gigs/details',
+                  params: {
+                    id: gig.id,
+                    title: gig.title,
+                    description: gig.description,
+                    imageUrl: gig.imageUrl,
+                    price: `${gig.currency || '€'}${gig.price.toLocaleString('de-DE')}`,
+                    source: 'profile'
+                  }
+                })}
               />
             ))}
           </ProfileTabListContainer>
@@ -399,7 +409,17 @@ export default function ProfileScreen() {
                 key={gig.id}
                 gig={gig}
                 showPrice={false}
-                onPress={() => Alert.alert('Fallstudie', 'Fallstudien-Details werden angezeigt')}
+                onPress={() => router.push({
+                  pathname: '/gigs/details',
+                  params: {
+                    id: gig.id,
+                    title: gig.title,
+                    description: gig.description,
+                    imageUrl: gig.imageUrl,
+                    price: '',
+                    source: 'profile'
+                  }
+                })}
               />
             ))}
           </ProfileTabListContainer>

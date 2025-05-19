@@ -91,7 +91,39 @@ export default function SearchResultsScreen() {
   };
 
   const handleGigPress = (gigId: string) => {
-    Alert.alert('Gig', `Gig ${gigId} wurde angeklickt`);
+    // Suche nach dem Gig anhand der ID
+    const gig = mockGigs.find(g => g.id === gigId);
+    
+    if (gig) {
+      // Navigiere zum GigDetailsScreen mit den Gig-Daten als Parameter
+      router.push({
+        pathname: '/gigs/details',
+        params: {
+          id: gig.id,
+          title: gig.title,
+          description: gig.description,
+          imageUrl: gig.imageUrl,
+          price: `${gig.currency || '€'}${gig.price.toLocaleString('de-DE')}`,
+          source: 'search'
+        }
+      });
+    } else {
+      // Wenn es sich um eine Fallstudie handelt
+      const casestudy = mockCasestudies.find(c => c.id === gigId);
+      if (casestudy) {
+        router.push({
+                      pathname: '/gigs/details',
+            params: {
+              id: casestudy.id,
+              title: casestudy.title,
+              description: casestudy.description,
+              imageUrl: casestudy.imageUrl,
+              price: '',
+              source: 'search'
+            }
+        });
+      }
+    }
   };
 
   const handleExpertPress = (expertId: string) => {
