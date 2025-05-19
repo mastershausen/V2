@@ -30,7 +30,7 @@ export function NuggetCardBody({
   const colors = useThemeColor();
   const screenWidth = Dimensions.get('window').width;
   // Angepasste Berechnung der Medienbreite, um volle Breite zu erzielen
-  const mediaWidth = screenWidth - 2; // Nur Border abziehen, ohne Padding
+  const mediaWidth = screenWidth - 2 * spacing.m;
 
   // Rendert einen klickbaren Link mit Icon
   function renderLink(url: string) {
@@ -98,13 +98,13 @@ export function NuggetCardBody({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: spacing.m,
-    // paddingBottom wird dynamisch gesetzt
+    paddingHorizontal: 0,
   },
   contentText: {
     fontSize: typography.fontSize.m,
     lineHeight: typography.fontSize.m * 1.5,
     paddingBottom: spacing.s,
+    paddingHorizontal: spacing.m,
   },
   linkContainer: {
     flexDirection: 'row',
@@ -119,33 +119,40 @@ const styles = StyleSheet.create({
     marginLeft: spacing.s,
   },
   mediaContainer: {
-    marginTop: 0,
-    marginBottom: 0, // Kein Abstand nach unten für Medien
+    marginTop: spacing.s,
+    marginBottom: spacing.s,
   },
   mediaImage: {
-    borderRadius: borderRadius.m,
+    height: 200,
+    borderRadius: 0,
     marginTop: spacing.s,
+    width: '100%',
   },
   videoContainer: {
     position: 'relative',
     marginTop: spacing.s,
+    height: 200,
+    width: '100%',
   },
   videoThumbnail: {
-    borderRadius: 0, // Keine abgerundeten Ecken für Bilder
+    width: '100%',
+    height: '100%',
+    borderRadius: 0,
   },
   playButtonContainer: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    borderRadius: 0, // Keine abgerundeten Ecken für Video-Overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    borderRadius: 0,
   },
   linkWrapper: {
     flexDirection: 'row',
     borderWidth: 1,
     borderColor: '#E0E0E0',
     borderRadius: borderRadius.m,
-    marginBottom: 0,
+    marginTop: spacing.s,
+    marginHorizontal: spacing.m,
     overflow: 'hidden',
   },
 }); 

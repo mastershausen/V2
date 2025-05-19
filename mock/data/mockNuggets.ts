@@ -14,7 +14,10 @@ const mockNuggets: NuggetData[] = [
     commentCount: 7,
     isHelpful: true,
     isSaved: false,
-    tags: ['Steuern', 'Selbstständige', 'Tipps']
+    tags: ['Steuern', 'Selbstständige', 'Tipps'],
+    media: [
+      { type: 'image', url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80' }
+    ]
   },
   {
     id: 'n2',
@@ -29,7 +32,10 @@ const mockNuggets: NuggetData[] = [
     commentCount: 5,
     isHelpful: false,
     isSaved: true,
-    tags: ['Freiberufler', 'Büromiete', 'Betriebsausgaben']
+    tags: ['Freiberufler', 'Büromiete', 'Betriebsausgaben'],
+    media: [
+      { type: 'video', url: 'https://www.w3schools.com/html/mov_bbb.mp4', thumbnailUrl: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80' }
+    ]
   },
   {
     id: 'n3',
