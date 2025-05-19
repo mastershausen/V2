@@ -31,6 +31,7 @@ import { ProfileTabListContainer } from '@/shared-components/ProfileTabListConta
 import mockNuggets from '@/mock/data/mockNuggets';
 import mockGigs from '@/mock/data/mockGigs';
 import mockCasestudies from '@/mock/data/mockCasestudies';
+import { ReviewCard } from '@/shared-components/cards/review-card/ReviewCard';
 
 // Typ für Profile-Tabs
 type ProfileTabId = 'nuggets' | 'gigs' | 'casestudies' | 'ratings';
@@ -441,22 +442,15 @@ export default function ProfileScreen() {
       case 'ratings':
         return (
           <ProfileTabListContainer>
-            {DEMO_RATINGS.map((r) => (
-              <View key={r.id} style={{ backgroundColor: '#fff', borderRadius: 12, borderWidth: 1, borderColor: '#E0E0E0', padding: spacing.m, flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{ marginRight: spacing.m }}>
-                  <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: '#F0F0F0', alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={{ fontWeight: 'bold', color: '#888' }}>{r.user.profileImage.initials}</Text>
-                  </View>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ fontWeight: 'bold', marginBottom: 2 }}>{r.user.name}</Text>
-                  <Text style={{ color: '#666', marginBottom: 4 }}>{r.text}</Text>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ color: '#FFD600', fontWeight: 'bold', marginRight: 4 }}>★</Text>
-                    <Text style={{ color: '#888' }}>{r.rating.toFixed(1)}</Text>
-                  </View>
-                </View>
-              </View>
+            {DEMO_RATINGS.map((r, idx) => (
+              <ReviewCard
+                key={r.id}
+                name={r.user.name}
+                initials={r.user.profileImage.initials}
+                rating={r.rating}
+                text={r.text}
+                date={idx === 0 ? 'vor 2 Wochen' : idx === 1 ? 'vor 3 Tagen' : 'vor 1 Monat'}
+              />
             ))}
           </ProfileTabListContainer>
         );
