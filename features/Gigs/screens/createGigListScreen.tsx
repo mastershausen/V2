@@ -88,14 +88,20 @@ export default function CreateGigListScreen() {
       rating: 5.0, // Neue Gigs starten mit 5.0 Sternen
     };
     
-    Alert.alert(
-      'Gig erstellt',
-      'Dein Gig wurde erfolgreich erstellt.',
-      [{ text: 'OK', onPress: () => router.back() }]
-    );
+    // Navigiere zum nächsten Schritt mit den eingegebenen Daten
+    router.push({
+      pathname: '/gigs/create/createGigDetails',
+      params: {
+        title,
+        description,
+        price: priceType === 'specific' ? price : '0',
+        currency: priceType === 'specific' ? currency : (priceType === 'free' ? 'Kostenlos' : 'Auf Anfrage'),
+        imageUrl: imageUrl || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb'
+      }
+    });
   };
 
-  // Erstellen-Button für HeaderNavigation
+  // Weiter-Button für HeaderNavigation
   const renderErstellenButton = () => (
     <TouchableOpacity 
       onPress={createGig}
@@ -107,7 +113,7 @@ export default function CreateGigListScreen() {
           { color: canCreateGig ? colors.primary : colors.textSecondary }
         ]}
       >
-        Erstellen
+        Weiter
       </Text>
     </TouchableOpacity>
   );

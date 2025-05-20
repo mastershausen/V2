@@ -20,6 +20,14 @@ export default function GigsCreateLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="createGigDetails"
+        options={{
+          headerShown: false,
+          presentation: 'card',
+          animation: 'slide_from_right',
+        }}
+      />
     </Stack>
   );
 } 
