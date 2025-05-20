@@ -7,7 +7,7 @@
 
 import { useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TextStyle, Alert, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, TextStyle, Alert, Dimensions, TouchableOpacity, Linking } from 'react-native';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -15,6 +15,7 @@ import { ui } from '@/config/theme/ui';
 import Routes from '@/constants/routes';
 import { useMode } from '@/features/mode/hooks/useMode';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { Ionicons } from '@expo/vector-icons';
 import { DoubleButton } from '@/shared-components/button/DoubleButton';
 import { PlusButton } from '@/shared-components/button/PlusButton';
 import { SettingsIcon } from '@/shared-components/button/SettingsIcon';
@@ -501,7 +502,7 @@ export default function ProfileScreen() {
         {/* EINHEITLICHER SafeSpace-Container für alle Inhalte */}
         <View style={styles.safeSpaceContent}>
           {/* Abstand für Profilbild */}
-          <View style={{height: 70}} />
+          <View style={{height: 90}} />
           
           {/* Name und Info */}
           <View style={styles.userInfoContainer}>
@@ -519,10 +520,16 @@ export default function ProfileScreen() {
                 </Text>
               )}
               
-              {profile.companyName && (
-                <Text style={[styles.bioCompany, { color: colors.textSecondary }]}>
-                  {profile.companyName}
-                </Text>
+              {profile.website && (
+                <TouchableOpacity 
+                  onPress={() => Linking.openURL(profile.website || '')}
+                  style={styles.websiteContainer}
+                >
+                  <Ionicons name="globe-outline" size={16} color={colors.primary} />
+                  <Text style={[styles.bioCompany, { color: colors.primary, marginLeft: spacing.xs }]}>
+                    {profile.website.replace(/^https?:\/\/(www\.)?/i, '')}
+                  </Text>
+                </TouchableOpacity>
               )}
             </View>
           </View>
@@ -621,7 +628,7 @@ const styles = StyleSheet.create({
   profileImageContainer: {
     position: 'absolute',
     left: spacing.l,
-    bottom: -50,
+    bottom: -70,
     backgroundColor: 'transparent',
     elevation: 2,
     shadowColor: '#000',
@@ -686,12 +693,16 @@ const styles = StyleSheet.create({
     marginBottom: spacing.s,
   },
   bioCompany: {
-    fontSize: typography.fontSize.s,
+    fontSize: typography.fontSize.m,
     marginBottom: spacing.xxs,
   },
   bioLocation: {
     fontSize: typography.fontSize.s,
     marginBottom: spacing.xxs,
+  },
+  websiteContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   plusButton: {
     position: 'absolute',

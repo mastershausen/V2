@@ -83,7 +83,7 @@ export function AppModeToggle({
       color: colors.error
     },
     modeBadge: {
-      color: isCurrentlyDemoMode ? '#0056B3' : '#00702F', // Dunklere Textfarben für besseren Kontrast
+      color: isCurrentlyDemoMode ? colors.primary : colors.success, // Verwende Primärfarbe für Demo und Success für Live
       fontWeight: 'bold' as TextStyle['fontWeight'],
       backgroundColor: isCurrentlyDemoMode ? `${colors.primary}60` : `${colors.success}60`, // 60% Opacity für maximalen Kontrast
       borderWidth: 1.5, // Dickerer Rahmen für mehr Sichtbarkeit

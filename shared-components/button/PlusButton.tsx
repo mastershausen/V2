@@ -42,27 +42,27 @@ export function PlusButton({
     return null;
   }
   
-  // Verwende Pastellfarben aus dem Theme statt harter Codierung
-  const pastelPrimary = colors.pastel.primary;
-  const pastelBorder = colors.pastel.primaryBorder;
+  // Verwende dunklere Pastellfarben für mehr Kontrast
+  const backgroundColor = `${colors.primary}30`; // 30% Opazität für dunkleren Pastell-Look
+  const borderColor = `${colors.primary}60`;    // 60% Opazität für dunkleren Rand
   
   // Dynamische Styles basierend auf der Größe
   const buttonStyle = {
     width: size,
     height: size,
     borderRadius: size / 2,
-    borderWidth: 1,
-    borderColor: pastelBorder,
-    backgroundColor: pastelPrimary,
-    // Schatten für den schwebenden Effekt
+    borderWidth: 1.5, // Dickerer Rand für bessere Sichtbarkeit
+    borderColor: borderColor,
+    backgroundColor: backgroundColor,
+    // Verstärkter Schatten für besseren schwebenden Effekt
     shadowColor: colors.textPrimary,
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 3,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOpacity: 0.3,
+    shadowRadius: 4.5,
+    elevation: 6,
   };
 
   return (

@@ -18,6 +18,12 @@ export const themeColors = {
       secondary: 'rgba(52, 199, 89, 0.15)', // Pastellversion der Sekundärfarbe
       secondaryBorder: 'rgba(52, 199, 89, 0.5)', // Pastellversion für Ränder
     },
+    
+    // Mode-Farben (Dunklere Varianten für Text)
+    mode: {
+      demoDark: '#0056B3', // Dunklere Blau-Variante für Demo-Modus
+      liveDark: '#00702F', // Dunklere Grün-Variante für Live-Modus
+    },
 
     // Statusfarben
     success: '#34C759',
@@ -91,6 +97,12 @@ export const themeColors = {
       primaryBorder: 'rgba(0, 122, 255, 0.6)', // Pastellversion für Ränder (dunkler Modus)
       secondary: 'rgba(48, 209, 88, 0.25)', // Pastellversion der Sekundärfarbe (dunkler Modus)
       secondaryBorder: 'rgba(48, 209, 88, 0.6)', // Pastellversion für Ränder (dunkler Modus)
+    },
+    
+    // Mode-Farben (Dunklere Varianten für Text)
+    mode: {
+      demoDark: '#0056B3', // Dunklere Blau-Variante für Demo-Modus 
+      liveDark: '#00702F', // Dunklere Grün-Variante für Live-Modus
     },
     
     // Statusfarben

@@ -15,31 +15,7 @@ import { typography } from '../config/theme/typography';
 const lightColors = themeColors.light;
 
 // Dunkel-Modus Farben
-const darkColors = {
-  // Primärfarben
-  primary: '#6F8FFF',
-  secondary: '#9C27B0',
-  
-  // Hintergrundfarben
-  background: '#121212',
-  card: '#1E1E1E',
-  
-  // Textfarben
-  text: '#FFFFFF',
-  textSecondary: '#B3B3B3',
-  textTertiary: '#757575',
-  
-  // Funktionale Farben
-  success: '#4CAF50',
-  warning: '#FF9800',
-  error: '#F44336',
-  info: '#2196F3',
-  
-  // Interface-Elemente
-  divider: '#383838',
-  disabled: '#5E5E5E',
-  border: '#383838',
-};
+const darkColors = themeColors.dark;
 
 /**
  * Exportierter Hook, der das Theme zurückgibt
@@ -64,7 +40,7 @@ export function useTheme() {
 }
 
 // Exportiere Typen für das Theme
-export type ThemeColors = typeof lightColors;
+export type ThemeColors = typeof themeColors.light;
 export type ThemeSpacing = typeof spacing;
 export type ThemeTypography = typeof typography;
 export type Theme = ReturnType<typeof useTheme>; 
