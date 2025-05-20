@@ -23,13 +23,16 @@ import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigatio
 import { FooterActionButton } from '@/shared-components/navigation/FooterActionButton';
 import { NuggetCardInteraction } from '@/shared-components/cards/nugget-card/components/NuggetCardInteraction';
 import { GigActionBottomSheet } from '@/shared-components/bottomsheet/GigActionBottomSheet';
+import { DateBadge } from '@/shared-components/badges/DateBadge';
 
 // Demo-Daten von Alexander Becker
 const DEMO_USER = {
   name: 'Alexander Becker',
   profileImage: null, // Wir nutzen Initialen
   description: 'Ich zeige Selbstständigen & Unternehmern, wie sie mit legaler Steueroptimierung 5-stellig sparen können – jedes Jahr.',
-  headline: 'Steuern runter. Gewinn rauf.'
+  headline: 'Steuern runter. Gewinn rauf.',
+  rating: 4.9,
+  ratingCount: 42
 };
 
 // Demo-Daten für den Gig
@@ -40,7 +43,8 @@ const DEMO_GIG = {
   title: 'Steuerliche Rundumbetreuung für Startups & Gründer von der Planung bis zur ersten Bilanz',
   // Ausführliche und überzeugendere Beschreibung für den Details-Screen
   description: 'Als Gründer stehst du vor vielen Herausforderungen – die Steuern sollten nicht dein größtes Problem sein. Mit meiner speziell für Startups entwickelten Beratung helfe ich dir, von Anfang an alles richtig zu machen und gleichzeitig erheblich Steuern zu sparen.\n\n**Was dich erwartet:**\n\n• **Umfassende Erstberatung (90 Minuten)** – Wir analysieren deine individuellen Bedürfnisse und entwickeln eine maßgeschneiderte Strategie\n\n• **Rechtsformoptimierung** – Ich zeige dir, welche Unternehmensform steuerlich am günstigsten für dein Geschäftsmodell ist\n\n• **Investitions- und Förderberatung** – Erfahre, welche staatlichen Zuschüsse und Fördermittel du nutzen kannst\n\n• **Umsatzsteuer-Coaching** – Verstehe die wichtigsten Regeln und vermeide kostspielige Fehler\n\n• **Gewinnoptimierung** – Lerne legale Strategien zur Minimierung deiner Steuerlast kennen\n\n• **Digitale Buchhaltungseinrichtung** – Ich helfe dir, deine Finanzen von Anfang an digital und effizient zu organisieren\n\nMeine Kunden sparen durchschnittlich 40% ihrer Steuerlast im ersten Geschäftsjahr. Als ehemaliger Startup-Gründer kenne ich die Herausforderungen aus eigener Erfahrung und spreche deine Sprache – keine komplizierten Steuerfachbegriffe, sondern praxisnahe Lösungen.\n\nBuche jetzt dein Erstgespräch und starte mit einer soliden steuerlichen Grundlage in deine Selbstständigkeit.',
-  price: '€299'
+  price: '€299',
+  publishedAt: '12. Mai 2023'
 };
 
 /**
@@ -209,28 +213,54 @@ export default function GigDetailsScreen() {
         />
         
         <View style={styles.content}>
-          {/* Profilbild - jetzt noch kleiner und näher am Header */}
+          {/* Profilbereich mit Name und Bewertung */}
           <View style={styles.profileContainer}>
-            <ProfileImage
-              source={userImageUrl ? { uri: userImageUrl } : null}
-              fallbackText={userName}
-              size={50}
-              variant="circle"
-              isRealMode={!isDemoMode()}
-              style={styles.profileImage}
-            />
-            
-            {/* Name des Anbieters direkt neben dem Profilbild */}
-            <Text style={[styles.userName, { color: colors.textPrimary }]}>
-              {userName}
-            </Text>
-          </View>
-          
-          {/* Preis */}
-          <View style={[styles.priceContainer, { backgroundColor: colors.backgroundSecondary }]}>
-            <Text style={[styles.price, { color: colors.textPrimary }]}>
-              {price}
-            </Text>
+            <View style={styles.profileMainSection}>
+              {/* Zeile für Name und Bewertung */}
+              <View style={styles.profileNameRow}>
+                {/* Profilbild und Name links */}
+                <View style={styles.profileLeftSection}>
+                  <ProfileImage
+                    source={userImageUrl ? { uri: userImageUrl } : null}
+                    fallbackText={userName}
+                    size={40}
+                    variant="circle"
+                    isRealMode={!isDemoMode()}
+                    style={styles.profileImage}
+                  />
+                  
+                  {/* Name des Anbieters */}
+                  <Text style={[styles.userName, { color: colors.textPrimary }]}>
+                    {userName}
+                  </Text>
+                </View>
+                
+                {/* Bewertung rechts neben dem Namen */}
+                <View style={styles.ratingContainer}>
+                  <Text style={[styles.ratingText, { color: colors.textPrimary }]}>
+                    {DEMO_USER.rating}
+                  </Text>
+                  <Ionicons name="star" size={14} color="#FFB400" style={styles.ratingIcon} />
+                  <Text style={[styles.ratingCountText, { color: colors.textSecondary }]}>
+                    ({DEMO_USER.ratingCount})
+                  </Text>
+                </View>
+              </View>
+              
+              {/* Zweite Zeile: Preisbadge rechts ausgerichtet */}
+              <View style={styles.priceBadgeRow}>
+                <View style={{flex: 1}} />
+                <View style={[styles.priceContainer, { 
+                  backgroundColor: colors.backgroundSecondary, 
+                  borderWidth: 1,
+                  borderColor: 'rgba(0, 0, 0, 0.05)',
+                }]}>
+                  <Text style={[styles.price, { color: colors.textPrimary }]}>
+                    {price}
+                  </Text>
+                </View>
+              </View>
+            </View>
           </View>
           
           {/* Interaktionsleiste in voller Breite */}
@@ -257,6 +287,15 @@ export default function GigDetailsScreen() {
           <Text style={[styles.description, { color: colors.textSecondary }]}>
             {description}
           </Text>
+          
+          {/* Trennlinie und Veröffentlichungsdatum */}
+          <View style={[styles.footerDivider, { backgroundColor: colors.divider }]} />
+          <View style={styles.footerContainer}>
+            <DateBadge
+              date={DEMO_GIG.publishedAt}
+              prefix="Veröffentlicht am"
+            />
+          </View>
         </View>
       </ScrollView>
       
@@ -315,29 +354,63 @@ const styles = StyleSheet.create({
     paddingTop: 12, // Reduzierter Abstand für mehr Nähe zum Header
   },
   profileContainer: {
+    marginBottom: spacing.m,
+    marginTop: spacing.s,
+  },
+  profileMainSection: {
+    width: '100%',
+  },
+  profileNameRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: spacing.m,
-    marginTop: spacing.s, // Etwas Abstand nach dem Header
+    justifyContent: 'space-between',
+    marginBottom: spacing.xs,
+  },
+  priceBadgeRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginBottom: spacing.s,
+  },
+  profileLeftSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   profileImage: {
     borderWidth: 0,
   },
   userName: {
-    fontSize: typography.fontSize.xl,
+    fontSize: typography.fontSize.l,
     fontWeight: typography.fontWeight.bold,
     marginLeft: spacing.s,
   },
   priceContainer: {
-    alignSelf: 'flex-start',
     paddingVertical: spacing.xs,
-    paddingHorizontal: spacing.m,
+    paddingHorizontal: spacing.s,
     borderRadius: ui.borderRadius.m,
-    marginVertical: spacing.m,
+    shadowColor: 'rgba(0,0,0,0.1)',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
+    elevation: 1,
   },
   price: {
-    fontSize: typography.fontSize.l,
+    fontSize: typography.fontSize.m,
     fontWeight: typography.fontWeight.bold,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ratingText: {
+    fontSize: typography.fontSize.s,
+    fontWeight: typography.fontWeight.bold,
+  },
+  ratingIcon: {
+    marginLeft: spacing.xxs,
+    marginRight: spacing.xxs,
+  },
+  ratingCountText: {
+    fontSize: typography.fontSize.xs,
   },
   title: {
     fontSize: typography.fontSize.xl,
@@ -379,5 +452,13 @@ const styles = StyleSheet.create({
   actionButtonLabel: {
     fontSize: typography.fontSize.s,
     fontWeight: '500',
+  },
+  footerDivider: {
+    height: StyleSheet.hairlineWidth,
+    width: '100%',
+    marginBottom: spacing.m,
+  },
+  footerContainer: {
+    marginBottom: spacing.xl,
   },
 }); 
