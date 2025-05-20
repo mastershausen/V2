@@ -135,7 +135,7 @@ function HomeScreen() {
             </View>
             
             <View style={styles.suggestionsContainer}>
-              <Text style={styles.suggestionsTitle}>
+              <Text style={[styles.suggestionsTitle, { color: colors.textSecondary }]}>
                 Meistgesuchte Lösungen
               </Text>
               <SuggestionList
@@ -144,6 +144,7 @@ function HomeScreen() {
                 colors={colors}
                 horizontal={false}
                 maxItems={5}
+                containerStyle={styles.suggestionListContainer}
               />
             </View>
           </View>
@@ -200,17 +201,17 @@ const createStyles = (colors: HomeScreenColors) => StyleSheet.create({
     marginBottom: spacing.m,
   },
   suggestionsContainer: {
-    flexDirection: 'column',
-    marginTop: spacing.s,
-    paddingHorizontal: spacing.m,
+    marginTop: spacing.m,
+    width: '100%',
   },
   suggestionsTitle: {
     fontSize: typography.fontSize.m,
-    color: colors.textSecondary,
+    fontWeight: typography.fontWeight.medium,
     marginBottom: spacing.s,
-    paddingHorizontal: spacing.xs,
     textAlign: 'center',
-    width: '100%',
+  },
+  suggestionListContainer: {
+    marginTop: spacing.xs,
   },
 });
 

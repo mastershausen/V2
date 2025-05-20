@@ -132,7 +132,9 @@ function SuggestionListBase({
         </ScrollView>
       ) : (
         <View style={styles.verticalContainer}>
-          {displayedSuggestions.map(renderSuggestionItem)}
+          <View style={styles.flexRow}>
+            {displayedSuggestions.map(renderSuggestionItem)}
+          </View>
         </View>
       )}
     </View>
@@ -144,25 +146,24 @@ function SuggestionListBase({
  */
 const styles = StyleSheet.create({
   container: {
-    marginVertical: spacing.s,
+    marginVertical: spacing.xs,
   },
   scrollViewContent: {
     paddingHorizontal: spacing.s,
   },
-  flexContainer: {
+  flexRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    paddingHorizontal: spacing.s,
-  },
-  verticalContainer: {
-    flexDirection: 'column',
-    paddingHorizontal: spacing.s,
     alignItems: 'center',
   },
+  verticalContainer: {
+    paddingHorizontal: spacing.s,
+    alignItems: 'center',
+    width: '100%',
+  },
   chipContainer: {
-    marginBottom: spacing.s,
-    marginHorizontal: spacing.xs,
+    margin: spacing.xs,
   }
 });
 
