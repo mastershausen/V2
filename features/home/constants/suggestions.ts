@@ -9,31 +9,32 @@ import i18n from '@/i18n/config';
  * durchgeführt hat.
  * 
  * Die Vorschläge sind nach Relevanz und Beliebtheit sortiert.
+ * Die Labels werden aus den Übersetzungen bezogen.
  */
 export const DEFAULT_SUGGESTIONS: SearchSuggestion[] = [
   { 
     id: '1', 
-    label: 'Steuern sparen', 
+    label: i18n.t('home.defaultSuggestions.taxSaving'), 
     icon: 'money' 
   },
   { 
     id: '2', 
-    label: 'Vermögen schützen', 
+    label: i18n.t('home.defaultSuggestions.protectAssets'), 
     icon: 'shield' 
   },
   { 
     id: '3', 
-    label: 'Kunden gewinnen', 
+    label: i18n.t('home.defaultSuggestions.gainCustomers'), 
     icon: 'users' 
   },
   { 
     id: '4', 
-    label: 'Fixkosten senken', 
+    label: i18n.t('home.defaultSuggestions.reduceCosts'), 
     icon: 'arrow-down' 
   },
   { 
     id: '5', 
-    label: 'Unternehmen verkaufen', 
+    label: i18n.t('home.defaultSuggestions.sellCompany'), 
     icon: 'building-o' 
   },
 ];

@@ -18,6 +18,7 @@ import { ThemeProvider } from '@/contexts/ThemeContext';
 import { analyticsService } from '@/services/analytics';
 import { logger } from '@/utils/logger';
 import bootstrapServices from '@/utils/service/initServices';
+import { CustomSplashScreen } from '@/shared-components/splash/CustomSplashScreen';
 
 // App-Installation beim Start überprüfen
 const APP_INSTALLATION_KEY = 'app_installation';
@@ -43,6 +44,7 @@ SplashScreen.preventAutoHideAsync().catch(error => {
  */
 export default function RootLayout() {
   const [appReady, setAppReady] = useState(false);
+  const [showCustomSplash, setShowCustomSplash] = useState(false);
   
   // Verbesserte Initialisierungslogik mit mehr Fehlerbehandlung
   useEffect(() => {
@@ -61,24 +63,26 @@ export default function RootLayout() {
         await analyticsService.initAnalytics();
         logger.info('[App] Analytics-Service initialisiert');
         
-        // Mindestens 1 Sekunde Verzögerung für bessere Benutzererfahrung
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        if (!isMounted) return;
-        
-        logger.info('[App] Startvorbereitungen abgeschlossen');
-        setAppReady(true);
-        
+        // Expo SplashScreen ausblenden und den benutzerdefinierten Splashscreen anzeigen
         try {
-          logger.info('[App] Versuche SplashScreen auszublenden...');
+          logger.info('[App] Versuche Expo SplashScreen auszublenden...');
           await SplashScreen.hideAsync();
-          logger.info('[App] SplashScreen erfolgreich ausgeblendet');
+          if (isMounted) {
+            setShowCustomSplash(true);
+          }
+          logger.info('[App] Expo SplashScreen erfolgreich ausgeblendet');
         } catch (splashError) {
-          logger.warn('[App] Konnte SplashScreen nicht ausblenden', 
+          logger.warn('[App] Konnte Expo SplashScreen nicht ausblenden', 
             splashError instanceof Error ? splashError.message : String(splashError)
           );
-          // Fahre dennoch fort, auch wenn der SplashScreen nicht ausgeblendet werden konnte
+          // Trotzdem Custom Splash anzeigen
+          if (isMounted) {
+            setShowCustomSplash(true);
+          }
         }
+        
+        // Der benutzerdefinierte Splashscreen wird sich selbst ausblenden,
+        // sobald seine Animation abgeschlossen ist
       } catch (error) {
         logger.error('[App] Fehler beim Initialisieren der App:', 
           error instanceof Error ? error.message : String(error)
@@ -104,19 +108,22 @@ export default function RootLayout() {
     };
   }, []);
   
-  if (!appReady) {
-    logger.debug('[App] App noch nicht bereit, zeige leeres Layout');
-    return null;
-  }
-  
-  logger.info('[App] App bereit, zeige Hauptlayout');
+  // Callback für wenn der benutzerdefinierte Splashscreen fertig ist
+  const handleSplashComplete = () => {
+    setShowCustomSplash(false);
+    setAppReady(true);
+  };
   
   // Vereinfachtes Layout mit den erforderlichen Providern
   return (
     <ThemeProvider>
       <AuthProvider>
         <StatusBar style="auto" />
-        <Slot />
+        <CustomSplashScreen 
+          isVisible={showCustomSplash} 
+          onAnimationComplete={handleSplashComplete} 
+        />
+        {appReady && <Slot />}
       </AuthProvider>
     </ThemeProvider>
   );

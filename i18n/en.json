@@ -251,8 +251,9 @@
   },
   "home": {
     "searchHeader": "How can we help?",
-    "searchSubtitle": "Looking for expertise or solutions?",
+    "searchSubtitle": "For every problem the right solution within 48h",
     "searchPlaceholder": "Search for a solution here...",
+    "popularSolutions": "Most searched solutions",
     "defaultSuggestions": {
       "taxOptions": "Tax options",
       "saveMoney": "Save money",
@@ -260,7 +261,12 @@
       "businessPlan": "Business plan",
       "investment": "Investment advice",
       "insurance": "Insurance",
-      "retirement": "Retirement planning"
+      "retirement": "Retirement planning",
+      "taxSaving": "Save taxes",
+      "protectAssets": "Protect assets",
+      "gainCustomers": "Gain customers",
+      "reduceCosts": "Reduce fixed costs",
+      "sellCompany": "Sell company"
     }
   },
   "search": {

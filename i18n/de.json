@@ -262,8 +262,9 @@
   },
   "home": {
     "searchHeader": "Wie können wir helfen?",
-    "searchSubtitle": "Suchst du nach Expertise oder Lösungen?",
+    "searchSubtitle": "Für jedes Problem die passende Lösung innerhalb von 48h",
     "searchPlaceholder": "Hier nach Lösung suchen...",
+    "popularSolutions": "Meistgesuchte Lösungen",
     "defaultSuggestions": {
       "taxOptions": "Steueroptionen",
       "saveMoney": "Geld sparen",
@@ -271,7 +272,12 @@
       "businessPlan": "Geschäftsplan",
       "investment": "Anlageberatung",
       "insurance": "Versicherungen",
-      "retirement": "Altersvorsorge"
+      "retirement": "Altersvorsorge",
+      "taxSaving": "Steuern sparen",
+      "protectAssets": "Vermögen schützen",
+      "gainCustomers": "Kunden gewinnen",
+      "reduceCosts": "Fixkosten senken",
+      "sellCompany": "Unternehmen verkaufen"
     }
   },
   "permissions": {

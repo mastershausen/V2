@@ -114,10 +114,10 @@ function HomeScreen() {
           <View style={[styles.contentContainer, layoutStyles]}>
             <View style={styles.header}>
               <Text style={styles.headerTitle}>
-                Wie können wir helfen?
+                {t('home.searchHeader')}
               </Text>
               <Text style={styles.headerSubtitle}>
-                Für jedes Problem die passende Lösung innerhalb von 48h
+                {t('home.searchSubtitle')}
               </Text>
             </View>
             
@@ -136,7 +136,7 @@ function HomeScreen() {
             
             <View style={styles.suggestionsContainer}>
               <Text style={[styles.suggestionsTitle, { color: colors.textSecondary }]}>
-                Meistgesuchte Lösungen
+                {t('home.popularSolutions')}
               </Text>
               <SuggestionList
                 suggestions={suggestions}
