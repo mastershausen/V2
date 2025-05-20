@@ -412,13 +412,12 @@ export default function ProfileScreen() {
                 gig={gig}
                 showPrice={false}
                 onPress={() => router.push({
-                  pathname: '/gigs/details',
+                  pathname: '/casestudies/details',
                   params: {
                     id: gig.id,
                     title: gig.title,
                     description: gig.description,
                     imageUrl: gig.imageUrl,
-                    price: '',
                     source: 'profile'
                   }
                 })}

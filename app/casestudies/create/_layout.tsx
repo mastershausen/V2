@@ -10,8 +10,9 @@ export default function CaseStudiesCreateLayout() {
       <Stack.Screen
         name="createCasestudyList"
         options={{
-          presentation: 'modal',
+          presentation: 'fullScreenModal',
           headerShown: false,
+          animation: 'slide_from_bottom',
         }}
       />
       <Stack.Screen

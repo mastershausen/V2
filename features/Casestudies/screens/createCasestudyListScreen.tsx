@@ -11,7 +11,8 @@ import {
   ScrollView,
   Image,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  StatusBar
 } from 'react-native';
 
 import { spacing } from '@/config/theme/spacing';
@@ -104,113 +105,129 @@ export default function CreateCasestudyListScreen() {
   );
   
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
-      <HeaderNavigation 
-        title="Neue Fallstudie" 
-        rightContent={renderWeiterButton()}
-        onBackPress={() => router.back()}
-      />
-      
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.keyboardAvoidingView}
-      >
-        <ScrollView style={styles.scrollView}>
-          <View style={styles.content}>
-            {/* Editierbare Fallstudienkarte */}
-            <View style={[styles.casestudyCard, { backgroundColor: colors.backgroundSecondary }]}>
-              <View style={styles.cardContent}>
-                {/* Bild im 4:3 Format */}
-                <TouchableOpacity 
-                  style={styles.imageContainer}
-                  onPress={pickImage}
-                >
-                  {imageUrl ? (
-                    <Image 
-                      source={{ uri: imageUrl }}
-                      style={styles.image}
-                      resizeMode="cover"
-                    />
-                  ) : (
-                    <View style={[styles.imagePlaceholder, { backgroundColor: colors.backgroundTertiary }]}>
-                      <Ionicons name="image-outline" size={32} color={colors.textTertiary} />
-                      <Text style={[styles.placeholderText, { color: colors.textTertiary }]}>
-                        Bild hinzufügen
-                      </Text>
-                    </View>
-                  )}
-                </TouchableOpacity>
-                
-                {/* Text-Content */}
-                <View style={styles.textContainer}>
-                  {/* Editierbare Überschrift */}
-                  <TextInput
-                    style={[styles.titleInput, { color: colors.textPrimary }]}
-                    value={title}
-                    onChangeText={setTitle}
-                    placeholder="Titel der Fallstudie"
-                    placeholderTextColor={colors.textTertiary}
-                    maxLength={50}
-                  />
+    <View style={[styles.containerOuter, { backgroundColor: colors.backgroundPrimary }]}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.headerContainer}>
+          <HeaderNavigation 
+            title="Neue Fallstudie" 
+            rightContent={renderWeiterButton()}
+            onBackPress={() => router.back()}
+            containerStyle={styles.headerNavigationContainer}
+          />
+        </View>
+        
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.keyboardAvoidingView}
+        >
+          <ScrollView style={styles.scrollView}>
+            <View style={styles.content}>
+              {/* Editierbare Fallstudienkarte */}
+              <View style={[styles.casestudyCard, { backgroundColor: colors.backgroundSecondary }]}>
+                <View style={styles.cardContent}>
+                  {/* Bild im 4:3 Format */}
+                  <TouchableOpacity 
+                    style={styles.imageContainer}
+                    onPress={pickImage}
+                  >
+                    {imageUrl ? (
+                      <Image 
+                        source={{ uri: imageUrl }}
+                        style={styles.image}
+                        resizeMode="cover"
+                      />
+                    ) : (
+                      <View style={[styles.imagePlaceholder, { backgroundColor: colors.backgroundTertiary }]}>
+                        <Ionicons name="image-outline" size={32} color={colors.textTertiary} />
+                        <Text style={[styles.placeholderText, { color: colors.textTertiary }]}>
+                          Bild hinzufügen
+                        </Text>
+                      </View>
+                    )}
+                  </TouchableOpacity>
                   
-                  {/* Editierbare Beschreibung oder Anzeige */}
-                  {isEditingDescription ? (
+                  {/* Text-Content */}
+                  <View style={styles.textContainer}>
+                    {/* Editierbare Überschrift */}
                     <TextInput
-                      style={[styles.descriptionInput, { color: colors.textSecondary }]}
-                      value={description}
-                      onChangeText={setDescription}
-                      placeholder="Beschreibung der Fallstudie"
+                      style={[styles.titleInput, { color: colors.textPrimary }]}
+                      value={title}
+                      onChangeText={setTitle}
+                      placeholder="Titel der Fallstudie"
                       placeholderTextColor={colors.textTertiary}
-                      multiline
-                      numberOfLines={3}
-                      maxLength={200}
-                      onBlur={() => setIsEditingDescription(false)}
-                      autoFocus
+                      maxLength={50}
                     />
-                  ) : (
-                    <TouchableOpacity onPress={() => setIsEditingDescription(true)}>
-                      <Text 
-                        style={[
-                          styles.description, 
-                          { color: description ? colors.textSecondary : colors.textTertiary }
-                        ]}
+                    
+                    {/* Editierbare Beschreibung oder Anzeige */}
+                    {isEditingDescription ? (
+                      <TextInput
+                        style={[styles.descriptionInput, { color: colors.textSecondary }]}
+                        value={description}
+                        onChangeText={setDescription}
+                        placeholder="Beschreibung der Fallstudie"
+                        placeholderTextColor={colors.textTertiary}
+                        multiline
                         numberOfLines={3}
-                      >
-                        {description || "Tippe hier, um eine Beschreibung hinzuzufügen"}
-                      </Text>
-                    </TouchableOpacity>
-                  )}
-                  
-                  {/* Fußzeile mit Bewertung */}
-                  <View style={styles.footer}>
-                    <View style={{ flex: 1 }} />
-                    <View style={styles.ratingContainer}>
-                      <Ionicons name="star" size={16} color="#FFD600" style={{ marginRight: 2 }} />
-                      <Text style={[styles.rating, { color: colors.textSecondary }]}>
-                        5.0
-                      </Text>
+                        maxLength={200}
+                        onBlur={() => setIsEditingDescription(false)}
+                        autoFocus
+                      />
+                    ) : (
+                      <TouchableOpacity onPress={() => setIsEditingDescription(true)}>
+                        <Text 
+                          style={[
+                            styles.description, 
+                            { color: description ? colors.textSecondary : colors.textTertiary }
+                          ]}
+                          numberOfLines={3}
+                        >
+                          {description || "Tippe hier, um eine Beschreibung hinzuzufügen"}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                    
+                    {/* Fußzeile mit Bewertung */}
+                    <View style={styles.footer}>
+                      <View style={{ flex: 1 }} />
+                      <View style={styles.ratingContainer}>
+                        <Ionicons name="star" size={16} color="#FFD600" style={{ marginRight: 2 }} />
+                        <Text style={[styles.rating, { color: colors.textSecondary }]}>
+                          5.0
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
               </View>
+              
+              {/* Hilfe-Text */}
+              <View style={styles.helpTextContainer}>
+                <Text style={[styles.helpText, { color: colors.textTertiary }]}>
+                  Tippe auf die einzelnen Elemente, um sie zu bearbeiten. Auf dem nächsten Screen kannst du weitere Details hinzufügen.
+                </Text>
+              </View>
             </View>
-            
-            {/* Hilfe-Text */}
-            <View style={styles.helpTextContainer}>
-              <Text style={[styles.helpText, { color: colors.textTertiary }]}>
-                Tippe auf die einzelnen Elemente, um sie zu bearbeiten. Auf dem nächsten Screen kannst du weitere Details hinzufügen.
-              </Text>
-            </View>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  containerOuter: {
+    flex: 1,
+  },
   container: {
     flex: 1,
+    marginTop: Platform.OS === 'ios' ? 47 : 0, // Höhe der iOS-Statusbar
+  },
+  headerContainer: {
+    zIndex: 10,
+    elevation: 10,
+  },
+  headerNavigationContainer: {
+    paddingTop: 0,
   },
   keyboardAvoidingView: {
     flex: 1,

@@ -10,9 +10,12 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   useWindowDimensions,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 import { borderRadius, spacing, typography } from '@/config/theme';
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -59,6 +62,9 @@ function HomeScreen() {
   const themeColors = useThemeColor();
   const colors = getHomeColors(themeColors);
   const colorScheme = useColorScheme();
+  
+  // Router für Navigation
+  const router = useRouter();
   
   // Verwende useWindowDimensions für bessere Performance
   const { height: windowHeight } = useWindowDimensions();
