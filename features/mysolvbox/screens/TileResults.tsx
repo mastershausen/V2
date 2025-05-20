@@ -118,10 +118,7 @@ export default function TileResults() {
         pathname: '/gigs/details',
         params: {
           id: gig.id,
-          title: gig.title,
-          description: gig.description,
           imageUrl: gig.imageUrl,
-          price: `${gig.currency || '€'}${gig.price.toLocaleString('de-DE')}`,
           source: 'tile'
         }
       });
@@ -130,15 +127,12 @@ export default function TileResults() {
       const casestudy = mockCasestudies.find(c => c.id === gigId);
       if (casestudy) {
         router.push({
-                      pathname: '/gigs/details',
-            params: {
-              id: casestudy.id,
-              title: casestudy.title,
-              description: casestudy.description,
-              imageUrl: casestudy.imageUrl,
-              price: '',
-              source: 'tile'
-            }
+          pathname: '/gigs/details',
+          params: {
+            id: casestudy.id,
+            imageUrl: casestudy.imageUrl,
+            source: 'tile'
+          }
         });
       }
     }

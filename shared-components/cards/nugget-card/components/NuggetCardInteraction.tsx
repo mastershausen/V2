@@ -14,6 +14,7 @@ export interface NuggetCardInteractionProps {
   onCommentPress?: () => void;
   onSharePress?: () => void;
   onSavePress?: () => void;
+  hideCommentButton?: boolean;
 }
 
 /**
@@ -30,6 +31,7 @@ export interface NuggetCardInteractionProps {
  * @param {Function} [props.onCommentPress] - Callback bei Klick auf Kommentieren
  * @param {Function} [props.onSharePress] - Callback bei Klick auf Teilen
  * @param {Function} [props.onSavePress] - Callback bei Klick auf Speichern
+ * @param {boolean} [props.hideCommentButton] - Ob der Kommentar-Button ausgeblendet werden soll
  * @returns {React.ReactElement} Die gerenderte NuggetCardInteraction-Komponente
  */
 export function NuggetCardInteraction({
@@ -41,6 +43,7 @@ export function NuggetCardInteraction({
   onCommentPress,
   onSharePress,
   onSavePress,
+  hideCommentButton = false,
 }: NuggetCardInteractionProps) {
   const colors = useThemeColor();
 
@@ -48,26 +51,28 @@ export function NuggetCardInteraction({
     <View style={[styles.container, { borderTopColor: colors.divider }]}>
       <View style={styles.leftButtonsContainer}>
         {/* Kommentieren Button */}
-        <TouchableOpacity 
-          style={styles.iconWithCountButton}
-          onPress={onCommentPress}
-          accessible={true}
-          accessibilityRole="button"
-          accessibilityLabel={`${commentCount > 0 ? commentCount : 'Keine'} Kommentare`}
-        >
-          <Ionicons 
-            name="chatbubble-outline" 
-            size={20} 
-            color={colors.textSecondary} 
-          />
-          <Text style={[styles.countText, { color: colors.textSecondary }]}>
-            {commentCount > 0 ? commentCount : ''}
-          </Text>
-        </TouchableOpacity>
+        {!hideCommentButton && (
+          <TouchableOpacity 
+            style={styles.iconWithCountButton}
+            onPress={onCommentPress}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel={`${commentCount > 0 ? commentCount : 'Keine'} Kommentare`}
+          >
+            <Ionicons 
+              name="chatbubble-outline" 
+              size={20} 
+              color={colors.textSecondary} 
+            />
+            <Text style={[styles.countText, { color: colors.textSecondary }]}>
+              {commentCount > 0 ? commentCount : ''}
+            </Text>
+          </TouchableOpacity>
+        )}
 
         {/* "Das hilft"-Button */}
         <TouchableOpacity 
-          style={styles.actionButton}
+          style={[styles.actionButton, hideCommentButton && { marginLeft: 0 }]}
           onPress={onHelpfulPress}
           accessible={true}
           accessibilityRole="button"

@@ -100,10 +100,7 @@ export default function SearchResultsScreen() {
         pathname: '/gigs/details',
         params: {
           id: gig.id,
-          title: gig.title,
-          description: gig.description,
           imageUrl: gig.imageUrl,
-          price: `${gig.currency || '€'}${gig.price.toLocaleString('de-DE')}`,
           source: 'search'
         }
       });
@@ -112,15 +109,12 @@ export default function SearchResultsScreen() {
       const casestudy = mockCasestudies.find(c => c.id === gigId);
       if (casestudy) {
         router.push({
-                      pathname: '/gigs/details',
-            params: {
-              id: casestudy.id,
-              title: casestudy.title,
-              description: casestudy.description,
-              imageUrl: casestudy.imageUrl,
-              price: '',
-              source: 'search'
-            }
+          pathname: '/gigs/details',
+          params: {
+            id: casestudy.id,
+            imageUrl: casestudy.imageUrl,
+            source: 'search'
+          }
         });
       }
     }

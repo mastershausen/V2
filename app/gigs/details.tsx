@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   View,
   Text,
@@ -27,6 +27,17 @@ const DEMO_USER = {
   headline: 'Steuern runter. Gewinn rauf.'
 };
 
+// Demo-Daten für den Gig
+const DEMO_GIG = {
+  // Kurzer Titel für die GigCard und HeaderNavigation
+  cardTitle: 'Steuerberatung für Startups',
+  // Ausführlicher Titel für den Details-Screen
+  title: 'Steuerliche Rundumbetreuung für Startups & Gründer von der Planung bis zur ersten Bilanz',
+  // Ausführliche und überzeugendere Beschreibung für den Details-Screen
+  description: 'Als Gründer stehst du vor vielen Herausforderungen – die Steuern sollten nicht dein größtes Problem sein. Mit meiner speziell für Startups entwickelten Beratung helfe ich dir, von Anfang an alles richtig zu machen und gleichzeitig erheblich Steuern zu sparen.\n\n**Was dich erwartet:**\n\n• **Umfassende Erstberatung (90 Minuten)** – Wir analysieren deine individuellen Bedürfnisse und entwickeln eine maßgeschneiderte Strategie\n\n• **Rechtsformoptimierung** – Ich zeige dir, welche Unternehmensform steuerlich am günstigsten für dein Geschäftsmodell ist\n\n• **Investitions- und Förderberatung** – Erfahre, welche staatlichen Zuschüsse und Fördermittel du nutzen kannst\n\n• **Umsatzsteuer-Coaching** – Verstehe die wichtigsten Regeln und vermeide kostspielige Fehler\n\n• **Gewinnoptimierung** – Lerne legale Strategien zur Minimierung deiner Steuerlast kennen\n\n• **Digitale Buchhaltungseinrichtung** – Ich helfe dir, deine Finanzen von Anfang an digital und effizient zu organisieren\n\nMeine Kunden sparen durchschnittlich 40% ihrer Steuerlast im ersten Geschäftsjahr. Als ehemaliger Startup-Gründer kenne ich die Herausforderungen aus eigener Erfahrung und spreche deine Sprache – keine komplizierten Steuerfachbegriffe, sondern praxisnahe Lösungen.\n\nBuche jetzt dein Erstgespräch und starte mit einer soliden steuerlichen Grundlage in deine Selbstständigkeit.',
+  price: '€299'
+};
+
 /**
  * Detailansicht für einen Gig
  * Zeigt detaillierte Informationen zu einem bestimmten Gig an
@@ -44,21 +55,31 @@ export default function GigDetailsScreen() {
   
   // Parameter aus der Navigation abrufen
   const params = useLocalSearchParams<{
-    title: string;
-    description: string;
+    title?: string; // Optional, wird nicht mehr verwendet, nur für Rückwärtskompatibilität
+    description?: string; // Optional, wird nicht mehr verwendet, nur für Rückwärtskompatibilität
+    price?: string; // Optional, wird nicht mehr verwendet, nur für Rückwärtskompatibilität
     imageUrl: string;
-    price: string;
     id: string;
     source?: string; // Quelle der Navigation (z.B. 'profile', 'search', 'tile')
     userImageUrl?: string; // Profilbild des Anbieters
     userName?: string; // Name des Anbieters
   }>();
   
-  // Daten aus den Parametern oder Demo-Daten verwenden
-  const title = params.title || 'Gig Titel';
-  const description = params.description || 'Keine Beschreibung verfügbar';
+  // Warnung ausgeben, falls alte Parameter verwendet werden
+  useEffect(() => {
+    if (params.title || params.description || params.price) {
+      console.warn('GigDetailsScreen: Die Parameter "title", "description" und "price" werden nicht mehr verwendet. Diese werden jetzt direkt im GigDetailsScreen definiert.');
+    }
+  }, [params.title, params.description, params.price]);
+  
+  // Verwende immer die festen Gig-Daten
+  const title = DEMO_GIG.title;
+  const cardTitle = DEMO_GIG.cardTitle;
+  const description = DEMO_GIG.description;
+  const price = DEMO_GIG.price;
+  
+  // Weitere Parameter aus der Navigation
   const imageUrl = params.imageUrl || '';
-  const price = params.price || '€0';
   const id = params.id || '0';
   const source = params.source || '';
   
@@ -101,7 +122,7 @@ export default function GigDetailsScreen() {
       
       {/* Header Navigation */}
       <HeaderNavigation 
-        title={title}
+        title={cardTitle}
         onBackPress={() => {
           // Intelligente Zurück-Navigation basierend auf der Quelle
           if (source === 'profile') {
@@ -151,11 +172,6 @@ export default function GigDetailsScreen() {
             </Text>
           </View>
           
-          {/* Titel (als Backup, falls er nicht in der Header-Navigation angezeigt wird) */}
-          <Text style={[styles.title, { color: colors.textPrimary }]}>
-            {title}
-          </Text>
-          
           {/* Interaktionsleiste in voller Breite */}
           <View style={styles.interactionContainer}>
             <NuggetCardInteraction
@@ -167,27 +183,19 @@ export default function GigDetailsScreen() {
               onCommentPress={handleCommentPress}
               onSharePress={handleSharePress}
               onSavePress={handleSavePress}
+              hideCommentButton={true}
             />
           </View>
+          
+          {/* Titel (jetzt unter der Interaktionsleiste) */}
+          <Text style={[styles.title, { color: colors.textPrimary }]}>
+            {title}
+          </Text>
           
           {/* Beschreibung */}
           <Text style={[styles.description, { color: colors.textSecondary }]}>
             {description}
           </Text>
-          
-          {/* Weitere Details können hier hinzugefügt werden */}
-          <View style={styles.detailsSection}>
-            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              Details
-            </Text>
-            
-            <View style={[styles.detailCard, { backgroundColor: colors.backgroundSecondary }]}>
-              <Text style={[styles.detailText, { color: colors.textSecondary }]}>
-                Hier können weitere Details zum Gig angezeigt werden, wie zum Beispiel Kategorien, 
-                Bewertungen, Kontaktinformationen oder andere relevante Informationen.
-              </Text>
-            </View>
-          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -245,24 +253,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: typography.fontSize.m,
-    lineHeight: typography.lineHeight.m,
+    lineHeight: typography.lineHeight.l,
     marginBottom: spacing.l,
-  },
-  detailsSection: {
-    marginTop: spacing.m,
-  },
-  sectionTitle: {
-    fontSize: typography.fontSize.l,
-    fontWeight: typography.fontWeight.bold,
-    marginBottom: spacing.m,
-  },
-  detailCard: {
-    padding: spacing.m,
-    borderRadius: ui.borderRadius.m,
-    marginBottom: spacing.m,
-  },
-  detailText: {
-    fontSize: typography.fontSize.m,
-    lineHeight: typography.lineHeight.m,
   },
 }); 
