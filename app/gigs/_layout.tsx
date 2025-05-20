@@ -14,6 +14,12 @@ export default function GigsLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="create"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 } 

@@ -5,7 +5,6 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  StatusBar,
   SafeAreaView,
   Alert,
   TextInput,
@@ -125,11 +124,6 @@ export default function CreateGigListScreen() {
   
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
-      <StatusBar 
-        barStyle="dark-content"
-        backgroundColor="transparent"
-        translucent
-      />
       <HeaderNavigation 
         title="Neues Gig" 
         rightContent={renderErstellenButton()}
