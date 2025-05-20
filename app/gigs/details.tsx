@@ -237,7 +237,6 @@ export default function GigDetailsScreen() {
                 
                 {/* Bewertung rechts neben dem Namen */}
                 <View style={styles.ratingContainer}>
-                  <Text style={[styles.ratingCountText, { color: colors.textSecondary }]}>
                   <ReviewBadge
                     rating={DEMO_USER.rating}
                     ratingCount={DEMO_USER.ratingCount}
