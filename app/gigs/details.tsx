@@ -23,7 +23,7 @@ import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigatio
 import { FooterActionButton } from '@/shared-components/navigation/FooterActionButton';
 import { NuggetCardInteraction } from '@/shared-components/cards/nugget-card/components/NuggetCardInteraction';
 import { GigActionBottomSheet } from '@/shared-components/bottomsheet/GigActionBottomSheet';
-import { DateBadge } from '@/shared-components/badges/DateBadge';
+import { DateBadge, ReviewBadge } from '@/shared-components/badges';
 
 // Demo-Daten von Alexander Becker
 const DEMO_USER = {
@@ -31,7 +31,7 @@ const DEMO_USER = {
   profileImage: null, // Wir nutzen Initialen
   description: 'Ich zeige Selbstständigen & Unternehmern, wie sie mit legaler Steueroptimierung 5-stellig sparen können – jedes Jahr.',
   headline: 'Steuern runter. Gewinn rauf.',
-  rating: 4.9,
+  rating: 5.0,
   ratingCount: 42
 };
 
@@ -237,13 +237,11 @@ export default function GigDetailsScreen() {
                 
                 {/* Bewertung rechts neben dem Namen */}
                 <View style={styles.ratingContainer}>
-                  <Text style={[styles.ratingText, { color: colors.textPrimary }]}>
-                    {DEMO_USER.rating}
-                  </Text>
-                  <Ionicons name="star" size={14} color="#FFB400" style={styles.ratingIcon} />
                   <Text style={[styles.ratingCountText, { color: colors.textSecondary }]}>
-                    ({DEMO_USER.ratingCount})
-                  </Text>
+                  <ReviewBadge
+                    rating={DEMO_USER.rating}
+                    ratingCount={DEMO_USER.ratingCount}
+                  />
                 </View>
               </View>
               

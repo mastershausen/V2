@@ -19,7 +19,7 @@ export const originalMockUsers = [
       email: 'kontakt@oliviawrites.de',
       phone: '+49 30 12345678',
       role: 'free',
-      rating: 4.9,
+      rating: 5.0,
     },
     {
       id: 'u2',
@@ -60,7 +60,7 @@ export const originalMockUsers = [
       email: 'laura@hoffmann-studios.de',
       phone: '+49 40 23456789',
       role: 'pro',
-      rating: 4.7,
+      rating: 5.0,
     },
     {
       id: 'u4',
@@ -73,7 +73,7 @@ export const originalMockUsers = [
       description: 'Als ehemaliger CFO helfe ich Mittelständlern, ihre Fixkosten ohne Qualitätseinbußen zu reduzieren.',
       website: 'https://kunz-partner.de',
       role: 'pro',
-      rating: 4.6,
+      rating: 5.0,
     },
     {
       id: 'u5',
@@ -86,7 +86,7 @@ export const originalMockUsers = [
       description: 'Bäckermeisterin mit Leidenschaft – und klarer Wachstumsstrategie für unser Familienunternehmen.',
       website: 'https://neumanns-backstube.de',
       role: 'free',
-      rating: 4.5,
+      rating: 5.0,
     },
     {
       id: 'u6',
@@ -99,7 +99,7 @@ export const originalMockUsers = [
       description: 'Vom Angebot bis zur Rechnung – ich digitalisiere interne Prozesse für kleinere Bauunternehmen.',
       website: 'https://schwarzbau.digital',
       role: 'free',
-      rating: 4.4,
+      rating: 5.0,
     },
     {
       id: 'u7',
@@ -112,7 +112,7 @@ export const originalMockUsers = [
       description: 'Ich unterstütze Kosmetikstudios dabei, durch authentisches Social Media mehr Stammkunden zu gewinnen.',
       website: 'https://kellerkosmetik.de',
       role: 'free',
-      rating: 4.6,
+      rating: 5.0,
     },
     {
       id: 'u8',
@@ -125,7 +125,7 @@ export const originalMockUsers = [
       description: 'Ich begleite Einzelunternehmer beim Übergang zum skalierbaren Geschäftsmodell – ohne Überforderung.',
       website: 'https://dlperformance.de',
       role: 'pro',
-      rating: 4.8,
+      rating: 5.0,
     },
     {
       id: 'u9',
@@ -138,7 +138,7 @@ export const originalMockUsers = [
       description: 'Meta & Google Ads für lokale Unternehmen, die messbar Neukunden gewinnen wollen.',
       website: 'https://krausemedia.de',
       role: 'pro',
-      rating: 4.7,
+      rating: 5.0,
     },
     {
       id: 'u10',
@@ -151,7 +151,7 @@ export const originalMockUsers = [
       description: 'Rechtsanwalt mit Fokus auf Vertragsrecht & Unternehmensstrukturierung für digitale Unternehmen.',
       website: 'https://lorenzlegal.de',
       role: 'free',
-      rating: 4.9,
+      rating: 5.0,
     }
   ];
 

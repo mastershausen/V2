@@ -7,7 +7,7 @@ const mockCasestudies: GigData[] = [
     description: 'Wie ein Tech-Startup durch gezielte Maßnahmen seine Steuerlast um 30% senken konnte. Einblicke in Strategie und Umsetzung.',
     imageUrl: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
     price: 0,
-    rating: 4.9,
+    rating: 5.0,
     currency: ''
   },
   {
@@ -16,7 +16,7 @@ const mockCasestudies: GigData[] = [
     description: 'Fallstudie: Wie ein Freiberufler mit guter Vorbereitung und Beratung eine Betriebsprüfung ohne Nachzahlung gemeistert hat.',
     imageUrl: 'https://images.unsplash.com/photo-1503676382389-4809596d5290?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
     price: 0,
-    rating: 4.8,
+    rating: 5.0,
     currency: ''
   },
   {

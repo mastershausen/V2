@@ -6,6 +6,7 @@ import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { ProfileImage } from '@/shared-components/media';
+import { ReviewBadge } from '@/shared-components/badges';
 
 export interface GigData {
   id: string;
@@ -99,12 +100,7 @@ export function GigCard({ gig, onPress, showPrice = true }: GigCardProps): React
             ) : (
               <View style={{ width: 48 }} />
             )}
-            <View style={styles.ratingContainer}>
-              <Ionicons name="star" size={16} color="#FFD600" style={{ marginRight: 2 }} />
-              <Text style={[styles.rating, { color: colors.textSecondary }]}>
-                {gig.rating.toFixed(1)}
-              </Text>
-            </View>
+            <ReviewBadge rating={gig.rating} />
           </View>
         </View>
       </View>

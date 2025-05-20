@@ -34,11 +34,55 @@ const DEMO_USER = {
   ratingCount: 42
 };
 
+export type CreateDetailsType = 'gig' | 'casestudy';
+
+interface CreateDetailsScreenProps {
+  /**
+   * Bestimmt den Typ des Inhalts (Gig oder Fallstudie)
+   * @default 'gig'
+   */
+  type?: CreateDetailsType;
+  
+  /**
+   * Titel in der Navigationsleiste
+   */
+  navigationTitle?: string;
+  
+  /**
+   * Ziel-Route beim Speichern/Erstellen
+   */
+  redirectRoute?: string;
+  
+  /**
+   * Button-Text für den Erstellungsbutton im Header
+   * @default 'Erstellen'
+   */
+  submitButtonText?: string;
+  
+  /**
+   * Labels für die Action-Buttons im Footer
+   */
+  actionButtonLabels?: {
+    leftButton?: string;
+    middleButton?: string;
+    rightButton?: string;
+  };
+}
+
 /**
- * Detaillierter Gig-Erstellungsscreen im WYSIWYG-Format
- * Basiert auf dem Layout des GigDetailsScreen
+ * Universeller Erstellungs-/Bearbeitungs-Screen für Gigs und Fallstudien im WYSIWYG-Format
  */
-export default function CreateGigDetailsScreen() {
+export default function CreateDetailsScreen({
+  type = 'gig',
+  navigationTitle = type === 'gig' ? 'Gig erstellen' : 'Fallstudie erstellen',
+  redirectRoute = '/(tabs)/home',
+  submitButtonText = 'Erstellen',
+  actionButtonLabels = {
+    leftButton: 'Bewerten',
+    middleButton: 'Anfragen',
+    rightButton: type === 'gig' ? 'Fallstudie' : 'Speichern',
+  }
+}: CreateDetailsScreenProps) {
   const colors = useThemeColor();
   const router = useRouter();
   const { isDemoMode } = useMode();
@@ -53,9 +97,9 @@ export default function CreateGigDetailsScreen() {
   }>();
   
   // State für die Bearbeitung mit Initialwerten aus den Parametern
-  const [title, setTitle] = useState(params.title || 'Dein Gig-Titel');
-  const [cardTitle, setCardTitle] = useState(params.title || 'Dein Gig-Titel');
-  const [description, setDescription] = useState(params.description || 'Beschreibung deines Gigs...');
+  const [title, setTitle] = useState(params.title || 'Dein Titel');
+  const [cardTitle, setCardTitle] = useState(params.title || 'Dein Titel');
+  const [description, setDescription] = useState(params.description || 'Beschreibung...');
   const [price, setPrice] = useState(params.price || '0');
   const [currency, setCurrency] = useState(params.currency || '€');
   const [imageUrl, setImageUrl] = useState(params.imageUrl || null);
@@ -130,9 +174,9 @@ export default function CreateGigDetailsScreen() {
   const handleCreatePress = () => {
     // Hier später die tatsächliche Erstellung implementieren
     Alert.alert(
-      'Gig erstellen',
-      'Dein Gig wurde erfolgreich erstellt!',
-      [{ text: 'OK', onPress: () => router.push('/(tabs)/home') }]
+      type === 'gig' ? 'Gig erstellen' : 'Fallstudie erstellen',
+      type === 'gig' ? 'Dein Gig wurde erfolgreich erstellt!' : 'Deine Fallstudie wurde erfolgreich erstellt!',
+      [{ text: 'OK', onPress: () => router.push(redirectRoute) }]
     );
   };
   
@@ -147,7 +191,7 @@ export default function CreateGigDetailsScreen() {
           { color: colors.primary }
         ]}
       >
-        Erstellen
+        {submitButtonText}
       </Text>
     </TouchableOpacity>
   );
@@ -156,7 +200,7 @@ export default function CreateGigDetailsScreen() {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       {/* Header Navigation */}
       <HeaderNavigation 
-        title="Gig erstellen" 
+        title={navigationTitle} 
         rightContent={renderErstellenButton()}
         onBackPress={() => router.back()}
       />
@@ -214,19 +258,21 @@ export default function CreateGigDetailsScreen() {
                 </View>
               </View>
               
-              {/* Zweite Zeile: Preisbadge rechts ausgerichtet */}
-              <View style={styles.priceBadgeRow}>
-                <View style={{flex: 1}} />
-                <View style={[styles.priceContainer, { 
-                  backgroundColor: colors.backgroundSecondary, 
-                  borderWidth: 1,
-                  borderColor: 'rgba(0, 0, 0, 0.05)',
-                }]}>
-                  <Text style={[styles.price, { color: colors.textPrimary }]}>
-                    {fullPrice}
-                  </Text>
+              {/* Zweite Zeile: Preisbadge rechts ausgerichtet, nur für Gigs anzeigen */}
+              {type === 'gig' && (
+                <View style={styles.priceBadgeRow}>
+                  <View style={{flex: 1}} />
+                  <View style={[styles.priceContainer, { 
+                    backgroundColor: colors.backgroundSecondary, 
+                    borderWidth: 1,
+                    borderColor: 'rgba(0, 0, 0, 0.05)',
+                  }]}>
+                    <Text style={[styles.price, { color: colors.textPrimary }]}>
+                      {fullPrice}
+                    </Text>
+                  </View>
                 </View>
-              </View>
+              )}
             </View>
           </View>
           
@@ -261,7 +307,7 @@ export default function CreateGigDetailsScreen() {
           ) : (
             <TouchableOpacity onPress={() => setIsTitleEditing(true)}>
               <Text style={[styles.title, { color: colors.textPrimary }]}>
-                {title || "Tippe hier, um einen Titel hinzuzufügen"}
+                {title || `Tippe hier, um einen ${type === 'gig' ? 'Gig-' : 'Fallstudien-'}Titel hinzuzufügen`}
               </Text>
             </TouchableOpacity>
           )}
@@ -300,34 +346,48 @@ export default function CreateGigDetailsScreen() {
         {/* Gig bewerten */}
         <TouchableOpacity
           style={styles.actionIconButton}
-          accessibilityLabel="Gig bewerten"
+          accessibilityLabel={actionButtonLabels.leftButton}
         >
           <View style={[styles.iconContainer, { backgroundColor: 'rgba(255, 180, 0, 0.15)' }]}>
             <Ionicons name="star-outline" size={22} color="#FFB400" />
           </View>
-          <Text style={[styles.actionButtonLabel, { color: colors.textSecondary }]}>Bewerten</Text>
+          <Text style={[styles.actionButtonLabel, { color: colors.textSecondary }]}>
+            {actionButtonLabels.leftButton}
+          </Text>
         </TouchableOpacity>
         
         {/* Anfrage senden */}
         <TouchableOpacity
           style={styles.actionIconButton}
-          accessibilityLabel="Anfrage senden"
+          accessibilityLabel={actionButtonLabels.middleButton}
         >
           <View style={[styles.iconContainer, { backgroundColor: 'rgba(10, 132, 255, 0.15)' }]}>
             <Ionicons name="chatbubble-outline" size={22} color="#0A84FF" />
           </View>
-          <Text style={[styles.actionButtonLabel, { color: colors.textSecondary }]}>Anfragen</Text>
+          <Text style={[styles.actionButtonLabel, { color: colors.textSecondary }]}>
+            {actionButtonLabels.middleButton}
+          </Text>
         </TouchableOpacity>
         
-        {/* Fallstudie */}
+        {/* Dritter Button - variabel je nach Typ */}
         <TouchableOpacity
           style={styles.actionIconButton}
-          accessibilityLabel="Fallstudie anzeigen"
+          accessibilityLabel={actionButtonLabels.rightButton}
         >
-          <View style={[styles.iconContainer, { backgroundColor: 'rgba(94, 92, 230, 0.15)' }]}>
-            <Ionicons name="document-text-outline" size={22} color="#5E5CE6" />
+          <View style={[styles.iconContainer, { 
+            backgroundColor: type === 'gig' 
+              ? 'rgba(94, 92, 230, 0.15)' 
+              : 'rgba(52, 199, 89, 0.15)' 
+          }]}>
+            <Ionicons 
+              name={type === 'gig' ? "document-text-outline" : "bookmark-outline"} 
+              size={22} 
+              color={type === 'gig' ? "#5E5CE6" : "#34C759"} 
+            />
           </View>
-          <Text style={[styles.actionButtonLabel, { color: colors.textSecondary }]}>Fallstudie</Text>
+          <Text style={[styles.actionButtonLabel, { color: colors.textSecondary }]}>
+            {actionButtonLabels.rightButton}
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -481,4 +541,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-});
+}); 

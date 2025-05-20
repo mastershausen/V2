@@ -26,7 +26,7 @@ const mockExperts: ExtendedExpertData[] = [
     role: 'premium',
     headline: 'Steuerberaterin & Wirtschaftsprüferin | Spezialistin für Unternehmenssteuern',
     specialties: ['Steuerberatung', 'Wirtschaftsprüfung', 'Unternehmensberatung'],
-    rating: 4.9,
+    rating: 5.0,
     verified: true,
     company: 'Schmidt & Partner Steuerberatung',
     profileImage: { initials: 'ES' }
@@ -37,7 +37,7 @@ const mockExperts: ExtendedExpertData[] = [
     role: 'pro',
     headline: 'Rechtsanwalt für Unternehmensrecht | 15 Jahre Erfahrung',
     specialties: ['Unternehmensrecht', 'Vertragsrecht', 'Arbeitsrecht'],
-    rating: 4.7,
+    rating: 5.0,
     verified: true,
     company: 'Müller Rechtsanwälte GmbH',
     profileImage: { initials: 'TM' }
@@ -48,7 +48,7 @@ const mockExperts: ExtendedExpertData[] = [
     role: 'free',
     headline: 'Finanzberaterin für Selbstständige & Freelancer',
     specialties: ['Finanzplanung', 'Altersvorsorge', 'Investitionen'],
-    rating: 4.8,
+    rating: 5.0,
     verified: false,
     company: 'Freelance Finance Solutions',
     profileImage: { initials: 'LW' }
@@ -70,7 +70,7 @@ const mockExperts: ExtendedExpertData[] = [
     role: 'pro',
     headline: 'Fördermittelberaterin für KMU & Startups',
     specialties: ['Fördermittel', 'Innovationsförderung', 'EU-Programme'],
-    rating: 4.6,
+    rating: 5.0,
     verified: true,
     company: 'FörderConsult GmbH',
     profileImage: { initials: 'SK' }
