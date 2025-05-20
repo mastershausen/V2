@@ -111,12 +111,8 @@ export default function CreateCasestudyDetailsScreen() {
   
   // Handler für Erstellen-Button (war vorher Weiter-Button)
   const handleErstellenPress = () => {
-    // Fallstudie erstellen und zur Home-Seite navigieren
-    Alert.alert(
-      'Fallstudie erstellen',
-      'Deine Fallstudie wurde erfolgreich erstellt!',
-      [{ text: 'OK', onPress: () => router.push('/(tabs)/home') }]
-    );
+    // Navigiere zum MetaDataScreen ohne Parameter
+    router.push('/create/metadata');
   };
   
   // Weiter-Button für HeaderNavigation

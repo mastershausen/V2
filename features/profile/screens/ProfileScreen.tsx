@@ -32,7 +32,6 @@ import { createProfileInitialsFromName, ProfileImageData } from '@/utils/profile
 import { ProfileTabListContainer } from '@/shared-components/ProfileTabListContainer';
 import mockNuggets from '@/mock/data/mockNuggets';
 import mockGigs from '@/mock/data/mockGigs';
-import mockCasestudies from '@/mock/data/mockCasestudies';
 import { ReviewCard } from '@/shared-components/cards/review-card/ReviewCard';
 import mockReviews from '@/mock/data/mockReviews';
 import { BottomScreen } from '@/shared-components/navigation/BottomScreen';
@@ -406,7 +405,7 @@ export default function ProfileScreen() {
       case 'casestudies':
         return (
           <ProfileTabListContainer>
-            {mockCasestudies.map((gig) => (
+            {[].map((gig) => (
               <GigCard
                 key={gig.id}
                 gig={gig}

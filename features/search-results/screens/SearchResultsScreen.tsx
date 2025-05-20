@@ -29,7 +29,6 @@ import { ExpertCard } from '@/shared-components/cards/expert-card/ExpertCard';
 import { SearchInput } from '@/shared-components/searchinput/SearchInput';
 import mockNuggets from '@/mock/data/mockNuggets';
 import mockGigs from '@/mock/data/mockGigs';
-import mockCasestudies from '@/mock/data/mockCasestudies';
 import mockExperts from '@/mock/data/mockExperts';
 
 // Vordefinierte Filter-Tabs
@@ -38,7 +37,7 @@ const FILTER_TABS: FilterTabItem[] = [
   { id: 'experts', label: 'Experten' },
   { id: 'gigs', label: 'Gigs' },
   { id: 'nuggets', label: 'Nuggets' },
-  { id: 'casestudies', label: 'Fallstudien' },
+  
 ];
 
 /**
@@ -59,7 +58,7 @@ export default function SearchResultsScreen() {
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState(params.query || '');
   const [totalResults, setTotalResults] = useState(
-    mockExperts.length + mockGigs.length + mockNuggets.length + mockCasestudies.length
+    mockExperts.length + mockGigs.length + mockNuggets.length
   );
   
   // Zurück-Navigation
@@ -104,19 +103,6 @@ export default function SearchResultsScreen() {
           source: 'search'
         }
       });
-    } else {
-      // Wenn es sich um eine Fallstudie handelt
-      const casestudy = mockCasestudies.find(c => c.id === gigId);
-      if (casestudy) {
-        router.push({
-          pathname: '/gigs/details',
-          params: {
-            id: casestudy.id,
-            imageUrl: casestudy.imageUrl,
-            source: 'search'
-          }
-        });
-      }
     }
   };
 
@@ -165,21 +151,6 @@ export default function SearchResultsScreen() {
                 <GigCard 
                   gig={gig}
                   onPress={() => handleGigPress(gig.id)}
-                />
-              </View>
-            ))}
-          </View>
-        );
-        
-      case 'casestudies':
-        return (
-          <View style={styles.filterContentContainer}>
-            {mockCasestudies.map(casestudy => (
-              <View key={casestudy.id} style={styles.cardContainer}>
-                <GigCard 
-                  gig={casestudy}
-                  showPrice={false}
-                  onPress={() => handleGigPress(casestudy.id)}
                 />
               </View>
             ))}
@@ -241,19 +212,6 @@ export default function SearchResultsScreen() {
                   onSharePress={() => {}}
                   onSavePress={() => {}}
                   onUserPress={() => handleNuggetPress(nugget.id)}
-                />
-              </View>
-            ))}
-
-            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              Fallstudien
-            </Text>
-            {mockCasestudies.slice(0, 2).map(casestudy => (
-              <View key={casestudy.id} style={styles.cardContainer}>
-                <GigCard 
-                  gig={casestudy}
-                  showPrice={false}
-                  onPress={() => handleGigPress(casestudy.id)}
                 />
               </View>
             ))}

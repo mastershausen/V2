@@ -32,7 +32,6 @@ import { GigCard } from '@/shared-components/cards/gig-card/GigCard';
 import { ExpertCard } from '@/shared-components/cards/expert-card/ExpertCard';
 import mockNuggets from '@/mock/data/mockNuggets';
 import mockGigs from '@/mock/data/mockGigs';
-import mockCasestudies from '@/mock/data/mockCasestudies';
 import mockExperts from '@/mock/data/mockExperts';
 
 // Typ für die Route-Parameter
@@ -48,7 +47,7 @@ const FILTER_TABS: FilterTabItem[] = [
   { id: 'experts', label: 'Experten' },
   { id: 'gigs', label: 'Gigs' },
   { id: 'nuggets', label: 'Nuggets' },
-  { id: 'casestudies', label: 'Fallstudien' },
+  
 ];
 
 /**
@@ -122,19 +121,6 @@ export default function TileResults() {
           source: 'tile'
         }
       });
-    } else {
-      // Wenn es sich um eine Fallstudie handelt
-      const casestudy = mockCasestudies.find(c => c.id === gigId);
-      if (casestudy) {
-        router.push({
-          pathname: '/gigs/details',
-          params: {
-            id: casestudy.id,
-            imageUrl: casestudy.imageUrl,
-            source: 'tile'
-          }
-        });
-      }
     }
   };
 
@@ -188,22 +174,7 @@ export default function TileResults() {
             ))}
           </View>
         );
-        
-      case 'casestudies':
-        return (
-          <View style={styles.filterContentContainer}>
-            {mockCasestudies.map(casestudy => (
-              <View key={casestudy.id} style={styles.cardContainer}>
-                <GigCard 
-                  gig={casestudy}
-                  showPrice={false}
-                  onPress={() => handleGigPress(casestudy.id)}
-                />
-              </View>
-            ))}
-          </View>
-        );
-        
+      
       case 'experts':
         return (
           <View style={styles.filterContentContainer}>
@@ -259,19 +230,6 @@ export default function TileResults() {
                   onSharePress={() => {}}
                   onSavePress={() => {}}
                   onUserPress={() => handleNuggetPress(nugget.id)}
-                />
-              </View>
-            ))}
-
-            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              Fallstudien
-            </Text>
-            {mockCasestudies.slice(0, 2).map(casestudy => (
-              <View key={casestudy.id} style={styles.cardContainer}>
-                <GigCard 
-                  gig={casestudy}
-                  showPrice={false}
-                  onPress={() => handleGigPress(casestudy.id)}
                 />
               </View>
             ))}

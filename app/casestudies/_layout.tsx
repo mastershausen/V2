@@ -12,12 +12,6 @@ export default function CasestudiesLayout() {
       }}
     >
       <Stack.Screen
-        name="index"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
         name="details"
         options={{
           headerShown: false,

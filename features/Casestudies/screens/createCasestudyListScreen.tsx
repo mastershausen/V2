@@ -110,7 +110,7 @@ export default function CreateCasestudyListScreen() {
           <HeaderNavigation 
             title="Neue Fallstudie" 
             rightContent={renderWeiterButton()}
-            onBackPress={() => router.back()}
+            onBackPress={() => router.push('/(tabs)/profile')}
             containerStyle={styles.headerNavigationContainer}
           />
         </View>

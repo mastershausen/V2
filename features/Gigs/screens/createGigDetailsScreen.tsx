@@ -126,12 +126,8 @@ export default function CreateGigDetailsScreen() {
   
   // Handler für Erstellen-Button (war vorher Weiter-Button)
   const handleCreatePress = () => {
-    // Erstelle den Gig und navigiere zurück zur Home-Seite
-    Alert.alert(
-      'Gig erstellen',
-      'Dein Gig wurde erfolgreich erstellt!',
-      [{ text: 'OK', onPress: () => router.push('/(tabs)/home') }]
-    );
+    // Navigiere zum MetaDataScreen ohne Parameter
+    router.push('/create/metadata');
   };
   
   // Weiter-Button für HeaderNavigation

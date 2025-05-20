@@ -1,9 +1,10 @@
+import { Redirect } from 'expo-router';
 import React from 'react';
-import CasestudiesListScreen from '@/features/casestudy/screens/CasestudiesListScreen';
 
 /**
- * Route für die Auflistung aller Fallstudien
+ * Route für die Auflistung aller Fallstudien wurde entfernt
+ * Umleitung zum HomeScreen
  */
 export default function CasestudiesRoute() {
-  return <CasestudiesListScreen />;
-} 
+  return <Redirect href="/(tabs)/home" />;
+}
