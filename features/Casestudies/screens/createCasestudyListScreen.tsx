@@ -81,8 +81,7 @@ export default function CreateCasestudyListScreen() {
       pathname: '/casestudies/create/createCasestudyDetails',
       params: {
         title,
-        description,
-        imageUrl: imageUrl || 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+        description
       }
     });
   };

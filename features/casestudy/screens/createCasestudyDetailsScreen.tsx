@@ -50,7 +50,7 @@ export default function CreateCasestudyDetailsScreen() {
   // State für die Bearbeitung mit festen Platzhaltern
   const [title, setTitle] = useState('Titel der Fallstudie');
   const [description, setDescription] = useState('Beschreibung der Fallstudie...');
-  const [imageUrl, setImageUrl] = useState(params.imageUrl || null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   
   // Bearbeitungszustände
   const [isTitleEditing, setIsTitleEditing] = useState(false);
@@ -119,8 +119,8 @@ export default function CreateCasestudyDetailsScreen() {
     );
   };
   
-  // Erstellen-Button für HeaderNavigation
-  const renderErstellenButton = () => (
+  // Weiter-Button für HeaderNavigation
+  const renderWeiterButton = () => (
     <TouchableOpacity onPress={handleErstellenPress}>
       <Text 
         style={[
@@ -128,7 +128,7 @@ export default function CreateCasestudyDetailsScreen() {
           { color: colors.primary }
         ]}
       >
-        Erstellen
+        Weiter
       </Text>
     </TouchableOpacity>
   );
@@ -142,7 +142,7 @@ export default function CreateCasestudyDetailsScreen() {
       />
       <HeaderNavigation 
         title="Fallstudie erstellen" 
-        rightContent={renderErstellenButton()}
+        rightContent={renderWeiterButton()}
         onBackPress={() => router.back()}
       />
       

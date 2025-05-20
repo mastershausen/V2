@@ -134,8 +134,8 @@ export default function CreateGigDetailsScreen() {
     );
   };
   
-  // Erstellen-Button für HeaderNavigation
-  const renderErstellenButton = () => (
+  // Weiter-Button für HeaderNavigation
+  const renderWeiterButton = () => (
     <TouchableOpacity 
       onPress={handleCreatePress}
     >
@@ -145,7 +145,7 @@ export default function CreateGigDetailsScreen() {
           { color: colors.primary }
         ]}
       >
-        Erstellen
+        Weiter
       </Text>
     </TouchableOpacity>
   );
@@ -155,7 +155,7 @@ export default function CreateGigDetailsScreen() {
       {/* Header Navigation */}
       <HeaderNavigation 
         title="Gig erstellen" 
-        rightContent={renderErstellenButton()}
+        rightContent={renderWeiterButton()}
         onBackPress={() => router.back()}
       />
       
