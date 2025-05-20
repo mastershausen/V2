@@ -117,7 +117,7 @@ function HomeScreen() {
                 Wie können wir helfen?
               </Text>
               <Text style={styles.headerSubtitle}>
-                Suchst du nach Expertise oder Lösungen?
+                Für jedes Problem die passende Lösung innerhalb von 48h
               </Text>
             </View>
             
@@ -185,20 +185,21 @@ const createStyles = (colors: HomeScreenColors) => StyleSheet.create({
     fontSize: typography.fontSize.title,
     fontWeight: typography.fontWeight.bold,
     color: colors.textPrimary,
-    marginBottom: spacing.xs,
-    textAlign: 'center', // Zentriert den Text
-    width: '100%', // Stellt sicher, dass der Text die volle Breite einnimmt
+    marginBottom: spacing.l,
+    textAlign: 'center',
+    width: '100%',
   },
   headerSubtitle: {
     fontSize: typography.fontSize.l,
     color: colors.textSecondary,
-    marginBottom: spacing.m,
-    textAlign: 'center', // Zentriert den Text
+    marginBottom: spacing.xs,
+    textAlign: 'center',
   },
   
   // Such-/Vorschlagsstile
   searchContainer: {
     marginBottom: spacing.m,
+    marginTop: 0,
   },
   suggestionsContainer: {
     marginTop: spacing.m,

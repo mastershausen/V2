@@ -13,38 +13,28 @@ import i18n from '@/i18n/config';
 export const DEFAULT_SUGGESTIONS: SearchSuggestion[] = [
   { 
     id: '1', 
-    label: i18n.t('home.defaultSuggestions.taxOptions'), 
+    label: 'Steuern sparen', 
     icon: 'money' 
   },
   { 
     id: '2', 
-    label: i18n.t('home.defaultSuggestions.saveMoney'), 
-    icon: 'piggy-bank' 
-  },
-  { 
-    id: '3', 
-    label: i18n.t('home.defaultSuggestions.growth'), 
-    icon: 'line-chart' 
-  },
-  { 
-    id: '4', 
-    label: i18n.t('home.defaultSuggestions.businessPlan'), 
-    icon: 'file-text-o' 
-  },
-  { 
-    id: '5', 
-    label: i18n.t('home.defaultSuggestions.investment'), 
-    icon: 'briefcase' 
-  },
-  { 
-    id: '6', 
-    label: i18n.t('home.defaultSuggestions.insurance'), 
+    label: 'Vermögen schützen', 
     icon: 'shield' 
   },
   { 
-    id: '7', 
-    label: i18n.t('home.defaultSuggestions.retirement'), 
-    icon: 'clock-o' 
+    id: '3', 
+    label: 'Kunden gewinnen', 
+    icon: 'users' 
+  },
+  { 
+    id: '4', 
+    label: 'Fixkosten senken', 
+    icon: 'arrow-down' 
+  },
+  { 
+    id: '5', 
+    label: 'Unternehmen verkaufen', 
+    icon: 'building-o' 
   },
 ];
 
