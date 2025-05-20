@@ -70,12 +70,12 @@ export function TileCard({
   const shadowStyle = Platform.select({
     ios: {
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 5 },
-      shadowOpacity: 0.25,
+      shadowOffset: { width: 0, height: 6 },
+      shadowOpacity: 0.3,
       shadowRadius: 8,
     },
     android: {
-      elevation: 8,
+      elevation: 10,
     },
   });
 
@@ -89,9 +89,9 @@ export function TileCard({
       marginHorizontal: 0,
       marginBottom: 0,
       backgroundColor: colors.backgroundSecondary,
-      borderColor: 'rgba(0,0,0,0.1)',
-      borderWidth: 0.7,
-      transform: [{ translateY: -4 }],
+      borderColor: 'rgba(0,0,0,0.12)',
+      borderWidth: 0.8,
+      transform: [{ translateY: -5 }],
       borderRadius: ui.borderRadius.xl,
     },
     style
