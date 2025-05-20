@@ -130,19 +130,31 @@ interface KeywordTagProps {
   text: string;
   onRemove: () => void;
   colors: any; // Für die einfache Demo-Implementierung reicht 'any' als Typ
+  index: number; // Index für unterschiedliche Pastellfarben
 }
 
 /**
  * KeywordTag-Komponente für die Darstellung eines einzelnen Keyword-Tags
  */
-function KeywordTag({ text, onRemove, colors }: KeywordTagProps) {
+function KeywordTag({ text, onRemove, colors, index }: KeywordTagProps) {
+  // Einheitliches Blau für alle Tags
+  const tagColor = {
+    bg: colors.pastel.primary,
+    border: colors.pastel.primaryBorder,
+    text: colors.primary
+  };
+  
   return (
-    <View style={[styles.keywordTag, { backgroundColor: colors.backgroundSecondary }]}>
-      <Text style={[styles.keywordTagText, { color: colors.textPrimary }]}>
+    <View style={[styles.keywordTag, { 
+      backgroundColor: tagColor.bg,
+      borderColor: tagColor.border,
+      borderWidth: 0.5, // Dünnerer Rand
+    }]}>
+      <Text style={[styles.keywordTagText, { color: tagColor.text }]}>
         {text}
       </Text>
       <TouchableOpacity onPress={onRemove} style={styles.keywordTagRemoveButton}>
-        <Ionicons name="close-circle" size={18} color={colors.textSecondary} />
+        <Ionicons name="close-circle" size={16} color={tagColor.text} />
       </TouchableOpacity>
     </View>
   );
@@ -175,7 +187,8 @@ function CustomDropdown({
       <TouchableOpacity
         style={[styles.dropdownButton, { 
           borderColor: colors.divider,
-          backgroundColor: colors.backgroundSecondary
+          backgroundColor: colors.backgroundSecondary,
+          height: 40 // Gleiche Höhe wie Segmented Control
         }]}
         onPress={() => setModalVisible(true)}
       >
@@ -192,7 +205,10 @@ function CustomDropdown({
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalOverlay}>
-          <View style={[styles.modalContent, { backgroundColor: colors.backgroundPrimary }]}>
+          <View style={[styles.modalContent, { 
+            backgroundColor: colors.backgroundPrimary,
+            minHeight: 220 // Mindesthöhe für das Modal
+          }]}>
             <View style={styles.modalHeader}>
               <Text style={[styles.modalTitle, { color: colors.textPrimary }]}>
                 {placeholder || 'Auswählen'}
@@ -229,10 +245,60 @@ function CustomDropdown({
                   )}
                 </TouchableOpacity>
               )}
+              contentContainerStyle={{ paddingBottom: 20 }}
             />
           </View>
         </View>
       </Modal>
+    </View>
+  );
+}
+
+/**
+ * Segmented Control Komponente
+ */
+function SegmentedControl({ 
+  options, 
+  selectedValue, 
+  onValueChange,
+  colors
+}: { 
+  options: Array<{value: boolean, label: string}>;
+  selectedValue: boolean;
+  onValueChange: (value: boolean) => void;
+  colors: any;
+}) {
+  return (
+    <View style={[styles.segmentedControl, { 
+      backgroundColor: colors.backgroundTertiary,
+      borderColor: colors.primary,
+      borderWidth: 1,
+    }]}>
+      {options.map((option) => (
+        <TouchableOpacity
+          key={option.label}
+          style={[
+            styles.segmentedControlOption,
+            selectedValue === option.value && { 
+              backgroundColor: colors.pastel.primary,
+            }
+          ]}
+          onPress={() => onValueChange(option.value)}
+        >
+          <Text
+            style={[
+              styles.segmentedControlText,
+              { color: colors.textSecondary },
+              selectedValue === option.value && { 
+                color: colors.primary,
+                fontWeight: typography.fontWeight.bold 
+              }
+            ]}
+          >
+            {option.label}
+          </Text>
+        </TouchableOpacity>
+      ))}
     </View>
   );
 }
@@ -255,9 +321,11 @@ export default function MetaDataScreen() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const keywordInputRef = useRef<TextInput>(null);
   const errorAnim = useRef(new Animated.Value(0)).current;
-  const [showInMySolvbox, setShowInMySolvbox] = useState(true); // true = MySolvbox, false = SolvboxAI
-  const [selectedTab, setSelectedTab] = useState(showInMySolvbox ? MYSOLVBOX_TABS[0] : SOLVBOXAI_TABS[0]);
-  const [selectedTile, setSelectedTile] = useState(TILE_OPTIONS[showInMySolvbox ? MYSOLVBOX_TABS[0] : SOLVBOXAI_TABS[0]][0]);
+  
+  // MySolvbox vorausgewählt, aber Tab und Kachel bleiben leer
+  const [showInMySolvbox, setShowInMySolvbox] = useState<boolean>(true); // MySolvbox vorausgewählt
+  const [selectedTab, setSelectedTab] = useState<string>(''); // Kein Tab vorausgewählt 
+  const [selectedTile, setSelectedTile] = useState<string>(''); // Keine Kachel vorausgewählt
   
   // Keywordeingabe validieren und ggf. hinzufügen
   const validateAndAddKeyword = (text: string) => {
@@ -343,29 +411,36 @@ export default function MetaDataScreen() {
   const handleToggleChange = (value: boolean) => {
     setShowInMySolvbox(value);
     
-    // Setze die Defaults für die neue Auswahl
-    if (value) {
-      // MySolvbox wurde ausgewählt
-      setSelectedTab(MYSOLVBOX_TABS[0]);
-      setSelectedTile(TILE_OPTIONS[MYSOLVBOX_TABS[0]][0]);
-    } else {
-      // SolvboxAI wurde ausgewählt
-      setSelectedTab(SOLVBOXAI_TABS[0]);
-      setSelectedTile(TILE_OPTIONS[SOLVBOXAI_TABS[0]][0]);
-    }
+    // Zurücksetzen der Auswahlen
+    setSelectedTab('');
+    setSelectedTile('');
   };
   
   // Handler für Änderung des Tabs
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
-    // Setze auch den Tile auf den ersten verfügbaren für diesen Tab
-    if (TILE_OPTIONS[tab] && TILE_OPTIONS[tab].length > 0) {
-      setSelectedTile(TILE_OPTIONS[tab][0]);
-    }
+    // Zurücksetzen der Kachelauswahl, wenn der Tab sich ändert
+    setSelectedTile('');
   };
   
   // Handler für Erstellen-Button
   const handleCreatePress = () => {
+    // Prüfen, ob alle notwendigen Auswahlfelder befüllt sind
+    if (showInMySolvbox === null) {
+      Alert.alert('Fehler', 'Bitte wähle aus, ob dein Beitrag in MySolvbox oder SolvboxAI erscheinen soll.');
+      return;
+    }
+    
+    if (!selectedTab) {
+      Alert.alert('Fehler', 'Bitte wähle einen Tab aus.');
+      return;
+    }
+    
+    if (!selectedTile) {
+      Alert.alert('Fehler', 'Bitte wähle eine Kachel aus.');
+      return;
+    }
+    
     // Metadaten ausgeben (später an API senden)
     console.log({
       contentType: formData.type,
@@ -426,7 +501,16 @@ export default function MetaDataScreen() {
           </Text>
           
           {/* Keywords-Eingabe */}
-          <View style={styles.section}>
+          <View style={[styles.section, { 
+            backgroundColor: colors.backgroundSecondary,
+            borderRadius: ui.borderRadius.m,
+            padding: spacing.m,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 4,
+            elevation: 2,
+          }]}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
               Keywords
             </Text>
@@ -436,8 +520,13 @@ export default function MetaDataScreen() {
             
             {/* Keyword-Eingabefeld im iOS-Stil */}
             <View style={[styles.keywordInputContainer, { 
-              borderColor: keywordError ? colors.error : colors.divider,
-              backgroundColor: colors.backgroundSecondary
+              borderColor: keywordError ? colors.error : 'transparent',
+              backgroundColor: colors.backgroundPrimary,
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 1 },
+              shadowOpacity: 0.05,
+              shadowRadius: 2,
+              elevation: 1,
             }]}>
               {/* Bereits hinzugefügte Keywords als Tags anzeigen */}
               <View style={styles.keywordTagsContainer}>
@@ -447,6 +536,7 @@ export default function MetaDataScreen() {
                     text={tag} 
                     onRemove={() => removeKeyword(index)} 
                     colors={colors}
+                    index={index}
                   />
                 ))}
                 
@@ -495,8 +585,13 @@ export default function MetaDataScreen() {
             {/* Keyword-Vorschläge */}
             {showSuggestions && (
               <View style={[styles.suggestionsContainer, { 
-                backgroundColor: colors.backgroundSecondary,
-                borderColor: colors.divider 
+                backgroundColor: colors.backgroundPrimary,
+                borderColor: colors.divider,
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 3 },
+                shadowOpacity: 0.1,
+                shadowRadius: 5,
+                elevation: 3,
               }]}>
                 <Text style={[styles.suggestionsTitle, { color: colors.textSecondary }]}>
                   Vorschläge
@@ -508,15 +603,22 @@ export default function MetaDataScreen() {
                         key={index}
                         style={[styles.suggestionTag, { 
                           backgroundColor: keywordTags.includes(suggestion) 
-                            ? 'rgba(0, 122, 255, 0.1)' // Heller iOS-Blauton mit Transparenz statt colors.primaryLight
-                            : colors.backgroundTertiary 
+                            ? colors.pastel.primary
+                            : colors.backgroundTertiary,
+                          borderColor: keywordTags.includes(suggestion)
+                            ? colors.pastel.primaryBorder
+                            : 'transparent',
+                          borderWidth: 0.5, // Dünnerer Rand
+                          paddingVertical: 3, // Kompaktere Höhe
+                          paddingHorizontal: spacing.xs,
                         }]}
                         onPress={() => selectSuggestion(suggestion)}
                       >
                         <Text style={[styles.suggestionText, { 
                           color: keywordTags.includes(suggestion) 
                             ? colors.primary 
-                            : colors.textPrimary 
+                            : colors.textPrimary,
+                          fontSize: typography.fontSize.xs, // Kleinere Schrift
                         }]}>
                           {suggestion}
                         </Text>
@@ -529,7 +631,17 @@ export default function MetaDataScreen() {
           </View>
           
           {/* Zielbereich-Auswahl */}
-          <View style={styles.section}>
+          <View style={[styles.section, { 
+            backgroundColor: colors.backgroundSecondary,
+            borderRadius: ui.borderRadius.m,
+            padding: spacing.m,
+            marginTop: spacing.m,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 4,
+            elevation: 2,
+          }]}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
               Zielbereich
             </Text>
@@ -537,27 +649,17 @@ export default function MetaDataScreen() {
               Wähle aus, wo dein Beitrag zusätzlich erscheinen soll
             </Text>
             
-            {/* Toggle für MySolvbox/SolvboxAI */}
-            <View style={styles.toggleContainer}>
-              <Text style={[styles.toggleLabel, { 
-                color: showInMySolvbox ? colors.primary : colors.textSecondary,
-                fontWeight: showInMySolvbox ? 'bold' : 'normal'
-              }]}>
-                MySolvbox
-              </Text>
-              <Switch
-                value={!showInMySolvbox}
-                onValueChange={(value) => handleToggleChange(!value)}
-                trackColor={{ false: colors.primary, true: colors.primary }}
-                thumbColor="#FFFFFF"
-                ios_backgroundColor={colors.backgroundSecondary}
+            {/* Segmented Control für MySolvbox/SolvboxAI */}
+            <View style={{ marginVertical: spacing.m }}>
+              <SegmentedControl
+                options={[
+                  { value: true, label: 'MySolvbox' },
+                  { value: false, label: 'SolvboxAI' }
+                ]}
+                selectedValue={showInMySolvbox}
+                onValueChange={handleToggleChange}
+                colors={colors}
               />
-              <Text style={[styles.toggleLabel, { 
-                color: !showInMySolvbox ? colors.primary : colors.textSecondary,
-                fontWeight: !showInMySolvbox ? 'bold' : 'normal'
-              }]}>
-                SolvboxAI
-              </Text>
             </View>
             
             {/* Tab-Auswahl */}
@@ -566,11 +668,12 @@ export default function MetaDataScreen() {
                 Tab auswählen
               </Text>
               <CustomDropdown
-                options={showInMySolvbox ? MYSOLVBOX_TABS : SOLVBOXAI_TABS}
+                options={showInMySolvbox === true ? MYSOLVBOX_TABS : showInMySolvbox === false ? SOLVBOXAI_TABS : []}
                 selectedValue={selectedTab}
                 onValueChange={handleTabChange}
                 placeholder="Tab auswählen"
                 colors={colors}
+                containerStyle={styles.dropdownContainer}
               />
             </View>
             
@@ -580,11 +683,12 @@ export default function MetaDataScreen() {
                 Kachel auswählen
               </Text>
               <CustomDropdown
-                options={TILE_OPTIONS[selectedTab] || []}
+                options={selectedTab ? (TILE_OPTIONS[selectedTab] || []) : []}
                 selectedValue={selectedTile}
                 onValueChange={setSelectedTile}
                 placeholder="Kachel auswählen"
                 colors={colors}
+                containerStyle={styles.dropdownContainer}
               />
             </View>
           </View>
@@ -662,8 +766,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderWidth: 1,
     borderRadius: ui.borderRadius.m,
-    padding: spacing.m,
-    height: 50,
+    paddingHorizontal: spacing.m,
+    height: 40, // Gleiche Höhe wie Segmented Control
   },
   dropdownButtonText: {
     fontSize: typography.fontSize.m,
@@ -720,18 +824,18 @@ const styles = StyleSheet.create({
   keywordTag: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F0F0F0',
-    borderRadius: 15,
-    paddingHorizontal: spacing.s,
-    paddingVertical: spacing.xs,
+    borderRadius: 12,
+    paddingHorizontal: spacing.xs,
+    paddingVertical: 3, // Kompaktere Höhe
     margin: 3,
   },
   keywordTagText: {
-    fontSize: typography.fontSize.s,
-    marginRight: 5,
+    fontSize: typography.fontSize.xs, // Kleinere Schrift
+    marginRight: 3,
+    fontWeight: typography.fontWeight.medium,
   },
   keywordTagRemoveButton: {
-    padding: 2,
+    padding: 1,
   },
   keywordInput: {
     flex: 1,
@@ -756,6 +860,7 @@ const styles = StyleSheet.create({
   suggestionsTitle: {
     fontSize: typography.fontSize.xs,
     marginBottom: spacing.xs,
+    fontWeight: typography.fontWeight.medium,
   },
   suggestionsRow: {
     flexDirection: 'row',
@@ -770,5 +875,23 @@ const styles = StyleSheet.create({
   suggestionText: {
     fontSize: typography.fontSize.s,
     fontWeight: typography.fontWeight.medium,
+  },
+  dropdownContainer: {
+    marginTop: spacing.xs,
+  },
+  segmentedControl: {
+    flexDirection: 'row',
+    borderRadius: ui.borderRadius.m,
+    overflow: 'hidden',
+    height: 40,
+  },
+  segmentedControlOption: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: spacing.xs,
+  },
+  segmentedControlText: {
+    fontSize: typography.fontSize.m,
   },
 }); 
