@@ -278,6 +278,13 @@ export default function CreateGigDetailsScreen() {
             </TouchableOpacity>
           )}
           
+          {/* Hinweis zur Mindestlänge */}
+          <Text style={[styles.characterCountHint, { 
+            color: description.length >= 500 ? colors.success : colors.textSecondary 
+          }]}>
+            {description.length}/500 Zeichen (Minimum)
+          </Text>
+          
           {/* Trennlinie und Veröffentlichungsdatum */}
           <View style={[styles.footerDivider, { backgroundColor: colors.divider }]} />
           <View style={styles.footerContainer}>
@@ -474,5 +481,9 @@ const styles = StyleSheet.create({
   createButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  characterCountHint: {
+    fontSize: typography.fontSize.s,
+    marginTop: spacing.xs,
   },
 });

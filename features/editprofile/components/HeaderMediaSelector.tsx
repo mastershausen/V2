@@ -18,7 +18,14 @@ export function HeaderMediaSelector({ onPress }: HeaderMediaSelectorProps) {
 
   return (
     <TouchableOpacity 
-      style={[styles.mediaNavItem, { borderBottomColor: colors.divider }]}
+      style={[
+        styles.mediaNavItem, 
+        { 
+          borderBottomColor: colors.divider,
+          borderLeftWidth: 3,
+          borderLeftColor: colors.pastel?.primary || 'rgba(0, 122, 255, 0.3)',
+        }
+      ]}
       onPress={onPress}
       accessible={true}
       accessibilityRole="button"

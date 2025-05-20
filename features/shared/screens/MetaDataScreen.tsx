@@ -440,6 +440,15 @@ export default function MetaDataScreen() {
       Alert.alert('Fehler', 'Bitte wähle eine Kachel aus.');
       return;
     }
+
+    // Prüfen, ob die Beschreibung mindestens 500 Zeichen hat
+    if (formData.description.length < 500) {
+      Alert.alert(
+        'Beschreibung zu kurz',
+        `Die Beschreibung sollte mindestens 500 Zeichen enthalten, um qualitativ hochwertigen Content zu gewährleisten. Aktuell: ${formData.description.length} Zeichen.`
+      );
+      return;
+    }
     
     // Metadaten ausgeben (später an API senden)
     console.log({

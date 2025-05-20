@@ -27,7 +27,10 @@ export function SaveButton({ onPress, hasChanges }: SaveButtonProps) {
     >
       <Text style={[
         styles.saveButtonText, 
-        { color: hasChanges ? colors.primary : colors.textTertiary }
+        { 
+          color: hasChanges ? colors.primary : colors.textTertiary,
+          fontWeight: hasChanges ? typography.fontWeight.bold : typography.fontWeight.medium,
+        }
       ]}>
         Speichern
       </Text>
