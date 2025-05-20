@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   View, 
   Text, 
@@ -7,9 +7,14 @@ import {
   SafeAreaView, 
   ScrollView, 
   StatusBar, 
-  Alert 
+  Alert,
+  TextInput,
+  Switch,
+  Modal,
+  FlatList
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -17,6 +22,112 @@ import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useCreateForm } from '@/features/shared/contexts/CreateFormContext';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
+
+// Beispiel-Daten für die Dropdown-Optionen (später aus API/Context holen)
+const MYSOLVBOX_TABS = ["Sichern", "Wachsen", "Vorausdenken", "Bonus"];
+const SOLVBOXAI_TABS = ["Gigs", "Fallstudien"];
+
+type TileOptionsType = {
+  [key: string]: string[];
+};
+
+const TILE_OPTIONS: TileOptionsType = {
+  "Sichern": ["Kosten senken", "Risiken minimieren", "Steuern optimieren"],
+  "Wachsen": ["Kurzfristig Kunden gewinnen", "Marketing verbessern", "Team erweitern"],
+  "Vorausdenken": ["Digitalisierung nutzen", "Technologie nutzen", "Zukunftssicher aufstellen"],
+  "Bonus": ["Sonderangebote", "Neue Ressourcen", "Top-Tools"],
+  "Gigs": ["Empfohlene Gigs", "Top-Gigs", "Neue Gigs"],
+  "Fallstudien": ["Case-Studies", "Erfolgsgeschichten", "Branchenlösungen"]
+};
+
+/**
+ * Einfache Dropdown-Komponente als Ersatz für den Picker
+ */
+function CustomDropdown({ 
+  options, 
+  selectedValue, 
+  onValueChange, 
+  placeholder,
+  labelStyle,
+  containerStyle,
+  colors
+}: { 
+  options: string[]; 
+  selectedValue: string; 
+  onValueChange: (value: string) => void; 
+  placeholder?: string;
+  labelStyle?: any;
+  containerStyle?: any;
+  colors: any;
+}) {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  return (
+    <View style={containerStyle}>
+      <TouchableOpacity
+        style={[styles.dropdownButton, { 
+          borderColor: colors.divider,
+          backgroundColor: colors.backgroundSecondary
+        }]}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={[styles.dropdownButtonText, labelStyle, { color: colors.textPrimary }]}>
+          {selectedValue || placeholder || 'Auswählen'}
+        </Text>
+        <Ionicons name="chevron-down" size={20} color={colors.textSecondary} />
+      </TouchableOpacity>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalContent, { backgroundColor: colors.backgroundPrimary }]}>
+            <View style={styles.modalHeader}>
+              <Text style={[styles.modalTitle, { color: colors.textPrimary }]}>
+                {placeholder || 'Auswählen'}
+              </Text>
+              <TouchableOpacity onPress={() => setModalVisible(false)}>
+                <Ionicons name="close" size={24} color={colors.textPrimary} />
+              </TouchableOpacity>
+            </View>
+            <FlatList
+              data={options}
+              keyExtractor={(item) => item}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={[
+                    styles.optionItem,
+                    selectedValue === item && { backgroundColor: colors.backgroundSecondary }
+                  ]}
+                  onPress={() => {
+                    onValueChange(item);
+                    setModalVisible(false);
+                  }}
+                >
+                  <Text 
+                    style={[
+                      styles.optionText, 
+                      { color: colors.textPrimary },
+                      selectedValue === item && { fontWeight: 'bold', color: colors.primary }
+                    ]}
+                  >
+                    {item}
+                  </Text>
+                  {selectedValue === item && (
+                    <Ionicons name="checkmark" size={20} color={colors.primary} />
+                  )}
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+}
 
 /**
  * MetaDataScreen
@@ -29,9 +140,50 @@ export default function MetaDataScreen() {
   const router = useRouter();
   const { formData, goBackToDetailsScreen } = useCreateForm();
   
+  // State für Metadaten
+  const [keywords, setKeywords] = useState('');
+  const [showInMySolvbox, setShowInMySolvbox] = useState(true); // true = MySolvbox, false = SolvboxAI
+  const [selectedTab, setSelectedTab] = useState(showInMySolvbox ? MYSOLVBOX_TABS[0] : SOLVBOXAI_TABS[0]);
+  const [selectedTile, setSelectedTile] = useState(TILE_OPTIONS[showInMySolvbox ? MYSOLVBOX_TABS[0] : SOLVBOXAI_TABS[0]][0]);
+  
+  // Handler für Toggle zwischen MySolvbox und SolvboxAI
+  const handleToggleChange = (value: boolean) => {
+    setShowInMySolvbox(value);
+    
+    // Setze die Defaults für die neue Auswahl
+    if (value) {
+      // MySolvbox wurde ausgewählt
+      setSelectedTab(MYSOLVBOX_TABS[0]);
+      setSelectedTile(TILE_OPTIONS[MYSOLVBOX_TABS[0]][0]);
+    } else {
+      // SolvboxAI wurde ausgewählt
+      setSelectedTab(SOLVBOXAI_TABS[0]);
+      setSelectedTile(TILE_OPTIONS[SOLVBOXAI_TABS[0]][0]);
+    }
+  };
+  
+  // Handler für Änderung des Tabs
+  const handleTabChange = (tab: string) => {
+    setSelectedTab(tab);
+    // Setze auch den Tile auf den ersten verfügbaren für diesen Tab
+    if (TILE_OPTIONS[tab] && TILE_OPTIONS[tab].length > 0) {
+      setSelectedTile(TILE_OPTIONS[tab][0]);
+    }
+  };
+  
   // Handler für Erstellen-Button
   const handleCreatePress = () => {
     // Hier könnte später die tatsächliche Erstellung des Inhalts stattfinden
+    // mit den gesammelten Metadaten
+    
+    // Metadaten ausgeben (später an API senden)
+    console.log({
+      contentType: formData.type,
+      keywords,
+      destination: showInMySolvbox ? 'MySolvbox' : 'SolvboxAI',
+      tab: selectedTab,
+      tile: selectedTile
+    });
     
     // Erfolgsmeldung und Navigation zur Startseite
     Alert.alert(
@@ -80,13 +232,86 @@ export default function MetaDataScreen() {
             um {formData.type === 'gig' ? 'ihn' : 'sie'} besser auffindbar zu machen.
           </Text>
           
-          {/* Platzhalter für künftige Metadaten-Eingabefelder */}
-          <View style={styles.metadataContainer}>
-            {/* Hier werden später die Metadaten-Eingabefelder eingefügt */}
-            <View style={[styles.placeholderContainer, { backgroundColor: colors.backgroundSecondary }]}>
-              <Text style={[styles.placeholderText, { color: colors.textTertiary }]}>
-                {formData.type === 'gig' ? 'Gig-Metadaten-Eingabefelder' : 'Fallstudien-Metadaten-Eingabefelder'} werden hier angezeigt
+          {/* Keywords-Eingabe */}
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Keywords
+            </Text>
+            <Text style={[styles.sectionDescription, { color: colors.textSecondary }]}>
+              Gib relevante Suchbegriffe ein, damit dein Beitrag in den Suchergebnissen erscheint
+            </Text>
+            <TextInput
+              style={[styles.input, { 
+                color: colors.textPrimary,
+                borderColor: colors.divider,
+                backgroundColor: colors.backgroundSecondary
+              }]}
+              value={keywords}
+              onChangeText={setKeywords}
+              placeholder="z.B. Steuern senken, Buchhaltung, Kostenoptimierung"
+              placeholderTextColor={colors.textTertiary}
+              multiline={false}
+            />
+          </View>
+          
+          {/* Zielbereich-Auswahl */}
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Zielbereich
+            </Text>
+            <Text style={[styles.sectionDescription, { color: colors.textSecondary }]}>
+              Wähle aus, wo dein Beitrag zusätzlich erscheinen soll
+            </Text>
+            
+            {/* Toggle für MySolvbox/SolvboxAI */}
+            <View style={styles.toggleContainer}>
+              <Text style={[styles.toggleLabel, { 
+                color: showInMySolvbox ? colors.primary : colors.textSecondary,
+                fontWeight: showInMySolvbox ? 'bold' : 'normal'
+              }]}>
+                MySolvbox
               </Text>
+              <Switch
+                value={!showInMySolvbox}
+                onValueChange={(value) => handleToggleChange(!value)}
+                trackColor={{ false: colors.primary, true: colors.primary }}
+                thumbColor="#FFFFFF"
+                ios_backgroundColor={colors.backgroundSecondary}
+              />
+              <Text style={[styles.toggleLabel, { 
+                color: !showInMySolvbox ? colors.primary : colors.textSecondary,
+                fontWeight: !showInMySolvbox ? 'bold' : 'normal'
+              }]}>
+                SolvboxAI
+              </Text>
+            </View>
+            
+            {/* Tab-Auswahl */}
+            <View style={styles.pickerContainer}>
+              <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>
+                Tab auswählen
+              </Text>
+              <CustomDropdown
+                options={showInMySolvbox ? MYSOLVBOX_TABS : SOLVBOXAI_TABS}
+                selectedValue={selectedTab}
+                onValueChange={handleTabChange}
+                placeholder="Tab auswählen"
+                colors={colors}
+              />
+            </View>
+            
+            {/* Kachel-Auswahl */}
+            <View style={styles.pickerContainer}>
+              <Text style={[styles.inputLabel, { color: colors.textSecondary }]}>
+                Kachel auswählen
+              </Text>
+              <CustomDropdown
+                options={TILE_OPTIONS[selectedTab] || []}
+                selectedValue={selectedTile}
+                onValueChange={setSelectedTile}
+                placeholder="Kachel auswählen"
+                colors={colors}
+              />
             </View>
           </View>
         </View>
@@ -122,17 +347,86 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.m,
     marginBottom: spacing.l,
   },
-  metadataContainer: {
-    marginVertical: spacing.m,
+  section: {
+    marginBottom: spacing.l,
   },
-  placeholderContainer: {
-    padding: spacing.l,
+  sectionTitle: {
+    fontSize: typography.fontSize.l,
+    fontWeight: typography.fontWeight.bold,
+    marginBottom: spacing.xs,
+  },
+  sectionDescription: {
+    fontSize: typography.fontSize.s,
+    marginBottom: spacing.m,
+  },
+  input: {
+    borderWidth: 1,
     borderRadius: ui.borderRadius.m,
+    padding: spacing.m,
+    fontSize: typography.fontSize.m,
+  },
+  toggleContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 200,
+    marginVertical: spacing.m,
   },
-  placeholderText: {
-    textAlign: 'center',
+  toggleLabel: {
+    fontSize: typography.fontSize.m,
+    marginHorizontal: spacing.m,
+  },
+  pickerContainer: {
+    marginBottom: spacing.m,
+  },
+  inputLabel: {
+    fontSize: typography.fontSize.s,
+    marginBottom: spacing.xs,
+  },
+  dropdownButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderRadius: ui.borderRadius.m,
+    padding: spacing.m,
+    height: 50,
+  },
+  dropdownButtonText: {
+    fontSize: typography.fontSize.m,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'flex-end',
+  },
+  modalContent: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: spacing.m,
+    maxHeight: '70%',
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.m,
+    paddingBottom: spacing.s,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0,0,0,0.1)',
+  },
+  modalTitle: {
+    fontSize: typography.fontSize.l,
+    fontWeight: typography.fontWeight.bold,
+  },
+  optionItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: spacing.m,
+    borderRadius: ui.borderRadius.m,
+    marginBottom: spacing.xs,
+  },
+  optionText: {
+    fontSize: typography.fontSize.m,
   },
 }); 
