@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   View, 
   Text, 
@@ -11,7 +11,9 @@ import {
   TextInput,
   Switch,
   Modal,
-  FlatList
+  FlatList,
+  Keyboard,
+  Animated
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -23,22 +25,103 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { useCreateForm } from '@/features/shared/contexts/CreateFormContext';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 
-// Beispiel-Daten für die Dropdown-Optionen (später aus API/Context holen)
+// Korrekte Tab-IDs entsprechend der Datenstruktur
 const MYSOLVBOX_TABS = ["Sichern", "Wachsen", "Vorausdenken", "Bonus"];
 const SOLVBOXAI_TABS = ["Gigs", "Fallstudien"];
 
+// Kachel-Optionen entsprechend der tatsächlichen Daten in der App
 type TileOptionsType = {
   [key: string]: string[];
 };
 
 const TILE_OPTIONS: TileOptionsType = {
-  "Sichern": ["Kosten senken", "Risiken minimieren", "Steuern optimieren"],
-  "Wachsen": ["Kurzfristig Kunden gewinnen", "Marketing verbessern", "Team erweitern"],
-  "Vorausdenken": ["Digitalisierung nutzen", "Technologie nutzen", "Zukunftssicher aufstellen"],
-  "Bonus": ["Sonderangebote", "Neue Ressourcen", "Top-Tools"],
-  "Gigs": ["Empfohlene Gigs", "Top-Gigs", "Neue Gigs"],
-  "Fallstudien": ["Case-Studies", "Erfolgsgeschichten", "Branchenlösungen"]
+  // MySolvbox Kacheln
+  "Sichern": [
+    "Kunden kurzfristig gewinnen", 
+    "Fixkosten senken", 
+    "Vermögen schützen", 
+    "Unternehmen kernsanieren", 
+    "Recht & Sicherheit", 
+    "Kunden langfristig binden", 
+    "Fremdkapital beschaffen", 
+    "Mitarbeiter führen", 
+    "Cyber- und IT-Sicherheit", 
+    "Kunde ist insolvent. Was tun?"
+  ],
+  "Wachsen": [
+    "Steuern auf ein Minimum", 
+    "A-Mitarbeiter gewinnen und halten", 
+    "Dauerhaften Kundenstrom aufbauen", 
+    "Online-Geschäft optimieren", 
+    "Teams führen", 
+    "Marketing automatisieren"
+  ],
+  "Vorausdenken": [
+    "Digitalisierung nutzen", 
+    "Zukunftssicher aufstellen", 
+    "Prozesse optimieren", 
+    "Technologie nutzen", 
+    "Nachfolge planen"
+  ],
+  "Bonus": [
+    "Tools & Ressourcen", 
+    "Exklusive Angebote", 
+    "Community Events"
+  ],
+  
+  // SolvboxAI Kacheln
+  "Gigs": [
+    "KI-Agenten für alltägliche Aufgaben", 
+    "KI-Agenten für mehr PR & Podcasts", 
+    "Empfohlene Gigs", 
+    "Neue Gigs"
+  ],
+  "Fallstudien": [
+    "Case-Studies", 
+    "Erfolgsgeschichten", 
+    "Branchenlösungen"
+  ]
 };
+
+// Keyword Vorschläge nach Typ kategorisiert
+const KEYWORD_SUGGESTIONS = {
+  'gig': [
+    'Steuerberatung', 'Online-Marketing', 'Buchhaltungsoptimierung', 
+    'Umsatzsteigerung', 'Kostenreduktion', 'Digitale Transformation',
+    'Internetauftritt verbessern', 'Social Media Strategie', 'SEO-Optimierung'
+  ],
+  'casestudy': [
+    'Prozessoptimierung', 'Umsatzverdopplung', 'Kostenreduktion', 
+    'Kundenerfahrung verbessern', 'Digitalisierungsprojekt', 'ERP-Einführung',
+    'Cloud-Migration', 'Systemintegration', 'Marketing-Automation'
+  ]
+};
+
+// Eingeschränkte Keywords, die alleine nicht erlaubt sind
+const RESTRICTED_KEYWORDS = ['kunden', 'geld', 'service', 'firma', 'unternehmen', 'business'];
+
+// Ergänze fehlende Typen für die KeywordTag-Komponente
+interface KeywordTagProps {
+  text: string;
+  onRemove: () => void;
+  colors: any; // Für die einfache Demo-Implementierung reicht 'any' als Typ
+}
+
+/**
+ * KeywordTag-Komponente für die Darstellung eines einzelnen Keyword-Tags
+ */
+function KeywordTag({ text, onRemove, colors }: KeywordTagProps) {
+  return (
+    <View style={[styles.keywordTag, { backgroundColor: colors.backgroundSecondary }]}>
+      <Text style={[styles.keywordTagText, { color: colors.textPrimary }]}>
+        {text}
+      </Text>
+      <TouchableOpacity onPress={onRemove} style={styles.keywordTagRemoveButton}>
+        <Ionicons name="close-circle" size={18} color={colors.textSecondary} />
+      </TouchableOpacity>
+    </View>
+  );
+}
 
 /**
  * Einfache Dropdown-Komponente als Ersatz für den Picker
@@ -141,11 +224,96 @@ export default function MetaDataScreen() {
   const { formData, goBackToDetailsScreen } = useCreateForm();
   
   // State für Metadaten
-  const [keywords, setKeywords] = useState('');
+  const [keywordTags, setKeywordTags] = useState<string[]>([]);
+  const [currentKeyword, setCurrentKeyword] = useState('');
+  const [keywordError, setKeywordError] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const keywordInputRef = useRef<TextInput>(null);
+  const errorAnim = useRef(new Animated.Value(0)).current;
   const [showInMySolvbox, setShowInMySolvbox] = useState(true); // true = MySolvbox, false = SolvboxAI
   const [selectedTab, setSelectedTab] = useState(showInMySolvbox ? MYSOLVBOX_TABS[0] : SOLVBOXAI_TABS[0]);
   const [selectedTile, setSelectedTile] = useState(TILE_OPTIONS[showInMySolvbox ? MYSOLVBOX_TABS[0] : SOLVBOXAI_TABS[0]][0]);
   
+  // Keywordeingabe validieren und ggf. hinzufügen
+  const validateAndAddKeyword = (text: string) => {
+    // Trimmen und in Kleinbuchstaben umwandeln für die Prüfung
+    const trimmedText = text.trim();
+    const lowerText = trimmedText.toLowerCase();
+    
+    // Leere Eingabe ignorieren
+    if (trimmedText === '') {
+      setCurrentKeyword('');
+      return;
+    }
+    
+    // Prüfen, ob das Keyword bereits existiert
+    if (keywordTags.includes(trimmedText)) {
+      showErrorAnimation('Dieses Keyword wurde bereits hinzugefügt');
+      return;
+    }
+    
+    // In Wörter aufteilen und prüfen, ob es mindestens zwei gibt
+    const words = trimmedText.split(/\s+/).filter(word => word.length > 0);
+    
+    if (words.length < 2) {
+      showErrorAnimation('Keywords müssen aus mindestens zwei Wörtern bestehen');
+      return;
+    }
+    
+    // Prüfen, ob es Wiederholungen gibt (z.B. "Kunde Kunde")
+    for (let i = 1; i < words.length; i++) {
+      if (words[i].toLowerCase() === words[i-1].toLowerCase()) {
+        showErrorAnimation('Keywords dürfen keine Wortwiederholungen enthalten');
+        return;
+      }
+    }
+    
+    // Prüfen, ob es sich um ein eingeschränktes Einzelwort handelt
+    if (RESTRICTED_KEYWORDS.includes(lowerText) && !lowerText.includes(' ')) {
+      showErrorAnimation(`"${trimmedText}" ist zu allgemein. Bitte spezifischer formulieren`);
+      return;
+    }
+    
+    // Wenn alles okay ist, Keyword hinzufügen
+    setKeywordTags([...keywordTags, trimmedText]);
+    setCurrentKeyword('');
+    setKeywordError('');
+  };
+  
+  // Fehlermeldung mit Animation anzeigen
+  const showErrorAnimation = (message: string) => {
+    setKeywordError(message);
+    Animated.sequence([
+      Animated.timing(errorAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: false
+      }),
+      Animated.timing(errorAnim, {
+        toValue: 0,
+        duration: 300,
+        delay: 2000,
+        useNativeDriver: false
+      })
+    ]).start(() => setKeywordError(''));
+  };
+  
+  // Keyword entfernen
+  const removeKeyword = (index: number) => {
+    const newTags = [...keywordTags];
+    newTags.splice(index, 1);
+    setKeywordTags(newTags);
+  };
+  
+  // Vorschlag auswählen
+  const selectSuggestion = (suggestion: string) => {
+    if (!keywordTags.includes(suggestion)) {
+      setKeywordTags([...keywordTags, suggestion]);
+    }
+    setShowSuggestions(false);
+    keywordInputRef.current?.focus();
+  };
+
   // Handler für Toggle zwischen MySolvbox und SolvboxAI
   const handleToggleChange = (value: boolean) => {
     setShowInMySolvbox(value);
@@ -173,13 +341,10 @@ export default function MetaDataScreen() {
   
   // Handler für Erstellen-Button
   const handleCreatePress = () => {
-    // Hier könnte später die tatsächliche Erstellung des Inhalts stattfinden
-    // mit den gesammelten Metadaten
-    
     // Metadaten ausgeben (später an API senden)
     console.log({
       contentType: formData.type,
-      keywords,
+      keywords: keywordTags,
       destination: showInMySolvbox ? 'MySolvbox' : 'SolvboxAI',
       tab: selectedTab,
       tile: selectedTile
@@ -221,7 +386,10 @@ export default function MetaDataScreen() {
         rightContent={renderCreateButton()}
       />
       
-      <ScrollView style={styles.scrollView}>
+      <ScrollView 
+        style={styles.scrollView} 
+        keyboardShouldPersistTaps="handled"
+      >
         <View style={styles.content}>
           <Text style={[styles.title, { color: colors.textPrimary }]}>
             {formData.type === 'gig' ? 'Gig-Metadaten' : 'Fallstudien-Metadaten'} hinzufügen
@@ -238,20 +406,101 @@ export default function MetaDataScreen() {
               Keywords
             </Text>
             <Text style={[styles.sectionDescription, { color: colors.textSecondary }]}>
-              Gib relevante Suchbegriffe ein, damit dein Beitrag in den Suchergebnissen erscheint
+              Gib spezifische Suchbegriffe oder Phrasen ein, damit dein Beitrag bei relevanten Suchanfragen erscheint
             </Text>
-            <TextInput
-              style={[styles.input, { 
-                color: colors.textPrimary,
-                borderColor: colors.divider,
-                backgroundColor: colors.backgroundSecondary
-              }]}
-              value={keywords}
-              onChangeText={setKeywords}
-              placeholder="z.B. Steuern senken, Buchhaltung, Kostenoptimierung"
-              placeholderTextColor={colors.textTertiary}
-              multiline={false}
-            />
+            
+            {/* Keyword-Eingabefeld im iOS-Stil */}
+            <View style={[styles.keywordInputContainer, { 
+              borderColor: keywordError ? colors.error : colors.divider,
+              backgroundColor: colors.backgroundSecondary
+            }]}>
+              {/* Bereits hinzugefügte Keywords als Tags anzeigen */}
+              <View style={styles.keywordTagsContainer}>
+                {keywordTags.map((tag, index) => (
+                  <KeywordTag 
+                    key={index} 
+                    text={tag} 
+                    onRemove={() => removeKeyword(index)} 
+                    colors={colors}
+                  />
+                ))}
+                
+                {/* Eingabefeld für neue Keywords */}
+                <TextInput
+                  ref={keywordInputRef}
+                  style={[styles.keywordInput, { color: colors.textPrimary }]}
+                  value={currentKeyword}
+                  onChangeText={setCurrentKeyword}
+                  placeholder={keywordTags.length === 0 ? "Keyword hinzufügen..." : ""}
+                  placeholderTextColor={colors.textTertiary}
+                  returnKeyType="done"
+                  blurOnSubmit={false}
+                  onFocus={() => setShowSuggestions(true)}
+                  onSubmitEditing={() => {
+                    validateAndAddKeyword(currentKeyword);
+                  }}
+                  onBlur={() => {
+                    if (currentKeyword.trim() !== '') {
+                      validateAndAddKeyword(currentKeyword);
+                    }
+                    setTimeout(() => setShowSuggestions(false), 200);
+                  }}
+                />
+              </View>
+            </View>
+            
+            {/* Fehlermeldung mit Animation */}
+            <Animated.View 
+              style={[
+                styles.errorContainer, 
+                { 
+                  opacity: errorAnim,
+                  height: errorAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, 20]
+                  }) 
+                }
+              ]}
+            >
+              <Text style={[styles.errorText, { color: colors.error }]}>
+                {keywordError}
+              </Text>
+            </Animated.View>
+            
+            {/* Keyword-Vorschläge */}
+            {showSuggestions && (
+              <View style={[styles.suggestionsContainer, { 
+                backgroundColor: colors.backgroundSecondary,
+                borderColor: colors.divider 
+              }]}>
+                <Text style={[styles.suggestionsTitle, { color: colors.textSecondary }]}>
+                  Vorschläge
+                </Text>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <View style={styles.suggestionsRow}>
+                    {KEYWORD_SUGGESTIONS[formData.type === 'gig' ? 'gig' : 'casestudy'].map((suggestion, index) => (
+                      <TouchableOpacity 
+                        key={index}
+                        style={[styles.suggestionTag, { 
+                          backgroundColor: keywordTags.includes(suggestion) 
+                            ? 'rgba(0, 122, 255, 0.1)' // Heller iOS-Blauton mit Transparenz statt colors.primaryLight
+                            : colors.backgroundTertiary 
+                        }]}
+                        onPress={() => selectSuggestion(suggestion)}
+                      >
+                        <Text style={[styles.suggestionText, { 
+                          color: keywordTags.includes(suggestion) 
+                            ? colors.primary 
+                            : colors.textPrimary 
+                        }]}>
+                          {suggestion}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </ScrollView>
+              </View>
+            )}
           </View>
           
           {/* Zielbereich-Auswahl */}
@@ -428,5 +677,73 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: typography.fontSize.m,
+  },
+  
+  // Neue Stile für Keywords
+  keywordInputContainer: {
+    borderWidth: 1,
+    borderRadius: ui.borderRadius.m,
+    minHeight: 50,
+    paddingHorizontal: spacing.s,
+    paddingVertical: spacing.xs,
+  },
+  keywordTagsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+  },
+  keywordTag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F0F0F0',
+    borderRadius: 15,
+    paddingHorizontal: spacing.s,
+    paddingVertical: spacing.xs,
+    margin: 3,
+  },
+  keywordTagText: {
+    fontSize: typography.fontSize.s,
+    marginRight: 5,
+  },
+  keywordTagRemoveButton: {
+    padding: 2,
+  },
+  keywordInput: {
+    flex: 1,
+    minWidth: 100,
+    height: 30,
+    fontSize: typography.fontSize.m,
+    paddingHorizontal: spacing.xs,
+  },
+  errorContainer: {
+    marginTop: spacing.xs,
+    overflow: 'hidden',
+  },
+  errorText: {
+    fontSize: typography.fontSize.xs,
+  },
+  suggestionsContainer: {
+    marginTop: spacing.xs,
+    padding: spacing.s,
+    borderRadius: ui.borderRadius.m,
+    borderWidth: 1,
+  },
+  suggestionsTitle: {
+    fontSize: typography.fontSize.xs,
+    marginBottom: spacing.xs,
+  },
+  suggestionsRow: {
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    paddingBottom: spacing.xs,
+  },
+  suggestionTag: {
+    padding: spacing.s,
+    borderRadius: 20,
+    marginRight: spacing.xs,
+  },
+  suggestionText: {
+    fontSize: typography.fontSize.s,
+    fontWeight: typography.fontWeight.medium,
   },
 }); 
