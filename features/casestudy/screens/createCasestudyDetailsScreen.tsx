@@ -111,8 +111,8 @@ export default function CreateCasestudyDetailsScreen() {
   
   // Handler für Erstellen-Button (war vorher Weiter-Button)
   const handleErstellenPress = () => {
-    // Navigiere zum MetaDataScreen ohne Parameter
-    router.push('/create/metadata');
+    // Navigiere zum MetaDataScreen im richtigen Stack
+    router.push('/casestudies/create/metadata');
   };
   
   // Weiter-Button für HeaderNavigation

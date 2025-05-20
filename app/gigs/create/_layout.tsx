@@ -28,6 +28,14 @@ export default function GigsCreateLayout() {
           animation: 'slide_from_right',
         }}
       />
+      <Stack.Screen
+        name="metadata"
+        options={{
+          headerShown: false,
+          presentation: 'card',
+          animation: 'slide_from_right',
+        }}
+      />
     </Stack>
   );
 } 

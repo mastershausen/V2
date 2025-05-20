@@ -126,8 +126,8 @@ export default function CreateGigDetailsScreen() {
   
   // Handler für Erstellen-Button (war vorher Weiter-Button)
   const handleCreatePress = () => {
-    // Navigiere zum MetaDataScreen ohne Parameter
-    router.push('/create/metadata');
+    // Navigiere zum MetaDataScreen im richtigen Stack
+    router.push('/gigs/create/metadata');
   };
   
   // Weiter-Button für HeaderNavigation

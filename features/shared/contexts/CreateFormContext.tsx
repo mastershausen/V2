@@ -96,18 +96,19 @@ export const CreateFormProvider: React.FC<CreateFormProviderProps> = ({ children
     }
   };
   
-  // Navigation zum MetaDataScreen
+  // Navigation zum MetaDataScreen basierend auf dem Typ
   const goToMetaDataScreen = () => {
-    router.push('/create/metadata');
+    if (formData.type === 'gig') {
+      router.push('/gigs/create/metadata');
+    } else {
+      router.push('/casestudies/create/metadata');
+    }
   };
   
   // Zurück zum Details-Screen mit type-sicherer Navigation
   const goBackToDetailsScreen = () => {
-    if (formData.type === 'gig') {
-      router.push('/gigs/create/createGigDetails');
-    } else {
-      router.push('/casestudies/create/createCasestudyDetails');
-    }
+    // Statt zu einer neuen Instanz zu navigieren, gehen wir einfach zurück
+    router.back();
   };
   
   // Element erstellen basierend auf dem Typ

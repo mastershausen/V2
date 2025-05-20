@@ -22,6 +22,14 @@ export default function CaseStudiesCreateLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="metadata"
+        options={{
+          presentation: 'card',
+          headerShown: false,
+          animation: 'slide_from_right',
+        }}
+      />
     </Stack>
   );
 } 

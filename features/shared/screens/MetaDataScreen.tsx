@@ -1,31 +1,33 @@
-import { useRouter } from 'expo-router';
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Alert
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  TouchableOpacity, 
+  SafeAreaView, 
+  ScrollView, 
+  StatusBar, 
+  Alert 
 } from 'react-native';
+import { useRouter } from 'expo-router';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { useCreateForm } from '@/features/shared/contexts/CreateFormContext';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 
 /**
  * MetaDataScreen
  * 
  * Gemeinsamer Screen für zusätzliche Metadaten sowohl für Gigs als auch für Fallstudien.
- * Dieser Screen kommt nach den Details-Screens von Gig-Erstellung und Fallstudien-Erstellung.
+ * Wird über getrennte Routen in verschiedenen Stacks angesteuert.
  */
 export default function MetaDataScreen() {
   const colors = useThemeColor();
   const router = useRouter();
+  const { formData, goBackToDetailsScreen } = useCreateForm();
   
   // Handler für Erstellen-Button
   const handleCreatePress = () => {
@@ -33,21 +35,19 @@ export default function MetaDataScreen() {
     
     // Erfolgsmeldung und Navigation zur Startseite
     Alert.alert(
-      'Erfolgreich erstellt',
-      'Dein Inhalt wurde erfolgreich erstellt!',
+      `${formData.type === 'gig' ? 'Gig' : 'Fallstudie'} erfolgreich erstellt`,
+      `Dein ${formData.type === 'gig' ? 'Gig' : 'Deine Fallstudie'} wurde erfolgreich erstellt!`,
       [{ text: 'OK', onPress: () => router.push('/(tabs)/home') }]
     );
   };
 
-  // Erstellen-Button für HeaderNavigation
-  const renderErstellenButton = () => (
-    <TouchableOpacity onPress={handleCreatePress}>
-      <Text 
-        style={[
-          styles.erstellenButtonText, 
-          { color: colors.primary }
-        ]}
-      >
+  // Erstellungs-Button für die Header-Navigation
+  const renderCreateButton = () => (
+    <TouchableOpacity 
+      style={styles.createButton}
+      onPress={handleCreatePress}
+    >
+      <Text style={[styles.createButtonText, { color: colors.primary }]}>
         Erstellen
       </Text>
     </TouchableOpacity>
@@ -60,21 +60,24 @@ export default function MetaDataScreen() {
         backgroundColor="transparent"
         translucent
       />
-      <HeaderNavigation 
-        title="Metadaten" 
-        rightContent={renderErstellenButton()}
-        onBackPress={() => router.back()}
+      
+      {/* HeaderNavigation-Komponente */}
+      <HeaderNavigation
+        title={formData.type === 'gig' ? 'Gig-Metadaten' : 'Fallstudien-Metadaten'}
+        showBackButton={true}
+        onBackPress={goBackToDetailsScreen}
+        rightContent={renderCreateButton()}
       />
       
       <ScrollView style={styles.scrollView}>
         <View style={styles.content}>
           <Text style={[styles.title, { color: colors.textPrimary }]}>
-            Metadaten hinzufügen
+            {formData.type === 'gig' ? 'Gig-Metadaten' : 'Fallstudien-Metadaten'} hinzufügen
           </Text>
           
           <Text style={[styles.description, { color: colors.textSecondary }]}>
-            Hier kannst du weitere Informationen zu deinem Inhalt hinzufügen, 
-            um ihn besser auffindbar zu machen.
+            Hier kannst du weitere Informationen zu {formData.type === 'gig' ? 'deinem Gig' : 'deiner Fallstudie'} hinzufügen, 
+            um {formData.type === 'gig' ? 'ihn' : 'sie'} besser auffindbar zu machen.
           </Text>
           
           {/* Platzhalter für künftige Metadaten-Eingabefelder */}
@@ -82,7 +85,7 @@ export default function MetaDataScreen() {
             {/* Hier werden später die Metadaten-Eingabefelder eingefügt */}
             <View style={[styles.placeholderContainer, { backgroundColor: colors.backgroundSecondary }]}>
               <Text style={[styles.placeholderText, { color: colors.textTertiary }]}>
-                Metadaten-Eingabefelder werden hier angezeigt
+                {formData.type === 'gig' ? 'Gig-Metadaten-Eingabefelder' : 'Fallstudien-Metadaten-Eingabefelder'} werden hier angezeigt
               </Text>
             </View>
           </View>
@@ -95,6 +98,13 @@ export default function MetaDataScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  createButton: {
+    padding: spacing.xs,
+  },
+  createButtonText: {
+    fontSize: typography.fontSize.m,
+    fontWeight: typography.fontWeight.bold,
   },
   scrollView: {
     flex: 1,
@@ -124,9 +134,5 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     textAlign: 'center',
-  },
-  erstellenButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 }); 
