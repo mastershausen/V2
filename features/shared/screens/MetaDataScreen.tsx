@@ -35,7 +35,7 @@ type TileOptionsType = {
 };
 
 const TILE_OPTIONS: TileOptionsType = {
-  // MySolvbox Kacheln
+  // MySolvbox Kacheln - Aus data/mysolvbox-tiles.json und features/mysolvbox/config/data.ts
   "Sichern": [
     "Kunden kurzfristig gewinnen", 
     "Fixkosten senken", 
@@ -52,34 +52,59 @@ const TILE_OPTIONS: TileOptionsType = {
     "Steuern auf ein Minimum", 
     "A-Mitarbeiter gewinnen und halten", 
     "Dauerhaften Kundenstrom aufbauen", 
-    "Online-Geschäft optimieren", 
-    "Teams führen", 
-    "Marketing automatisieren"
+    "Vertrieb der verkauft",
+    "Brot & Butter Geschäft aufbauen",
+    "Max. Marge Produkt aufbauen",
+    "Steuern vom Finanzamt zurückholen",
+    "Bitte, bitte nutze KI",
+    "Investoren finden"
   ],
   "Vorausdenken": [
-    "Digitalisierung nutzen", 
-    "Zukunftssicher aufstellen", 
-    "Prozesse optimieren", 
-    "Technologie nutzen", 
-    "Nachfolge planen"
+    "Erbschafts- & Schenkungssteuer vermeiden",
+    "Unternehmen das ohne dich funktioniert",
+    "Vermögen im Inland schützen",
+    "Unternehmen verkaufen",
+    "Nachfolge regeln",
+    "Unternehmen kaufen",
+    "Steuerfrei durch Immobilien",
+    "Immobilien allgemein",
+    "Off-market Immobilien",
+    "Onlinegeschäft aufbauen"
   ],
   "Bonus": [
-    "Tools & Ressourcen", 
-    "Exklusive Angebote", 
-    "Community Events"
+    "Lange und glücklich Leben",
+    "Besser verhandeln",
+    "Rhetorik & Kommunikation meistern",
+    "Zukunftsforschung",
+    "Ideen und neue Märkte entwickeln",
+    "Allgemeine Goldnuggets",
+    "Auswandern als Unternehmer",
+    "Alternative Investments",
+    "Unternehmen ins Ausland verlagern",
+    "Auswandern mit Familie"
   ],
   
-  // SolvboxAI Kacheln
+  // SolvboxAI Kacheln - Aus data/solvboxai-tiles.json und features/solvboxai/config/data.ts
   "Gigs": [
     "KI-Agenten für alltägliche Aufgaben", 
-    "KI-Agenten für mehr PR & Podcasts", 
-    "Empfohlene Gigs", 
-    "Neue Gigs"
+    "KI-Agenten für mehr PR & Podcasts",
+    "KI im Kundenservice",
+    "KI im Vertrieb",
+    "KI im Recruiting",
+    "KI als Rechtsberater",
+    "KI als Unternehmensberater",
+    "KI Anwendungen um Zeit & Geld zu sparen",
+    "Was die Zukunft bringt"
   ],
   "Fallstudien": [
-    "Case-Studies", 
-    "Erfolgsgeschichten", 
-    "Branchenlösungen"
+    "Lästige Alltagsaufgaben automatisieren",
+    "Marketing",
+    "PR & Podcasts",
+    "Kundenservice",
+    "Vertrieb",
+    "Recht",
+    "Recruiting",
+    "Allgemein hilfreich & kostensenkend"
   ]
 };
 
