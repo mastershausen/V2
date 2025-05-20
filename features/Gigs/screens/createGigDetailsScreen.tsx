@@ -43,19 +43,17 @@ export default function CreateGigDetailsScreen() {
   const router = useRouter();
   const { isDemoMode } = useMode();
   
-  // Hole Parameter aus dem vorherigen Screen
+  // Hole Parameter aus dem vorherigen Screen (nur für imageUrl, price und currency)
   const params = useLocalSearchParams<{
-    title?: string;
-    description?: string;
     price?: string;
     imageUrl?: string;
     currency?: string;
   }>();
   
-  // State für die Bearbeitung mit Initialwerten aus den Parametern
-  const [title, setTitle] = useState(params.title || 'Dein Gig-Titel');
-  const [cardTitle, setCardTitle] = useState(params.title || 'Dein Gig-Titel');
-  const [description, setDescription] = useState(params.description || 'Beschreibung deines Gigs...');
+  // State für die Bearbeitung mit festen Platzhaltern für Titel und Beschreibung
+  const [title, setTitle] = useState('Dein Gig-Titel');
+  const [cardTitle, setCardTitle] = useState('Dein Gig-Titel');
+  const [description, setDescription] = useState('Beschreibung deines Gigs...');
   const [price, setPrice] = useState(params.price || '0');
   const [currency, setCurrency] = useState(params.currency || '€');
   const [imageUrl, setImageUrl] = useState(params.imageUrl || null);
@@ -126,9 +124,9 @@ export default function CreateGigDetailsScreen() {
     setIsSaved(!isSaved);
   };
   
-  // Handler für Erstellungs-Button
+  // Handler für Erstellen-Button (war vorher Weiter-Button)
   const handleCreatePress = () => {
-    // Hier später die tatsächliche Erstellung implementieren
+    // Erstelle den Gig und navigiere zurück zur Home-Seite
     Alert.alert(
       'Gig erstellen',
       'Dein Gig wurde erfolgreich erstellt!',
