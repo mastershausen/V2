@@ -7,7 +7,10 @@ import {
   ScrollView,
   SafeAreaView,
   StatusBar,
+  Alert,
+  TouchableOpacity,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -17,7 +20,9 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderMedia } from '@/shared-components/media/HeaderMedia';
 import { ProfileImage } from '@/shared-components/media/ProfileImage';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
+import { FooterActionButton } from '@/shared-components/navigation/FooterActionButton';
 import { NuggetCardInteraction } from '@/shared-components/cards/nugget-card/components/NuggetCardInteraction';
+import { GigActionBottomSheet } from '@/shared-components/bottomsheet/GigActionBottomSheet';
 
 // Demo-Daten von Alexander Becker
 const DEMO_USER = {
@@ -52,6 +57,9 @@ export default function GigDetailsScreen() {
   const [isSaved, setIsSaved] = useState(false);
   const [helpfulCount, setHelpfulCount] = useState(isDemoMode() ? 42 : 0);
   const [commentCount, setCommentCount] = useState(isDemoMode() ? 7 : 0);
+  
+  // State für das Action Sheet
+  const [isActionSheetVisible, setIsActionSheetVisible] = useState(false);
   
   // Parameter aus der Navigation abrufen
   const params = useLocalSearchParams<{
@@ -111,6 +119,31 @@ export default function GigDetailsScreen() {
   const handleSavePress = () => {
     setIsSaved(!isSaved);
   };
+  
+  // Handler für den Buchen-Button
+  const handleBookPress = () => {
+    Alert.alert(
+      'Gig buchen',
+      `Möchtest du "${cardTitle}" für ${price} buchen?`,
+      [
+        { text: 'Abbrechen', style: 'cancel' },
+        { text: 'Buchen', onPress: () => console.log('Gig gebucht!') }
+      ]
+    );
+  };
+  
+  // Handler für Aktionen
+  const handleRatePress = () => {
+    Alert.alert('Bewertung', 'Hier kannst du den Gig bewerten.');
+  };
+  
+  const handleMessagePress = () => {
+    Alert.alert('Anfrage', 'Hier kannst du eine Anfrage an den Anbieter senden.');
+  };
+  
+  const handlePinPress = () => {
+    Alert.alert('Premium-Funktion', 'Diese Funktion ist nur für Premium-Nutzer verfügbar. Möchtest du Premium aktivieren?');
+  };
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
@@ -118,6 +151,36 @@ export default function GigDetailsScreen() {
         barStyle="dark-content"
         backgroundColor="transparent"
         translucent
+      />
+      
+      {/* Action Sheet für weitere Aktionen */}
+      <GigActionBottomSheet 
+        visible={isActionSheetVisible}
+        onClose={() => setIsActionSheetVisible(false)}
+        options={[
+          {
+            id: 'rate',
+            label: 'Gig bewerten',
+            icon: 'star-outline',
+            color: '#FFB400',
+            onPress: handleRatePress
+          },
+          {
+            id: 'message',
+            label: 'Anfrage senden',
+            icon: 'chatbubble-outline',
+            color: '#0A84FF',
+            onPress: handleMessagePress
+          },
+          {
+            id: 'pin',
+            label: 'Fallstudie anpinnen',
+            icon: 'folder-open-outline',
+            isPremium: true,
+            color: '#5E5CE6',
+            onPress: handlePinPress
+          }
+        ]}
       />
       
       {/* Header Navigation */}
@@ -138,15 +201,13 @@ export default function GigDetailsScreen() {
         }}
       />
       
-      <View style={styles.headerContainer}>
+      <ScrollView style={styles.scrollView}>
         {/* Header Media (ohne Bild, nur mit Farbhintergrund) */}
         <HeaderMedia 
           imageUrl={null}
           borderRadius={0}
         />
-      </View>
-      
-      <ScrollView style={styles.scrollView}>
+        
         <View style={styles.content}>
           {/* Profilbild - jetzt noch kleiner und näher am Header */}
           <View style={styles.profileContainer}>
@@ -198,6 +259,45 @@ export default function GigDetailsScreen() {
           </Text>
         </View>
       </ScrollView>
+      
+      {/* Footer mit drei Buttons */}
+      <View style={[styles.footer, { borderTopColor: colors.divider, backgroundColor: colors.backgroundPrimary }]}>
+        {/* Gig bewerten */}
+        <TouchableOpacity
+          style={styles.actionIconButton}
+          onPress={handleRatePress}
+          accessibilityLabel="Gig bewerten"
+        >
+          <View style={[styles.iconContainer, { backgroundColor: 'rgba(255, 180, 0, 0.15)' }]}>
+            <Ionicons name="star-outline" size={22} color="#FFB400" />
+          </View>
+          <Text style={[styles.actionButtonLabel, { color: colors.textSecondary }]}>Bewerten</Text>
+        </TouchableOpacity>
+        
+        {/* Anfrage senden */}
+        <TouchableOpacity
+          style={styles.actionIconButton}
+          onPress={handleMessagePress}
+          accessibilityLabel="Anfrage senden"
+        >
+          <View style={[styles.iconContainer, { backgroundColor: 'rgba(10, 132, 255, 0.15)' }]}>
+            <Ionicons name="chatbubble-outline" size={22} color="#0A84FF" />
+          </View>
+          <Text style={[styles.actionButtonLabel, { color: colors.textSecondary }]}>Anfragen</Text>
+        </TouchableOpacity>
+        
+        {/* Fallstudie */}
+        <TouchableOpacity
+          style={styles.actionIconButton}
+          onPress={handlePinPress}
+          accessibilityLabel="Fallstudie anzeigen"
+        >
+          <View style={[styles.iconContainer, { backgroundColor: 'rgba(94, 92, 230, 0.15)' }]}>
+            <Ionicons name="document-text-outline" size={22} color="#5E5CE6" />
+          </View>
+          <Text style={[styles.actionButtonLabel, { color: colors.textSecondary }]}>Fallstudie</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -205,9 +305,6 @@ export default function GigDetailsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  headerContainer: {
-    position: 'relative',
   },
   scrollView: {
     flex: 1,
@@ -221,7 +318,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: spacing.m,
-    marginTop: 0, // Kein zusätzlicher Abstand nach oben
+    marginTop: spacing.s, // Etwas Abstand nach dem Header
   },
   profileImage: {
     borderWidth: 0,
@@ -255,5 +352,32 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.m,
     lineHeight: typography.lineHeight.l,
     marginBottom: spacing.l,
+  },
+  footer: {
+    flexDirection: 'row',
+    padding: spacing.s,
+    paddingTop: spacing.m,
+    paddingBottom: spacing.m,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  iconContainer: {
+    width: 54,
+    height: 54,
+    borderRadius: 27,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    marginBottom: spacing.xs,
+  },
+  actionIconButton: {
+    alignItems: 'center',
+    paddingHorizontal: spacing.s,
+    flex: 1,
+  },
+  actionButtonLabel: {
+    fontSize: typography.fontSize.s,
+    fontWeight: '500',
   },
 }); 
