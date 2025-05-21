@@ -4,7 +4,7 @@
  * Zeigt Suchergebnisse basierend auf der Suchanfrage an.
  */
 
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter, usePathname } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { 
   View, 
@@ -29,6 +29,9 @@ import { NuggetCard } from '@/shared-components/cards/nugget-card/NuggetCard';
 import { GigCard } from '@/shared-components/cards/gig-card/GigCard';
 import { ExpertCard } from '@/shared-components/cards/expert-card/ExpertCard';
 import { SearchInput } from '@/shared-components/searchinput/SearchInput';
+import { FloatingChatButton } from '@/shared-components/button';
+import { navigateToAssistantChat, isOnChatScreen } from '@/shared-components/navigation/ChatNavigation';
+import { FilterBottomSheet, FilterOption } from '../components/FilterBottomSheet';
 import mockNuggets from '@/mock/data/mockNuggets';
 import mockGigs from '@/mock/data/mockGigs';
 import mockExperts from '@/mock/data/mockExperts';
@@ -55,6 +58,7 @@ export default function SearchResultsScreen() {
     source?: string;
   }>();
   const router = useRouter();
+  const pathname = usePathname();
   const colors = useThemeColor();
   const [isLoading, setIsLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState<string>('all');
@@ -63,6 +67,21 @@ export default function SearchResultsScreen() {
   const [totalResults, setTotalResults] = useState(
     mockExperts.length + mockGigs.length + mockNuggets.length
   );
+  
+  // Prüfen, ob wir uns auf einer Chat-Seite befinden
+  const showChatButton = !isOnChatScreen(pathname);
+  
+  // FilterBottomSheet State
+  const [isFilterSheetVisible, setIsFilterSheetVisible] = useState(false);
+  const [selectedRadius, setSelectedRadius] = useState(25);
+  const [isNationwide, setIsNationwide] = useState(false);
+  const [filterOptions, setFilterOptions] = useState<FilterOption[]>([
+    { id: 'premium', label: 'Premium', isActive: false },
+    { id: 'free', label: 'Kostenlos', isActive: false },
+    { id: 'newOnly', label: 'Nur neue', isActive: false },
+    { id: 'verified', label: 'Verifiziert', isActive: false },
+    { id: 'highRated', label: 'Top bewertet', isActive: false },
+  ]);
   
   // Zurück-Navigation
   const handleGoBack = () => {
@@ -77,30 +96,35 @@ export default function SearchResultsScreen() {
   
   // Filter-Dialog öffnen
   const handleFilterPress = () => {
-    console.log('Filter-Dialog öffnen');
-    Alert.alert(
-      'Filter', 
-      'Hier würde ein Filter-Dialog angezeigt werden',
-      [
-        {
-          text: 'Filter anwenden',
-          onPress: () => {
-            // Simulation der Anwendung von Filtern
-            setHasActiveFilters(true);
-          },
-        },
-        {
-          text: 'Filter zurücksetzen',
-          onPress: () => {
-            setHasActiveFilters(false);
-          },
-        },
-        {
-          text: 'Abbrechen',
-          style: 'cancel',
-        },
-      ]
-    );
+    setIsFilterSheetVisible(true);
+  };
+  
+  // Filter anwenden
+  const handleApplyFilters = (activeFilters: FilterOption[]) => {
+    console.log('Angewendete Filter:', activeFilters);
+    // Filterstatus aktualisieren basierend auf aktiven Filtern ODER wenn bundesweit aktiv ist
+    setHasActiveFilters(activeFilters.length > 0 || isNationwide);
+  };
+  
+  // Radiusänderung
+  const handleRadiusChange = (radius: number) => {
+    console.log(`Radius geändert auf: ${radius}km`);
+    setSelectedRadius(radius);
+    if (isNationwide) {
+      setIsNationwide(false);
+    }
+  };
+  
+  // Bundesweit-Änderung
+  const handleNationwideChange = (nationwide: boolean) => {
+    console.log(`Bundesweit geändert auf: ${nationwide}`);
+    setIsNationwide(nationwide);
+  };
+  
+  // Handler für den Chat-Button - navigiert zum Solvbox-Assistenten
+  const handleChatButtonPress = () => {
+    console.log('Chat Button wurde gedrückt - Navigation zum Solvbox-Assistenten');
+    navigateToAssistantChat(router);
   };
   
   // Suche ausführen
@@ -327,6 +351,29 @@ export default function SearchResultsScreen() {
       >
         {renderFilterContent()}
       </ScrollView>
+      
+      {/* Filter BottomSheet */}
+      <FilterBottomSheet
+        visible={isFilterSheetVisible}
+        onClose={() => setIsFilterSheetVisible(false)}
+        onApplyFilters={handleApplyFilters}
+        initialFilters={filterOptions}
+        selectedRadius={selectedRadius}
+        onRadiusChange={handleRadiusChange}
+        isNationwide={isNationwide}
+        onNationwideChange={handleNationwideChange}
+      />
+      
+      {/* Floating Chat Button - nur anzeigen, wenn wir nicht auf einer Chat-Seite sind */}
+      {showChatButton && (
+        <FloatingChatButton
+          onPress={handleChatButtonPress}
+          style={{
+            bottom: 90, // Höhere Position über der Tab-Bar
+            right: 20
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 }

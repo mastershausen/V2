@@ -1,12 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { View, StyleSheet, SafeAreaView, useWindowDimensions, StyleProp, ViewStyle, TextStyle, TouchableOpacity, Text, TextInput, FlatList, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter, usePathname } from 'expo-router';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { TabSwipe, TabSwipeRef } from '@/shared-components/gesture/TabSwipe';
 import { BaseTabConfig } from '@/shared-components/navigation/BaseTabbar';
 import { SearchInput } from '@/shared-components/searchinput/SearchInput';
 import { BottomScreen } from '@/shared-components/navigation/BottomScreen';
+import { FloatingChatButton } from '@/shared-components/button';
+import { navigateToAssistantChat, isOnChatScreen } from '@/shared-components/navigation/ChatNavigation';
 
 /**
  * Erweiterte Tab-Konfiguration mit Komponenten-Information
@@ -90,6 +93,11 @@ export function TabScreensContainer({
   subtleSearch
 }: TabScreensContainerProps): React.ReactElement {
   const colors = useThemeColor();
+  const router = useRouter();
+  const pathname = usePathname();
+  
+  // Überprüfen, ob wir uns auf einer Chat-Seite befinden
+  const showChatButton = !isOnChatScreen(pathname);
   
   // Anhand der Prop-Übergabe entscheiden, ob wir kompakte Darstellung verwenden
   const useCompactSearch = compactSearch !== undefined ? compactSearch : true;
@@ -150,9 +158,10 @@ export function TabScreensContainer({
     onSearchChange?.(text);
   };
 
-  // Event Handler für den Chat
+  // Event Handler für den Chat: Direkte Navigation zum Assistenten-Chat
   const handleChatButtonPress = () => {
-    setChatVisible(true);
+    // Statt das Modal zu öffnen, navigieren wir direkt zum Solvbox-Assistenten Chat
+    navigateToAssistantChat(router);
   };
 
   const handleCloseChatModal = () => {
@@ -248,14 +257,12 @@ export function TabScreensContainer({
         onScroll={handleScroll}
       />
 
-      {/* Floating Action Button für Chat */}
-      <TouchableOpacity
-        style={[styles.chatButton, { backgroundColor: `${colors.secondary}CC` }]}
-        onPress={handleChatButtonPress}
-        activeOpacity={0.8}
-      >
-        <Ionicons name="chatbubble" size={24} color="white" />
-      </TouchableOpacity>
+      {/* Floating Action Button für Chat - nur anzeigen, wenn wir nicht im Chat-Bereich sind */}
+      {showChatButton && (
+        <FloatingChatButton
+          onPress={handleChatButtonPress}
+        />
+      )}
       
       {/* Chat Popup Modal */}
       <BottomScreen
@@ -324,21 +331,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     height: 38, // Niedrigere Höhe für kompakteres Suchfeld
   },
-  chatButton: {
-    position: 'absolute',
-    bottom: 24,
-    right: 24,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 6,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-  },
+  // chatButton wurde in eine separate Komponente ausgelagert
   // Chat Styles
   chatContainer: {
     flex: 1,

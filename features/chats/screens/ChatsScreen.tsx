@@ -18,6 +18,8 @@ import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { FloatingChatButton } from '@/shared-components/button';
+import { navigateToAssistantChat } from '@/shared-components/navigation/ChatNavigation';
 
 // Avatar-Bild importieren
 const solvboxAvatar = require('@/assets/small rounded Icon.png') as ImageSourcePropType;
@@ -322,6 +324,9 @@ export default function ChatsScreen() {
           showsVerticalScrollIndicator={false}
         />
       )}
+      
+      {/* Im Chat-Screen benötigen wir keinen FloatingChatButton */}
+      {/* Button entfernt, da wir uns bereits im Chat-Bereich befinden */}
     </View>
   );
 }
