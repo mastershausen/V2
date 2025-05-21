@@ -2,6 +2,9 @@
  * Hilfsfunktionen für Datumsformatierungen
  */
 
+import { useTranslation } from 'react-i18next';
+import { getCurrentLanguage } from '@/i18n/config';
+
 /**
  * Formatiert ein Datum als benutzerfreundliche relative Zeit 
  * (Heute, Gestern, Vor X Tagen, Vor einer Woche, etc.)
@@ -30,28 +33,39 @@ export function formatRelativeTime(date: Date): string {
   const diffInDays = Math.floor(diffInHours / 24);
   const diffInWeeks = Math.floor(diffInDays / 7);
 
+  // Wir benötigen einen Import von i18next, da dies eine reine Hilfsfunktion ist
+  // und nicht innerhalb einer React-Komponente läuft (kein useTranslation Hook)
+  const language = getCurrentLanguage();
+  const i18n = require('@/i18n/config').default;
+
   // Benutzerfreundliche Zeitangaben
   if (isSameDay(date, now)) {
     // Heute
     if (diffInSecs < 60) {
-      return 'Gerade eben';
+      return i18n.t('nugget.interaction.timeTerms.justNow');
     } else if (diffInMins < 60) {
-      return `Vor ${diffInMins} ${diffInMins === 1 ? 'Minute' : 'Minuten'}`;
+      return diffInMins === 1 
+        ? i18n.t('nugget.interaction.timeTerms.minuteAgo') 
+        : i18n.t('nugget.interaction.timeTerms.minutesAgo', { count: diffInMins });
     } else {
-      return `Vor ${diffInHours} ${diffInHours === 1 ? 'Stunde' : 'Stunden'}`;
+      return diffInHours === 1 
+        ? i18n.t('nugget.interaction.timeTerms.hourAgo') 
+        : i18n.t('nugget.interaction.timeTerms.hoursAgo', { count: diffInHours });
     }
   } else if (isSameDay(date, yesterday)) {
     // Gestern
-    return 'Gestern';
+    return i18n.t('nugget.interaction.timeTerms.yesterday');
   } else if (diffInDays < 7) {
     // Innerhalb einer Woche
-    return `Vor ${diffInDays} ${diffInDays === 1 ? 'Tag' : 'Tagen'}`;
+    return diffInDays === 1 
+      ? i18n.t('nugget.interaction.timeTerms.dayAgo') 
+      : i18n.t('nugget.interaction.timeTerms.daysAgo', { count: diffInDays });
   } else if (diffInWeeks === 1) {
     // Genau eine Woche
-    return 'Vor einer Woche';
+    return i18n.t('nugget.interaction.timeTerms.weekAgo');
   } else if (diffInWeeks < 2) {
     // Weniger als zwei Wochen
-    return `Vor ${diffInDays} Tagen`;
+    return i18n.t('nugget.interaction.timeTerms.daysAgo', { count: diffInDays });
   } else {
     // Älter als zwei Wochen - formatiertes Datum
     return formatDate(date);
@@ -59,12 +73,15 @@ export function formatRelativeTime(date: Date): string {
 }
 
 /**
- * Formatiert ein Datum in lokalisiertem Format (TT.MM.JJJJ)
+ * Formatiert ein Datum in lokalisiertem Format (TT.MM.JJJJ oder MM/DD/YYYY je nach Sprache)
  * @param date Das zu formatierende Datum
  * @returns Formatierte Zeichenkette
  */
 export function formatDate(date: Date): string {
-  return date.toLocaleDateString('de-DE', {
+  const language = getCurrentLanguage();
+  const locale = language === 'de' ? 'de-DE' : 'en-US';
+  
+  return date.toLocaleDateString(locale, {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric'
@@ -72,12 +89,16 @@ export function formatDate(date: Date): string {
 }
 
 /**
- * Formatiert ein Datum in lokalisiertem Format mit Uhrzeit (TT.MM.JJJJ, HH:MM)
+ * Formatiert ein Datum in lokalisiertem Format mit Uhrzeit
  * @param date Das zu formatierende Datum
  * @returns Formatierte Zeichenkette
  */
 export function formatDateTime(date: Date): string {
-  return `${formatDate(date)}, ${date.toLocaleTimeString('de-DE', {
+  const language = getCurrentLanguage();
+  const locale = language === 'de' ? 'de-DE' : 'en-US';
+  const separator = language === 'de' ? ', ' : ', ';
+  
+  return `${formatDate(date)}${separator}${date.toLocaleTimeString(locale, {
     hour: '2-digit',
     minute: '2-digit'
   })}`;

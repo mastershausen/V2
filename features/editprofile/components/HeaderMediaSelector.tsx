@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -15,6 +16,7 @@ interface HeaderMediaSelectorProps {
  */
 export function HeaderMediaSelector({ onPress }: HeaderMediaSelectorProps) {
   const colors = useThemeColor();
+  const { t } = useTranslation();
 
   return (
     <TouchableOpacity 
@@ -29,12 +31,12 @@ export function HeaderMediaSelector({ onPress }: HeaderMediaSelectorProps) {
       onPress={onPress}
       accessible={true}
       accessibilityRole="button"
-      accessibilityLabel="Header-Bild bearbeiten"
+      accessibilityLabel={t('profileEdit.editHeaderImage')}
     >
       <View style={styles.mediaNavItemContent}>
         <Ionicons name="image-outline" size={24} color={colors.textSecondary} />
         <Text style={[styles.mediaNavItemText, { color: colors.textPrimary }]}>
-          Header-Bild bearbeiten
+          {t('profileEdit.editHeaderImage')}
         </Text>
       </View>
       <Ionicons name="chevron-forward" size={24} color={colors.textSecondary} />

@@ -1,6 +1,7 @@
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextStyle } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { spacing, typography } from '@/config/theme';
 import { useThemeColor } from '@/hooks/useThemeColor';
@@ -46,6 +47,7 @@ export function NuggetCardInteraction({
   hideCommentButton = false,
 }: NuggetCardInteractionProps) {
   const colors = useThemeColor();
+  const { t } = useTranslation();
 
   return (
     <View style={[styles.container, { borderTopColor: colors.divider }]}>
@@ -57,7 +59,7 @@ export function NuggetCardInteraction({
             onPress={onCommentPress}
             accessible={true}
             accessibilityRole="button"
-            accessibilityLabel={`${commentCount > 0 ? commentCount : 'Keine'} Kommentare`}
+            accessibilityLabel={`${commentCount > 0 ? commentCount : t('nugget.interaction.noComments')} ${t('nugget.interaction.comments')}`}
           >
             <Ionicons 
               name="chatbubble-outline" 
@@ -76,7 +78,7 @@ export function NuggetCardInteraction({
           onPress={onHelpfulPress}
           accessible={true}
           accessibilityRole="button"
-          accessibilityLabel={isHelpful ? "Als hilfreich markiert" : "Als hilfreich markieren"}
+          accessibilityLabel={isHelpful ? t('nugget.interaction.helpful') : t('nugget.interaction.markHelpful')}
           accessibilityState={{ selected: isHelpful }}
         >
           <MaterialCommunityIcons 
@@ -88,7 +90,7 @@ export function NuggetCardInteraction({
             styles.actionText, 
             { color: isHelpful ? colors.primary : colors.textSecondary }
           ]}>
-            Das hilft {helpfulCount > 0 ? `(${helpfulCount})` : ''}
+            {t('nugget.interaction.thatHelps')} {helpfulCount > 0 ? `(${helpfulCount})` : ''}
           </Text>
         </TouchableOpacity>
       </View>
@@ -100,7 +102,7 @@ export function NuggetCardInteraction({
           onPress={onSharePress}
           accessible={true}
           accessibilityRole="button"
-          accessibilityLabel="Teilen"
+          accessibilityLabel={t('nugget.interaction.share')}
         >
           <Ionicons 
             name="paper-plane-outline" 
@@ -116,7 +118,7 @@ export function NuggetCardInteraction({
           onPress={onSavePress}
           accessible={true}
           accessibilityRole="button"
-          accessibilityLabel={isSaved ? "Gespeichert" : "Speichern"}
+          accessibilityLabel={isSaved ? t('profile.nuggetSaved') : t('nugget.interaction.save')}
           accessibilityState={{ selected: isSaved }}
         >
           <Ionicons 

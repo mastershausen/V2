@@ -349,5 +349,37 @@
     "en": "English",
     "currentLanguage": "Current language: {{language}}",
     "changeLanguage": "Change language"
+  },
+  "profileEdit": {
+    "save": "Save",
+    "noChanges": "No changes",
+    "changeProfilePicture": "Change profile picture",
+    "editHeaderImage": "Edit header image",
+    "assetError": "No URI found in selected image",
+    "uploadFailed": "Error uploading image",
+    "submitFailed": "Error saving profile",
+    "headlineInfoText": "Will be displayed as \"{firstName} {lastName} | [Your Headline]\""
+  },
+  "nugget": {
+    "interaction": {
+      "thatHelps": "That helped",
+      "comments": "Comments",
+      "noComments": "No comments",
+      "share": "Share",
+      "save": "Save",
+      "helpful": "Marked as helpful",
+      "markHelpful": "Mark as helpful",
+      "timeTerms": {
+        "justNow": "Just now",
+        "minuteAgo": "1 minute ago",
+        "minutesAgo": "{{count}} minutes ago",
+        "hourAgo": "1 hour ago",
+        "hoursAgo": "{{count}} hours ago",
+        "yesterday": "Yesterday",
+        "dayAgo": "1 day ago",
+        "daysAgo": "{{count}} days ago",
+        "weekAgo": "1 week ago"
+      }
+    }
   }
 } 

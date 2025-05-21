@@ -325,5 +325,37 @@
       "title": "Willkommen bei Solvbox",
       "subtitle": "Ihre Finanzlösungsplattform"
     }
+  },
+  "profileEdit": {
+    "save": "Speichern",
+    "noChanges": "Keine Änderungen",
+    "changeProfilePicture": "Profilbild ändern",
+    "editHeaderImage": "Header-Bild bearbeiten",
+    "assetError": "Keine URI im ausgewählten Bild gefunden",
+    "uploadFailed": "Fehler beim Hochladen des Bildes",
+    "submitFailed": "Fehler beim Speichern des Profils",
+    "headlineInfoText": "Wird als \"{firstName} {lastName} | [Ihre Headline]\" angezeigt"
+  },
+  "nugget": {
+    "interaction": {
+      "thatHelps": "Das hilft",
+      "comments": "Kommentare",
+      "noComments": "Keine Kommentare",
+      "share": "Teilen",
+      "save": "Speichern",
+      "helpful": "Als hilfreich markiert",
+      "markHelpful": "Als hilfreich markieren",
+      "timeTerms": {
+        "justNow": "Gerade eben",
+        "minuteAgo": "Vor einer Minute",
+        "minutesAgo": "Vor {{count}} Minuten",
+        "hourAgo": "Vor einer Stunde",
+        "hoursAgo": "Vor {{count}} Stunden",
+        "yesterday": "Gestern",
+        "dayAgo": "Vor einem Tag",
+        "daysAgo": "Vor {{count}} Tagen",
+        "weekAgo": "Vor einer Woche"
+      }
+    }
   }
 }

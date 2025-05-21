@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -15,6 +16,7 @@ interface SaveButtonProps {
  */
 export function SaveButton({ onPress, hasChanges }: SaveButtonProps) {
   const colors = useThemeColor();
+  const { t } = useTranslation();
 
   return (
     <TouchableOpacity 
@@ -22,7 +24,7 @@ export function SaveButton({ onPress, hasChanges }: SaveButtonProps) {
       style={styles.saveButton}
       accessible={true}
       accessibilityRole="button"
-      accessibilityLabel={hasChanges ? "Speichern" : "Keine Änderungen"}
+      accessibilityLabel={hasChanges ? t('profileEdit.save') : t('profileEdit.noChanges')}
       disabled={!hasChanges}
     >
       <Text style={[
@@ -32,7 +34,7 @@ export function SaveButton({ onPress, hasChanges }: SaveButtonProps) {
           fontWeight: hasChanges ? typography.fontWeight.bold : typography.fontWeight.medium,
         }
       ]}>
-        Speichern
+        {t('common.save')}
       </Text>
     </TouchableOpacity>
   );

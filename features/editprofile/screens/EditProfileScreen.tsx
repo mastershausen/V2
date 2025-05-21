@@ -335,7 +335,7 @@ export default function EditProfileScreen() {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       {/* Header mit Zurück-Button und Speichern-Link */}
       <HeaderNavigation 
-        title={`${formData.firstName || ''} ${formData.lastName || ''} | Profil bearbeiten`.trim()}
+        title={`${formData.firstName || ''} ${formData.lastName || ''} | ${t('profile.editProfile')}`.trim()}
         rightContent={<SaveButton onPress={saveProfile} hasChanges={hasChanges} />}
         onBackPress={() => router.push(Routes.TABS.PROFILE)}
       />

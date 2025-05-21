@@ -76,10 +76,10 @@ export function EditProfileForms({
         
         <FormField
           label={t('profile.headline')}
-          infoText={`Wird als "${formData.firstName} ${formData.lastName} | [Ihre Headline]" angezeigt`}
+          infoText={t('profileEdit.headlineInfoText', { firstName: formData.firstName, lastName: formData.lastName })}
           value={formData.headline}
           onChangeText={(text) => onUpdateFormData({ headline: text })}
-          placeholder="Ihre individuelle Headline eingeben"
+          placeholder={t('profile.headlinePlaceholder')}
           error={formErrors.headline}
         />
         
@@ -107,7 +107,7 @@ export function EditProfileForms({
       {/* Kontaktinfo */}
       <View style={styles.formSection}>
         <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-          Kontaktinfo
+          {t('profile.contactInfo')}
         </Text>
         
         <FormField
