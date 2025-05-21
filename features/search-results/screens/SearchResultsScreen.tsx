@@ -17,6 +17,7 @@ import {
   Alert
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -286,11 +287,19 @@ export default function SearchResultsScreen() {
       
       {/* Filter-Tabs */}
       <View style={styles.filterContainer}>
-        <View style={styles.tabGradientOverlay} />
         <FilterTabs 
           tabs={FILTER_TABS}
           activeTabId={activeFilter}
           onTabChange={handleFilterChange}
+        />
+        
+        {/* Weicher Übergang zum Filter-Icon */}
+        <LinearGradient
+          colors={['rgba(255,255,255,0)', 'rgba(255,255,255,0.7)', 'rgba(255,255,255,0.95)', 'rgba(255,255,255,1)']}
+          locations={[0, 0.5, 0.85, 1]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.tabGradient}
         />
         
         {/* Fixiertes Filter-Icon */}
@@ -415,25 +424,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'white', // Feste Farbe statt dynamischer Referenz
     borderRadius: 25, // Kreisrund für einen hervorstehenden Look
     padding: spacing.xs,
-    shadowColor: 'rgba(0, 0, 0, 0.3)',
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
+    shadowColor: 'rgba(0, 0, 0, 0.2)',
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 3,
     shadowOpacity: 1,
-    elevation: 5,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.05)',
   },
-  tabGradientOverlay: {
+  tabGradient: {
     position: 'absolute',
     right: 0,
     top: 0,
     bottom: 0,
-    width: 60, // Breite des Verlaufs
+    width: 80, // Etwas breiter für einen sanfteren Übergang
     zIndex: 5, // Über den Tabs, aber unter dem Filter-Icon
-    backgroundColor: 'transparent',
-    // Simuliere einen Verlauf mit einer abgestuften Border
-    borderRightWidth: 60,
-    borderTopColor: 'transparent',
-    borderRightColor: 'rgba(255, 255, 255, 0.95)',
-    borderBottomColor: 'transparent',
-    borderLeftColor: 'transparent',
   },
 }); 

@@ -172,6 +172,6 @@ const styles = StyleSheet.create({
     marginRight: spacing.s,
   },
   scrollViewStyle: {
-    paddingRight: 60, // Platz für das überlagernde Filter-Icon
+    paddingRight: 80, // Angepasst an die Breite des Gradienten
   },
 }); 
