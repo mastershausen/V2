@@ -22,7 +22,12 @@
     "pleaseWait": "Bitte warten...",
     "noResults": "Keine Ergebnisse",
     "error": "Fehler",
-    "success": "Erfolg"
+    "success": "Erfolg",
+    "message": "Nachricht",
+    "helpful": "Hilfreich",
+    "comment": "Kommentar",
+    "share": "Teilen",
+    "user": "Benutzer"
   },
   "auth": {
     "common": {
@@ -142,10 +147,10 @@
       "bonus": "Fehler beim Laden der Bonus-Daten"
     },
     "emptyStates": {
-      "save": "Keine Sparkacheln verfügbar",
-      "grow": "Keine Wachstumskacheln verfügbar",
-      "foresight": "Keine Vorausschau-Kacheln verfügbar",
-      "bonus": "Keine Bonuskacheln verfügbar",
+      "save": "Keine Sichern-kacheln verfügbar",
+      "grow": "Keine Wachsen-Kacheln verfügbar",
+      "foresight": "Keine Vorausdenken-Kacheln verfügbar",
+      "bonus": "Keine Bonus-Kacheln verfügbar",
       "searchResults": "Keine Ergebnisse für '{query}' gefunden"
     }
   },
@@ -258,11 +263,31 @@
     "locationPlaceholder": "Ihr Standort (z.B. Berlin, Deutschland)",
     "industryPlaceholder": "Ihre Branche",
     "emailPlaceholder": "Ihre E-Mail-Adresse",
-    "phonePlaceholder": "Ihre Telefonnummer"
+    "phonePlaceholder": "Ihre Telefonnummer",
+    "contactInfo": "Kontaktinfo",
+    "contact": "Kontakt",
+    "messageWillOpen": "Nachrichtenfunktion wird geöffnet",
+    "contactInfoWillShow": "Kontaktinformationen werden angezeigt",
+    "markedAsHelpful": "Als hilfreich markiert",
+    "openCommentFunction": "Kommentarfunktion öffnen",
+    "openShareDialog": "Teilen-Dialog öffnen",
+    "nuggetSaved": "Nugget gespeichert",
+    "toUserProfile": "Zum Benutzerprofil",
+    "tabs": {
+      "nuggets": "Nuggets",
+      "gigs": "Gigs",
+      "casestudies": "Fallstudien",
+      "ratings": "Bewertungen"
+    },
+    "reviewDate": {
+      "twoWeeksAgo": "vor 2 Wochen",
+      "threeDaysAgo": "vor 3 Tagen",
+      "oneMonthAgo": "vor 1 Monat"
+    }
   },
   "home": {
     "searchHeader": "Wie können wir helfen?",
-    "searchSubtitle": "Für jedes Problem die passende Lösung innerhalb von 48h",
+    "searchSubtitle": "Für jedes Problem die passende Lösung innerhalb von 48h. Nur für Unternehmer.",
     "searchPlaceholder": "Hier nach Lösung suchen...",
     "popularSolutions": "Meistgesuchte Lösungen",
     "defaultSuggestions": {

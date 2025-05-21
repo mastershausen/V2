@@ -7,7 +7,7 @@
     "profile": "Profile",
     "save": "Save",
     "grow": "Grow",
-    "foresight": "Foresight",
+    "foresight": "Think Ahead",
     "bonus": "Bonus"
   },
   "common": {
@@ -22,7 +22,12 @@
     "pleaseWait": "Please wait...",
     "noResults": "No results",
     "error": "Error",
-    "success": "Success"
+    "success": "Success",
+    "message": "Message",
+    "helpful": "Helpful",
+    "comment": "Comment",
+    "share": "Share",
+    "user": "User"
   },
   "auth": {
     "common": {
@@ -247,13 +252,44 @@
     "uploadThumbnail": "Upload thumbnail",
     "uploadThumbnailQuestion": "Would you like to upload a preview image for this video?",
     "profileUpdated": "Profile updated",
-    "profileUpdatedMessage": "Your profile data has been successfully updated."
+    "profileUpdatedMessage": "Your profile data has been successfully updated.",
+    "firstNamePlaceholder": "First Name",
+    "lastNamePlaceholder": "Last Name",
+    "usernamePlaceholder": "Username",
+    "companyPlaceholder": "Company",
+    "headlinePlaceholder": "Headline",
+    "descriptionPlaceholder": "Description",
+    "websitePlaceholder": "Your website URL",
+    "locationPlaceholder": "Your location (e.g. Berlin, Germany)",
+    "industryPlaceholder": "Your industry",
+    "emailPlaceholder": "Your email address",
+    "phonePlaceholder": "Your phone number",
+    "contactInfo": "Contact info",
+    "contact": "Contact",
+    "messageWillOpen": "Message function will open",
+    "contactInfoWillShow": "Contact information will be displayed",
+    "markedAsHelpful": "Marked as helpful",
+    "openCommentFunction": "Open comment function",
+    "openShareDialog": "Open share dialog",
+    "nuggetSaved": "Nugget saved",
+    "toUserProfile": "To user profile",
+    "tabs": {
+      "nuggets": "Nuggets",
+      "gigs": "Gigs",
+      "casestudies": "Case Studies",
+      "ratings": "Ratings"
+    },
+    "reviewDate": {
+      "twoWeeksAgo": "2 weeks ago",
+      "threeDaysAgo": "3 days ago",
+      "oneMonthAgo": "1 month ago"
+    }
   },
   "home": {
     "searchHeader": "How can we help?",
-    "searchSubtitle": "For every problem the right solution within 48h",
-    "searchPlaceholder": "Search for a solution here...",
-    "popularSolutions": "Most searched solutions",
+    "searchSubtitle": "For every problem the right solution within 48h. Only for Business Owners.",
+    "searchPlaceholder": "Search for a solution...",
+    "popularSolutions": "Trending solutions",
     "defaultSuggestions": {
       "taxOptions": "Tax options",
       "saveMoney": "Save money",
@@ -263,7 +299,7 @@
       "insurance": "Insurance",
       "retirement": "Retirement planning",
       "taxSaving": "Save taxes",
-      "protectAssets": "Protect assets",
+      "protectAssets": "Protect my assets",
       "gainCustomers": "Gain customers",
       "reduceCosts": "Reduce fixed costs",
       "sellCompany": "Sell company"

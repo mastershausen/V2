@@ -8,6 +8,7 @@
 import { useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, TextStyle, Alert, Dimensions, TouchableOpacity, Linking } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -283,6 +284,7 @@ export default function ProfileScreen() {
   const colors = useThemeColor();
   const router = useRouter();
   const userStore = useUserStore();
+  const { t } = useTranslation();
   
   // Verwende den neuen useMode-Hook für Modusinformationen
   const { isDemoMode } = useMode();
@@ -303,9 +305,9 @@ export default function ProfileScreen() {
   
   // State für Button-Text und Icon mit useMemo, um Render-Loops zu vermeiden
   const buttonConfig = useMemo(() => ({
-    label: isDemoMode() ? "Nachricht senden" : "Profil bearbeiten",
+    label: isDemoMode() ? t('profile.sendMessage') : t('profile.editProfile'),
     icon: isDemoMode() ? "chatbubble-outline" : "create-outline"
-  }), [isDemoMode]);
+  }), [isDemoMode, t]);
   
   // Erstelle Profilbild-Daten (entweder aus vorhandenem Bild oder Fallback mit Initialen)
   let profileImageData: ProfileImageSource = null;
@@ -323,7 +325,7 @@ export default function ProfileScreen() {
   // Button-Aktionen basierend auf dem Modus
   const handlePrimaryButtonPress = () => {
     if (isDemoMode()) {
-      Alert.alert('Nachricht', 'Nachrichtenfunktion wird geöffnet');
+      Alert.alert(t('common.message'), t('profile.messageWillOpen'));
     } else {
       // Im Live-Mode navigieren wir zum Profil-Bearbeitungsbildschirm
       router.push(Routes.EDIT_PROFILE);
@@ -331,7 +333,7 @@ export default function ProfileScreen() {
   };
   
   const handleSecondaryButtonPress = () => {
-    Alert.alert('Kontakt', 'Kontaktinformationen werden angezeigt');
+    Alert.alert(t('profile.contact'), t('profile.contactInfoWillShow'));
   };
   
   // Handler für PlusButton
@@ -371,11 +373,11 @@ export default function ProfileScreen() {
               <NuggetCard
                 key={nugget.id}
                 nugget={nugget}
-                onHelpfulPress={() => Alert.alert('Hilfreich', 'Als hilfreich markiert')}
-                onCommentPress={() => Alert.alert('Kommentar', 'Kommentarfunktion öffnen')}
-                onSharePress={() => Alert.alert('Teilen', 'Teilen-Dialog öffnen')}
-                onSavePress={() => Alert.alert('Speichern', 'Nugget gespeichert')}
-                onUserPress={() => Alert.alert('Benutzer', 'Zum Benutzerprofil')}
+                onHelpfulPress={() => Alert.alert(t('common.helpful'), t('profile.markedAsHelpful'))}
+                onCommentPress={() => Alert.alert(t('common.comment'), t('profile.openCommentFunction'))}
+                onSharePress={() => Alert.alert(t('common.share'), t('profile.openShareDialog'))}
+                onSavePress={() => Alert.alert(t('common.save'), t('profile.nuggetSaved'))}
+                onUserPress={() => Alert.alert(t('common.user'), t('profile.toUserProfile'))}
               />
             ))}
           </ProfileTabListContainer>
@@ -405,7 +407,7 @@ export default function ProfileScreen() {
       case 'casestudies':
         return (
           <ProfileTabListContainer>
-            {[].map((gig) => (
+            {DEMO_CASESTUDIES.map((gig) => (
               <GigCard
                 key={gig.id}
                 gig={gig}
@@ -435,7 +437,7 @@ export default function ProfileScreen() {
                 imageUrl={r.user.profileImage.imageUrl}
                 rating={r.rating}
                 text={r.text}
-                date={idx === 0 ? 'vor 2 Wochen' : idx === 1 ? 'vor 3 Tagen' : 'vor 1 Monat'}
+                date={idx === 0 ? t('profile.reviewDate.twoWeeksAgo') : idx === 1 ? t('profile.reviewDate.threeDaysAgo') : t('profile.reviewDate.oneMonthAgo')}
               />
             ))}
           </ProfileTabListContainer>
@@ -447,10 +449,10 @@ export default function ProfileScreen() {
   
   // Tabs für das Profil
   const profileTabs: BaseTabConfig[] = [
-    { id: 'nuggets', label: 'Nuggets' },
-    { id: 'gigs', label: 'Gigs' },
-    { id: 'casestudies', label: 'Fallstudien' },
-    { id: 'ratings', label: 'Bewertungen' }
+    { id: 'nuggets', label: t('profile.tabs.nuggets') },
+    { id: 'gigs', label: t('profile.tabs.gigs') },
+    { id: 'casestudies', label: t('profile.tabs.casestudies') },
+    { id: 'ratings', label: t('profile.tabs.ratings') }
   ];
   
   return (
@@ -538,7 +540,7 @@ export default function ProfileScreen() {
           {/* DoubleButton für Nachricht senden und Kontaktinformationen */}
           <DoubleButton 
             primaryLabel={buttonConfig.label}
-            secondaryLabel="Kontaktinfo"
+            secondaryLabel={t('profile.contactInfo')}
             onPrimaryPress={handlePrimaryButtonPress}
             onSecondaryPress={handleSecondaryButtonPress}
             primaryIcon={buttonConfig.icon}
