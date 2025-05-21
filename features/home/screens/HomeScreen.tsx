@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { memo, useMemo } from 'react';
+import React, { memo, useMemo, useState, useEffect } from 'react';
 import { 
   View, 
   Text, 
@@ -25,6 +25,8 @@ import { SearchInput } from '@/shared-components/searchinput/SearchInput';
 import { SuggestionList } from '../components/SuggestionList';
 import { useHome } from '../hooks/useHome';
 import { HomeScreenColors, getHomeColors } from '../types/theme';
+import { DEFAULT_SUGGESTIONS } from '../constants/suggestions';
+import { SearchSuggestion } from '../types/search';
 
 // Konstanten für Layout-Berechnungen
 const SMALL_DEVICE_THRESHOLD = 700;
@@ -80,6 +82,14 @@ function HomeScreen() {
   } = useHome({
     autoNavigateToResults: true
   });
+  
+  // Trending Solutions, die immer angezeigt werden
+  const [trendingSolutions, setTrendingSolutions] = useState<SearchSuggestion[]>([]);
+  
+  // Laden der Trending Solutions beim ersten Rendern
+  useEffect(() => {
+    setTrendingSolutions(DEFAULT_SUGGESTIONS);
+  }, []);
   
   // Berechnung der Layouts mit useMemo für Performance-Optimierung
   const layoutStyles = useMemo(() => {
@@ -139,7 +149,7 @@ function HomeScreen() {
                 {t('home.popularSolutions')}
               </Text>
               <SuggestionList
-                suggestions={suggestions}
+                suggestions={trendingSolutions}
                 onSuggestionPress={handleSuggestionPress}
                 colors={colors}
                 horizontal={false}

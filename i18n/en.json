@@ -33,20 +33,20 @@
     "common": {
       "email": "Email",
       "password": "Password",
-      "confirmPassword": "Confirm password",
-      "firstName": "First name",
-      "lastName": "Last name",
+      "confirmPassword": "Confirm Password",
+      "firstName": "First Name",
+      "lastName": "Last Name",
       "forgotPassword": "Forgot password?",
       "error": "Authentication error",
       "success": "Authentication successful",
       "orText": "Or"
     },
     "login": {
-      "title": "Login",
-      "subtitle": "Sign in to access your account",
-      "button": "Sign in",
+      "title": "Log in",
+      "subtitle": "Log in to access your account",
+      "button": "Log in",
       "noAccount": "Don't have an account?",
-      "createAccount": "Register",
+      "createAccount": "Sign up",
       "googleLogin": "Sign in with Google",
       "placeholders": {
         "email": "Your email address",
@@ -54,15 +54,15 @@
       },
       "errors": {
         "invalidCredentials": "Invalid email or password",
-        "googleLogin": "An error occurred during Google login"
+        "googleLogin": "Error signing in with Google"
       }
     },
     "register": {
-      "title": "Register",
+      "title": "Sign up",
       "subtitle": "Create a new account",
-      "button": "Register",
+      "button": "Sign up",
       "alreadyAccount": "Already have an account?",
-      "login": "Sign in",
+      "login": "Log in",
       "placeholders": {
         "email": "Your email address",
         "password": "Your password",
@@ -82,7 +82,7 @@
       "subtitle": "Enter your email address to receive a link to reset your password",
       "button": "Send link",
       "backToLogin": "Back to login",
-      "success": "We have sent you a link to reset your password",
+      "success": "We've sent you a link to reset your password",
       "placeholders": {
         "email": "Your email address"
       }
@@ -92,20 +92,20 @@
       "email": "Please enter a valid email address",
       "password": {
         "minLength": "Password must be at least {{length}} characters long",
-        "requireNumber": "Password must contain at least one number",
-        "requireUppercase": "Password must contain at least one uppercase letter",
-        "requireSpecialChar": "Password must contain at least one special character"
+        "requireNumber": "Password must include at least one number",
+        "requireUppercase": "Password must include at least one uppercase letter",
+        "requireSpecialChar": "Password must include at least one special character"
       },
       "passwordMatch": "Passwords do not match"
     },
     "logout": {
-      "button": "Sign out",
-      "confirm": "Are you sure you want to sign out?",
-      "success": "You have been successfully signed out"
+      "button": "Log out",
+      "confirm": "Are you sure you want to log out?",
+      "success": "You have been successfully logged out"
     },
     "session": {
-      "expired": "Your session has expired. Please sign in again",
-      "invalid": "Invalid session. Please sign in again"
+      "expired": "Your session has expired. Please log in again",
+      "invalid": "Invalid session. Please log in again"
     },
     "demo": {
       "title": "Demo Mode",
@@ -115,12 +115,12 @@
     }
   },
   "developerTools": {
-    "fillDemoData": "Insert demo data",
+    "fillDemoData": "Fill demo data",
     "fillDemoDataHint": "Fills form fields with test data",
-    "fillDemoDataButton": "Insert demo data",
+    "fillDemoDataButton": "Fill demo data",
     "clearStorage": "Clear storage",
     "clearStorageButton": "Clear storage",
-    "storageClearedSuccess": "Storage successfully cleared",
+    "storageClearedSuccess": "Storage cleared successfully",
     "storageClearError": "Error clearing storage",
     "demoLogin": "Demo login",
     "demoLoginButton": "Perform demo login"
@@ -139,16 +139,66 @@
       "innovation": "Innovation",
       "reward": "Reward"
     },
+    "tiles": {
+      "save": {
+        "shortTermCustomers": "Win customers short-term",
+        "reduceFixedCosts": "Reduce fixed costs",
+        "protectAssets": "Protect assets",
+        "restructureBusiness": "Core restructuring of business",
+        "lawAndSecurity": "Law & security",
+        "longTermCustomers": "Retain customers long-term",
+        "externalCapital": "Acquire external capital",
+        "employeeLeadership": "Lead employees",
+        "cyberSecurity": "Cyber and IT security",
+        "customerInsolvency": "Customer is insolvent. What to do?"
+      },
+      "grow": {
+        "minimizeTaxes": "Minimize taxes",
+        "attractTopPlayers": "Attract and retain A-players",
+        "customerFlow": "Build sustainable customer flow",
+        "salesThatDeliver": "Sales that deliver",
+        "breadButter": "Build bread & butter business",
+        "maxMargin": "Build max margin product",
+        "reclaimTaxes": "Reclaim taxes from tax office",
+        "useAI": "Please, please use AI",
+        "findInvestors": "Find investors"
+      },
+      "foresight": {
+        "inheritancePlanning": "Avoid inheritance & gift tax",
+        "companyWithoutYou": "Build a company that works without you",
+        "domesticAssets": "Protect assets domestically",
+        "sellCompany": "Sell your company",
+        "succession": "Plan succession",
+        "buyCompany": "Buy a company",
+        "taxFreeRealEstate": "Tax-free through real estate",
+        "realEstate": "Real estate general",
+        "offMarketRealEstate": "Off-market real estate",
+        "onlineBusiness": "Build online business"
+      },
+      "bonus": {
+        "longAndHappy": "Live long and happy",
+        "negotiateBetter": "Negotiate better",
+        "rhetoric": "Master rhetoric & communication",
+        "futureResearch": "Future research",
+        "newMarkets": "Develop ideas and new markets",
+        "goldNuggets": "General gold nuggets",
+        "emigrate": "Emigrate as entrepreneur",
+        "alternativeInvestments": "Alternative investments",
+        "relocateAbroad": "Relocate company abroad",
+        "emigrateFamily": "Emigrate with family",
+        "protectAssetsAbroad": "Protect assets abroad"
+      }
+    },
     "errorMessages": {
       "generic": "An error occurred: {message}",
-      "save": "Error loading savings data",
+      "save": "Error loading save data",
       "grow": "Error loading growth data",
       "foresight": "Error loading foresight data",
       "bonus": "Error loading bonus data"
     },
     "emptyStates": {
-      "save": "No savings tiles available",
-      "grow": "No growth tiles available",
+      "save": "No save tiles available",
+      "grow": "No grow tiles available",
       "foresight": "No foresight tiles available",
       "bonus": "No bonus tiles available",
       "searchResults": "No results found for '{query}'"
@@ -157,8 +207,27 @@
   "solvboxai": {
     "title": "SolvboxAI",
     "tabs": {
-      "gigs": "Gigs",
-      "casestudies": "Case Studies"
+      "gigs": "Status Quo",
+      "casestudies": "Proven Impact"
+    },
+    "tiles": {
+      "gigs": {
+        "everydayTasks": "AI agents for everyday tasks",
+        "prPodcasts": "AI agents for more PR & podcasts",
+        "marketing": "AI agents in marketing",
+        "customerService": "AI agents for perfect customer service",
+        "sales": "AI agents in sales",
+        "recruiting": "AI in recruiting",
+        "legal": "AI as legal advisor",
+        "consultant": "AI as business consultant",
+        "saveTime": "AI applications to save time & money",
+        "future": "What the future holds"
+      },
+      "casestudies": {
+        "companyA": "Case study Company A",
+        "companyB": "Case study Company B",
+        "companyC": "Case study Company C"
+      }
     },
     "categories": {
       "all": "All",
@@ -170,7 +239,7 @@
       "legal": "Legal",
       "technology": "Technology",
       "operations": "Operations",
-      "hr": "Human Resources"
+      "hr": "HR"
     },
     "errorMessages": {
       "generic": "An error occurred: {message}",
@@ -188,7 +257,7 @@
     "title": "Settings",
     "general": "General Settings",
     "tutorial": "Tutorial",
-    "learnApp": "Learn about the app",
+    "learnApp": "Learn how to use the app",
     "savedContent": "Saved Content",
     "yourSavedContent": "Your saved gigs and articles",
     "support": "Support",
@@ -202,12 +271,12 @@
     "accountSettings": "Account Settings",
     "accountAndPrivacy": "Account & privacy",
     "account": "Account",
-    "logout": "Sign out",
+    "logout": "Log out",
 
     "accountSecurity": "Account & Security",
-    "changePassword": "Change password",
-    "changePasswordDescription": "Change your password to increase your account security.",
-    "changeEmail": "Change email",
+    "changePassword": "Change Password",
+    "changePasswordDescription": "Change your password to increase the security of your account.",
+    "changeEmail": "Change Email",
     "changeEmailDescription": "Update the email address for your account.",
     "privacySecurity": "Privacy & Security",
     "privacySecurityDescription": "Manage your privacy and security settings.",
@@ -215,11 +284,11 @@
 
     "accountManagement": "Account Management",
     "pauseAccount": "Pause account",
-    "pauseAccountDescription": "Your account will be temporarily deactivated. You can sign in anytime to reactivate it.",
-    "pauseAccountConfirm": "Pause account",
+    "pauseAccountDescription": "Your account will be temporarily deactivated. You can sign in at any time to reactivate it.",
+    "pauseAccountConfirm": "Pause Account",
     "tempDeactivate": "Temporarily deactivate",
     "deactivateAccount": "Deactivate account",
-    "deactivateAccountDescription": "Your account will be deactivated but retained for future use.",
+    "deactivateAccountDescription": "Your account will be deactivated but kept for future use.",
     "deactivateAccountConfirm": "Deactivate",
     "accountDeactivate": "Temporarily deactivate account",
     "deleteAccount": "Delete account",
@@ -250,15 +319,15 @@
     "addThumbnail": "Add thumbnail",
     "changeThumbnail": "Change thumbnail",
     "uploadThumbnail": "Upload thumbnail",
-    "uploadThumbnailQuestion": "Would you like to upload a preview image for this video?",
+    "uploadThumbnailQuestion": "Would you like to upload a thumbnail for this video?",
     "profileUpdated": "Profile updated",
     "profileUpdatedMessage": "Your profile data has been successfully updated.",
-    "firstNamePlaceholder": "First Name",
-    "lastNamePlaceholder": "Last Name",
-    "usernamePlaceholder": "Username",
-    "companyPlaceholder": "Company",
-    "headlinePlaceholder": "Headline",
-    "descriptionPlaceholder": "Description",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastNamePlaceholder": "Enter your last name",
+    "usernamePlaceholder": "Enter your username",
+    "companyPlaceholder": "Enter your company",
+    "headlinePlaceholder": "Brief description about you",
+    "descriptionPlaceholder": "Detailed description about you and your work",
     "websitePlaceholder": "Your website URL",
     "locationPlaceholder": "Your location (e.g. Berlin, Germany)",
     "industryPlaceholder": "Your industry",
@@ -276,7 +345,7 @@
     "tabs": {
       "nuggets": "Nuggets",
       "gigs": "Gigs",
-      "casestudies": "Case Studies",
+      "casestudies": "Case studies",
       "ratings": "Ratings"
     },
     "reviewDate": {
@@ -287,9 +356,9 @@
   },
   "home": {
     "searchHeader": "How can we help?",
-    "searchSubtitle": "For every problem the right solution within 48h. Only for Business Owners.",
-    "searchPlaceholder": "Search for a solution...",
-    "popularSolutions": "Trending solutions",
+    "searchSubtitle": "The right solution for any problem within 48h. Only for entrepreneurs.",
+    "searchPlaceholder": "Search for solution here...",
+    "popularSolutions": "Most searched solutions",
     "defaultSuggestions": {
       "taxOptions": "Tax options",
       "saveMoney": "Save money",
@@ -298,57 +367,33 @@
       "investment": "Investment advice",
       "insurance": "Insurance",
       "retirement": "Retirement planning",
-      "taxSaving": "Save taxes",
-      "protectAssets": "Protect my assets",
+      "taxSaving": "Tax saving",
+      "protectAssets": "Protect assets",
       "gainCustomers": "Gain customers",
       "reduceCosts": "Reduce fixed costs",
       "sellCompany": "Sell company"
     }
   },
-  "search": {
-    "noResults": "No search results",
-    "loading": "Searching...",
-    "error": "Error during search",
-    "tryAgain": "Please try again or refine your search query",
-    "recentSearches": "Recent searches",
-    "clearHistory": "Clear history",
-    "suggestions": "Suggestions",
-    "results": "Results",
-    "categories": {
-      "all": "All",
-      "documents": "Documents",
-      "experts": "Experts",
-      "services": "Services",
-      "articles": "Articles",
-      "videos": "Videos",
-      "other": "Other"
-    },
-    "sortOptions": {
-      "relevance": "Relevance",
-      "newest": "Newest",
-      "oldest": "Oldest",
-      "az": "A-Z",
-      "za": "Z-A"
-    },
-    "filterLabels": {
-      "categories": "Categories",
-      "date": "Date",
-      "type": "Type",
-      "tags": "Tags",
-      "filter": "Filter",
-      "dateRange": "Date range",
-      "from": "From",
-      "to": "To",
-      "apply": "Apply filters",
-      "reset": "Reset filters"
-    }
+  "permissions": {
+    "mediaLibraryTitle": "Media access required",
+    "mediaLibraryMessage": "We need access to your media to select images and videos."
   },
-  "language": {
-    "selection": "Language selection",
-    "de": "German",
-    "en": "English",
-    "currentLanguage": "Current language: {{language}}",
-    "changeLanguage": "Change language"
+  "errors": {
+    "mediaPickerError": "An error occurred while selecting media.",
+    "networkErrorTitle": "Network error",
+    "networkErrorMessage": "Please check your internet connection and try again later.",
+    "notFoundTitle": "Data not found",
+    "notFoundMessage": "The requested data could not be found.",
+    "serverErrorTitle": "Server error",
+    "serverErrorMessage": "A server error has occurred. Our team has been notified.",
+    "genericErrorTitle": "Error occurred"
+  },
+  "app": {
+    "loading": "Loading Solvbox...",
+    "splash": {
+      "title": "Welcome to Solvbox",
+      "subtitle": "Your financial solution platform"
+    }
   },
   "profileEdit": {
     "save": "Save",
@@ -356,13 +401,13 @@
     "changeProfilePicture": "Change profile picture",
     "editHeaderImage": "Edit header image",
     "assetError": "No URI found in selected image",
-    "uploadFailed": "Error uploading image",
-    "submitFailed": "Error saving profile",
-    "headlineInfoText": "Will be displayed as \"{firstName} {lastName} | [Your Headline]\""
+    "uploadFailed": "Failed to upload image",
+    "submitFailed": "Failed to save profile",
+    "headlineInfoText": "Will be displayed as \"{firstName} {lastName} | [Your headline]\""
   },
   "nugget": {
     "interaction": {
-      "thatHelps": "That helped",
+      "thatHelps": "That helps",
       "comments": "Comments",
       "noComments": "No comments",
       "share": "Share",
@@ -380,6 +425,12 @@
         "daysAgo": "{{count}} days ago",
         "weekAgo": "1 week ago"
       }
+    }
+  },
+  "ui": {
+    "footerButton": {
+      "buttonLabel": "{{label}}",
+      "disabled": "Disabled"
     }
   }
 } 

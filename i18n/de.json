@@ -139,6 +139,56 @@
       "innovation": "Innovation",
       "reward": "Belohnung"
     },
+    "tiles": {
+      "save": {
+        "shortTermCustomers": "Kurzfristig Kunden gewinnen",
+        "reduceFixedCosts": "Fixkosten senken",
+        "protectAssets": "Vermögen schützen",
+        "restructureBusiness": "Unternehmen kernsanieren",
+        "lawAndSecurity": "Recht & Sicherheit",
+        "longTermCustomers": "Kunden langfristig binden",
+        "externalCapital": "Fremdkapital beschaffen",
+        "employeeLeadership": "Mitarbeiter führen",
+        "cyberSecurity": "Cyber- und IT-Sicherheit",
+        "customerInsolvency": "Kunde ist insolvent. Was tun?"
+      },
+      "grow": {
+        "minimizeTaxes": "Steuern auf ein Minimum",
+        "attractTopPlayers": "A-Mitarbeiter gewinnen und halten",
+        "customerFlow": "Dauerhaften Kundenstrom aufbauen",
+        "salesThatDeliver": "Vertrieb der verkauft",
+        "breadButter": "Brot & Butter Geschäft aufbauen",
+        "maxMargin": "Max. Marge Produkt aufbauen",
+        "reclaimTaxes": "Steuern vom Finanzamt zurückholen",
+        "useAI": "Bitte, bitte nutze KI",
+        "findInvestors": "Investoren finden"
+      },
+      "foresight": {
+        "inheritancePlanning": "Erbschafts- & Schenkungssteuer vermeiden",
+        "companyWithoutYou": "Unternehmen das ohne dich funktioniert",
+        "domesticAssets": "Vermögen im Inland schützen",
+        "sellCompany": "Unternehmen verkaufen",
+        "succession": "Nachfolge regeln",
+        "buyCompany": "Unternehmen kaufen",
+        "taxFreeRealEstate": "Steuerfrei durch Immobilien",
+        "realEstate": "Immobilien allgemein",
+        "offMarketRealEstate": "Off-market Immobilien",
+        "onlineBusiness": "Onlinegeschäft aufbauen"
+      },
+      "bonus": {
+        "longAndHappy": "Lange und glücklich Leben",
+        "negotiateBetter": "Besser verhandeln",
+        "rhetoric": "Rhetorik & Kommunikation meistern",
+        "futureResearch": "Zukunftsforschung",
+        "newMarkets": "Ideen und neue Märkte entwickeln",
+        "goldNuggets": "Allgemeine Goldnuggets",
+        "emigrate": "Auswandern als Unternehmer",
+        "alternativeInvestments": "Alternative Investments",
+        "relocateAbroad": "Unternehmen ins Ausland verlagern",
+        "emigrateFamily": "Auswandern mit Familie",
+        "protectAssetsAbroad": "Vermögen schützen im Ausland"
+      }
+    },
     "errorMessages": {
       "generic": "Ein Fehler ist aufgetreten: {message}",
       "save": "Fehler beim Laden der Spardaten",
@@ -157,8 +207,27 @@
   "solvboxai": {
     "title": "SolvboxAI",
     "tabs": {
-      "gigs": "Gigs",
-      "casestudies": "Fallstudien"
+      "gigs": "Status Quo",
+      "casestudies": "Praxiserfolge"
+    },
+    "tiles": {
+      "gigs": {
+        "everydayTasks": "KI-Agenten für alltägliche Aufgaben",
+        "prPodcasts": "KI-Agenten für mehr PR & Podcasts",
+        "marketing": "KI-Agenten im Marketing",
+        "customerService": "KI-Agenten für perfekten Kundenservice",
+        "sales": "KI-Agenten im Vertrieb",
+        "recruiting": "KI im Recruiting",
+        "legal": "KI als Rechtsberater",
+        "consultant": "KI als Unternehmensberater",
+        "saveTime": "KI Anwendungen um Zeit & Geld zu sparen",
+        "future": "Was die Zukunft bringt"
+      },
+      "casestudies": {
+        "companyA": "Fallstudie Unternehmen A",
+        "companyB": "Fallstudie Unternehmen B",
+        "companyC": "Fallstudie Unternehmen C"
+      }
     },
     "categories": {
       "all": "Alle",
@@ -356,6 +425,12 @@
         "daysAgo": "Vor {{count}} Tagen",
         "weekAgo": "Vor einer Woche"
       }
+    }
+  },
+  "ui": {
+    "footerButton": {
+      "buttonLabel": "{{label}}",
+      "disabled": "Deaktiviert"
     }
   }
 }

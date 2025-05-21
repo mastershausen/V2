@@ -23,6 +23,7 @@ import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { FilterTabs, FilterTabItem } from '@/shared-components/navigation/FilterTabs';
+import { FilterIcon } from '@/shared-components/navigation/FilterIcon';
 import { NuggetCard } from '@/shared-components/cards/nugget-card/NuggetCard';
 import { GigCard } from '@/shared-components/cards/gig-card/GigCard';
 import { ExpertCard } from '@/shared-components/cards/expert-card/ExpertCard';
@@ -37,7 +38,7 @@ const FILTER_TABS: FilterTabItem[] = [
   { id: 'experts', label: 'Experten' },
   { id: 'gigs', label: 'Gigs' },
   { id: 'nuggets', label: 'Nuggets' },
-  
+  { id: 'casestudies', label: 'Fallstudien' },
 ];
 
 /**
@@ -57,6 +58,7 @@ export default function SearchResultsScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState(params.query || '');
+  const [hasActiveFilters, setHasActiveFilters] = useState(false);
   const [totalResults, setTotalResults] = useState(
     mockExperts.length + mockGigs.length + mockNuggets.length
   );
@@ -70,6 +72,34 @@ export default function SearchResultsScreen() {
   const handleFilterChange = (filterId: string) => {
     console.log(`Filter geändert auf: ${filterId}`);
     setActiveFilter(filterId);
+  };
+  
+  // Filter-Dialog öffnen
+  const handleFilterPress = () => {
+    console.log('Filter-Dialog öffnen');
+    Alert.alert(
+      'Filter', 
+      'Hier würde ein Filter-Dialog angezeigt werden',
+      [
+        {
+          text: 'Filter anwenden',
+          onPress: () => {
+            // Simulation der Anwendung von Filtern
+            setHasActiveFilters(true);
+          },
+        },
+        {
+          text: 'Filter zurücksetzen',
+          onPress: () => {
+            setHasActiveFilters(false);
+          },
+        },
+        {
+          text: 'Abbrechen',
+          style: 'cancel',
+        },
+      ]
+    );
   };
   
   // Suche ausführen
@@ -170,6 +200,15 @@ export default function SearchResultsScreen() {
             ))}
           </View>
         );
+      
+      case 'casestudies':
+        return (
+          <View style={styles.filterContentContainer}>
+            <Text style={[styles.infoText, { color: colors.textSecondary }]}>
+              Hier würden Fallstudien angezeigt werden.
+            </Text>
+          </View>
+        );
         
       case 'all':
       default:
@@ -245,20 +284,31 @@ export default function SearchResultsScreen() {
         </View>
       </View>
       
-      {/* Ergebnisanzahl */}
-      <View style={styles.resultsCountContainer}>
-        <Text style={[styles.resultCount, { color: colors.textSecondary }]}>
-          {totalResults} Treffer
-        </Text>
-      </View>
-      
       {/* Filter-Tabs */}
       <View style={styles.filterContainer}>
+        <View style={styles.tabGradientOverlay} />
         <FilterTabs 
           tabs={FILTER_TABS}
           activeTabId={activeFilter}
           onTabChange={handleFilterChange}
         />
+        
+        {/* Fixiertes Filter-Icon */}
+        <View style={styles.fixedFilterIconContainer}>
+          <FilterIcon
+            hasActiveFilters={hasActiveFilters}
+            onPress={handleFilterPress}
+            size={22}
+            style={styles.fixedFilterIcon}
+          />
+        </View>
+      </View>
+      
+      {/* Ergebnisanzahl - NACH den Tabs */}
+      <View style={styles.resultsCountContainer}>
+        <Text style={[styles.resultCount, { color: colors.textSecondary }]}>
+          {totalResults} Treffer
+        </Text>
       </View>
       
       <ScrollView 
@@ -296,9 +346,23 @@ const styles = StyleSheet.create({
     paddingTop: 0,
     paddingBottom: 0,
   },
+  filterContainer: {
+    backgroundColor: 'white',
+    paddingVertical: spacing.xs,
+    borderBottomWidth: 0, // Entfernt die untere Grenze, da wir die Ergebnisanzahl darunter haben
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 3,
+    shadowOpacity: 1,
+    elevation: 2,
+    position: 'relative', // Wichtig für die absolute Positionierung des Filter-Icons
+    overflow: 'visible', // Damit das Filter-Icon nicht abgeschnitten wird
+  },
   resultsCountContainer: {
     paddingHorizontal: spacing.m,
-    paddingBottom: spacing.xs,
+    paddingVertical: spacing.s,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, 0.05)',
   },
   resultCount: {
     fontSize: typography.fontSize.m,
@@ -318,17 +382,6 @@ const styles = StyleSheet.create({
     marginTop: spacing.m,
     fontSize: typography.fontSize.m,
   },
-  filterContainer: {
-    backgroundColor: 'white',
-    paddingVertical: spacing.xs,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.05)',
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 3,
-    shadowOpacity: 1,
-    elevation: 2,
-  },
   filterContentContainer: {
     flex: 1,
     width: '100%',
@@ -346,5 +399,41 @@ const styles = StyleSheet.create({
     fontWeight: typography.fontWeight.semiBold,
     marginTop: spacing.m,
     marginBottom: spacing.s,
+  },
+  infoText: {
+    fontSize: typography.fontSize.m,
+    textAlign: 'center',
+  },
+  fixedFilterIconContainer: {
+    position: 'absolute',
+    right: spacing.m,
+    top: '50%',
+    transform: [{ translateY: -14 }], // Hälfte der ungefähren Höhe des Icons für vertikale Zentrierung
+    zIndex: 10, // Stellt sicher, dass das Icon über anderen Elementen liegt
+  },
+  fixedFilterIcon: {
+    backgroundColor: 'white', // Feste Farbe statt dynamischer Referenz
+    borderRadius: 25, // Kreisrund für einen hervorstehenden Look
+    padding: spacing.xs,
+    shadowColor: 'rgba(0, 0, 0, 0.3)',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
+    shadowOpacity: 1,
+    elevation: 5,
+  },
+  tabGradientOverlay: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    bottom: 0,
+    width: 60, // Breite des Verlaufs
+    zIndex: 5, // Über den Tabs, aber unter dem Filter-Icon
+    backgroundColor: 'transparent',
+    // Simuliere einen Verlauf mit einer abgestuften Border
+    borderRightWidth: 60,
+    borderTopColor: 'transparent',
+    borderRightColor: 'rgba(255, 255, 255, 0.95)',
+    borderBottomColor: 'transparent',
+    borderLeftColor: 'transparent',
   },
 }); 
