@@ -256,10 +256,10 @@ export default function OliviaChatScreen() {
           {/* Hintergrund-Gradient mit absoluter Positionierung */}
           <LinearGradient
             colors={[
-              'rgba(0, 170, 110, 0.25)', 
-              'rgba(0, 170, 110, 0.15)', 
-              'rgba(0, 170, 110, 0.05)', 
-              'rgba(0, 170, 110, 0)'
+              'rgba(41, 121, 255, 0.25)', 
+              'rgba(41, 121, 255, 0.15)', 
+              'rgba(41, 121, 255, 0.05)', 
+              'rgba(41, 121, 255, 0)'
             ]}
             locations={[0, 0.3, 0.6, 0.9]}
             start={{ x: 0.5, y: 0 }}
@@ -277,7 +277,7 @@ export default function OliviaChatScreen() {
               <Text style={[styles.solvboxHeaderSignature, { color: colors.textSecondary }]}>
                 Auf eine gute Zusammenarbeit!
               </Text>
-              <View style={styles.solvboxHeaderDivider} />
+              <View style={[styles.solvboxHeaderDivider, { backgroundColor: 'rgba(41, 121, 255, 0.7)' }]} />
             </View>
           </View>
         </View>
@@ -464,7 +464,8 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     marginRight: spacing.xs,
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
+    marginTop: 0,
   },
   avatar: {
     width: 28,
@@ -597,7 +598,7 @@ const styles = StyleSheet.create({
   solvboxHeaderDivider: {
     width: 40,
     height: 3,
-    backgroundColor: 'rgba(0, 170, 110, 0.7)',
+    backgroundColor: 'rgba(41, 121, 255, 0.7)',
     borderRadius: 1.5,
     marginTop: spacing.xs,
   },
