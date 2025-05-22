@@ -29,6 +29,7 @@ import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { logger } from '@/utils/logger';
+import FallstudieDetail from '../components/FallstudieDetail';
 
 // Avatar-Bild importieren
 const oliviaAvatar = require('@/assets/small rounded Icon.png') as ImageSourcePropType;
@@ -51,6 +52,8 @@ export default function OliviaChatScreen() {
   const [attachedLink, setAttachedLink] = useState<string | null>(null);
   const [isRecording, setIsRecording] = useState(false);
   const [recordingDuration, setRecordingDuration] = useState(0);
+  const [showFallstudieDetail, setShowFallstudieDetail] = useState(false);
+  const [selectedFallstudie, setSelectedFallstudie] = useState<any>(null);
   const recordingInterval = useRef<NodeJS.Timeout | null>(null);
   const flatListRef = useRef<FlatList>(null);
   const typingDots = useRef(new Animated.Value(0)).current;
@@ -131,18 +134,80 @@ export default function OliviaChatScreen() {
   const fallstudienErgebnisse = [
     {
       id: '1',
-      titel: 'Erfahrener Statik-Ingenieur',
-      ergebnis: 'Perfekte Übereinstimmung: 8 Jahre Erfahrung mit vergleichbaren Projekten, verfügbar ab nächster Woche.'
+      titel: 'Statik-Expertise für Mehrfamilienhäuser',
+      kurzbeschreibung: 'Erfolgreiche Sanierung von komplexen Wohngebäuden mit statischen Herausforderungen',
+      context: 'Ein denkmalgeschütztes Mehrfamilienhaus in München-Schwabing sollte umfassend saniert werden. Die Bausubstanz wies erhebliche statische Mängel auf, die Eigentümergemeinschaft stand unter Zeitdruck und die Kosten mussten im Rahmen bleiben.',
+      action: 'Unser Team führte eine umfassende Analyse der Baustruktur durch, erstellte ein detailliertes Sanierungskonzept mit BIM-Technologie und koordinierte die Arbeiten mit lokalen Handwerksbetrieben. Durch innovative Lösungsansätze konnten wir die statischen Probleme beheben, ohne die historische Substanz zu beeinträchtigen.',
+      result: {
+        text: 'Das Projekt wurde termingerecht und innerhalb des Budgetrahmens abgeschlossen. Konkrete Ergebnisse:',
+        bulletpoints: [
+          'Erhaltung von 90% der historischen Bausubstanz bei gleichzeitiger Modernisierung',
+          'Kosteneinsparung von 18% gegenüber vergleichbaren Projekten',
+          'Energetische Optimierung mit Einsparung von 35% der Heizkosten',
+          'Abschluss der Hauptarbeiten 2 Wochen vor dem Zeitplan'
+        ]
+      },
+      anbieter: {
+        name: 'Baustatik München GmbH',
+        erfahrung: '15 Jahre Spezialisierung auf Altbausanierung',
+        erfolgsrate: '96% termingerechte Projektabschlüsse',
+        kontakt: {
+          email: 'kontakt@baustatik-muenchen.de',
+          telefon: '+49 89 12345678'
+        }
+      }
     },
     {
       id: '2',
-      titel: 'Bauingenieur-Team',
-      ergebnis: 'Sehr gut geeignet: Expertise in Statikberechnung und Projektkoordination, Spezialisierung auf historische Gebäude.'
+      titel: 'Industriegebäude-Umnutzung mit hohen Anforderungen',
+      kurzbeschreibung: 'Transformation eines Industriegebäudes zu modernen Wohnlofts bei Erhalt der historischen Fassade',
+      context: 'Ein ehemaliges Industriegebäude aus den 1920er Jahren in München sollte zu hochwertigen Wohnlofts umgebaut werden. Die Bausubstanz war teilweise marode, die Stahlträger korrodiert, doch die charakteristische Fassade sollte unbedingt erhalten bleiben. Der Bauherr hatte ein ambitioniertes Zeitfenster von nur 14 Monaten vorgegeben.',
+      action: 'Wir entwickelten ein zweistufiges Sanierungskonzept mit Fokus auf die statische Ertüchtigung der Tragkonstruktion bei gleichzeitigem Erhalt der Fassade. Durch den Einsatz moderner Materialverbundtechniken konnten wir die vorhandene Struktur verstärken, ohne den industriellen Charakter zu verlieren. Parallel wurden maßgeschneiderte Lösungen für Schall- und Wärmeschutz entwickelt.',
+      result: {
+        text: 'Die Umnutzung wurde erfolgreich abgeschlossen mit folgenden Ergebnissen:',
+        bulletpoints: [
+          'Vollständiger Erhalt der historischen Industriefassade',
+          'Schaffung von 24 individuellen Loftwohnungen mit modernstem Standard',
+          'Unterschreitung des Zeitplans um 6 Wochen',
+          'Einhaltung des Budgets trotz unvorhergesehener Herausforderungen',
+          'Auszeichnung mit dem lokalen Architekturpreis für gelungene Umnutzung'
+        ]
+      },
+      anbieter: {
+        name: 'Industriebau Umnutzung GmbH',
+        erfahrung: '20+ Jahre Spezialisierung auf Umnutzungsprojekte',
+        erfolgsrate: '92% positive Kundenbewertungen',
+        kontakt: {
+          email: 'info@industriebau-umnutzung.de',
+          telefon: '+49 89 98765432'
+        }
+      }
     },
     {
       id: '3',
-      titel: 'Statik-Experte Bayern',
-      ergebnis: 'Gute Option: Flexible Arbeitszeiten und kurzfristige Verfügbarkeit, Erfahrung mit ähnlichen Projekten in der Region.'
+      titel: 'Kostengünstige Sanierung eines Wohnkomplexes',
+      kurzbeschreibung: 'Budgetorientierte Sanierung eines 70er-Jahre Wohnkomplexes mit neuem Nutzungskonzept',
+      context: 'Ein Wohnkomplex aus den 1970er Jahren mit 42 Wohneinheiten in München-Pasing wies erhebliche bauliche und statische Mängel auf. Die Eigentümergemeinschaft verfügte über ein begrenztes Budget und wünschte eine wirtschaftliche Sanierungslösung ohne Beeinträchtigung der Wohnqualität.',
+      action: 'Unser Team entwickelte ein maßgeschneidertes, kostenbewusstes Sanierungskonzept mit Schwerpunkt auf die statische Ertüchtigung des Gebäudes. Durch digitale Bauwerkserfassung konnten wir präzise Schwachstellen identifizieren und gezielt beheben. Wir koordinierten die Arbeiten unter laufendem Betrieb mit minimaler Beeinträchtigung der Bewohner und implementierten kosteneffiziente, aber langlebige Lösungen.',
+      result: {
+        text: 'Die Sanierung wurde erfolgreich abgeschlossen mit hervorragenden Ergebnissen:',
+        bulletpoints: [
+          'Kostenersparnis von 22% gegenüber vergleichbaren Sanierungsprojekten',
+          'Verlängerung der Gebäudelebensdauer um mindestens 30 Jahre',
+          'Steigerung der Energieeffizienz um 48% mit entsprechender Heizkostenreduzierung',
+          'Minimale Beeinträchtigung der Bewohner während der Bauphase durch effiziente Planung',
+          'Wertsteigerung der Immobilie um durchschnittlich 31% nach Abschluss der Maßnahmen'
+        ]
+      },
+      anbieter: {
+        name: 'Effiziente Bausanierung GmbH',
+        erfahrung: '12 Jahre Spezialisierung auf kostenbewusste Sanierungen',
+        erfolgsrate: '97% Budgeteinhaltung',
+        kontakt: {
+          email: 'kontakt@effiziente-bausanierung.de',
+          telefon: '+49 172 3456789'
+        }
+      }
     },
   ];
 
@@ -471,13 +536,16 @@ export default function OliviaChatScreen() {
                   </Text>
                   <TouchableOpacity 
                     style={styles.infoButton}
-                    onPress={() => Alert.alert('Fallstudie Details', `Detailansicht für ${studie.titel}`)}
+                    onPress={() => {
+                      setSelectedFallstudie(studie);
+                      setShowFallstudieDetail(true);
+                    }}
                   >
                     <Text style={styles.infoButtonText}>i</Text>
                   </TouchableOpacity>
                 </View>
                 <Text style={styles.fallstudieErgebnis}>
-                  {studie.ergebnis}
+                  {studie.kurzbeschreibung}
                 </Text>
               </View>
             ))}
@@ -780,6 +848,13 @@ export default function OliviaChatScreen() {
       
       {/* Anhang-Menü Modal */}
       {renderAttachmentMenu()}
+      
+      {/* Fallstudie Detail Modal */}
+      <FallstudieDetail 
+        visible={showFallstudieDetail}
+        onClose={() => setShowFallstudieDetail(false)}
+        fallstudie={selectedFallstudie}
+      />
     </View>
   );
 }
