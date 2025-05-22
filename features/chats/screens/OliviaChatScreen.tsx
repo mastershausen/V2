@@ -13,11 +13,16 @@ import {
   SafeAreaView,
   Animated,
   ImageSourcePropType,
-  Image
+  Image,
+  Modal,
+  ScrollView,
+  Linking,
+  Alert
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as ImagePicker from 'expo-image-picker';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -39,8 +44,15 @@ export default function OliviaChatScreen() {
   const router = useRouter();
   const [message, setMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
+  const [attachedImage, setAttachedImage] = useState<string | null>(null);
+  const [attachedLink, setAttachedLink] = useState<string | null>(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingDuration, setRecordingDuration] = useState(0);
+  const recordingInterval = useRef<NodeJS.Timeout | null>(null);
   const flatListRef = useRef<FlatList>(null);
   const typingDots = useRef(new Animated.Value(0)).current;
+  const recordingAnimation = useRef(new Animated.Value(1)).current;
 
   // Mock-Daten für den Olivia-Chat
   const [chat, setChat] = useState({
@@ -86,17 +98,132 @@ export default function OliviaChatScreen() {
     }, 300); // Mehr Verzögerung für sanfteres Scrollen
   }, [chat.messages]);
 
-  // Nachricht senden
+  // Animation für die Aufnahme starten
+  useEffect(() => {
+    if (isRecording) {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(recordingAnimation, {
+            toValue: 0.3,
+            duration: 500,
+            useNativeDriver: true,
+          }),
+          Animated.timing(recordingAnimation, {
+            toValue: 1,
+            duration: 500,
+            useNativeDriver: true,
+          }),
+        ])
+      ).start();
+
+      // Timer für die Aufnahmedauer
+      recordingInterval.current = setInterval(() => {
+        setRecordingDuration(prev => prev + 1);
+      }, 1000);
+    } else {
+      recordingAnimation.setValue(1);
+      setRecordingDuration(0);
+      if (recordingInterval.current) {
+        clearInterval(recordingInterval.current);
+        recordingInterval.current = null;
+      }
+    }
+
+    return () => {
+      if (recordingInterval.current) {
+        clearInterval(recordingInterval.current);
+      }
+    };
+  }, [isRecording, recordingAnimation]);
+
+  // Bild auswählen
+  const handlePickImage = useCallback(async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.8,
+    });
+
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      setAttachedImage(result.assets[0].uri);
+      setShowAttachmentMenu(false);
+    }
+  }, []);
+
+  // Link hinzufügen
+  const handleAddLink = useCallback(() => {
+    // Dialog zum Eingeben eines Links anzeigen
+    Alert.prompt(
+      "Link hinzufügen",
+      "Geben Sie die URL ein:",
+      [
+        {
+          text: "Abbrechen",
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: (url) => {
+            if (url && url.trim()) {
+              // Einfache URL-Validierung
+              if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+              }
+              setAttachedLink(url);
+              setShowAttachmentMenu(false);
+            }
+          }
+        }
+      ],
+      "plain-text"
+    );
+  }, []);
+
+  // Anhänge entfernen
+  const handleClearAttachments = useCallback(() => {
+    setAttachedImage(null);
+    setAttachedLink(null);
+  }, []);
+
+  // Spracheingabe starten/stoppen
+  const handleVoiceInput = useCallback(() => {
+    if (isRecording) {
+      // Aufnahme beenden (nur visuell, keine echte Funktionalität)
+      setIsRecording(false);
+    } else {
+      // Aufnahme starten (nur visuell, keine echte Funktionalität)
+      setIsRecording(true);
+    }
+  }, [isRecording]);
+
+  // Formatiere die Aufnahmezeit
+  const formatRecordingTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+  };
+
+  // Nachricht mit Anhängen senden
   const handleSendMessage = useCallback(() => {
-    if (!message.trim()) return;
+    if (!message.trim() && !attachedImage && !attachedLink) return;
+
+    let messageText = message;
+    
+    // Füge Link zur Nachricht hinzu
+    if (attachedLink) {
+      messageText += messageText ? `\n${attachedLink}` : attachedLink;
+    }
 
     // Lokales Senden der Nachricht
     const newUserMessage = {
       id: `u-${Date.now()}`,
-      text: message,
+      text: messageText,
       time: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
       isUser: true,
-      date: 'Heute'
+      date: 'Heute',
+      image: attachedImage,
+      link: attachedLink,
     };
 
     setChat(prev => ({
@@ -106,6 +233,7 @@ export default function OliviaChatScreen() {
 
     setMessage('');
     setIsTyping(true);
+    handleClearAttachments();
 
     // Simulierte Antwort des Assistenten (kann später durch API-Aufruf ersetzt werden)
     setTimeout(() => {
@@ -134,7 +262,7 @@ export default function OliviaChatScreen() {
       
       setIsTyping(false);
     }, 1500);
-  }, [message]);
+  }, [message, attachedImage, attachedLink]);
 
   // Zurück-Navigation
   const handleGoBack = useCallback(() => {
@@ -162,7 +290,7 @@ export default function OliviaChatScreen() {
   }, [chat.messages]);
 
   // Einzelne Nachricht rendern
-  const renderMessage = useCallback(({ item, index }: { item: (typeof chat.messages)[0], index: number }) => {
+  const renderMessage = useCallback(({ item, index }: { item: (typeof chat.messages)[0] & {image?: string | null, link?: string | null}, index: number }) => {
     const isLastInGroup = index === chat.messages.length - 1 || 
                           chat.messages[index + 1].date !== item.date || 
                           chat.messages[index + 1].isUser !== item.isUser;
@@ -196,6 +324,26 @@ export default function OliviaChatScreen() {
           ]}>
             {item.text}
           </Text>
+          
+          {/* Anzeige von Bildern */}
+          {item.image && (
+            <View style={styles.attachmentContainer}>
+              <Image source={{ uri: item.image }} style={styles.attachedImage} />
+            </View>
+          )}
+          
+          {/* Anzeige von Links */}
+          {item.link && !item.text.includes(item.link) && (
+            <TouchableOpacity 
+              style={[styles.linkContainer]}
+              onPress={() => Linking.openURL(item.link || '')}
+            >
+              <Text style={[styles.linkText, { color: item.isUser ? '#FFFFFF' : colors.primary }]}>
+                {item.link}
+              </Text>
+            </TouchableOpacity>
+          )}
+          
           <Text style={[
             styles.timeText,
             { color: item.isUser ? timeUserColor : timeOtherColor }
@@ -295,6 +443,104 @@ export default function OliviaChatScreen() {
     );
   }, [colors, renderGroupedMessages, chat.messages.length]);
 
+  // Anhang-Menü rendern
+  const renderAttachmentMenu = () => (
+    <Modal
+      visible={showAttachmentMenu}
+      transparent={true}
+      animationType="slide"
+      onRequestClose={() => setShowAttachmentMenu(false)}
+    >
+      <TouchableOpacity 
+        style={styles.modalOverlay} 
+        activeOpacity={1} 
+        onPress={() => setShowAttachmentMenu(false)}
+      >
+        <View style={[styles.attachmentMenuContainer, { backgroundColor: colors.backgroundPrimary }]}>
+          <TouchableOpacity 
+            style={styles.attachmentOption} 
+            onPress={handlePickImage}
+          >
+            <View style={[styles.attachmentIconContainer, { backgroundColor: '#4CAF50' }]}>
+              <Ionicons name="image-outline" size={24} color="#FFFFFF" />
+            </View>
+            <Text style={[styles.attachmentOptionText, { color: colors.textPrimary }]}>Bild senden</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.attachmentOption} 
+            onPress={handleAddLink}
+          >
+            <View style={[styles.attachmentIconContainer, { backgroundColor: '#9C27B0' }]}>
+              <Ionicons name="link-outline" size={24} color="#FFFFFF" />
+            </View>
+            <Text style={[styles.attachmentOptionText, { color: colors.textPrimary }]}>Link senden</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={[styles.cancelButton, { backgroundColor: colors.backgroundSecondary }]} 
+            onPress={() => setShowAttachmentMenu(false)}
+          >
+            <Text style={[styles.cancelButtonText, { color: colors.textPrimary }]}>Abbrechen</Text>
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    </Modal>
+  );
+
+  // Anzeige der ausgewählten Anhänge
+  const renderAttachmentPreview = () => {
+    if (!attachedImage && !attachedLink) return null;
+    
+    return (
+      <View style={styles.attachmentPreviewContainer}>
+        {attachedImage && (
+          <View style={styles.previewItem}>
+            <Image source={{ uri: attachedImage }} style={styles.previewImage} />
+            <TouchableOpacity style={styles.removeAttachmentButton} onPress={() => setAttachedImage(null)}>
+              <Ionicons name="close-circle" size={22} color="#FFF" />
+            </TouchableOpacity>
+          </View>
+        )}
+        
+        {attachedLink && (
+          <View style={styles.previewItem}>
+            <View style={styles.linkPreview}>
+              <Ionicons name="link-outline" size={20} color={colors.primary} />
+              <Text style={[styles.linkPreviewText, { color: colors.primary }]} numberOfLines={1}>
+                {attachedLink}
+              </Text>
+            </View>
+            <TouchableOpacity style={styles.removeAttachmentButton} onPress={() => setAttachedLink(null)}>
+              <Ionicons name="close-circle" size={22} color="#FFF" />
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    );
+  };
+
+  // Renderingfunktion für die Aufnahmeansicht
+  const renderRecordingView = () => {
+    if (!isRecording) return null;
+    
+    return (
+      <View style={styles.recordingContainer}>
+        <Animated.View style={[
+          styles.recordingIndicator,
+          { opacity: recordingAnimation, backgroundColor: '#E53935' }
+        ]} />
+        <Text style={styles.recordingText}>Aufnahme läuft... {formatRecordingTime(recordingDuration)}</Text>
+        <TouchableOpacity 
+          style={styles.stopRecordingButton}
+          onPress={handleVoiceInput}
+        >
+          <Ionicons name="square" size={18} color="#E53935" />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <StatusBar barStyle="dark-content" />
@@ -338,26 +584,69 @@ export default function OliviaChatScreen() {
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
-        style={styles.inputContainer}
+        style={[
+          styles.inputContainer,
+          {
+            backgroundColor: colors.backgroundPrimary,
+            borderTopWidth: 1,
+            borderTopColor: colors.divider,
+          }
+        ]}
       >
-        <View style={[styles.inputWrapper, { backgroundColor: colors.backgroundSecondary }]}>
-          <TextInput
-            style={[styles.input, { color: colors.textPrimary }]}
-            placeholder="Nachricht an Olivia..."
-            placeholderTextColor={colors.textTertiary}
-            value={message}
-            onChangeText={setMessage}
-            multiline
-          />
-          <TouchableOpacity 
-            style={[styles.sendButton, { backgroundColor: colors.primary }]} 
-            onPress={handleSendMessage}
-            disabled={!message.trim()}
-          >
-            <Ionicons name="send" size={18} color="#FFFFFF" />
-          </TouchableOpacity>
-        </View>
+        {renderAttachmentPreview()}
+        {renderRecordingView()}
+        
+        {!isRecording && (
+          <View style={[
+            styles.inputWrapper, 
+            { 
+              backgroundColor: colors.backgroundSecondary,
+              borderWidth: 1,
+              borderColor: colors.divider,
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.1,
+              shadowRadius: 3,
+              elevation: 3,
+            }
+          ]}>
+            <TouchableOpacity 
+              style={styles.attachButton} 
+              onPress={() => setShowAttachmentMenu(true)}
+            >
+              <Ionicons name="add-circle-outline" size={24} color={colors.textSecondary} />
+            </TouchableOpacity>
+            
+            <TextInput
+              style={[styles.input, { color: colors.textPrimary }]}
+              placeholder="Nachricht an Olivia..."
+              placeholderTextColor={colors.textTertiary}
+              value={message}
+              onChangeText={setMessage}
+              multiline
+            />
+            
+            {message.trim() || attachedImage || attachedLink ? (
+              <TouchableOpacity 
+                style={[styles.sendButton, { backgroundColor: colors.primary }]} 
+                onPress={handleSendMessage}
+              >
+                <Ionicons name="send" size={18} color="#FFFFFF" />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity 
+                style={[styles.voiceButton, { backgroundColor: colors.primary }]} 
+                onPress={handleVoiceInput}
+              >
+                <Ionicons name="mic" size={18} color="#FFFFFF" />
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
       </KeyboardAvoidingView>
+      
+      {/* Anhang-Menü Modal */}
+      {renderAttachmentMenu()}
     </SafeAreaView>
   );
 }
@@ -529,6 +818,7 @@ const styles = StyleSheet.create({
     borderRadius: ui.borderRadius.l,
     paddingHorizontal: spacing.s,
     paddingVertical: spacing.xs,
+    marginVertical: spacing.xs,
   },
   input: {
     flex: 1,
@@ -545,6 +835,109 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: spacing.s,
     marginBottom: 2,
+  },
+  attachButton: {
+    padding: spacing.xs,
+    marginRight: spacing.xs,
+    marginBottom: 2,
+  },
+  voiceButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: spacing.s,
+    marginBottom: 2,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'flex-end',
+  },
+  attachmentMenuContainer: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingVertical: spacing.m,
+    paddingHorizontal: spacing.m,
+  },
+  attachmentOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: spacing.m,
+  },
+  attachmentIconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.m,
+  },
+  attachmentOptionText: {
+    fontSize: typography.fontSize.m,
+    fontWeight: '500',
+  },
+  cancelButton: {
+    borderRadius: ui.borderRadius.l,
+    padding: spacing.m,
+    alignItems: 'center',
+    marginTop: spacing.m,
+  },
+  cancelButtonText: {
+    fontWeight: '600',
+  },
+  attachmentContainer: {
+    marginTop: spacing.s,
+    marginBottom: spacing.s,
+    borderRadius: ui.borderRadius.m,
+    overflow: 'hidden',
+  },
+  attachedImage: {
+    width: '100%',
+    height: 200,
+    borderRadius: ui.borderRadius.m,
+    resizeMode: 'cover',
+  },
+  linkContainer: {
+    marginTop: spacing.s,
+  },
+  linkText: {
+    textDecorationLine: 'underline',
+  },
+  attachmentPreviewContainer: {
+    marginBottom: spacing.xs,
+  },
+  previewItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.xs,
+    position: 'relative',
+  },
+  previewImage: {
+    width: 60,
+    height: 60,
+    borderRadius: ui.borderRadius.s,
+  },
+  linkPreview: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: spacing.xs,
+    borderRadius: ui.borderRadius.s,
+    maxWidth: '85%',
+  },
+  linkPreviewText: {
+    marginLeft: spacing.xs,
+    fontSize: typography.fontSize.s,
+    textDecorationLine: 'underline',
+    maxWidth: '90%',
+  },
+  removeAttachmentButton: {
+    position: 'absolute',
+    top: -5,
+    right: -5,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    borderRadius: 15,
   },
   solvboxHeaderContainer: {
     width: '100%',
@@ -606,5 +999,27 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(41, 121, 255, 0.7)',
     borderRadius: 1.5,
     marginTop: spacing.xs,
+  },
+  recordingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(229, 57, 53, 0.1)',
+    borderRadius: ui.borderRadius.l,
+    padding: spacing.s,
+    marginVertical: spacing.xs,
+  },
+  recordingIndicator: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    marginRight: spacing.s,
+  },
+  recordingText: {
+    flex: 1,
+    color: '#E53935',
+    fontSize: typography.fontSize.s,
+  },
+  stopRecordingButton: {
+    padding: spacing.xs,
   },
 }); 
