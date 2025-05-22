@@ -1,11 +1,11 @@
 /**
  * @file app/index.tsx
- * @description Vereinfachte Startseite, die nach einiger Zeit zum Login navigiert
+ * @description Vereinfachte Startseite, die direkt zur App navigiert (Auth-Flow deaktiviert)
  */
 
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Text, ActivityIndicator, Alert } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { logger } from '@/utils/logger';
@@ -17,26 +17,43 @@ export default function Index() {
   const colors = useThemeColor();
   const [isNavigating, setIsNavigating] = useState(false);
 
-  // Verbesserte Verzögerung und Navigation zum Login mit Logging
+  // Verbesserte Verzögerung und direktes Weiterleiten zur Haupt-App (Auth übersprungen)
   useEffect(() => {
-    logger.info('Startbildschirm wird angezeigt - warte vor Navigation zum Login...');
+    logger.info('Startbildschirm wird angezeigt - warte vor Navigation zur App...');
+    
+    // DEBUG: Zeige Hinweis, dass wir den Startbildschirm sehen
+    if (__DEV__) {
+      Alert.alert('Debug', 'Startbildschirm wird angezeigt. Wir navigieren in Kürze zur Haupt-App.');
+    }
     
     const timer = setTimeout(() => {
       try {
-        logger.info('Navigiere zum Login-Bildschirm...');
+        logger.info('Navigiere direkt zur App...');
         setIsNavigating(true);
         
         // Versuche mit einer kurzen Verzögerung, um sicherzustellen,
         // dass alle Zustandsänderungen durchgeführt wurden
         setTimeout(() => {
-          router.replace('/(auth)/login');
+          // Direkt zur Olivia-Assistent-Seite navigieren
+          router.replace('/chats/olivia-assistent');
+          
+          // DEBUG: Zeige Hinweis nach der Navigation
+          if (__DEV__) {
+            setTimeout(() => {
+              Alert.alert('Debug', 'Navigation zur Olivia-Assistent wurde ausgelöst. Sind wir angekommen?');
+            }, 500);
+          }
         }, 100);
       } catch (error) {
-        logger.error('Fehler bei der Navigation zum Login:', 
-          error instanceof Error ? error.message : String(error)
-        );
+        const errorMsg = error instanceof Error ? error.message : String(error);
+        logger.error('Fehler bei der Navigation zur App:', errorMsg);
+        
+        // DEBUG: Zeige Fehler an
+        if (__DEV__) {
+          Alert.alert('Navigationsfehler', `Fehler beim Navigieren zur App: ${errorMsg}`);
+        }
       }
-    }, 3000); // Längere Verzögerung für besseres Timing
+    }, 1500); // Kürzere Verzögerung für schnelleres Testen
     
     return () => {
       clearTimeout(timer);
@@ -56,7 +73,7 @@ export default function Index() {
       />
       {isNavigating && (
         <Text style={[styles.subtext, { color: colors.textSecondary }]}>
-          Navigiere zum Login...
+          App wird gestartet...
         </Text>
       )}
     </View>

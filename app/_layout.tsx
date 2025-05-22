@@ -19,6 +19,7 @@ import { analyticsService } from '@/services/analytics';
 import { logger } from '@/utils/logger';
 import bootstrapServices from '@/utils/service/initServices';
 import { CustomSplashScreen } from '@/shared-components/splash/CustomSplashScreen';
+import { setupAutoAuth } from '@/utils/autoAuth';
 
 // App-Installation beim Start überprüfen
 const APP_INSTALLATION_KEY = 'app_installation';
@@ -58,6 +59,11 @@ export default function RootLayout() {
         logger.info('[App] Starte Service-Initialisierung...');
         await bootstrapServices();
         logger.info('[App] Service-Initialisierung abgeschlossen');
+        
+        // AUTO-AUTH: Benutzer automatisch anmelden (für Testzwecke)
+        logger.info('[App] Auto-Auth: Benutzer wird automatisch angemeldet...');
+        await setupAutoAuth();
+        logger.info('[App] Auto-Auth: Benutzer erfolgreich angemeldet');
         
         // Analytics-Service initialisieren
         await analyticsService.initAnalytics();

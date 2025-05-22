@@ -165,11 +165,11 @@ export default function TabLayout() {
           headerShown: false,
         }}>
         <Tabs.Screen
-          name="home"
+          name="chats"
           options={{
-            title: t('tabs.home'),
+            title: t('tabs.chats'),
             tabBarIcon: ({ color }) => (
-              <BottomTabIcon name="home" color={color} size={26} />
+              <BottomTabIcon name="chat" color={color} size={26} />
             ),
           }}
         />
@@ -183,15 +183,6 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="chats"
-          options={{
-            title: t('tabs.chats'),
-            tabBarIcon: ({ color }) => (
-              <BottomTabIcon name="chat" color={color} size={26} />
-            ),
-          }}
-        />
-        <Tabs.Screen
           name="solvboxai"
           options={{
             title: 'SolvboxAI',
@@ -201,32 +192,11 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="profile"
+          name="settings"
           options={{
-            title: '',
-            tabBarIcon: ({ color, focused }) => (
-              <View
-                style={{
-                  backgroundColor: focused ? colors.backgroundPrimary : 'transparent',
-                  borderRadius: 17.5,
-                  padding: 0,
-                  width: 35,
-                  height: 35,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderWidth: focused ? 1 : 0,
-                  borderColor: focused ? colors.primary : 'transparent',
-                  marginTop: 10,
-                }}
-              >
-                <ProfileTabIcon
-                  name={userName}
-                  profileImage={profileData}
-                  userId={demoMode ? demoUser?.id : currentUser?.id}
-                  isActive={focused}
-                  size={30}
-                />
-              </View>
+            title: 'Einstellungen',
+            tabBarIcon: ({ color }) => (
+              <BottomTabIcon name="settings" color={color} size={26} />
             ),
           }}
         />

@@ -5,6 +5,9 @@
  * Die Komponente prüft den Authentifizierungsstatus und stellt sicher, dass der Benutzer
  * zur richtigen Route weitergeleitet wird. Sie nutzt den optimierten useAuthNavigation-Hook
  * für zuverlässige Navigationszustände und sanfte Übergänge zwischen Auth-Zuständen.
+ * 
+ * HINWEIS: Für Testzwecke wurde die Umleitung deaktiviert, sodass der Benutzer immer
+ * als authentifiziert gilt und keine Umleitung erfolgt.
  */
 
 import { useCallback, useEffect, useState } from 'react';
@@ -35,6 +38,8 @@ interface AuthCheckProps {
  * 
  * Prüft Authentifizierungsstatus und leitet bei Bedarf weiter, mit verbessertem
  * Übergang zwischen den Zuständen und Vermeidung von Flackern.
+ * 
+ * HINWEIS: Für Testzwecke wurde die Umleitung deaktiviert.
  */
 export function AuthCheck({
   children,
@@ -59,8 +64,9 @@ export function AuthCheck({
   
   // Automatische Navigation deaktivieren, um manuelle Kontrolle zu haben
   const { 
-    navigateToAuthenticated, 
-    navigateToAuth, 
+    navigateTo,
+    navigateToDashboard,
+    navigateToLogin,
     isNavigating,
     inAuthGroup
   } = useAuthNavigation({ 
@@ -78,6 +84,7 @@ export function AuthCheck({
   
   /**
    * Hauptlogik für die Authentifizierungsprüfung und Navigation
+   * HINWEIS: Für Testzwecke wurde die Umleitung deaktiviert.
    */
   useEffect(() => {
     // Während des Ladens keinen Redirect durchführen
@@ -90,26 +97,26 @@ export function AuthCheck({
       return;
     }
 
-    // Authentifizierten Benutzer umleiten, wenn redirectIfAuthenticated aktiviert ist
-    if (isAuthenticated && redirectIfAuthenticated) {
-      logger.debug('AuthCheck: Authentifizierter Benutzer wird umgeleitet', { inAuthGroup });
-      navigateToAuthenticated();
-      return;
-    }
+    // DEAKTIVIERT FÜR TESTZWECKE: Umleitung für authentifizierte Benutzer
+    // if (isAuthenticated && redirectIfAuthenticated) {
+    //   logger.debug('AuthCheck: Authentifizierter Benutzer wird umgeleitet', { inAuthGroup });
+    //   navigateToDashboard();
+    //   return;
+    // }
     
-    // Nicht-authentifizierten Benutzer umleiten, wenn redirectIfUnauthenticated aktiviert ist
-    if (!isAuthenticated && redirectIfUnauthenticated) {
-      logger.debug('AuthCheck: Nicht-authentifizierter Benutzer wird umgeleitet', { inAuthGroup });
-      navigateToAuth();
-      return;
-    }
+    // DEAKTIVIERT FÜR TESTZWECKE: Umleitung für nicht-authentifizierte Benutzer
+    // if (!isAuthenticated && redirectIfUnauthenticated) {
+    //   logger.debug('AuthCheck: Nicht-authentifizierter Benutzer wird umgeleitet', { inAuthGroup });
+    //   navigateToLogin();
+    //   return;
+    // }
     
     // Wenn keine Umleitung nötig ist, Ladebildschirm ausblenden
     hideLoadingWithDelay();
   }, [
     isLoading, isAuthenticated, redirectIfAuthenticated,
-    redirectIfUnauthenticated, navigateToAuthenticated, 
-    navigateToAuth, isNavigating, inAuthGroup, hideLoadingWithDelay
+    redirectIfUnauthenticated, navigateToDashboard, 
+    navigateToLogin, isNavigating, inAuthGroup, hideLoadingWithDelay
   ]);
 
   // Debug-Informationen in der Entwicklung anzeigen

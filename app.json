@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "design-only",
-    "slug": "design-only",
+    "name": "Frontend5",
+    "slug": "Frontend5",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
@@ -16,24 +16,24 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.designonly"
+      "bundleIdentifier": "com.anonymous.Frontend5"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.designonly"
+      "package": "com.anonymous.Frontend5"
     },
     "web": {
       "favicon": "./assets/logo.png"
     },
     "extra": {
       "eas": {
-        "projectId": "design-only"
+        "projectId": "Frontend5"
       }
     },
-    "scheme": "com.anonymous.designonly",
+    "scheme": "com.anonymous.Frontend5",
     "jsEngine": "hermes",
     "fonts": [
       {

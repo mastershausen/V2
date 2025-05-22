@@ -7,7 +7,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>design-only</string>
+    <string>Frontend5</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -27,7 +27,8 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.anonymous.designonly</string>
+          <string>com.anonymous.Frontend5</string>
+          <string>com.anonymous.Frontend5</string>
         </array>
       </dict>
     </array>
@@ -45,15 +46,11 @@
       <true/>
     </dict>
     <key>NSCameraUsageDescription</key>
-    <string>Diese App benötigt Zugriff auf Ihre Kamera, um Fotos für Ihr Profil aufzunehmen.</string>
+    <string>Allow $(PRODUCT_NAME) to access your camera</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>Allow $(PRODUCT_NAME) to access your microphone</string>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>Diese App benötigt Zugriff auf Ihre Fotos, um Bilder für Ihr Profil auszuwählen.</string>
-    <key>NSUserActivityTypes</key>
-    <array>
-      <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
-    </array>
+    <string>Allow $(PRODUCT_NAME) to access your photos</string>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
     <key>UIRequiredDeviceCapabilities</key>

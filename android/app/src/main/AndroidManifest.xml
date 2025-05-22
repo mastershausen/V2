@@ -30,6 +30,7 @@
         <data android:scheme="myapp"/>
         <data android:scheme="com.anonymous.Frontend5"/>
         <data android:scheme="com.anonymous.designonly"/>
+        <data android:scheme="com.anonymous.Frontend5"/>
       </intent-filter>
     </activity>
   </application>
