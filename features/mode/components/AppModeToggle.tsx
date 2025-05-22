@@ -83,11 +83,11 @@ export function AppModeToggle({
       color: colors.error
     },
     modeBadge: {
-      color: isCurrentlyDemoMode ? colors.primary : colors.success, // Verwende Primärfarbe für Demo und Success für Live
+      color: isCurrentlyDemoMode ? colors.primary : colors.primary, // Verwende Primärfarbe für Demo und Success für Live
       fontWeight: 'bold' as TextStyle['fontWeight'],
-      backgroundColor: isCurrentlyDemoMode ? `${colors.primary}60` : `${colors.success}60`, // 60% Opacity für maximalen Kontrast
+      backgroundColor: isCurrentlyDemoMode ? `${colors.primary}60` : `${colors.primary}60`, // 60% Opacity für maximalen Kontrast
       borderWidth: 1.5, // Dickerer Rahmen für mehr Sichtbarkeit
-      borderColor: isCurrentlyDemoMode ? colors.primary : colors.success,
+      borderColor: isCurrentlyDemoMode ? colors.primary : colors.primary,
       borderRadius: 16,
       overflow: 'hidden' as const,
       paddingHorizontal: 12,

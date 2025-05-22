@@ -293,7 +293,7 @@ export default function ChatDetailScreen() {
             <View style={[
               styles.messageBubble,
               isUser 
-                ? [styles.userBubble, { backgroundColor: colors.secondary }] 
+                ? [styles.userBubble, { backgroundColor: colors.primary }] 
                 : [styles.botBubble, { backgroundColor: colors.divider + '30' }]
             ]}>
               <Text style={[
@@ -378,7 +378,7 @@ export default function ChatDetailScreen() {
             {chat.isSolvboxChat ? (
               <Image source={solvboxAvatar} style={styles.headerAvatarImage} />
             ) : (
-              <View style={[styles.headerAvatar, { backgroundColor: colors.secondary }]}>
+              <View style={[styles.headerAvatar, { backgroundColor: colors.primary }]}>
                 <Ionicons name="person-outline" size={20} color="white" />
               </View>
             )}
@@ -420,7 +420,7 @@ export default function ChatDetailScreen() {
                   {chat.isSolvboxChat ? (
                     <Image source={solvboxAvatar} style={styles.chatStartAvatarImage} />
                   ) : (
-                    <View style={[styles.chatStartAvatar, { backgroundColor: colors.secondary }]}>
+                    <View style={[styles.chatStartAvatar, { backgroundColor: colors.primary }]}>
                       <Ionicons name="person-outline" size={28} color="white" />
                     </View>
                   )}

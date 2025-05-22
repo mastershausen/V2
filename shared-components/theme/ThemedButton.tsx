@@ -115,7 +115,7 @@ export function ThemedButton({
   } else {
     switch (variant) {
       case 'secondary':
-        backgroundColor = colors.secondary;
+        backgroundColor = colors.primary;
         break;
       case 'outline':
         backgroundColor = 'transparent';

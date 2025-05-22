@@ -100,7 +100,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
               <View style={styles.section}>
                 <View style={styles.sectionHeader}>
                   <View style={styles.iconContainer}>
-                    <Ionicons name="document-text-outline" size={20} color="#63C0C8" />
+                    <Ionicons name="document-text-outline" size={20} color="#1E6B55" />
                   </View>
                   <Text style={styles.sectionTitle}>Context</Text>
                 </View>
@@ -112,7 +112,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
               <View style={styles.section}>
                 <View style={styles.sectionHeader}>
                   <View style={styles.iconContainer}>
-                    <Ionicons name="cog-outline" size={20} color="#63C0C8" />
+                    <Ionicons name="cog-outline" size={20} color="#1E6B55" />
                   </View>
                   <Text style={styles.sectionTitle}>Action</Text>
                 </View>
@@ -124,7 +124,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
               <View style={styles.section}>
                 <View style={styles.sectionHeader}>
                   <View style={styles.iconContainer}>
-                    <Ionicons name="trophy-outline" size={20} color="#63C0C8" />
+                    <Ionicons name="trophy-outline" size={20} color="#1E6B55" />
                   </View>
                   <Text style={styles.sectionTitle}>Result</Text>
                 </View>
@@ -135,7 +135,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                     {fallstudie.result.bulletpoints.map((point, index) => (
                       <View key={index} style={styles.bulletpointItem}>
                         <LinearGradient
-                          colors={['#63C0C8', '#4FA4AC']}
+                          colors={['#1E6B55', '#15503F']}
                           style={styles.bulletGradient}
                           start={{ x: 0, y: 0 }}
                           end={{ x: 1, y: 1 }}
@@ -153,41 +153,41 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
               {fallstudie.anbieter && (
                 <View style={styles.anbieterSection}>
                   <LinearGradient
-                    colors={['rgba(99, 192, 200, 0.1)', 'rgba(99, 192, 200, 0.05)']}
+                    colors={['rgba(30, 107, 85, 0.1)', 'rgba(30, 107, 85, 0.05)']}
                     style={styles.anbieterGradient}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
                   >
                     <View style={styles.anbieterHeader}>
-                      <Ionicons name="business-outline" size={18} color="#63C0C8" />
+                      <Ionicons name="business-outline" size={18} color="#1E6B55" />
                       <Text style={styles.anbieterName}>{fallstudie.anbieter.name}</Text>
                     </View>
                     
                     <View style={styles.anbieterDetails}>
                       {fallstudie.anbieter.erfahrung && (
                         <View style={styles.anbieterItem}>
-                          <Ionicons name="time-outline" size={16} color="#63C0C8" style={styles.anbieterIcon} />
+                          <Ionicons name="time-outline" size={16} color="#1E6B55" style={styles.anbieterIcon} />
                           <Text style={styles.anbieterText}>{fallstudie.anbieter.erfahrung}</Text>
                         </View>
                       )}
                       
                       {fallstudie.anbieter.erfolgsrate && (
                         <View style={styles.anbieterItem}>
-                          <Ionicons name="trending-up-outline" size={16} color="#63C0C8" style={styles.anbieterIcon} />
+                          <Ionicons name="trending-up-outline" size={16} color="#1E6B55" style={styles.anbieterIcon} />
                           <Text style={styles.anbieterText}>{fallstudie.anbieter.erfolgsrate}</Text>
                         </View>
                       )}
                       
                       {fallstudie.anbieter.kontakt?.email && (
                         <View style={styles.anbieterItem}>
-                          <Ionicons name="mail-outline" size={16} color="#63C0C8" style={styles.anbieterIcon} />
+                          <Ionicons name="mail-outline" size={16} color="#1E6B55" style={styles.anbieterIcon} />
                           <Text style={styles.anbieterText}>{fallstudie.anbieter.kontakt.email}</Text>
                         </View>
                       )}
                       
                       {fallstudie.anbieter.kontakt?.telefon && (
                         <View style={styles.anbieterItem}>
-                          <Ionicons name="call-outline" size={16} color="#63C0C8" style={styles.anbieterIcon} />
+                          <Ionicons name="call-outline" size={16} color="#1E6B55" style={styles.anbieterIcon} />
                           <Text style={styles.anbieterText}>{fallstudie.anbieter.kontakt.telefon}</Text>
                         </View>
                       )}
@@ -216,7 +216,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                 }}
               >
                 <LinearGradient
-                  colors={['#63C0C8', '#4FA4AC']}
+                  colors={['#1E6B55', '#15503F']}
                   style={styles.buttonGradient}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
   },
   accentLine: {
     width: 3,
-    backgroundColor: '#63C0C8',
+    backgroundColor: '#1E6B55',
     borderRadius: 2,
     marginRight: 12,
   },
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingBottom: 12,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(99, 192, 200, 0.1)',
+    borderBottomColor: 'rgba(30, 107, 85, 0.1)',
   },
   anbieterName: {
     fontSize: 16,

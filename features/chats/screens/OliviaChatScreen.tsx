@@ -493,7 +493,7 @@ export default function OliviaChatScreen() {
               style={[styles.linkContainer]}
               onPress={() => Linking.openURL(item.link || '')}
             >
-              <Text style={[styles.linkText, { color: '#63C0C8' }]}>
+              <Text style={[styles.linkText, { color: '#1E6B55' }]}>
                 {item.link}
               </Text>
             </TouchableOpacity>
@@ -584,9 +584,9 @@ export default function OliviaChatScreen() {
           styles.typingBubble,
           { backgroundColor: '#1F3949' }
         ]}>
-          <Animated.View style={[styles.typingDot, { opacity: typingDots, backgroundColor: '#63C0C8' }]} />
-          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#63C0C8' }]} />
-          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#63C0C8' }]} />
+          <Animated.View style={[styles.typingDot, { opacity: typingDots, backgroundColor: '#1E6B55' }]} />
+          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#1E6B55' }]} />
+          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#1E6B55' }]} />
         </View>
       </View>
     );
@@ -637,7 +637,7 @@ export default function OliviaChatScreen() {
               <Text style={[styles.solvboxHeaderSignature, { color: '#F1F5F9' }]}>
                 Auf eine gute Zusammenarbeit!
               </Text>
-              <View style={[styles.solvboxHeaderDivider, { backgroundColor: '#63C0C8' }]} />
+              <View style={[styles.solvboxHeaderDivider, { backgroundColor: '#1E6B55' }]} />
             </View>
           </View>
         </View>
@@ -870,7 +870,7 @@ const styles = StyleSheet.create({
   },
   fallstudieItem: {
     marginBottom: 12,
-    backgroundColor: 'rgba(99, 192, 200, 0.1)',
+    backgroundColor: 'rgba(30, 107, 85, 0.1)',
     borderRadius: 8,
     padding: 12,
   },
@@ -895,7 +895,7 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-    backgroundColor: 'rgba(99, 192, 200, 0.5)',
+    backgroundColor: 'rgba(30, 107, 85, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 8,

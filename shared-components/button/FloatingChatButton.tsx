@@ -31,7 +31,7 @@ export function FloatingChatButton({
   
   // Berechne Hex-Alpha-Wert basierend auf dem Opacity-Parameter
   const alphaHex = Math.round(opacity * 255).toString(16).padStart(2, '0').toUpperCase();
-  const backgroundColor = `${colors.secondary}${alphaHex}`;
+  const backgroundColor = `${colors.primary}${alphaHex}`;
   
   // Immer weißes Icon mit leichter Transparenz
   // Hier setzen wir die Farbe fest auf Weiß, unabhängig von der übergebenen iconColor
@@ -43,7 +43,7 @@ export function FloatingChatButton({
         styles.chatButton, 
         { 
           backgroundColor,
-          borderColor: colors.secondary,
+          borderColor: colors.primary,
           borderWidth: 1.5
         }, 
         style
