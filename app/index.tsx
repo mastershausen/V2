@@ -34,13 +34,13 @@ export default function Index() {
         // Versuche mit einer kurzen Verzögerung, um sicherzustellen,
         // dass alle Zustandsänderungen durchgeführt wurden
         setTimeout(() => {
-          // Direkt zur Olivia-Assistent-Seite navigieren
-          router.replace('/chats/olivia-assistent');
+          // Direkt zur Olivia-Seite navigieren
+          router.replace('/chats/olivia');
           
           // DEBUG: Zeige Hinweis nach der Navigation
           if (__DEV__) {
             setTimeout(() => {
-              Alert.alert('Debug', 'Navigation zur Olivia-Assistent wurde ausgelöst. Sind wir angekommen?');
+              Alert.alert('Debug', 'Navigation zur Olivia wurde ausgelöst. Sind wir angekommen?');
             }, 500);
           }
         }, 100);

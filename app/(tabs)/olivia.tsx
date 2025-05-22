@@ -10,7 +10,7 @@ export default function OliviaScreen() {
   
   return (
     <View style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
-      <Text style={{ color: colors.textPrimary }}>Olivia-Assistent</Text>
+      <Text style={{ color: colors.textPrimary }}>Olivia</Text>
     </View>
   );
 }

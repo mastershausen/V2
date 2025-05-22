@@ -83,7 +83,7 @@ export default function OliviaChatScreen() {
   useEffect(() => {
     setTimeout(() => {
       flatListRef.current?.scrollToEnd({ animated: true });
-    }, 100);
+    }, 300); // Mehr Verzögerung für sanfteres Scrollen
   }, [chat.messages]);
 
   // Nachricht senden
@@ -247,6 +247,45 @@ export default function OliviaChatScreen() {
     ]);
   }, [groupMessagesByDate, renderDateSeparator, renderMessage]);
 
+  // Header und Nachrichten zusammen rendern
+  const renderHeaderAndMessages = useCallback(() => {
+    return (
+      <View style={styles.messagesContainer}>
+        {/* Solvbox-Style Header als Teil des scrollbaren Inhalts */}
+        <View style={[styles.solvboxHeaderContainer, chat.messages.length === 1 ? styles.solvboxHeaderContainerNoChat : null]}>
+          <LinearGradient
+            colors={[
+              'rgba(0, 170, 110, 0.25)', 
+              'rgba(0, 170, 110, 0.15)', 
+              'rgba(0, 170, 110, 0.05)', 
+              'rgba(0, 170, 110, 0)'
+            ]}
+            locations={[0, 0.3, 0.6, 0.9]}
+            start={{ x: 0.5, y: 0 }}
+            end={{ x: 0.5, y: 1 }}
+            style={styles.solvboxHeaderGradient}
+          >
+            <View style={styles.solvboxLogoContainer}>
+              <Image source={oliviaAvatar} style={styles.solvboxLogo} />
+            </View>
+            <View style={styles.solvboxTextContainer}>
+              <Text style={[styles.solvboxHeaderTitle, { color: colors.textPrimary }]}>
+                Olivia
+              </Text>
+              <Text style={[styles.solvboxHeaderSubtitle, { color: colors.textSecondary }]}>
+                Ihr persönlicher Assistent
+              </Text>
+              <View style={styles.solvboxHeaderDivider} />
+            </View>
+          </LinearGradient>
+        </View>
+        
+        {/* Chat-Nachrichten */}
+        {renderGroupedMessages()}
+      </View>
+    );
+  }, [colors, renderGroupedMessages, chat.messages.length]);
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <StatusBar barStyle="dark-content" />
@@ -262,7 +301,7 @@ export default function OliviaChatScreen() {
           </View>
           <View>
             <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
-              Olivia-Assistent
+              Olivia
             </Text>
             <Text style={[styles.headerSubtitle, { color: colors.textSecondary }]}>
               Online
@@ -274,27 +313,12 @@ export default function OliviaChatScreen() {
         </TouchableOpacity>
       </View>
       
-      {/* Assistenten-Info-Banner */}
-      <View style={[styles.assistantBanner, { backgroundColor: colors.success + '20' }]}>
-        <View style={styles.assistantLogoContainer}>
-          <Image source={oliviaAvatar} style={styles.assistantLogo} />
-        </View>
-        <View>
-          <Text style={[styles.assistantTitle, { color: colors.textPrimary }]}>
-            Olivia-Assistent
-          </Text>
-          <Text style={[styles.assistantSubtitle, { color: colors.textSecondary }]}>
-            Ihr persönlicher Assistent für Unternehmensberatung und Problemlösungen.
-          </Text>
-        </View>
-      </View>
-      
       {/* Chat-Nachrichten */}
       <FlatList
         ref={flatListRef}
         data={[]} // Leere Daten, da wir einen benutzerdefinierten Renderer verwenden
         renderItem={() => null}
-        ListHeaderComponent={<View style={styles.messagesContainer}>{renderGroupedMessages()}</View>}
+        ListHeaderComponent={renderHeaderAndMessages()}
         ListFooterComponent={renderTypingIndicator()}
         style={styles.chatList}
         contentContainerStyle={styles.chatContent}
@@ -310,7 +334,7 @@ export default function OliviaChatScreen() {
         <View style={[styles.inputWrapper, { backgroundColor: colors.backgroundSecondary }]}>
           <TextInput
             style={[styles.input, { color: colors.textPrimary }]}
-            placeholder="Nachricht an Olivia-Assistent..."
+            placeholder="Nachricht an Olivia..."
             placeholderTextColor={colors.textTertiary}
             value={message}
             onChangeText={setMessage}
@@ -398,9 +422,11 @@ const styles = StyleSheet.create({
   chatContent: {
     paddingHorizontal: spacing.m,
     paddingBottom: spacing.m,
+    flexGrow: 1, // Wichtig, damit der Inhalt den verfügbaren Platz einnimmt
   },
   messagesContainer: {
     paddingBottom: spacing.s,
+    minHeight: '100%', // Stellt sicher, dass der Container die volle Höhe einnimmt
   },
   dateSeparator: {
     alignItems: 'center',
@@ -507,5 +533,61 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: spacing.s,
     marginBottom: 2,
+  },
+  solvboxHeaderContainer: {
+    width: '100%',
+    overflow: 'hidden',
+    marginBottom: spacing.m,
+  },
+  solvboxHeaderContainerNoChat: {
+    marginBottom: spacing.xl * 2, // Mehr Abstand wenn keine Chat-Nachrichten vorhanden sind
+    paddingBottom: spacing.xl,
+  },
+  solvboxHeaderGradient: {
+    paddingTop: spacing.xl * 1.5,
+    paddingBottom: spacing.xl * 2,
+    alignItems: 'center',
+  },
+  solvboxLogoContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: spacing.m,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  solvboxLogo: {
+    width: 68,
+    height: 68,
+    borderRadius: 34,
+  },
+  solvboxTextContainer: {
+    alignItems: 'center',
+    paddingHorizontal: spacing.xl,
+  },
+  solvboxHeaderTitle: {
+    fontSize: typography.fontSize.xl,
+    fontWeight: typography.fontWeight.bold as any,
+    marginTop: spacing.s,
+    textAlign: 'center',
+  },
+  solvboxHeaderSubtitle: {
+    fontSize: typography.fontSize.m,
+    marginTop: spacing.xs,
+    marginBottom: spacing.s,
+    textAlign: 'center',
+  },
+  solvboxHeaderDivider: {
+    width: 40,
+    height: 3,
+    backgroundColor: 'rgba(0, 170, 110, 0.7)',
+    borderRadius: 1.5,
+    marginTop: spacing.xs,
   },
 }); 

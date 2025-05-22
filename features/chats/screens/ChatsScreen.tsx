@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -130,7 +131,14 @@ export default function ChatsScreen() {
   // Navigiert zum einzelnen Chat
   const handleChatPress = (contact: (typeof FIXED_CHATS)[0]) => {
     console.log(`Chat mit ${contact.name} öffnen`);
-    // Die Navigation zum Chat-Detail-Screen
+    
+    // Für Olivia direkt zum OliviaChatScreen navigieren
+    if (contact.name === 'Olivia') {
+      router.push('/chats/olivia');
+      return;
+    }
+    
+    // Für alle anderen Chats zum regulären ChatDetailScreen navigieren
     router.push({
       pathname: `/chats/${contact.id}`,
       params: { name: contact.name }
@@ -139,12 +147,23 @@ export default function ChatsScreen() {
 
   // Rendert einen Chat-Kontakt
   const renderChatContact = ({ item }: { item: (typeof FIXED_CHATS)[0] }) => {
+    const isOliviaChat = item.name === 'Olivia';
+    
     return (
       <TouchableOpacity
         style={[styles.contactItem, { borderBottomColor: colors.divider }]}
         onPress={() => handleChatPress(item)}
         activeOpacity={0.7}
       >
+        {isOliviaChat && (
+          <LinearGradient
+            colors={['rgba(0, 122, 255, 0.2)', 'rgba(0, 122, 255, 0.05)', 'rgba(0, 122, 255, 0)']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0.7, y: 0 }}
+            style={styles.highlightGradient}
+          />
+        )}
+        
         {/* Avatar */}
         <View style={styles.avatarContainer}>
           {item.isFixed ? (
@@ -382,6 +401,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.m,
     paddingVertical: spacing.m,
     borderBottomWidth: StyleSheet.hairlineWidth,
+    position: 'relative',
+  },
+  highlightGradient: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: '100%',
+    zIndex: -1,
   },
   avatarContainer: {
     width: 50,
