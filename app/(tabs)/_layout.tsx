@@ -194,18 +194,9 @@ export default function TabLayout() {
         <Tabs.Screen
           name="mysolvbox"
           options={{
-            title: 'MySolvbox',
+            title: 'Explore',
             tabBarIcon: ({ color }) => (
-              <BottomTabIcon name="folder" color={color} size={26} />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="solvboxai"
-          options={{
-            title: 'SolvboxAI',
-            tabBarIcon: ({ color }) => (
-              <BottomTabIcon name="ai" color={color} size={26} />
+              <BottomTabIcon name="search" color={color} size={26} />
             ),
           }}
         />
