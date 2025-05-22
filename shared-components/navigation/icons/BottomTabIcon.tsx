@@ -5,7 +5,7 @@ import { View, StyleProp, ViewStyle } from 'react-native';
 import { ui } from '@/config/theme/ui';
 
 interface BottomTabIconProps {
-  name: 'home' | 'folder' | 'chat' | 'ai';
+  name: 'home' | 'folder' | 'chat' | 'ai' | 'settings';
   color: string;
   size?: number;
   style?: StyleProp<ViewStyle>;
@@ -25,6 +25,8 @@ const getIconName = (name: BottomTabIconProps['name']): keyof typeof Ionicons.gl
       return 'chatbubble';
     case 'ai':
       return 'hardware-chip';
+    case 'settings':
+      return 'settings';
     default:
       return 'help-circle';
   }

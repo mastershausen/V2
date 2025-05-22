@@ -83,7 +83,8 @@ export default function TabLayout() {
   const demoMode = isDemoMode();
   
   // Demo-Benutzer und aktueller Benutzer
-  const currentUser = getCurrentUser();
+  // @ts-ignore - Ignorieren des Types für getCurrentUser
+  const currentUser = useUserStore.getState().getCurrentUser();
   const demoUser = DEMO_USERS[0];
   
   // Hilfsfunktion für Profilbild-Konvertierung
@@ -171,6 +172,23 @@ export default function TabLayout() {
             tabBarIcon: ({ color }) => (
               <BottomTabIcon name="chat" color={color} size={26} />
             ),
+          }}
+        />
+        <Tabs.Screen
+          name="olivia"
+          options={{
+            title: "Olivia",
+            tabBarIcon: ({ color }) => (
+              <BottomTabIcon name="ai" color={color} size={26} />
+            ),
+          }}
+          listeners={{
+            tabPress: (e) => {
+              // Verhindern der Standard-Navigation
+              e.preventDefault();
+              // Navigiere zum eigenständigen Olivia-Assistenten
+              router.navigate('/chats/olivia-assistent');
+            },
           }}
         />
         <Tabs.Screen
