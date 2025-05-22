@@ -269,9 +269,7 @@ export default function OliviaChatScreen() {
           
           {/* Inhalt-Container, der unabhängig vom Gradient zentriert ist */}
           <View style={styles.solvboxContentContainer}>
-            <View style={styles.solvboxLogoContainer}>
-              <Image source={oliviaAvatar} style={styles.solvboxLogo} />
-            </View>
+            <Image source={oliviaAvatar} style={styles.solvboxLogo} />
             <View style={styles.solvboxTextContainer}>
               <Text style={[styles.solvboxHeaderTitle, { color: colors.textPrimary }]}>
                 Olivia
@@ -561,29 +559,15 @@ const styles = StyleSheet.create({
     width: '150%', // Deutlich breiter als der Bildschirm
   },
   solvboxContentContainer: {
-    paddingTop: spacing.xl * 1.5,
+    paddingTop: spacing.xl * 0.8, // Reduziertes Padding oben, damit das Icon höher erscheint
     paddingBottom: spacing.xl * 2,
     alignItems: 'center',
     zIndex: 1, // Stellt sicher, dass der Inhalt über dem Gradient liegt
   },
-  solvboxLogoContainer: {
+  solvboxLogo: {
     width: 80,
     height: 80,
-    borderRadius: 40,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
     marginBottom: spacing.m,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 4,
-  },
-  solvboxLogo: {
-    width: 68,
-    height: 68,
-    borderRadius: 34,
   },
   solvboxTextContainer: {
     alignItems: 'center',
