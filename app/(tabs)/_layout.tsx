@@ -187,7 +187,7 @@ export default function TabLayout() {
               // Verhindern der Standard-Navigation
               e.preventDefault();
               // Navigiere zum eigenständigen Olivia-Assistenten
-              router.navigate('/chats/olivia-assistent');
+              router.navigate('/chats/olivia');
             },
           }}
         />

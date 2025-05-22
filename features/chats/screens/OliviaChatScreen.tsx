@@ -29,9 +29,9 @@ import { logger } from '@/utils/logger';
 const oliviaAvatar = require('@/assets/small rounded Icon.png') as ImageSourcePropType;
 
 /**
- * Olivia Chat Screen - Eigenständige Komponente für den Solvbox-Assistent-Chat
+ * Olivia Chat Screen - Eigenständige Komponente für den Olivia-Chatbot
  * 
- * Diese Komponente implementiert einen spezialisierten Chat mit dem Olivia-Assistenten
+ * Diese Komponente implementiert einen spezialisierten Chat mit Olivia
  * und bietet eine maßgeschneiderte Benutzeroberfläche und Interaktion.
  */
 export default function OliviaChatScreen() {
@@ -45,11 +45,11 @@ export default function OliviaChatScreen() {
   // Mock-Daten für den Olivia-Chat
   const [chat, setChat] = useState({
     id: 'olivia-assistant',
-    name: 'Olivia-Assistent',
+    name: 'Olivia',
     messages: [
       {
         id: '1',
-        text: 'Hallo! Ich bin der Olivia-Assistent. Wie kann ich Ihnen heute helfen?',
+        text: 'Hallo! Ich bin Olivia. Wie kann ich Ihnen heute helfen?',
         time: '14:30',
         isUser: false,
         date: 'Heute'

@@ -28,34 +28,14 @@ const solvboxAvatar = require('@/assets/small rounded Icon.png') as ImageSourceP
 const FIXED_CHATS = [
   {
     id: '1',
-    name: 'Solvbox-Assistent',
+    name: 'Olivia',
     avatar: solvboxAvatar,
     isBot: true,
     lastMessage: 'Wie kann ich Ihnen heute helfen?',
     time: '14:30',
     unread: 1,
     isFixed: true,
-  },
-  {
-    id: '2',
-    name: 'Solvbox-Support',
-    avatar: solvboxAvatar, 
-    isBot: true,
-    lastMessage: 'Hallo! Bei Fragen oder Problemen mit der App bin ich für Sie da.',
-    time: 'Gestern',
-    unread: 0,
-    isFixed: true,
-  },
-  {
-    id: '3',
-    name: 'Solvbox-Feedback',
-    avatar: solvboxAvatar,
-    isBot: true, 
-    lastMessage: 'Teilen Sie Ihre Erfahrungen mit uns, um die App zu verbessern.',
-    time: 'Montag',
-    unread: 0,
-    isFixed: true,
-  },
+  }
 ];
 
 // Mock-Daten für reguläre Chat-Kontakte

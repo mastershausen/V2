@@ -5,12 +5,12 @@ import { StatusBar } from 'expo-status-bar';
 import OliviaChatScreen from '@/features/chats/screens/OliviaChatScreen';
 
 /**
- * Olivia-Assistent Chat
+ * Olivia Chat
  * 
- * Diese Seite zeigt den Chat mit dem Olivia-Assistenten an,
+ * Diese Seite zeigt den Chat mit Olivia an,
  * der eine eigenständige Komponente ist, ohne BottomTabbar.
  */
-export default function OliviaAssistentRoute() {
+export default function OliviaRoute() {
   return (
     <>
       <StatusBar style="dark" />
