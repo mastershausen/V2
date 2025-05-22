@@ -271,11 +271,11 @@ export default function OliviaChatScreen() {
           <View style={styles.solvboxContentContainer}>
             <Image source={oliviaAvatar} style={styles.solvboxLogo} />
             <View style={styles.solvboxTextContainer}>
-              <Text style={[styles.solvboxHeaderTitle, { color: colors.textPrimary }]}>
-                Olivia
-              </Text>
               <Text style={[styles.solvboxHeaderSubtitle, { color: colors.textSecondary }]}>
-                Ihr persönlicher Assistent
+                Ich bin Olivia und mein Job ist es neue Möglichkeiten zu entdecken, wie Sie Ihre Liquidität steigern können. Sollten Sie Fragen oder ungelöste Probleme in Ihrem Unternehmen haben bin ich immer für Sie da und suche innerhalb von wenigen Sekunden nach der besten Lösung.
+              </Text>
+              <Text style={[styles.solvboxHeaderSignature, { color: colors.textSecondary }]}>
+                Auf eine gute Zusammenarbeit!
               </Text>
               <View style={styles.solvboxHeaderDivider} />
             </View>
@@ -572,6 +572,7 @@ const styles = StyleSheet.create({
   solvboxTextContainer: {
     alignItems: 'center',
     paddingHorizontal: spacing.xl,
+    maxWidth: '90%',
   },
   solvboxHeaderTitle: {
     fontSize: typography.fontSize.xl,
@@ -580,10 +581,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   solvboxHeaderSubtitle: {
-    fontSize: typography.fontSize.m,
+    fontSize: typography.fontSize.s,
     marginTop: spacing.xs,
     marginBottom: spacing.s,
     textAlign: 'center',
+    lineHeight: 18,
+  },
+  solvboxHeaderSignature: {
+    fontSize: typography.fontSize.s,
+    fontWeight: typography.fontWeight.medium as any,
+    marginBottom: spacing.s,
+    textAlign: 'center',
+    fontStyle: 'italic',
   },
   solvboxHeaderDivider: {
     width: 40,
