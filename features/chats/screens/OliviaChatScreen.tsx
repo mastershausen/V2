@@ -253,6 +253,7 @@ export default function OliviaChatScreen() {
       <View style={styles.messagesContainer}>
         {/* Solvbox-Style Header als Teil des scrollbaren Inhalts */}
         <View style={[styles.solvboxHeaderContainer, chat.messages.length === 1 ? styles.solvboxHeaderContainerNoChat : null]}>
+          {/* Hintergrund-Gradient mit absoluter Positionierung */}
           <LinearGradient
             colors={[
               'rgba(0, 170, 110, 0.25)', 
@@ -264,7 +265,10 @@ export default function OliviaChatScreen() {
             start={{ x: 0.5, y: 0 }}
             end={{ x: 0.5, y: 1 }}
             style={styles.solvboxHeaderGradient}
-          >
+          />
+          
+          {/* Inhalt-Container, der unabhängig vom Gradient zentriert ist */}
+          <View style={styles.solvboxContentContainer}>
             <View style={styles.solvboxLogoContainer}>
               <Image source={oliviaAvatar} style={styles.solvboxLogo} />
             </View>
@@ -277,11 +281,13 @@ export default function OliviaChatScreen() {
               </Text>
               <View style={styles.solvboxHeaderDivider} />
             </View>
-          </LinearGradient>
+          </View>
         </View>
         
-        {/* Chat-Nachrichten */}
-        {renderGroupedMessages()}
+        {/* Chat-Nachrichten in einem Container mit Padding */}
+        <View style={styles.chatMessagesContainer}>
+          {renderGroupedMessages()}
+        </View>
       </View>
     );
   }, [colors, renderGroupedMessages, chat.messages.length]);
@@ -420,13 +426,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   chatContent: {
-    paddingHorizontal: spacing.m,
-    paddingBottom: spacing.m,
     flexGrow: 1, // Wichtig, damit der Inhalt den verfügbaren Platz einnimmt
+    paddingBottom: spacing.m,
   },
   messagesContainer: {
-    paddingBottom: spacing.s,
     minHeight: '100%', // Stellt sicher, dass der Container die volle Höhe einnimmt
+  },
+  chatMessagesContainer: {
+    paddingHorizontal: spacing.m, // Nur die Chat-Nachrichten bekommen horizontale Paddings
   },
   dateSeparator: {
     alignItems: 'center',
@@ -490,6 +497,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     marginBottom: spacing.s,
+    paddingHorizontal: spacing.m,
   },
   typingBubble: {
     flexDirection: 'row',
@@ -538,15 +546,25 @@ const styles = StyleSheet.create({
     width: '100%',
     overflow: 'hidden',
     marginBottom: spacing.m,
+    position: 'relative',
   },
   solvboxHeaderContainerNoChat: {
     marginBottom: spacing.xl * 2, // Mehr Abstand wenn keine Chat-Nachrichten vorhanden sind
     paddingBottom: spacing.xl,
   },
   solvboxHeaderGradient: {
+    position: 'absolute',
+    left: -spacing.m * 2, // Weit über den linken Rand hinaus
+    right: -spacing.m * 2, // Weit über den rechten Rand hinaus
+    top: 0,
+    bottom: 0,
+    width: '150%', // Deutlich breiter als der Bildschirm
+  },
+  solvboxContentContainer: {
     paddingTop: spacing.xl * 1.5,
     paddingBottom: spacing.xl * 2,
     alignItems: 'center',
+    zIndex: 1, // Stellt sicher, dass der Inhalt über dem Gradient liegt
   },
   solvboxLogoContainer: {
     width: 80,
