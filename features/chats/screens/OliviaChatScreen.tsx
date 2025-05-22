@@ -66,14 +66,14 @@ const OliviaChatGigCard = ({ gig, onPress }: { gig: GigData; onPress?: () => voi
           </Text>
           {/* Beschreibung (3 Zeilen) */}
           <Text 
-            style={[styles.customGigDescription, { color: '#000000' }]}
+            style={[styles.customGigDescription, { color: '#333333' }]}
             numberOfLines={3}
           >
             {gig.description}
           </Text>
           {/* Nur Preis anzeigen ohne Badge */}
           <View style={styles.customGigFooter}>
-            <Text style={[styles.customGigPrice, { color: '#7F00FF' }]}> 
+            <Text style={[styles.customGigPrice, { color: '#0075B0' }]}> 
               {gig.currency || '€'}{gig.price.toLocaleString('de-DE')}
             </Text>
             {/* Keine Badge hier - leer lassen */}
@@ -433,9 +433,9 @@ export default function OliviaChatScreen() {
                           chat.messages[index + 1].date !== item.date || 
                           chat.messages[index + 1].isUser !== item.isUser;
     
-    // EINHEITLICHE Textfarbe für alle Nachrichten
-    const textColor = '#000000';  // Schwarz für ALLE Texte
-    const timeColor = 'rgba(0, 0, 0, 0.5)';  // Transparentes Schwarz für alle Zeitstempel
+    // Einheitliche Textfarbe für alle Nachrichten
+    const textColor = '#FFFFFF';
+    const timeColor = 'rgba(255, 255, 255, 0.7)';
 
     // Wenn es sich um die letzte Nachricht von Olivia handelt, zeige die GigCards an
     if (item.id === '9' && !item.isUser) {
@@ -464,119 +464,66 @@ export default function OliviaChatScreen() {
             <Image source={oliviaAvatar} style={styles.avatar} />
           </View>
         )}
-        {item.isUser ? (
-          // Benutzer-Sprechblase mit hellerer Hintergrundfarbe für schwarzen Text
-          <LinearGradient
-            colors={['#E0B0FF', '#C8A2C8']} // Hellere Violett-Töne für schwarzen Text
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={[
-              styles.messageBubble,
-              styles.userBubble,
-              styles.iosBubbleShadow
-            ]}
-          >
-            <Text style={[
-              styles.messageText,
-              { color: textColor } // SCHWARZ für alle Texte
-            ]}>
-              {item.text}
-            </Text>
-            
-            {/* Anzeige von Bildern */}
-            {item.image && (
-              <View style={styles.attachmentContainer}>
-                <Image source={{ uri: item.image }} style={styles.attachedImage} />
-              </View>
-            )}
-            
-            {/* Anzeige von Links */}
-            {item.link && !item.text.includes(item.link) && (
-              <TouchableOpacity 
-                style={[styles.linkContainer]}
-                onPress={() => Linking.openURL(item.link || '')}
-              >
-                <Text style={[styles.linkText, { color: textColor }]}>
-                  {item.link}
-                </Text>
-              </TouchableOpacity>
-            )}
-            
-            <Text style={[
-              styles.timeText,
-              { color: timeColor } // Gleiche Zeitfarbe für alle
-            ]}>
-              {item.time}
-            </Text>
-          </LinearGradient>
-        ) : (
-          // Olivia-Sprechblase mit neutralem iOS-Stil
-          <View style={[
-            styles.messageBubble, 
-            styles.otherBubble,
-            styles.iosBubbleShadow,
-            { backgroundColor: '#F2F2F7' }  // Hellerer iOS-Grauton für bessere Lesbarkeit
+        <View style={[
+          styles.messageBubble,
+          item.isUser ? styles.userBubble : styles.otherBubble,
+          { backgroundColor: item.isUser ? 'rgba(44, 82, 130, 0.85)' : 'rgba(28, 52, 80, 0.85)' }
+        ]}>
+          <Text style={[
+            styles.messageText,
+            { color: textColor }
           ]}>
-            <Text style={[
-              styles.messageText,
-              { color: textColor } // SCHWARZ für alle Texte
-            ]}>
-              {item.text}
-            </Text>
-            
-            {/* Anzeige von Bildern */}
-            {item.image && (
-              <View style={styles.attachmentContainer}>
-                <Image source={{ uri: item.image }} style={styles.attachedImage} />
-              </View>
-            )}
-            
-            {/* Anzeige von Links */}
-            {item.link && !item.text.includes(item.link) && (
-              <TouchableOpacity 
-                style={[styles.linkContainer]}
-                onPress={() => Linking.openURL(item.link || '')}
-              >
-                <Text style={[styles.linkText, { color: '#7F00FF' }]}>
-                  {item.link}
-                </Text>
-              </TouchableOpacity>
-            )}
-            
-            <Text style={[
-              styles.timeText,
-              { color: timeColor } // Gleiche Zeitfarbe für alle
-            ]}>
-              {item.time}
-            </Text>
-          </View>
-        )}
+            {item.text}
+          </Text>
+          
+          {/* Anzeige von Bildern */}
+          {item.image && (
+            <View style={styles.attachmentContainer}>
+              <Image source={{ uri: item.image }} style={styles.attachedImage} />
+            </View>
+          )}
+          
+          {/* Anzeige von Links */}
+          {item.link && !item.text.includes(item.link) && (
+            <TouchableOpacity 
+              style={[styles.linkContainer]}
+              onPress={() => Linking.openURL(item.link || '')}
+            >
+              <Text style={[styles.linkText, { color: '#7AEEFF' }]}>
+                {item.link}
+              </Text>
+            </TouchableOpacity>
+          )}
+          
+          <Text style={[
+            styles.timeText,
+            { color: timeColor }
+          ]}>
+            {item.time}
+          </Text>
+        </View>
       </View>
     );
   }, []);
 
   // Nachricht mit GigCards anzeigen
   const renderMessageWithCards = (item: any, messageText: string) => {
-    const textColor = '#000000';  // Schwarz für ALLE Texte
-    const timeColor = 'rgba(0, 0, 0, 0.5)';  // Transparentes Schwarz für alle Zeitstempel
-    
     return (
       <View>
         <View style={[
           styles.messageBubble,
           styles.otherBubble,
-          styles.iosBubbleShadow,
-          { backgroundColor: '#F2F2F7' }  // Hellerer iOS-Grauton für bessere Lesbarkeit
+          { backgroundColor: 'rgba(28, 52, 80, 0.85)' }
         ]}>
           <Text style={[
             styles.messageText,
-            { color: textColor }
+            { color: '#FFFFFF' }
           ]}>
             {messageText}
           </Text>
           <Text style={[
             styles.timeText,
-            { color: timeColor }
+            { color: 'rgba(255, 255, 255, 0.7)' }
           ]}>
             {item.time}
           </Text>
@@ -615,12 +562,11 @@ export default function OliviaChatScreen() {
         </View>
         <View style={[
           styles.typingBubble,
-          styles.iosBubbleShadow,
-          { backgroundColor: '#F2F2F7' }  // Hellerer iOS-Grauton für bessere Lesbarkeit
+          { backgroundColor: 'rgba(28, 52, 80, 0.85)' }
         ]}>
-          <Animated.View style={[styles.typingDot, { opacity: typingDots, backgroundColor: '#7F00FF' }]} />
-          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#7F00FF' }]} />
-          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#7F00FF' }]} />
+          <Animated.View style={[styles.typingDot, { opacity: typingDots, backgroundColor: '#7AEEFF' }]} />
+          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#7AEEFF' }]} />
+          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#7AEEFF' }]} />
         </View>
       </View>
     );
@@ -665,13 +611,13 @@ export default function OliviaChatScreen() {
           <View style={styles.solvboxContentContainer}>
             <Image source={oliviaAvatar} style={styles.solvboxLogo} />
             <View style={styles.solvboxTextContainer}>
-              <Text style={[styles.solvboxHeaderSubtitle, { color: colors.textSecondary }]}>
+              <Text style={[styles.solvboxHeaderSubtitle, { color: '#FFFFFF' }]}>
                 Ich bin Olivia und mein Job ist es neue Möglichkeiten zu entdecken, wie Sie Ihre Liquidität steigern können. Sollten Sie Fragen oder ungelöste Probleme in Ihrem Unternehmen haben bin ich immer für Sie da und suche innerhalb von wenigen Sekunden nach der besten Lösung.
               </Text>
-              <Text style={[styles.solvboxHeaderSignature, { color: colors.textSecondary }]}>
+              <Text style={[styles.solvboxHeaderSignature, { color: '#FFFFFF' }]}>
                 Auf eine gute Zusammenarbeit!
               </Text>
-              <View style={[styles.solvboxHeaderDivider, { backgroundColor: colors.secondary }]} />
+              <View style={[styles.solvboxHeaderDivider, { backgroundColor: '#7AEEFF' }]} />
             </View>
           </View>
         </View>
@@ -788,9 +734,10 @@ export default function OliviaChatScreen() {
       
       {/* Futuristischer Gradient-Hintergrund */}
       <LinearGradient
-        colors={['#1E5B4E', '#1E4B5B', '#1E3B6B']}
+        colors={['#1E5B4E', '#1E4B5B', '#1E3B6B', '#0A1828']}
+        locations={[0, 0.3, 0.6, 1.0]}
         start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+        end={{ x: 0, y: 1 }}
         style={styles.backgroundGradient}
       />
       
@@ -808,7 +755,7 @@ export default function OliviaChatScreen() {
               <Text style={[styles.headerTitle, { color: '#FFFFFF' }]}>
                 Olivia
               </Text>
-              <Text style={[styles.headerSubtitle, { color: 'rgba(255, 255, 255, 0.7)' }]}>
+              <Text style={[styles.headerSubtitle, { color: 'rgba(255, 255, 255, 0.8)' }]}>
                 Online
               </Text>
             </View>
@@ -833,60 +780,45 @@ export default function OliviaChatScreen() {
         {/* Eingabebereich */}
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
-          style={[
-            styles.inputContainer,
-            {
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              borderTopWidth: 0,
-            }
-          ]}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
+          style={styles.keyboardView}
         >
           {renderAttachmentPreview()}
           {renderRecordingView()}
           
           {!isRecording && (
-            <View style={[
-              styles.inputWrapper, 
-              { 
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                borderWidth: 0,
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.1,
-                shadowRadius: 3,
-                elevation: 3,
-              }
-            ]}>
+            <View style={styles.inputContainer}>
               <TouchableOpacity 
                 style={styles.attachButton} 
                 onPress={() => setShowAttachmentMenu(true)}
               >
-                <Ionicons name="add-circle-outline" size={24} color="#FFFFFF" />
+                <Ionicons name="add-outline" size={20} color="rgba(255, 255, 255, 0.9)" />
               </TouchableOpacity>
               
-              <TextInput
-                style={[styles.input, { color: '#FFFFFF' }]}
-                placeholder="Nachricht an Olivia..."
-                placeholderTextColor="rgba(255, 255, 255, 0.6)"
-                value={message}
-                onChangeText={setMessage}
-                multiline
-              />
+              <View style={styles.inputFieldContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Nachricht an Olivia..."
+                  placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                  value={message}
+                  onChangeText={setMessage}
+                  multiline={false}
+                />
+              </View>
               
               {message.trim() || attachedImage || attachedLink ? (
                 <TouchableOpacity 
-                  style={[styles.sendButton, { backgroundColor: '#E0B0FF' }]} 
+                  style={styles.sendButton} 
                   onPress={handleSendMessage}
                 >
-                  <Ionicons name="send" size={18} color="#000000" />
+                  <Ionicons name="send" size={16} color="#FFFFFF" />
                 </TouchableOpacity>
               ) : (
                 <TouchableOpacity 
-                  style={[styles.voiceButton, { backgroundColor: '#E0B0FF' }]} 
+                  style={styles.voiceButton} 
                   onPress={handleVoiceInput}
                 >
-                  <Ionicons name="mic" size={18} color="#000000" />
+                  <Ionicons name="mic" size={16} color="#FFFFFF" />
                 </TouchableOpacity>
               )}
             </View>
@@ -1027,27 +959,24 @@ const styles = StyleSheet.create({
     borderRadius: 14,
   },
   messageBubble: {
-    borderRadius: ui.borderRadius.l,
-    padding: spacing.s,
+    borderRadius: 14,
+    padding: 10,
     marginBottom: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+    elevation: 3,
   },
   userBubble: {
     borderBottomRightRadius: 4,
-    overflow: 'hidden', // Wichtig für den Gradienten
   },
   otherBubble: {
     borderBottomLeftRadius: 4,
   },
-  iosBubbleShadow: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
-    elevation: 2,
-  },
   messageText: {
-    fontSize: typography.fontSize.m,
-    lineHeight: 20,
+    fontSize: 16,
+    lineHeight: 22,
     fontWeight: '400',
   },
   timeText: {
@@ -1065,60 +994,70 @@ const styles = StyleSheet.create({
   typingBubble: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: ui.borderRadius.l,
+    borderRadius: 14,
     borderBottomLeftRadius: 4,
     padding: spacing.s,
     height: 40,
     width: 60,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.15,
+    shadowRadius: 2,
+    elevation: 2,
   },
   typingDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#999',
+    backgroundColor: '#7AEEFF',
+  },
+  keyboardView: {
+    width: '100%',
+    marginTop: 'auto',
   },
   inputContainer: {
-    paddingHorizontal: spacing.m,
-    paddingBottom: spacing.m,
-    paddingTop: spacing.s,
-  },
-  inputWrapper: {
     flexDirection: 'row',
-    alignItems: 'flex-end',
-    borderRadius: ui.borderRadius.l,
-    paddingHorizontal: spacing.s,
-    paddingVertical: spacing.xs,
-    marginVertical: spacing.xs,
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  inputFieldContainer: {
+    flex: 1,
+    borderRadius: 18,
+    marginHorizontal: 8,
+    height: 36,
+    borderWidth: 0.5,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+    backgroundColor: 'rgba(10, 24, 40, 0.4)',
+    justifyContent: 'center',
   },
   input: {
-    flex: 1,
-    fontSize: typography.fontSize.m,
-    maxHeight: 100,
-    paddingTop: spacing.s,
-    paddingBottom: spacing.s,
+    color: '#FFFFFF',
+    fontSize: 15,
+    paddingHorizontal: 12,
+    paddingVertical: 0,
+    height: 36,
   },
   sendButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: spacing.s,
-    marginBottom: 2,
   },
   attachButton: {
-    padding: spacing.xs,
-    marginRight: spacing.xs,
-    marginBottom: 2,
-  },
-  voiceButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 28,
+    height: 28,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: spacing.s,
-    marginBottom: 2,
+  },
+  voiceButton: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   modalOverlay: {
     flex: 1,
@@ -1241,7 +1180,7 @@ const styles = StyleSheet.create({
   solvboxTextContainer: {
     alignItems: 'center',
     paddingHorizontal: spacing.xl,
-    maxWidth: '90%',
+    maxWidth: '92%',
   },
   solvboxHeaderTitle: {
     fontSize: typography.fontSize.xl,
@@ -1254,7 +1193,10 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
     marginBottom: spacing.s,
     textAlign: 'center',
-    lineHeight: 18,
+    lineHeight: 20,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   solvboxHeaderSignature: {
     fontSize: typography.fontSize.s,
@@ -1262,11 +1204,14 @@ const styles = StyleSheet.create({
     marginBottom: spacing.s,
     textAlign: 'center',
     fontStyle: 'italic',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   solvboxHeaderDivider: {
     width: 40,
     height: 3,
-    backgroundColor: 'rgba(41, 121, 255, 0.7)',
+    backgroundColor: '#7AEEFF',
     borderRadius: 1.5,
     marginTop: spacing.xs,
   },
@@ -1302,11 +1247,11 @@ const styles = StyleSheet.create({
     overflow: 'visible',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.2,
     shadowRadius: 8,
-    elevation: 6,
+    elevation: 8,
     borderWidth: 0.5,
-    borderColor: 'rgba(0, 0, 0, 0.05)',
+    borderColor: 'rgba(0, 0, 0, 0.1)',
     maxHeight: 130,
     minHeight: 130,
     marginBottom: spacing.m,
