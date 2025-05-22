@@ -65,6 +65,62 @@ export default function OliviaChatScreen() {
         time: '14:30',
         isUser: false,
         date: 'Heute'
+      },
+      {
+        id: '2',
+        text: 'Ich brauche kurzfristig einen Bauingenieur.',
+        time: '14:32',
+        isUser: true,
+        date: 'Heute'
+      },
+      {
+        id: '3',
+        text: 'Verstanden, Sie benötigen kurzfristig einen Bauingenieur. Um Ihnen bestmöglich helfen zu können, bräuchte ich noch einige Informationen:\n\n1. Handelt es sich um einen temporären oder langfristigen Bedarf?\n2. Für welche Art von Projekt benötigen Sie den Bauingenieur?\n3. Welche speziellen Qualifikationen sollte der Ingenieur mitbringen?\n4. In welchem Budgetrahmen bewegen wir uns?\n5. Bis wann wird der Ingenieur benötigt?',
+        time: '14:33',
+        isUser: false,
+        date: 'Heute'
+      },
+      {
+        id: '4',
+        text: 'Es ist ein temporärer Bedarf für ca. 3 Monate. Wir haben ein Sanierungsprojekt für ein Mehrfamilienhaus und brauchen jemanden mit Erfahrung in der Statik. Budget liegt bei max. 15.000€ pro Monat. Der Ingenieur sollte idealerweise nächste Woche anfangen können.',
+        time: '14:35',
+        isUser: true,
+        date: 'Heute'
+      },
+      {
+        id: '5',
+        text: 'Danke für die Informationen. Handelt es sich um ein Projekt in Deutschland? Und gibt es Präferenzen bezüglich der Arbeitsweise - remote, vor Ort oder hybrid?',
+        time: '14:36',
+        isUser: false,
+        date: 'Heute'
+      },
+      {
+        id: '6',
+        text: 'Ja, das Projekt ist in München. Wir benötigen jemanden, der mindestens 3 Tage pro Woche vor Ort sein kann. Die restliche Zeit kann remote gearbeitet werden.',
+        time: '14:37',
+        isUser: true,
+        date: 'Heute'
+      },
+      {
+        id: '7',
+        text: 'Soll der Bauingenieur als Freelancer oder als temporärer Angestellter eingestellt werden? Und haben Sie besondere Anforderungen an die Berufserfahrung?',
+        time: '14:38',
+        isUser: false,
+        date: 'Heute'
+      },
+      {
+        id: '8',
+        text: 'Freelancer wäre bevorzugt. Die Person sollte mindestens 5 Jahre Berufserfahrung haben, idealerweise mit ähnlichen Sanierungsprojekten.',
+        time: '14:39',
+        isUser: true,
+        date: 'Heute'
+      },
+      {
+        id: '9',
+        text: 'Sehr gut. Ich habe jetzt alle Infos, die ich brauche. Ich habe drei Fallstudien gefunden, die perfekt zu Ihrer aktuellen Situation passen. Wählen Sie eine aus:',
+        time: '14:40',
+        isUser: false,
+        date: 'Heute'
       }
     ]
   });
@@ -315,7 +371,7 @@ export default function OliviaChatScreen() {
         <View style={[
           styles.messageBubble,
           item.isUser ? 
-            [styles.userBubble, { backgroundColor: colors.primary }] : 
+            [styles.userBubble, { backgroundColor: colors.secondary }] : 
             [styles.otherBubble, { backgroundColor: colors.backgroundSecondary }]
         ]}>
           <Text style={[
@@ -338,7 +394,7 @@ export default function OliviaChatScreen() {
               style={[styles.linkContainer]}
               onPress={() => Linking.openURL(item.link || '')}
             >
-              <Text style={[styles.linkText, { color: item.isUser ? '#FFFFFF' : colors.primary }]}>
+              <Text style={[styles.linkText, { color: item.isUser ? '#FFFFFF' : colors.secondary }]}>
                 {item.link}
               </Text>
             </TouchableOpacity>
@@ -409,10 +465,10 @@ export default function OliviaChatScreen() {
           {/* Hintergrund-Gradient mit absoluter Positionierung */}
           <LinearGradient
             colors={[
-              'rgba(41, 121, 255, 0.25)', 
-              'rgba(41, 121, 255, 0.15)', 
-              'rgba(41, 121, 255, 0.05)', 
-              'rgba(41, 121, 255, 0)'
+              'rgba(52, 199, 89, 0.25)', 
+              'rgba(52, 199, 89, 0.15)', 
+              'rgba(52, 199, 89, 0.05)', 
+              'rgba(52, 199, 89, 0)'
             ]}
             locations={[0, 0.3, 0.6, 0.9]}
             start={{ x: 0.5, y: 0 }}
@@ -430,7 +486,7 @@ export default function OliviaChatScreen() {
               <Text style={[styles.solvboxHeaderSignature, { color: colors.textSecondary }]}>
                 Auf eine gute Zusammenarbeit!
               </Text>
-              <View style={[styles.solvboxHeaderDivider, { backgroundColor: 'rgba(41, 121, 255, 0.7)' }]} />
+              <View style={[styles.solvboxHeaderDivider, { backgroundColor: colors.secondary }]} />
             </View>
           </View>
         </View>
@@ -506,8 +562,8 @@ export default function OliviaChatScreen() {
         {attachedLink && (
           <View style={styles.previewItem}>
             <View style={styles.linkPreview}>
-              <Ionicons name="link-outline" size={20} color={colors.primary} />
-              <Text style={[styles.linkPreviewText, { color: colors.primary }]} numberOfLines={1}>
+              <Ionicons name="link-outline" size={20} color={colors.secondary} />
+              <Text style={[styles.linkPreviewText, { color: colors.secondary }]} numberOfLines={1}>
                 {attachedLink}
               </Text>
             </View>
@@ -548,7 +604,7 @@ export default function OliviaChatScreen() {
       {/* Header */}
       <View style={[styles.header, { borderBottomColor: colors.divider }]}>
         <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-          <Ionicons name="chevron-back" size={24} color={colors.primary} />
+          <Ionicons name="chevron-back" size={24} color={colors.secondary} />
         </TouchableOpacity>
         <View style={styles.headerTitleContainer}>
           <View style={styles.chatAvatarContainer}>
@@ -628,14 +684,14 @@ export default function OliviaChatScreen() {
             
             {message.trim() || attachedImage || attachedLink ? (
               <TouchableOpacity 
-                style={[styles.sendButton, { backgroundColor: colors.primary }]} 
+                style={[styles.sendButton, { backgroundColor: colors.secondary }]} 
                 onPress={handleSendMessage}
               >
                 <Ionicons name="send" size={18} color="#FFFFFF" />
               </TouchableOpacity>
             ) : (
               <TouchableOpacity 
-                style={[styles.voiceButton, { backgroundColor: colors.primary }]} 
+                style={[styles.voiceButton, { backgroundColor: colors.secondary }]} 
                 onPress={handleVoiceInput}
               >
                 <Ionicons name="mic" size={18} color="#FFFFFF" />

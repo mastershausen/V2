@@ -157,7 +157,7 @@ export default function ChatsScreen() {
       >
         {isOliviaChat && (
           <LinearGradient
-            colors={['rgba(0, 122, 255, 0.2)', 'rgba(0, 122, 255, 0.05)', 'rgba(0, 122, 255, 0)']}
+            colors={['rgba(52, 199, 89, 0.2)', 'rgba(52, 199, 89, 0.05)', 'rgba(52, 199, 89, 0)']}
             start={{ x: 0, y: 0 }}
             end={{ x: 0.7, y: 0 }}
             style={styles.highlightGradient}
@@ -169,7 +169,7 @@ export default function ChatsScreen() {
           {item.isFixed ? (
             <Image source={item.avatar} style={styles.avatarImage} />
           ) : (
-            <View style={[styles.avatar, { backgroundColor: colors.primary }]}>
+            <View style={[styles.avatar, { backgroundColor: colors.secondary }]}>
               <Ionicons 
                 name="person-outline" 
                 size={24} 
@@ -202,7 +202,7 @@ export default function ChatsScreen() {
             </Text>
             
             {item.unread > 0 && (
-              <View style={[styles.unreadBadge, { backgroundColor: colors.primary }]}>
+              <View style={[styles.unreadBadge, { backgroundColor: colors.secondary }]}>
                 <Text style={styles.unreadText}>
                   {item.unread}
                 </Text>
@@ -242,7 +242,7 @@ export default function ChatsScreen() {
         Chats
       </Text>
       <TouchableOpacity style={styles.newChatButton}>
-        <Ionicons name="create-outline" size={24} color={colors.primary} />
+        <Ionicons name="create-outline" size={24} color={colors.secondary} />
       </TouchableOpacity>
     </View>
   );
@@ -283,7 +283,7 @@ export default function ChatsScreen() {
       </Text>
       {!searchQuery && (
         <TouchableOpacity 
-          style={[styles.newAssistantChatButton, { backgroundColor: colors.primary }]}
+          style={[styles.newAssistantChatButton, { backgroundColor: colors.secondary }]}
           onPress={() => handleChatPress(FIXED_CHATS[0])}
         >
           <Text style={styles.newAssistantChatButtonText}>

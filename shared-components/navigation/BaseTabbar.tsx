@@ -182,7 +182,7 @@ export function BaseTabbar({
             <Text 
               style={[
                 styles.tabLabel, 
-                { color: isActive ? colors.primary : colors.textSecondary },
+                { color: isActive ? colors.secondary : colors.textSecondary },
                 tabLabelStyle
               ]}
             >
@@ -198,8 +198,8 @@ export function BaseTabbar({
         <Animated.View 
           style={[
             indicatorStyle === 'line' 
-              ? [styles.indicatorStrip, { backgroundColor: colors.primary }, indicatorStripStyle] 
-              : [styles.indicatorDot, { backgroundColor: colors.primary }, indicatorDotStyle],
+              ? [styles.indicatorStrip, { backgroundColor: colors.secondary }, indicatorStripStyle] 
+              : [styles.indicatorDot, { backgroundColor: colors.secondary }, indicatorDotStyle],
             indicatorAnimStyle
           ]} 
         />

@@ -293,7 +293,7 @@ export default function ChatDetailScreen() {
             <View style={[
               styles.messageBubble,
               isUser 
-                ? [styles.userBubble, { backgroundColor: colors.primary }] 
+                ? [styles.userBubble, { backgroundColor: colors.secondary }] 
                 : [styles.botBubble, { backgroundColor: colors.divider + '30' }]
             ]}>
               <Text style={[
@@ -370,7 +370,7 @@ export default function ChatDetailScreen() {
           style={styles.backButton}
           onPress={handleGoBack}
         >
-          <Ionicons name="chevron-back" size={24} color={colors.primary} />
+          <Ionicons name="chevron-back" size={24} color={colors.secondary} />
         </TouchableOpacity>
         
         <View style={styles.headerTitleContainer}>
@@ -378,7 +378,7 @@ export default function ChatDetailScreen() {
             {chat.isSolvboxChat ? (
               <Image source={solvboxAvatar} style={styles.headerAvatarImage} />
             ) : (
-              <View style={[styles.headerAvatar, { backgroundColor: colors.primary }]}>
+              <View style={[styles.headerAvatar, { backgroundColor: colors.secondary }]}>
                 <Ionicons name="person-outline" size={20} color="white" />
               </View>
             )}
@@ -411,8 +411,8 @@ export default function ChatDetailScreen() {
             <View style={styles.chatStartContainer}>
               <LinearGradient
                 colors={[
-                  chat.isSolvboxChat ? colors.secondary + '40' : colors.primary + '30', 
-                  chat.isSolvboxChat ? colors.secondary + '10' : colors.primary + '10'
+                  chat.isSolvboxChat ? colors.secondary + '40' : colors.secondary + '30', 
+                  chat.isSolvboxChat ? colors.secondary + '10' : colors.secondary + '10'
                 ]}
                 style={styles.chatStartBackground}
               >
@@ -420,7 +420,7 @@ export default function ChatDetailScreen() {
                   {chat.isSolvboxChat ? (
                     <Image source={solvboxAvatar} style={styles.chatStartAvatarImage} />
                   ) : (
-                    <View style={[styles.chatStartAvatar, { backgroundColor: colors.primary }]}>
+                    <View style={[styles.chatStartAvatar, { backgroundColor: colors.secondary }]}>
                       <Ionicons name="person-outline" size={28} color="white" />
                     </View>
                   )}
@@ -448,7 +448,7 @@ export default function ChatDetailScreen() {
       >
         <View style={[styles.inputContainer, { borderTopColor: colors.divider }]}>
           <TouchableOpacity style={styles.attachButton}>
-            <Ionicons name="add-circle-outline" size={24} color={colors.primary} />
+            <Ionicons name="add-circle-outline" size={24} color={colors.secondary} />
           </TouchableOpacity>
           
           <View style={[styles.inputWrapper, { backgroundColor: colors.backgroundSecondary }]}>
@@ -466,7 +466,7 @@ export default function ChatDetailScreen() {
           <TouchableOpacity 
             style={[
               styles.sendButton, 
-              { backgroundColor: message.trim() ? colors.primary : colors.backgroundSecondary }
+              { backgroundColor: message.trim() ? colors.secondary : colors.backgroundSecondary }
             ]}
             onPress={handleSendMessage}
             disabled={message.trim() === ''}
