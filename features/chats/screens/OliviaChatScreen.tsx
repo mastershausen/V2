@@ -29,60 +29,11 @@ import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { logger } from '@/utils/logger';
-import { GigData } from '@/shared-components/cards/gig-card/GigCard';
 
 // Avatar-Bild importieren
 const oliviaAvatar = require('@/assets/small rounded Icon.png') as ImageSourcePropType;
 
-/**
- * Eine angepasste GigCard speziell für den Olivia-Chat ohne Bewertungsbadge
- */
-const OliviaChatGigCard = ({ gig, onPress }: { gig: GigData; onPress?: () => void }) => {
-  const colors = useThemeColor();
-
-  return (
-    <TouchableOpacity 
-      style={[styles.customGigCard, { backgroundColor: '#FFFFFF' }]}
-      onPress={onPress}
-      activeOpacity={0.7}
-    >
-      <View style={styles.customGigContent}>
-        {/* Bild im 4:3 Format */}
-        <View style={styles.customGigImageContainer}>
-          <Image 
-            source={{ uri: gig.imageUrl }}
-            style={styles.customGigImage}
-            resizeMode="cover"
-          />
-        </View>
-        {/* Text-Content */}
-        <View style={styles.customGigTextContainer}>
-          {/* Überschrift (1 Zeile) */}
-          <Text 
-            style={[styles.customGigTitle, { color: '#000000' }]}
-            numberOfLines={1}
-          >
-            {gig.title}
-          </Text>
-          {/* Beschreibung (3 Zeilen) */}
-          <Text 
-            style={[styles.customGigDescription, { color: '#333333' }]}
-            numberOfLines={3}
-          >
-            {gig.description}
-          </Text>
-          {/* Nur Preis anzeigen ohne Badge */}
-          <View style={styles.customGigFooter}>
-            <Text style={[styles.customGigPrice, { color: '#0075B0' }]}> 
-              {gig.currency || '€'}{gig.price.toLocaleString('de-DE')}
-            </Text>
-            {/* Keine Badge hier - leer lassen */}
-          </View>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-};
+// Keine Konvertierungsfunktion mehr notwendig, da wir direkt mit ChatCardData arbeiten
 
 /**
  * Olivia Chat Screen - Eigenständige Komponente für den Olivia-Chatbot
@@ -176,34 +127,22 @@ export default function OliviaChatScreen() {
     ]
   });
 
-  // Mock-Daten für GigCards
-  const gigCards: GigData[] = [
+  // Fallstudien-Daten für die Chat-Bubble
+  const fallstudienErgebnisse = [
     {
       id: '1',
-      title: 'Erfahrener Statik-Ingenieur für Sanierungsprojekte',
-      description: 'Spezialist für strukturelle Analysen und Sanierungskonzepte bei Mehrfamilienhäusern. 8 Jahre Erfahrung mit ähnlichen Projekten in München und Umgebung.',
-      imageUrl: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
-      price: 12800,
-      rating: 4.8,
-      currency: '€'
+      titel: 'Erfahrener Statik-Ingenieur',
+      ergebnis: 'Perfekte Übereinstimmung: 8 Jahre Erfahrung mit vergleichbaren Projekten, verfügbar ab nächster Woche.'
     },
     {
       id: '2',
-      title: 'Bauingenieur-Team für Wohngebäudesanierung',
-      description: 'Zwei-Personen-Team mit umfassender Expertise in statischer Berechnung und Projektkoordination. Spezialisiert auf die Sanierung von Wohngebäuden mit historischer Substanz.',
-      imageUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
-      price: 14500,
-      rating: 4.9,
-      currency: '€'
+      titel: 'Bauingenieur-Team',
+      ergebnis: 'Sehr gut geeignet: Expertise in Statikberechnung und Projektkoordination, Spezialisierung auf historische Gebäude.'
     },
     {
       id: '3',
-      title: 'Statik-Experte für komplexe Sanierungsprojekte',
-      description: 'Bauingenieur mit Fokus auf Statik und Bauleitung. Erfahrung mit ähnlichen Projekten in Bayern. Flexible Arbeitszeiten und kurzfristige Verfügbarkeit.',
-      imageUrl: 'https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80',
-      price: 13200,
-      rating: 4.6,
-      currency: '€'
+      titel: 'Statik-Experte Bayern',
+      ergebnis: 'Gute Option: Flexible Arbeitszeiten und kurzfristige Verfügbarkeit, Erfahrung mit ähnlichen Projekten in der Region.'
     },
   ];
 
@@ -448,7 +387,7 @@ export default function OliviaChatScreen() {
           <View style={styles.avatarContainer}>
             <Image source={oliviaAvatar} style={styles.avatar} />
           </View>
-          {renderMessageWithCards(item, item.text)}
+          {renderMessageWithResults(item, item.text)}
         </View>
       );
     }
@@ -506,10 +445,10 @@ export default function OliviaChatScreen() {
     );
   }, []);
 
-  // Nachricht mit GigCards anzeigen
-  const renderMessageWithCards = (item: any, messageText: string) => {
+  // Nachricht mit Fallstudien-Ergebnissen anzeigen
+  const renderMessageWithResults = (item: any, messageText: string) => {
     return (
-      <View>
+      <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
         <View style={[
           styles.messageBubble,
           styles.otherBubble,
@@ -521,22 +460,35 @@ export default function OliviaChatScreen() {
           ]}>
             {messageText}
           </Text>
+          
+          {/* Fallstudien-Ergebnisse */}
+          <View style={styles.fallstudienContainer}>
+            {fallstudienErgebnisse.map((studie) => (
+              <View key={studie.id} style={styles.fallstudieItem}>
+                <View style={styles.fallstudieHeader}>
+                  <Text style={styles.fallstudieTitle}>
+                    Fallstudie {studie.id}: {studie.titel}
+                  </Text>
+                  <TouchableOpacity 
+                    style={styles.infoButton}
+                    onPress={() => Alert.alert('Fallstudie Details', `Detailansicht für ${studie.titel}`)}
+                  >
+                    <Text style={styles.infoButtonText}>i</Text>
+                  </TouchableOpacity>
+                </View>
+                <Text style={styles.fallstudieErgebnis}>
+                  {studie.ergebnis}
+                </Text>
+              </View>
+            ))}
+          </View>
+          
           <Text style={[
             styles.timeText,
             { color: 'rgba(241, 245, 249, 0.7)' }
           ]}>
             {item.time}
           </Text>
-        </View>
-        
-        <View style={styles.gigCardsContainer}>
-          {gigCards.map(card => (
-            <OliviaChatGigCard
-              key={card.id}
-              gig={card}
-              onPress={() => Alert.alert('Angebot ausgewählt', `Sie haben ${card.title} ausgewählt.`)}
-            />
-          ))}
         </View>
       </View>
     );
@@ -835,6 +787,48 @@ export default function OliviaChatScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  fallstudienContainer: {
+    width: '100%',
+    marginTop: 12,
+    marginBottom: 8,
+  },
+  fallstudieItem: {
+    marginBottom: 12,
+    backgroundColor: 'rgba(99, 192, 200, 0.1)',
+    borderRadius: 8,
+    padding: 12,
+  },
+  fallstudieHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  fallstudieTitle: {
+    fontWeight: '600',
+    fontSize: 14,
+    color: '#F1F5F9',
+    flex: 1,
+  },
+  fallstudieErgebnis: {
+    fontSize: 13,
+    color: '#F1F5F9',
+    opacity: 0.9,
+  },
+  infoButton: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: 'rgba(99, 192, 200, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 8,
+  },
+  infoButtonText: {
+    color: '#F1F5F9',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   backgroundGradient: {
     position: 'absolute',
@@ -1237,78 +1231,5 @@ const styles = StyleSheet.create({
   stopRecordingButton: {
     padding: spacing.xs,
   },
-  gigCardsContainer: {
-    marginTop: spacing.s,
-    marginLeft: spacing.xl,
-    marginBottom: spacing.m,
-  },
-  customGigCard: {
-    borderRadius: ui.borderRadius.m,
-    overflow: 'visible',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 8,
-    borderWidth: 0.5,
-    borderColor: 'rgba(0, 0, 0, 0.1)',
-    maxHeight: 130,
-    minHeight: 130,
-    marginBottom: spacing.m,
-    position: 'relative',
-    backgroundColor: '#FFFFFF',
-  },
-  customGigContent: {
-    flexDirection: 'row',
-    paddingRight: spacing.m,
-    paddingLeft: 0,
-    paddingTop: 0,
-    paddingBottom: 0,
-    height: '100%',
-    alignItems: 'center',
-  },
-  customGigImageContainer: {
-    width: 90,
-    height: '100%',
-    borderTopLeftRadius: ui.borderRadius.m,
-    borderBottomLeftRadius: ui.borderRadius.m,
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
-    overflow: 'hidden',
-    marginRight: spacing.m,
-    backgroundColor: '#eee',
-    marginLeft: 0,
-  },
-  customGigImage: {
-    width: '100%',
-    height: '100%',
-  },
-  customGigTextContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
-    height: '100%',
-    marginLeft: spacing.s,
-    paddingRight: spacing.s,
-    paddingTop: spacing.s,
-    paddingBottom: spacing.s,
-  },
-  customGigTitle: {
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.bold,
-    marginBottom: spacing.xs,
-  },
-  customGigDescription: {
-    fontSize: typography.fontSize.s,
-    lineHeight: typography.lineHeight.m,
-    marginBottom: spacing.s,
-  },
-  customGigFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  customGigPrice: {
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.bold,
-  },
+  // Die Styles für die Chat-Karten wurden in die ChatCard- und ChatCardContainer-Komponenten verschoben
 }); 
