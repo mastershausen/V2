@@ -8,20 +8,20 @@ export const themeColors = {
   // Erweiterte Farbpalette - helles Theme
   light: {
     // Primärfarben
-    primary: '#007AFF', // Blau als Hauptfarbe
+    primary: '#1E6B55', // Petrol als Hauptfarbe
     secondary: '#34C759', // Grün als Sekundärfarbe
     
     // Pastel-Varianten
     pastel: {
-      primary: 'rgba(0, 122, 255, 0.15)', // Pastellversion der Primärfarbe
-      primaryBorder: 'rgba(0, 122, 255, 0.5)', // Pastellversion für Ränder
+      primary: 'rgba(30, 107, 85, 0.15)', // Pastellversion der Primärfarbe
+      primaryBorder: 'rgba(30, 107, 85, 0.5)', // Pastellversion für Ränder
       secondary: 'rgba(52, 199, 89, 0.15)', // Pastellversion der Sekundärfarbe
       secondaryBorder: 'rgba(52, 199, 89, 0.5)', // Pastellversion für Ränder
     },
     
     // Mode-Farben (Dunklere Varianten für Text)
     mode: {
-      demoDark: '#0056B3', // Dunklere Blau-Variante für Demo-Modus
+      demoDark: '#15503F', // Dunklere Petrol-Variante für Demo-Modus
       liveDark: '#00702F', // Dunklere Grün-Variante für Live-Modus
     },
 
@@ -78,7 +78,7 @@ export const themeColors = {
       icon: '#333333',
       headerBackground: '#FFFFFF',
       headerText: '#333333',
-      buttonBackground: '#007AFF',
+      buttonBackground: '#1E6B55',
       buttonText: '#FFFFFF',
       disabledBackground: '#CCCCCC',
       disabledText: '#666666',
@@ -88,20 +88,20 @@ export const themeColors = {
   // Erweiterte Farbpalette - dunkles Theme
   dark: {
     // Primärfarben
-    primary: '#007AFF', // Blau als Hauptfarbe für dunkles Theme
+    primary: '#1E6B55', // Petrol als Hauptfarbe für dunkles Theme
     secondary: '#30D158', // Angepasstes Grün für dunkles Theme
     
     // Pastel-Varianten für das dunkle Theme
     pastel: {
-      primary: 'rgba(0, 122, 255, 0.25)', // Pastellversion der Primärfarbe (dunkler Modus)
-      primaryBorder: 'rgba(0, 122, 255, 0.6)', // Pastellversion für Ränder (dunkler Modus)
+      primary: 'rgba(30, 107, 85, 0.25)', // Pastellversion der Primärfarbe (dunkler Modus)
+      primaryBorder: 'rgba(30, 107, 85, 0.6)', // Pastellversion für Ränder (dunkler Modus)
       secondary: 'rgba(48, 209, 88, 0.25)', // Pastellversion der Sekundärfarbe (dunkler Modus)
       secondaryBorder: 'rgba(48, 209, 88, 0.6)', // Pastellversion für Ränder (dunkler Modus)
     },
     
     // Mode-Farben (Dunklere Varianten für Text)
     mode: {
-      demoDark: '#0056B3', // Dunklere Blau-Variante für Demo-Modus 
+      demoDark: '#15503F', // Dunklere Petrol-Variante für Demo-Modus 
       liveDark: '#00702F', // Dunklere Grün-Variante für Live-Modus
     },
     
@@ -158,7 +158,7 @@ export const themeColors = {
       icon: '#ECEDEE',
       headerBackground: '#151718',
       headerText: '#ECEDEE',
-      buttonBackground: '#007AFF',
+      buttonBackground: '#1E6B55',
       buttonText: '#ECEDEE',
       disabledBackground: '#2C2C2E',
       disabledText: '#8E8E93',

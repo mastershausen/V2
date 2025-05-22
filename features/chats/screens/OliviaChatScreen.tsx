@@ -434,8 +434,8 @@ export default function OliviaChatScreen() {
                           chat.messages[index + 1].isUser !== item.isUser;
     
     // Einheitliche Textfarbe für alle Nachrichten
-    const textColor = '#FFFFFF';
-    const timeColor = 'rgba(255, 255, 255, 0.7)';
+    const textColor = '#F1F5F9';
+    const timeColor = 'rgba(241, 245, 249, 0.7)';
 
     // Wenn es sich um die letzte Nachricht von Olivia handelt, zeige die GigCards an
     if (item.id === '9' && !item.isUser) {
@@ -467,11 +467,11 @@ export default function OliviaChatScreen() {
         <View style={[
           styles.messageBubble,
           item.isUser ? styles.userBubble : styles.otherBubble,
-          { backgroundColor: item.isUser ? 'rgba(44, 82, 130, 0.85)' : 'rgba(28, 52, 80, 0.85)' }
+          { backgroundColor: item.isUser ? '#2C5063' : '#1F3949' }
         ]}>
           <Text style={[
             styles.messageText,
-            { color: textColor }
+            { color: '#F1F5F9' }
           ]}>
             {item.text}
           </Text>
@@ -489,7 +489,7 @@ export default function OliviaChatScreen() {
               style={[styles.linkContainer]}
               onPress={() => Linking.openURL(item.link || '')}
             >
-              <Text style={[styles.linkText, { color: '#7AEEFF' }]}>
+              <Text style={[styles.linkText, { color: '#63C0C8' }]}>
                 {item.link}
               </Text>
             </TouchableOpacity>
@@ -513,17 +513,17 @@ export default function OliviaChatScreen() {
         <View style={[
           styles.messageBubble,
           styles.otherBubble,
-          { backgroundColor: 'rgba(28, 52, 80, 0.85)' }
+          { backgroundColor: '#1F3949' }
         ]}>
           <Text style={[
             styles.messageText,
-            { color: '#FFFFFF' }
+            { color: '#F1F5F9' }
           ]}>
             {messageText}
           </Text>
           <Text style={[
             styles.timeText,
-            { color: 'rgba(255, 255, 255, 0.7)' }
+            { color: 'rgba(241, 245, 249, 0.7)' }
           ]}>
             {item.time}
           </Text>
@@ -562,11 +562,11 @@ export default function OliviaChatScreen() {
         </View>
         <View style={[
           styles.typingBubble,
-          { backgroundColor: 'rgba(28, 52, 80, 0.85)' }
+          { backgroundColor: '#1F3949' }
         ]}>
-          <Animated.View style={[styles.typingDot, { opacity: typingDots, backgroundColor: '#7AEEFF' }]} />
-          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#7AEEFF' }]} />
-          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#7AEEFF' }]} />
+          <Animated.View style={[styles.typingDot, { opacity: typingDots, backgroundColor: '#63C0C8' }]} />
+          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#63C0C8' }]} />
+          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#63C0C8' }]} />
         </View>
       </View>
     );
@@ -611,13 +611,13 @@ export default function OliviaChatScreen() {
           <View style={styles.solvboxContentContainer}>
             <Image source={oliviaAvatar} style={styles.solvboxLogo} />
             <View style={styles.solvboxTextContainer}>
-              <Text style={[styles.solvboxHeaderSubtitle, { color: '#FFFFFF' }]}>
+              <Text style={[styles.solvboxHeaderSubtitle, { color: '#F1F5F9' }]}>
                 Ich bin Olivia und mein Job ist es neue Möglichkeiten zu entdecken, wie Sie Ihre Liquidität steigern können. Sollten Sie Fragen oder ungelöste Probleme in Ihrem Unternehmen haben bin ich immer für Sie da und suche innerhalb von wenigen Sekunden nach der besten Lösung.
               </Text>
-              <Text style={[styles.solvboxHeaderSignature, { color: '#FFFFFF' }]}>
+              <Text style={[styles.solvboxHeaderSignature, { color: '#F1F5F9' }]}>
                 Auf eine gute Zusammenarbeit!
               </Text>
-              <View style={[styles.solvboxHeaderDivider, { backgroundColor: '#7AEEFF' }]} />
+              <View style={[styles.solvboxHeaderDivider, { backgroundColor: '#63C0C8' }]} />
             </View>
           </View>
         </View>
