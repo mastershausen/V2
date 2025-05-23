@@ -105,19 +105,19 @@ export default function ThinkDifferentFrameScreen() {
   // KeyboardToolbar Actions
   const toolbarActions: ToolbarAction[] = [
     {
+      id: 'context',
+      icon: 'information-circle-outline',
+      label: 'Kontext für Olivia',
+      onPress: handleContextForOlivia,
+      accessibilityLabel: 'Kontext für Olivia'
+    },
+    {
       id: 'save',
       icon: 'checkmark-circle-outline',
       label: 'Fallstudie speichern',
       onPress: handleSubmit,
       disabled: !isValid,
       accessibilityLabel: 'Fallstudie speichern'
-    },
-    {
-      id: 'context',
-      icon: 'information-circle-outline',
-      label: 'Kontext für Olivia',
-      onPress: handleContextForOlivia,
-      accessibilityLabel: 'Kontext für Olivia'
     }
   ];
 
