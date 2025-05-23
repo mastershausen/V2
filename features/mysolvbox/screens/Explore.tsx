@@ -633,6 +633,7 @@ export default function ExploreScreen(): React.ReactElement {
         iconPosition="left"
         backgroundColor={colors.primary}
         textColor="#FFFFFF"
+        style={{ borderTopWidth: 0 }}
       />
     </View>
   );
@@ -667,8 +668,12 @@ const styles = StyleSheet.create({
   },
   preButtonTextSection: {
     paddingHorizontal: spacing.m,
-    paddingVertical: spacing.s,
+    paddingTop: spacing.m,
+    paddingBottom: 0,
+    marginBottom: -spacing.xs,
     alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#E5E7EB',
   },
   preButtonText: {
     fontSize: 14,
