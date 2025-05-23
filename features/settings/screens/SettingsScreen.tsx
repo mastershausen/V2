@@ -1,28 +1,60 @@
 import React from 'react';
-import { StyleSheet, ScrollView, SafeAreaView, Text } from 'react-native';
+import { 
+  StyleSheet, 
+  ScrollView, 
+  SafeAreaView, 
+  Text, 
+  TouchableOpacity, 
+  View,
+  Alert 
+} from 'react-native';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 import { spacing } from '@/config/theme/spacing';
+import { typography } from '@/config/theme/typography';
 import { SettingsItem } from '@/features/settings/components/SettingsItem';
 import { SettingsSection } from '@/features/settings/components/SettingsSection';
-import { useSettings } from '@/features/settings/hooks/useSettings';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 
 /**
  * Hauptkomponente für alle Einstellungen
- * @returns Die Einstellungen-Komponente
  */
 export default function SettingsScreen() {
   const colors = useThemeColor();
+  const router = useRouter();
   
-  // Settings-Hook für Daten und Funktionen
-  const { settingsSections, showDebugMenu } = useSettings();
+  // Handler für Navigation zu verschiedenen Screens
+  const handleNavigation = (route: string) => {
+    router.push(route as any);
+  };
+  
+  // Logout Handler
+  const handleLogout = () => {
+    Alert.alert(
+      'Abmelden',
+      'Möchten Sie sich wirklich abmelden?',
+      [
+        { text: 'Abbrechen', style: 'cancel' },
+        { 
+          text: 'Abmelden', 
+          style: 'destructive',
+          onPress: () => {
+            // Hier würde die Logout-Logik kommen
+            console.log('User logged out');
+            router.replace('/auth/login' as any);
+          }
+        }
+      ]
+    );
+  };
   
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
         title="Einstellungen"
-        showBackButton={true}
+        showBackButton={false}
         titleStyle={styles.headerTitle}
         containerStyle={styles.headerContainer}
       />
@@ -32,36 +64,73 @@ export default function SettingsScreen() {
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Allgemeine Einstellungen */}
-        <SettingsSection title={settingsSections.general.title}>
-          {settingsSections.general.items.map((item) => (
-            <SettingsItem
-              key={`general-${item.id}`}
-              {...item}
-            />
-          ))}
+        {/* Allgemein */}
+        <SettingsSection title="Allgemein">
+          <SettingsItem
+            label="Mein Profil"
+            icon="person-outline"
+            showArrow={true}
+            onPress={() => handleNavigation('/settings/profile')}
+          />
+          <SettingsItem
+            label="Benachrichtigungen"
+            icon="notifications-outline"
+            showArrow={true}
+            onPress={() => handleNavigation('/settings/notifications')}
+          />
+          <SettingsItem
+            label="Erscheinungsbild"
+            icon="color-palette-outline"
+            showArrow={true}
+            onPress={() => handleNavigation('/settings/appearance')}
+          />
+          <SettingsItem
+            label="Sprache"
+            icon="language-outline"
+            value="Deutsch"
+            showArrow={true}
+            onPress={() => handleNavigation('/settings/language')}
+          />
+          <SettingsItem
+            label="Tutorial"
+            icon="play-circle-outline"
+            showArrow={true}
+            onPress={() => handleNavigation('/settings/tutorial')}
+          />
+          <SettingsItem
+            label="Gespeichert / Favoriten"
+            icon="bookmark-outline"
+            showArrow={true}
+            onPress={() => handleNavigation('/settings/saved')}
+          />
+          <SettingsItem
+            label="Hilfe & Support"
+            icon="help-circle-outline"
+            showArrow={true}
+            onPress={() => handleNavigation('/settings/support')}
+          />
+          <SettingsItem
+            label="Feedback"
+            icon="chatbubble-outline"
+            showArrow={true}
+            onPress={() => handleNavigation('/settings/feedback')}
+          />
         </SettingsSection>
         
-        {/* Debug-Menü - nur anzeigen wenn aktiviert */}
-        {showDebugMenu && (
-          <SettingsSection title={settingsSections.debug.title} icon={settingsSections.debug.icon}>
-            {settingsSections.debug.items.map((item) => (
-              <SettingsItem
-                key={`debug-${item.id}`}
-                {...item}
-              />
-            ))}
-          </SettingsSection>
-        )}
-        
-        {/* Account-Einstellungen */}
-        <SettingsSection title={settingsSections.account.title}>
-          {settingsSections.account.items.map((item) => (
-            <SettingsItem
-              key={`account-${item.id}`}
-              {...item}
-            />
-          ))}
+        {/* Account */}
+        <SettingsSection title="Account">
+          <SettingsItem
+            label="Account-Einstellungen"
+            icon="settings-outline"
+            showArrow={true}
+            onPress={() => handleNavigation('/settings/account')}
+          />
+          <SettingsItem
+            label="Abmelden"
+            icon="log-out-outline"
+            showArrow={false}
+            onPress={handleLogout}
+          />
         </SettingsSection>
       </ScrollView>
     </SafeAreaView>

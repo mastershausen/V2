@@ -32,7 +32,6 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
   // Mock-Daten für das Profil
   const profileData = {
     name: name || 'Thomas Müller',
-    title: 'Steuerberater für digitale KMU',
     verified: true,
     status: 'Online',
     specialization: 'Spezialisiert auf Unternehmensstruktur, digitale Finanzplanung und steueroptimierte Exitstrategien.',
@@ -52,6 +51,11 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
   // Navigiere zurück zum Chat
   const handleBackPress = () => {
     router.back();
+  };
+
+  // Navigiere zum EditProfilScreen
+  const handleEditProfile = () => {
+    router.push('/profile/edit-chat');
   };
 
   // Öffne die Website
@@ -82,8 +86,8 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
         showBackButton={true}
         onBackPress={handleBackPress}
         rightContent={
-          <TouchableOpacity style={styles.moreButton}>
-            <Ionicons name="ellipsis-vertical" size={20} color={colors.textSecondary} />
+          <TouchableOpacity style={styles.editButton} onPress={handleEditProfile}>
+            <Ionicons name="pencil-outline" size={22} color={colors.primary} />
           </TouchableOpacity>
         }
       />
@@ -106,14 +110,6 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
           <Text style={[styles.nameText, { color: colors.textPrimary }]}>
             {profileData.name}
           </Text>
-          <Text style={[styles.titleText, { color: colors.textSecondary }]}>
-            {profileData.title}
-          </Text>
-          <View style={styles.statusContainer}>
-            <Text style={[styles.statusText, { color: colors.textSecondary }]}>
-              <Ionicons name="checkmark-circle" size={16} color="#34C759" /> Verifiziert | <View style={styles.onlineDot} /> Online
-            </Text>
-          </View>
         </View>
 
         {/* Spezialisierung */}
@@ -125,11 +121,11 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
 
         {/* Fallstudien-Button */}
         <TouchableOpacity 
-          style={[styles.caseStudiesButton, { backgroundColor: colors.backgroundSecondary }]}
+          style={[styles.caseStudiesButton, { backgroundColor: colors.pastel.primary }]}
           onPress={handleShowCaseStudies}
         >
-          <Ionicons name="search" size={18} color={colors.textSecondary} />
-          <Text style={[styles.caseStudiesButtonText, { color: colors.textSecondary }]}>
+          <Ionicons name="search" size={18} color={colors.primary} />
+          <Text style={[styles.caseStudiesButtonText, { color: colors.primary }]}>
             Alle Fallstudien anzeigen
           </Text>
         </TouchableOpacity>
@@ -229,7 +225,7 @@ const styles = StyleSheet.create({
   },
   nameContainer: {
     alignItems: 'center',
-    marginBottom: spacing.m,
+    marginBottom: spacing.s,
   },
   nameText: {
     fontSize: typography.fontSize.xl,
@@ -335,7 +331,7 @@ const styles = StyleSheet.create({
   topicText: {
     fontSize: typography.fontSize.s,
   },
-  moreButton: {
+  editButton: {
     padding: spacing.xs,
   },
 });

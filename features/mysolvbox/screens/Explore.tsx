@@ -11,282 +11,282 @@ import { spacing } from '@/config/theme/spacing';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-// Tile-Datentyp
+// Tile data type
 interface ExploreTile {
   id: number;
   title: string;
   category: string;
 }
 
-// Alle Explore-Tiles aus der Markdown-Datei
+// All Explore-Tiles translated to English
 const EXPLORE_TILES: ExploreTile[] = [
-  // 1. Steuern
-  { id: 1, title: "Ich will mehr Netto vom Brutto", category: "steuern" },
-  { id: 2, title: "Ich will meine Steuerlast halbieren", category: "steuern" },
-  { id: 3, title: "Ich will steuerfrei Rücklagen bilden", category: "steuern" },
-  { id: 4, title: "Ich will meine Gewinne steuerfrei ausschütten", category: "steuern" },
-  { id: 5, title: "Ich will meine Firma steuerfrei verkaufen", category: "steuern" },
-  { id: 6, title: "Ich will eine Holding gründen", category: "steuern" },
-  { id: 7, title: "Ich will Gewerbesteuer vermeiden", category: "steuern" },
-  { id: 8, title: "Ich will Umsatzsteuer korrekt abführen", category: "steuern" },
-  { id: 9, title: "Ich will Rückzahlungen vom Finanzamt bekommen", category: "steuern" },
-  { id: 10, title: "Ich will verdeckte Gewinnausschüttungen vermeiden", category: "steuern" },
-  { id: 11, title: "Ich will meine Entnahmen korrekt verbuchen", category: "steuern" },
-  { id: 12, title: "Ich will private Ausgaben sauber absetzen", category: "steuern" },
-  { id: 13, title: "Ich will steuerfreie Gehaltsextras nutzen", category: "steuern" },
-  { id: 14, title: "Ich will meine Steuerbescheide verstehen", category: "steuern" },
-  { id: 15, title: "Ich will meine Bilanz steuerlich optimieren", category: "steuern" },
-  { id: 16, title: "Ich will Investitionsabzugsbetrag clever nutzen", category: "steuern" },
-  { id: 17, title: "Ich will Abschreibungen vollständig ausreizen", category: "steuern" },
-  { id: 18, title: "Ich will steuerlich begünstigt spenden", category: "steuern" },
-  { id: 19, title: "Ich will Steuern über Immobilien senken", category: "steuern" },
-  { id: 20, title: "Ich will meine Steuern international optimieren", category: "steuern" },
+  // 1. Taxes
+  { id: 1, title: "I want more net from gross", category: "taxes" },
+  { id: 2, title: "I want to halve my tax burden", category: "taxes" },
+  { id: 3, title: "I want to build tax-free reserves", category: "taxes" },
+  { id: 4, title: "I want to distribute profits tax-free", category: "taxes" },
+  { id: 5, title: "I want to sell my company tax-free", category: "taxes" },
+  { id: 6, title: "I want to establish a holding company", category: "taxes" },
+  { id: 7, title: "I want to avoid trade tax", category: "taxes" },
+  { id: 8, title: "I want to correctly remit VAT", category: "taxes" },
+  { id: 9, title: "I want to get refunds from tax office", category: "taxes" },
+  { id: 10, title: "I want to avoid disguised profit distributions", category: "taxes" },
+  { id: 11, title: "I want to correctly record my withdrawals", category: "taxes" },
+  { id: 12, title: "I want to cleanly deduct private expenses", category: "taxes" },
+  { id: 13, title: "I want to use tax-free salary extras", category: "taxes" },
+  { id: 14, title: "I want to understand my tax assessments", category: "taxes" },
+  { id: 15, title: "I want to optimize my balance sheet for taxes", category: "taxes" },
+  { id: 16, title: "I want to cleverly use investment deduction", category: "taxes" },
+  { id: 17, title: "I want to fully exploit depreciation", category: "taxes" },
+  { id: 18, title: "I want to donate with tax benefits", category: "taxes" },
+  { id: 19, title: "I want to reduce taxes through real estate", category: "taxes" },
+  { id: 20, title: "I want to optimize my taxes internationally", category: "taxes" },
 
-  // 2. Immobilien
-  { id: 21, title: "Ich will steuerfrei Immobilien verkaufen", category: "immobilien" },
-  { id: 22, title: "Ich will Immobilien über die GmbH kaufen", category: "immobilien" },
-  { id: 23, title: "Ich will Immobilien im Betriebsvermögen halten", category: "immobilien" },
-  { id: 24, title: "Ich will Off-Market Immobilien finden", category: "immobilien" },
-  { id: 25, title: "Ich will Immobilien mit Gewinn vermieten", category: "immobilien" },
-  { id: 26, title: "Ich will einen Mieter rechtssicher kündigen", category: "immobilien" },
-  { id: 27, title: "Ich will Immobilien an meine Kinder übertragen", category: "immobilien" },
-  { id: 28, title: "Ich will Immobilien steuerlich optimal abschreiben", category: "immobilien" },
-  { id: 29, title: "Ich will mein Immobilien-Portfolio digitalisieren", category: "immobilien" },
-  { id: 30, title: "Ich will Immobilien mit Holding kombinieren", category: "immobilien" },
-  { id: 31, title: "Ich will Immobilien günstig finanzieren", category: "immobilien" },
-  { id: 32, title: "Ich will Eigentümerstrukturen vereinfachen", category: "immobilien" },
-  { id: 33, title: "Ich will Immobiliengesellschaften gründen", category: "immobilien" },
-  { id: 34, title: "Ich will Immobilien international handeln", category: "immobilien" },
-  { id: 35, title: "Ich will Zwangsversteigerungen profitabel nutzen", category: "immobilien" },
-  { id: 36, title: "Ich will mein Immobiliengeschäft skalieren", category: "immobilien" },
-  { id: 37, title: "Ich will Immobilien gewerblich entwickeln", category: "immobilien" },
-  { id: 38, title: "Ich will Immobilien steuerfrei verschenken", category: "immobilien" },
-  { id: 39, title: "Ich will mein Immobilienvermögen absichern", category: "immobilien" },
-  { id: 40, title: "Ich will aus Immobilien flüssig werden", category: "immobilien" },
+  // 2. Real Estate
+  { id: 21, title: "I want to sell real estate tax-free", category: "real-estate" },
+  { id: 22, title: "I want to buy real estate through GmbH", category: "real-estate" },
+  { id: 23, title: "I want to hold real estate in business assets", category: "real-estate" },
+  { id: 24, title: "I want to find off-market real estate", category: "real-estate" },
+  { id: 25, title: "I want to rent real estate profitably", category: "real-estate" },
+  { id: 26, title: "I want to legally terminate a tenant", category: "real-estate" },
+  { id: 27, title: "I want to transfer real estate to my children", category: "real-estate" },
+  { id: 28, title: "I want to optimally depreciate real estate", category: "real-estate" },
+  { id: 29, title: "I want to digitalize my real estate portfolio", category: "real-estate" },
+  { id: 30, title: "I want to combine real estate with holding", category: "real-estate" },
+  { id: 31, title: "I want to finance real estate cheaply", category: "real-estate" },
+  { id: 32, title: "I want to simplify ownership structures", category: "real-estate" },
+  { id: 33, title: "I want to establish real estate companies", category: "real-estate" },
+  { id: 34, title: "I want to trade real estate internationally", category: "real-estate" },
+  { id: 35, title: "I want to profitably use foreclosures", category: "real-estate" },
+  { id: 36, title: "I want to scale my real estate business", category: "real-estate" },
+  { id: 37, title: "I want to develop real estate commercially", category: "real-estate" },
+  { id: 38, title: "I want to gift real estate tax-free", category: "real-estate" },
+  { id: 39, title: "I want to secure my real estate wealth", category: "real-estate" },
+  { id: 40, title: "I want to become liquid from real estate", category: "real-estate" },
 
-  // 3. Mitarbeiter
-  { id: 41, title: "Ich will bessere Mitarbeiter einstellen", category: "mitarbeiter" },
-  { id: 42, title: "Ich will Mitarbeiter langfristig binden", category: "mitarbeiter" },
-  { id: 43, title: "Ich will meine Kündigungsquote senken", category: "mitarbeiter" },
-  { id: 44, title: "Ich will Gehälter steuerlich optimieren", category: "mitarbeiter" },
-  { id: 45, title: "Ich will ein starkes Team aufbauen", category: "mitarbeiter" },
-  { id: 46, title: "Ich will eine Führungskultur etablieren", category: "mitarbeiter" },
-  { id: 47, title: "Ich will Arbeitsrecht-Fallen vermeiden", category: "mitarbeiter" },
-  { id: 48, title: "Ich will meine Mitarbeiter effizient onboarden", category: "mitarbeiter" },
-  { id: 49, title: "Ich will leistungsorientierte Boni fair regeln", category: "mitarbeiter" },
-  { id: 50, title: "Ich will krankheitsbedingte Ausfälle reduzieren", category: "mitarbeiter" },
-  { id: 51, title: "Ich will meine Teams selbstorganisiert aufstellen", category: "mitarbeiter" },
-  { id: 52, title: "Ich will A-Mitarbeiter systematisch halten", category: "mitarbeiter" },
-  { id: 53, title: "Ich will gute Mitarbeiter schneller finden", category: "mitarbeiter" },
-  { id: 54, title: "Ich will Fluktuation kostenneutral auffangen", category: "mitarbeiter" },
-  { id: 55, title: "Ich will mein Team entlasten ohne Kündigungen", category: "mitarbeiter" },
-  { id: 56, title: "Ich will Lohnkosten gezielt steuern", category: "mitarbeiter" },
-  { id: 57, title: "Ich will Mitarbeiter steuerfrei belohnen", category: "mitarbeiter" },
-  { id: 58, title: "Ich will Remote-Teams richtig führen", category: "mitarbeiter" },
-  { id: 59, title: "Ich will Personalgespräche professionell führen", category: "mitarbeiter" },
-  { id: 60, title: "Ich will Wachstum ohne Überforderung", category: "mitarbeiter" },
+  // 3. Employees
+  { id: 41, title: "I want to hire better employees", category: "employees" },
+  { id: 42, title: "I want to retain employees long-term", category: "employees" },
+  { id: 43, title: "I want to reduce my turnover rate", category: "employees" },
+  { id: 44, title: "I want to optimize salaries for taxes", category: "employees" },
+  { id: 45, title: "I want to build a strong team", category: "employees" },
+  { id: 46, title: "I want to establish a leadership culture", category: "employees" },
+  { id: 47, title: "I want to avoid labor law traps", category: "employees" },
+  { id: 48, title: "I want to efficiently onboard employees", category: "employees" },
+  { id: 49, title: "I want to fairly regulate performance bonuses", category: "employees" },
+  { id: 50, title: "I want to reduce illness-related absences", category: "employees" },
+  { id: 51, title: "I want to set up self-organized teams", category: "employees" },
+  { id: 52, title: "I want to systematically retain A-players", category: "employees" },
+  { id: 53, title: "I want to find good employees faster", category: "employees" },
+  { id: 54, title: "I want to manage turnover cost-neutral", category: "employees" },
+  { id: 55, title: "I want to relieve my team without layoffs", category: "employees" },
+  { id: 56, title: "I want to control labor costs strategically", category: "employees" },
+  { id: 57, title: "I want to reward employees tax-free", category: "employees" },
+  { id: 58, title: "I want to properly manage remote teams", category: "employees" },
+  { id: 59, title: "I want to conduct professional personnel talks", category: "employees" },
+  { id: 60, title: "I want growth without overload", category: "employees" },
 
-  // 4. Kundengewinnung
-  { id: 61, title: "Ich will regelmäßig neue Kunden", category: "kundengewinnung" },
-  { id: 62, title: "Ich will planbare Leads pro Monat", category: "kundengewinnung" },
-  { id: 63, title: "Ich will unabhängig von Empfehlungen verkaufen", category: "kundengewinnung" },
-  { id: 64, title: "Ich will einen Funnel, der verkauft", category: "kundengewinnung" },
-  { id: 65, title: "Ich will meinen Vertrieb digitalisieren", category: "kundengewinnung" },
-  { id: 66, title: "Ich will einen Vertrieb, der abschließt", category: "kundengewinnung" },
-  { id: 67, title: "Ich will Kundenbindung automatisieren", category: "kundengewinnung" },
-  { id: 68, title: "Ich will Kaltakquise ersetzen", category: "kundengewinnung" },
-  { id: 69, title: "Ich will Bestandskunden reaktivieren", category: "kundengewinnung" },
-  { id: 70, title: "Ich will Referenzen strategisch nutzen", category: "kundengewinnung" },
-  { id: 71, title: "Ich will Preisverhandlungen souverän führen", category: "kundengewinnung" },
-  { id: 72, title: "Ich will nie wieder Rabatt geben müssen", category: "kundengewinnung" },
-  { id: 73, title: "Ich will Neukunden zu Stammkunden machen", category: "kundengewinnung" },
-  { id: 74, title: "Ich will Einwandbehandlung perfektionieren", category: "kundengewinnung" },
-  { id: 75, title: "Ich will Online-Termine füllen", category: "kundengewinnung" },
-  { id: 76, title: "Ich will aus Leads echte Kunden machen", category: "kundengewinnung" },
-  { id: 77, title: "Ich will weniger Aufwand pro Abschluss", category: "kundengewinnung" },
-  { id: 78, title: "Ich will Cross-Selling gezielt einsetzen", category: "kundengewinnung" },
-  { id: 79, title: "Ich will keine Dead Leads mehr", category: "kundengewinnung" },
-  { id: 80, title: "Ich will bessere Margen bei gleichem Umsatz", category: "kundengewinnung" },
+  // 4. Customer Acquisition
+  { id: 61, title: "I want regular new customers", category: "customer-acquisition" },
+  { id: 62, title: "I want predictable leads per month", category: "customer-acquisition" },
+  { id: 63, title: "I want to sell independent of referrals", category: "customer-acquisition" },
+  { id: 64, title: "I want a funnel that sells", category: "customer-acquisition" },
+  { id: 65, title: "I want to digitalize my sales", category: "customer-acquisition" },
+  { id: 66, title: "I want sales that close deals", category: "customer-acquisition" },
+  { id: 67, title: "I want to automate customer retention", category: "customer-acquisition" },
+  { id: 68, title: "I want to replace cold calling", category: "customer-acquisition" },
+  { id: 69, title: "I want to reactivate existing customers", category: "customer-acquisition" },
+  { id: 70, title: "I want to strategically use references", category: "customer-acquisition" },
+  { id: 71, title: "I want to confidently handle price negotiations", category: "customer-acquisition" },
+  { id: 72, title: "I never want to give discounts again", category: "customer-acquisition" },
+  { id: 73, title: "I want to turn new customers into regulars", category: "customer-acquisition" },
+  { id: 74, title: "I want to perfect objection handling", category: "customer-acquisition" },
+  { id: 75, title: "I want to fill online appointments", category: "customer-acquisition" },
+  { id: 76, title: "I want to turn leads into real customers", category: "customer-acquisition" },
+  { id: 77, title: "I want less effort per deal", category: "customer-acquisition" },
+  { id: 78, title: "I want to use cross-selling strategically", category: "customer-acquisition" },
+  { id: 79, title: "I want no more dead leads", category: "customer-acquisition" },
+  { id: 80, title: "I want better margins with same revenue", category: "customer-acquisition" },
 
-  // 5. Künstliche Intelligenz
-  { id: 81, title: "Ich will Aufgaben mit KI automatisieren", category: "ki" },
-  { id: 82, title: "Ich will mit GPT richtig Zeit sparen", category: "ki" },
-  { id: 83, title: "Ich will KI im Kundenservice einsetzen", category: "ki" },
-  { id: 84, title: "Ich will Angebote automatisch schreiben lassen", category: "ki" },
-  { id: 85, title: "Ich will Inhalte mit KI erstellen", category: "ki" },
-  { id: 86, title: "Ich will repetitive Aufgaben eliminieren", category: "ki" },
-  { id: 87, title: "Ich will meinen Vertriebsprozess KI-gestützt machen", category: "ki" },
-  { id: 88, title: "Ich will ein eigenes GPT-Agentensystem", category: "ki" },
-  { id: 89, title: "Ich will mit KI Meetings zusammenfassen", category: "ki" },
-  { id: 90, title: "Ich will Marketingtexte automatisch generieren", category: "ki" },
-  { id: 91, title: "Ich will KI in meine Tools integrieren", category: "ki" },
-  { id: 92, title: "Ich will Chatbots effizient einsetzen", category: "ki" },
-  { id: 93, title: "Ich will keine manuellen Follow-ups mehr", category: "ki" },
-  { id: 94, title: "Ich will Rechnungsstellung automatisieren", category: "ki" },
-  { id: 95, title: "Ich will KI für PR & Social Media nutzen", category: "ki" },
-  { id: 96, title: "Ich will Bewerber automatisch vorsortieren", category: "ki" },
-  { id: 97, title: "Ich will KI im Support rund um die Uhr", category: "ki" },
-  { id: 98, title: "Ich will Contentplanung mit KI abbilden", category: "ki" },
-  { id: 99, title: "Ich will Produktdaten automatisch pflegen", category: "ki" },
-  { id: 100, title: "Ich will KI-Tools strategisch kombinieren", category: "ki" },
+  // 5. Artificial Intelligence
+  { id: 81, title: "I want to automate tasks with AI", category: "ai" },
+  { id: 82, title: "I want to really save time with GPT", category: "ai" },
+  { id: 83, title: "I want to use AI in customer service", category: "ai" },
+  { id: 84, title: "I want to automatically write proposals", category: "ai" },
+  { id: 85, title: "I want to create content with AI", category: "ai" },
+  { id: 86, title: "I want to eliminate repetitive tasks", category: "ai" },
+  { id: 87, title: "I want to make my sales process AI-supported", category: "ai" },
+  { id: 88, title: "I want my own GPT agent system", category: "ai" },
+  { id: 89, title: "I want to summarize meetings with AI", category: "ai" },
+  { id: 90, title: "I want to automatically generate marketing texts", category: "ai" },
+  { id: 91, title: "I want to integrate AI into my tools", category: "ai" },
+  { id: 92, title: "I want to efficiently use chatbots", category: "ai" },
+  { id: 93, title: "I want no more manual follow-ups", category: "ai" },
+  { id: 94, title: "I want to automate invoicing", category: "ai" },
+  { id: 95, title: "I want to use AI for PR & social media", category: "ai" },
+  { id: 96, title: "I want to automatically pre-sort applicants", category: "ai" },
+  { id: 97, title: "I want AI support 24/7", category: "ai" },
+  { id: 98, title: "I want to map content planning with AI", category: "ai" },
+  { id: 99, title: "I want to automatically maintain product data", category: "ai" },
+  { id: 100, title: "I want to strategically combine AI tools", category: "ai" },
 
-  // 6. Investments (war "Finanzen" in der MD, aber im Dropdown "Investments")
-  { id: 101, title: "Ich will in Startups investieren", category: "investments" },
-  { id: 102, title: "Ich will Immobilien als Investment nutzen", category: "investments" },
-  { id: 103, title: "Ich will mein Geld steueroptimiert anlegen", category: "investments" },
-  { id: 104, title: "Ich will Beteiligungen aufbauen", category: "investments" },
-  { id: 105, title: "Ich will alternative Investments verstehen", category: "investments" },
-  { id: 106, title: "Ich will sichere Investments mit hoher Rendite", category: "investments" },
-  { id: 107, title: "Ich will investieren ohne Tagesgeschäft", category: "investments" },
-  { id: 108, title: "Ich will Investmentrisiken minimieren", category: "investments" },
-  { id: 109, title: "Ich will passives Einkommen mit Substanz", category: "investments" },
-  { id: 110, title: "Ich will Beteiligungen steuerlich korrekt strukturieren", category: "investments" },
-  { id: 111, title: "Ich will mein Portfolio diversifizieren", category: "investments" },
-  { id: 112, title: "Ich will Kapital strategisch allokieren", category: "investments" },
-  { id: 113, title: "Ich will in Firmen investieren, die zu mir passen", category: "investments" },
-  { id: 114, title: "Ich will Investment mit Einfluss", category: "investments" },
-  { id: 115, title: "Ich will Sachwerte intelligent aufbauen", category: "investments" },
-  { id: 116, title: "Ich will meine Investments rechtssicher dokumentieren", category: "investments" },
-  { id: 117, title: "Ich will Business Angel werden", category: "investments" },
-  { id: 118, title: "Ich will mein Vermögen unabhängig machen", category: "investments" },
-  { id: 119, title: "Ich will investieren ohne Bankverbindung", category: "investments" },
-  { id: 120, title: "Ich will Investmentprojekte professionell prüfen", category: "investments" },
+  // 6. Investments
+  { id: 101, title: "I want to invest in startups", category: "investments" },
+  { id: 102, title: "I want to use real estate as investment", category: "investments" },
+  { id: 103, title: "I want to invest my money tax-optimized", category: "investments" },
+  { id: 104, title: "I want to build equity stakes", category: "investments" },
+  { id: 105, title: "I want to understand alternative investments", category: "investments" },
+  { id: 106, title: "I want safe investments with high returns", category: "investments" },
+  { id: 107, title: "I want to invest without daily operations", category: "investments" },
+  { id: 108, title: "I want to minimize investment risks", category: "investments" },
+  { id: 109, title: "I want passive income with substance", category: "investments" },
+  { id: 110, title: "I want to structure equity stakes tax-correctly", category: "investments" },
+  { id: 111, title: "I want to diversify my portfolio", category: "investments" },
+  { id: 112, title: "I want to allocate capital strategically", category: "investments" },
+  { id: 113, title: "I want to invest in companies that fit me", category: "investments" },
+  { id: 114, title: "I want investment with influence", category: "investments" },
+  { id: 115, title: "I want to intelligently build tangible assets", category: "investments" },
+  { id: 116, title: "I want to legally secure my investments", category: "investments" },
+  { id: 117, title: "I want to become a business angel", category: "investments" },
+  { id: 118, title: "I want to make my wealth independent", category: "investments" },
+  { id: 119, title: "I want to invest without bank connection", category: "investments" },
+  { id: 120, title: "I want to professionally check investment projects", category: "investments" },
 
-  // 7. Finanzierung (neue Kategorie aus "Finanzen" in der MD)
-  { id: 121, title: "Ich will kurzfristig meine Liquidität verbessern", category: "finanzierung" },
-  { id: 122, title: "Ich will Förderung erhalten, die mir zusteht", category: "finanzierung" },
-  { id: 123, title: "Ich will meine Kosten nachhaltig senken", category: "finanzierung" },
-  { id: 124, title: "Ich will meine Buchhaltung auslagern", category: "finanzierung" },
-  { id: 125, title: "Ich will bankfähig für einen Kredit werden", category: "finanzierung" },
-  { id: 126, title: "Ich will meine Einnahmen optimieren", category: "finanzierung" },
-  { id: 127, title: "Ich will meine Fixkosten radikal kürzen", category: "finanzierung" },
-  { id: 128, title: "Ich will mein Pricing strategisch anheben", category: "finanzierung" },
-  { id: 129, title: "Ich will Rechnungen schneller bezahlt bekommen", category: "finanzierung" },
-  { id: 130, title: "Ich will meine Mahnungen automatisieren", category: "finanzierung" },
-  { id: 131, title: "Ich will meine Bilanz verständlich machen", category: "finanzierung" },
-  { id: 132, title: "Ich will mein Cashflow-Management vereinfachen", category: "finanzierung" },
-  { id: 133, title: "Ich will meine Liquidität mit Tools steuern", category: "finanzierung" },
-  { id: 134, title: "Ich will Verbindlichkeiten clever managen", category: "finanzierung" },
-  { id: 135, title: "Ich will kein Zahlendrehen mehr", category: "finanzierung" },
-  { id: 136, title: "Ich will Skontostrategien aktiv nutzen", category: "finanzierung" },
-  { id: 137, title: "Ich will weniger Bürokratie in der Buchhaltung", category: "finanzierung" },
-  { id: 138, title: "Ich will mein Unternehmen auf Investoren vorbereiten", category: "finanzierung" },
-  { id: 139, title: "Ich will Finanzierung strategisch aufbauen", category: "finanzierung" },
-  { id: 140, title: "Ich will meinen Steuerberater kontrollieren können", category: "finanzierung" },
+  // 7. Financing
+  { id: 121, title: "I want to improve my liquidity short-term", category: "financing" },
+  { id: 122, title: "I want to receive funding I'm entitled to", category: "financing" },
+  { id: 123, title: "I want to sustainably reduce my costs", category: "financing" },
+  { id: 124, title: "I want to outsource my accounting", category: "financing" },
+  { id: 125, title: "I want to become bankable for a loan", category: "financing" },
+  { id: 126, title: "I want to optimize my income", category: "financing" },
+  { id: 127, title: "I want to radically cut my fixed costs", category: "financing" },
+  { id: 128, title: "I want to strategically raise my pricing", category: "financing" },
+  { id: 129, title: "I want invoices paid faster", category: "financing" },
+  { id: 130, title: "I want to automate my reminders", category: "financing" },
+  { id: 131, title: "I want to make my balance sheet understandable", category: "financing" },
+  { id: 132, title: "I want to simplify my cash flow management", category: "financing" },
+  { id: 133, title: "I want to control my liquidity with tools", category: "financing" },
+  { id: 134, title: "I want to cleverly manage liabilities", category: "financing" },
+  { id: 135, title: "I want no more number crunching", category: "financing" },
+  { id: 136, title: "I want to actively use discount strategies", category: "financing" },
+  { id: 137, title: "I want less bureaucracy in accounting", category: "financing" },
+  { id: 138, title: "I want to prepare my company for investors", category: "financing" },
+  { id: 139, title: "I want to strategically build financing", category: "financing" },
+  { id: 140, title: "I want to be able to control my tax advisor", category: "financing" },
 
-  // 8. Unternehmensstruktur
-  { id: 141, title: "Ich will eine Holding gründen", category: "unternehmensstruktur" },
-  { id: 142, title: "Ich will mein Unternehmen verkaufen", category: "unternehmensstruktur" },
-  { id: 143, title: "Ich will mein Unternehmen ohne mich führen", category: "unternehmensstruktur" },
-  { id: 144, title: "Ich will meine Nachfolge regeln", category: "unternehmensstruktur" },
-  { id: 145, title: "Ich will Anteile sauber übertragen", category: "unternehmensstruktur" },
-  { id: 146, title: "Ich will stille Beteiligungen clever einsetzen", category: "unternehmensstruktur" },
-  { id: 147, title: "Ich will mit Partnern klare Verhältnisse schaffen", category: "unternehmensstruktur" },
-  { id: 148, title: "Ich will eine Exit-Strategie aufbauen", category: "unternehmensstruktur" },
-  { id: 149, title: "Ich will mein Unternehmen teilverkaufen", category: "unternehmensstruktur" },
-  { id: 150, title: "Ich will meine Gesellschaftsstruktur verschlanken", category: "unternehmensstruktur" },
-  { id: 151, title: "Ich will Tochtergesellschaften gründen", category: "unternehmensstruktur" },
-  { id: 152, title: "Ich will Co-Founder fair einbinden", category: "unternehmensstruktur" },
-  { id: 153, title: "Ich will meine Struktur internationalisieren", category: "unternehmensstruktur" },
-  { id: 154, title: "Ich will stille Reserven steuerfrei heben", category: "unternehmensstruktur" },
-  { id: 155, title: "Ich will mein Unternehmen für Investoren attraktiv machen", category: "unternehmensstruktur" },
-  { id: 156, title: "Ich will Umfirmierung ohne Chaos", category: "unternehmensstruktur" },
-  { id: 157, title: "Ich will die beste Rechtsform für mein Modell", category: "unternehmensstruktur" },
-  { id: 158, title: "Ich will mein Unternehmen systematisieren", category: "unternehmensstruktur" },
-  { id: 159, title: "Ich will Struktur ohne Overhead", category: "unternehmensstruktur" },
-  { id: 160, title: "Ich will meine Unternehmensanteile vertraglich absichern", category: "unternehmensstruktur" },
+  // 8. Corporate Structure
+  { id: 141, title: "I want to establish a holding company", category: "corporate-structure" },
+  { id: 142, title: "I want to sell my company", category: "corporate-structure" },
+  { id: 143, title: "I want to run my company without me", category: "corporate-structure" },
+  { id: 144, title: "I want to arrange my succession", category: "corporate-structure" },
+  { id: 145, title: "I want to cleanly transfer shares", category: "corporate-structure" },
+  { id: 146, title: "I want to cleverly use silent partnerships", category: "corporate-structure" },
+  { id: 147, title: "I want to create clear conditions with partners", category: "corporate-structure" },
+  { id: 148, title: "I want to build an exit strategy", category: "corporate-structure" },
+  { id: 149, title: "I want to partially sell my company", category: "corporate-structure" },
+  { id: 150, title: "I want to streamline my corporate structure", category: "corporate-structure" },
+  { id: 151, title: "I want to establish subsidiaries", category: "corporate-structure" },
+  { id: 152, title: "I want to fairly include co-founders", category: "corporate-structure" },
+  { id: 153, title: "I want to internationalize my structure", category: "corporate-structure" },
+  { id: 154, title: "I want to realize hidden reserves tax-free", category: "corporate-structure" },
+  { id: 155, title: "I want to make my company attractive for investors", category: "corporate-structure" },
+  { id: 156, title: "I want restructuring without chaos", category: "corporate-structure" },
+  { id: 157, title: "I want the best legal form for my model", category: "corporate-structure" },
+  { id: 158, title: "I want to systematize my company", category: "corporate-structure" },
+  { id: 159, title: "I want structure without overhead", category: "corporate-structure" },
+  { id: 160, title: "I want to contractually secure my company shares", category: "corporate-structure" },
 
-  // 9. Recht & Sicherheit
-  { id: 161, title: "Ich will rechtssichere Verträge aufsetzen", category: "recht-sicherheit" },
-  { id: 162, title: "Ich will arbeitsrechtlich sauber kündigen", category: "recht-sicherheit" },
-  { id: 163, title: "Ich will nicht haften, wenn etwas schiefläuft", category: "recht-sicherheit" },
-  { id: 164, title: "Ich will meine Daten vor Angriffen schützen", category: "recht-sicherheit" },
-  { id: 165, title: "Ich will IT-Sicherheit mit wenig Aufwand", category: "recht-sicherheit" },
-  { id: 166, title: "Ich will keine Abmahnungen mehr riskieren", category: "recht-sicherheit" },
-  { id: 167, title: "Ich will meinen Online-Auftritt rechtssicher machen", category: "recht-sicherheit" },
-  { id: 168, title: "Ich will DSGVO-konform agieren", category: "recht-sicherheit" },
-  { id: 169, title: "Ich will Vertragslücken schließen", category: "recht-sicherheit" },
-  { id: 170, title: "Ich will mein Unternehmen vor Klagen schützen", category: "recht-sicherheit" },
-  { id: 171, title: "Ich will rechtlich vorbereitet in die Expansion gehen", category: "recht-sicherheit" },
-  { id: 172, title: "Ich will bei Streit mit Kunden abgesichert sein", category: "recht-sicherheit" },
-  { id: 173, title: "Ich will meine AGB wasserdicht gestalten", category: "recht-sicherheit" },
-  { id: 174, title: "Ich will meine Geschäftsführung rechtlich absichern", category: "recht-sicherheit" },
-  { id: 175, title: "Ich will als GmbH sicher auftreten", category: "recht-sicherheit" },
-  { id: 176, title: "Ich will mein Markenrecht durchsetzen", category: "recht-sicherheit" },
-  { id: 177, title: "Ich will nie wieder Ärger mit Datenschutz haben", category: "recht-sicherheit" },
-  { id: 178, title: "Ich will keine Probleme bei der Rechnungsstellung", category: "recht-sicherheit" },
-  { id: 179, title: "Ich will faire, aber sichere Arbeitsverträge", category: "recht-sicherheit" },
-  { id: 180, title: "Ich will mein Unternehmen rechtlich überprüfen lassen", category: "recht-sicherheit" },
+  // 9. Legal & Security
+  { id: 161, title: "I want to set up legally secure contracts", category: "legal-security" },
+  { id: 162, title: "I want to terminate employees legally", category: "legal-security" },
+  { id: 163, title: "I don't want to be liable if something goes wrong", category: "legal-security" },
+  { id: 164, title: "I want to protect my data from attacks", category: "legal-security" },
+  { id: 165, title: "I want IT security with little effort", category: "legal-security" },
+  { id: 166, title: "I want to no longer risk warnings", category: "legal-security" },
+  { id: 167, title: "I want to make my online presence legally secure", category: "legal-security" },
+  { id: 168, title: "I want to act GDPR-compliant", category: "legal-security" },
+  { id: 169, title: "I want to close contract gaps", category: "legal-security" },
+  { id: 170, title: "I want to protect my company from lawsuits", category: "legal-security" },
+  { id: 171, title: "I want to go into expansion legally prepared", category: "legal-security" },
+  { id: 172, title: "I want to be secured in disputes with customers", category: "legal-security" },
+  { id: 173, title: "I want to make my terms watertight", category: "legal-security" },
+  { id: 174, title: "I want to legally secure my management", category: "legal-security" },
+  { id: 175, title: "I want to operate safely as GmbH", category: "legal-security" },
+  { id: 176, title: "I want to enforce my trademark rights", category: "legal-security" },
+  { id: 177, title: "I never want data protection trouble again", category: "legal-security" },
+  { id: 178, title: "I want no problems with invoicing", category: "legal-security" },
+  { id: 179, title: "I want fair but safe employment contracts", category: "legal-security" },
+  { id: 180, title: "I want to have my company legally reviewed", category: "legal-security" },
 
-  // 10. Auswandern
-  { id: 181, title: "Ich will mein Unternehmen ins Ausland verlagern", category: "auswandern" },
-  { id: 182, title: "Ich will als Unternehmer auswandern", category: "auswandern" },
-  { id: 183, title: "Ich will steuerfrei leben im Ausland", category: "auswandern" },
-  { id: 184, title: "Ich will mit Familie auswandern", category: "auswandern" },
-  { id: 185, title: "Ich will ohne Wohnsitz leben", category: "auswandern" },
-  { id: 186, title: "Ich will weltweit frei arbeiten", category: "auswandern" },
-  { id: 187, title: "Ich will mich abmelden in Deutschland", category: "auswandern" },
-  { id: 188, title: "Ich will ein Business aus Dubai führen", category: "auswandern" },
-  { id: 189, title: "Ich will zwischen mehreren Ländern pendeln", category: "auswandern" },
-  { id: 190, title: "Ich will mein Unternehmen ortsunabhängig aufbauen", category: "auswandern" },
-  { id: 191, title: "Ich will ein steuerfreies Zweitmodell nutzen", category: "auswandern" },
-  { id: 192, title: "Ich will auswandern ohne Ärger mit dem Finanzamt", category: "auswandern" },
-  { id: 193, title: "Ich will ein Leben ohne Bürokratie", category: "auswandern" },
-  { id: 194, title: "Ich will mein Business auf Inseln führen", category: "auswandern" },
-  { id: 195, title: "Ich will auswandern mit Remote-Team", category: "auswandern" },
-  { id: 196, title: "Ich will meine Buchhaltung von überall steuern", category: "auswandern" },
-  { id: 197, title: "Ich will keinen deutschen Pass mehr brauchen", category: "auswandern" },
-  { id: 198, title: "Ich will meine Kinder im Ausland betreuen lassen", category: "auswandern" },
-  { id: 199, title: "Ich will meine Firma global betreiben", category: "auswandern" },
-  { id: 200, title: "Ich will in mehreren Ländern steuerlich optimieren", category: "auswandern" },
+  // 10. Emigration
+  { id: 181, title: "I want to relocate my company abroad", category: "emigration" },
+  { id: 182, title: "I want to emigrate as an entrepreneur", category: "emigration" },
+  { id: 183, title: "I want to live tax-free abroad", category: "emigration" },
+  { id: 184, title: "I want to emigrate with family", category: "emigration" },
+  { id: 185, title: "I want to live without residence", category: "emigration" },
+  { id: 186, title: "I want to work freely worldwide", category: "emigration" },
+  { id: 187, title: "I want to deregister in Germany", category: "emigration" },
+  { id: 188, title: "I want to run a business from Dubai", category: "emigration" },
+  { id: 189, title: "I want to commute between multiple countries", category: "emigration" },
+  { id: 190, title: "I want to build my company location-independent", category: "emigration" },
+  { id: 191, title: "I want to use a tax-free second model", category: "emigration" },
+  { id: 192, title: "I want to emigrate without tax office trouble", category: "emigration" },
+  { id: 193, title: "I want a life without bureaucracy", category: "emigration" },
+  { id: 194, title: "I want to run my business on islands", category: "emigration" },
+  { id: 195, title: "I want to emigrate with remote team", category: "emigration" },
+  { id: 196, title: "I want to control my accounting from anywhere", category: "emigration" },
+  { id: 197, title: "I don't want to need German passport anymore", category: "emigration" },
+  { id: 198, title: "I want to have my children cared for abroad", category: "emigration" },
+  { id: 199, title: "I want to operate my company globally", category: "emigration" },
+  { id: 200, title: "I want to optimize taxes in multiple countries", category: "emigration" },
 
-  // 11. Verkauf & Exit (war "Strategie & Vision" in der MD)
-  { id: 201, title: "Ich will mein Geschäftsmodell weiterentwickeln", category: "verkauf-exit" },
-  { id: 202, title: "Ich will mein Unternehmen neu positionieren", category: "verkauf-exit" },
-  { id: 203, title: "Ich will meine Vision schärfen", category: "verkauf-exit" },
-  { id: 204, title: "Ich will meinen Markt neu definieren", category: "verkauf-exit" },
-  { id: 205, title: "Ich will klarer entscheiden", category: "verkauf-exit" },
-  { id: 206, title: "Ich will strategisch statt operativ denken", category: "verkauf-exit" },
-  { id: 207, title: "Ich will mich vom Wettbewerb abheben", category: "verkauf-exit" },
-  { id: 208, title: "Ich will mein Unternehmen krisenfest machen", category: "verkauf-exit" },
-  { id: 209, title: "Ich will als Unternehmer radikal fokussieren", category: "verkauf-exit" },
-  { id: 210, title: "Ich will meinen Tagesablauf strategisch planen", category: "verkauf-exit" },
-  { id: 211, title: "Ich will bessere Entscheidungen treffen", category: "verkauf-exit" },
-  { id: 212, title: "Ich will von 12 auf 24 Monate planen", category: "verkauf-exit" },
-  { id: 213, title: "Ich will strategische Partnerschaften aufbauen", category: "verkauf-exit" },
-  { id: 214, title: "Ich will meine Marke strategisch führen", category: "verkauf-exit" },
-  { id: 215, title: "Ich will komplexe Probleme schneller lösen", category: "verkauf-exit" },
-  { id: 216, title: "Ich will eine neue Zielgruppe erschließen", category: "verkauf-exit" },
-  { id: 217, title: "Ich will mein Angebot smarter bündeln", category: "verkauf-exit" },
-  { id: 218, title: "Ich will meinen Markt antizipieren", category: "verkauf-exit" },
-  { id: 219, title: "Ich will Chancen erkennen, bevor andere es tun", category: "verkauf-exit" },
-  { id: 220, title: "Ich will als Unternehmer strategisch wachsen", category: "verkauf-exit" },
+  // 11. Sales & Exit
+  { id: 201, title: "I want to develop my business model further", category: "sales-exit" },
+  { id: 202, title: "I want to reposition my company", category: "sales-exit" },
+  { id: 203, title: "I want to sharpen my vision", category: "sales-exit" },
+  { id: 204, title: "I want to redefine my market", category: "sales-exit" },
+  { id: 205, title: "I want to decide more clearly", category: "sales-exit" },
+  { id: 206, title: "I want to think strategically instead of operationally", category: "sales-exit" },
+  { id: 207, title: "I want to differentiate from competition", category: "sales-exit" },
+  { id: 208, title: "I want to make my company crisis-proof", category: "sales-exit" },
+  { id: 209, title: "I want to radically focus as entrepreneur", category: "sales-exit" },
+  { id: 210, title: "I want to strategically plan my daily routine", category: "sales-exit" },
+  { id: 211, title: "I want to make better decisions", category: "sales-exit" },
+  { id: 212, title: "I want to plan from 12 to 24 months", category: "sales-exit" },
+  { id: 213, title: "I want to build strategic partnerships", category: "sales-exit" },
+  { id: 214, title: "I want to strategically manage my brand", category: "sales-exit" },
+  { id: 215, title: "I want to solve complex problems faster", category: "sales-exit" },
+  { id: 216, title: "I want to tap into a new target group", category: "sales-exit" },
+  { id: 217, title: "I want to bundle my offering smarter", category: "sales-exit" },
+  { id: 218, title: "I want to anticipate my market", category: "sales-exit" },
+  { id: 219, title: "I want to recognize opportunities before others", category: "sales-exit" },
+  { id: 220, title: "I want to grow strategically as entrepreneur", category: "sales-exit" },
 
-  // 12. Persönliches Wachstum
-  { id: 221, title: "Ich will besser kommunizieren", category: "persoenliches-wachstum" },
-  { id: 222, title: "Ich will klarer denken", category: "persoenliches-wachstum" },
-  { id: 223, title: "Ich will glücklicher leben als Unternehmer", category: "persoenliches-wachstum" },
-  { id: 224, title: "Ich will mehr Energie im Alltag", category: "persoenliches-wachstum" },
-  { id: 225, title: "Ich will Entscheidungen mit Ruhe treffen", category: "persoenliches-wachstum" },
-  { id: 226, title: "Ich will keine Angst vor Wachstum", category: "persoenliches-wachstum" },
-  { id: 227, title: "Ich will persönlich stabiler werden", category: "persoenliches-wachstum" },
-  { id: 228, title: "Ich will Klarheit in meiner Rolle", category: "persoenliches-wachstum" },
-  { id: 229, title: "Ich will mit Stress besser umgehen", category: "persoenliches-wachstum" },
-  { id: 230, title: "Ich will konsequenter handeln", category: "persoenliches-wachstum" },
-  { id: 231, title: "Ich will meine Kommunikation professionalisieren", category: "persoenliches-wachstum" },
-  { id: 232, title: "Ich will Verhandlungen souverän führen", category: "persoenliches-wachstum" },
-  { id: 233, title: "Ich will mich von Meinungen lösen", category: "persoenliches-wachstum" },
-  { id: 234, title: "Ich will entspannter führen", category: "persoenliches-wachstum" },
-  { id: 235, title: "Ich will meinen Selbstwert als Unternehmer festigen", category: "persoenliches-wachstum" },
-  { id: 236, title: "Ich will weniger innere Konflikte", category: "persoenliches-wachstum" },
-  { id: 237, title: "Ich will mein Denken auf Erfolg ausrichten", category: "persoenliches-wachstum" },
-  { id: 238, title: "Ich will emotional unabhängiger werden", category: "persoenliches-wachstum" },
-  { id: 239, title: "Ich will Verantwortung leichter tragen", category: "persoenliches-wachstum" },
-  { id: 240, title: "Ich will besser abschalten können", category: "persoenliches-wachstum" },
+  // 12. Personal Growth
+  { id: 221, title: "I want to communicate better", category: "personal-growth" },
+  { id: 222, title: "I want to think more clearly", category: "personal-growth" },
+  { id: 223, title: "I want to live happier as entrepreneur", category: "personal-growth" },
+  { id: 224, title: "I want more energy in daily life", category: "personal-growth" },
+  { id: 225, title: "I want to make decisions with calm", category: "personal-growth" },
+  { id: 226, title: "I want no fear of growth", category: "personal-growth" },
+  { id: 227, title: "I want to become personally more stable", category: "personal-growth" },
+  { id: 228, title: "I want clarity in my role", category: "personal-growth" },
+  { id: 229, title: "I want to handle stress better", category: "personal-growth" },
+  { id: 230, title: "I want to act more consistently", category: "personal-growth" },
+  { id: 231, title: "I want to professionalize my communication", category: "personal-growth" },
+  { id: 232, title: "I want to conduct negotiations confidently", category: "personal-growth" },
+  { id: 233, title: "I want to detach from opinions", category: "personal-growth" },
+  { id: 234, title: "I want to lead more relaxed", category: "personal-growth" },
+  { id: 235, title: "I want to strengthen my self-worth as entrepreneur", category: "personal-growth" },
+  { id: 236, title: "I want fewer inner conflicts", category: "personal-growth" },
+  { id: 237, title: "I want to align my thinking for success", category: "personal-growth" },
+  { id: 238, title: "I want to become emotionally more independent", category: "personal-growth" },
+  { id: 239, title: "I want to carry responsibility more easily", category: "personal-growth" },
+  { id: 240, title: "I want to be able to switch off better", category: "personal-growth" },
 ];
 
 /**
- * FilterDropdown - Elegantes Dropdown für FilterTabs
+ * FilterDropdown - Elegant dropdown for FilterTabs
  */
 interface FilterDropdownProps {
   tabs: FilterTabItem[];
@@ -299,7 +299,7 @@ function FilterDropdown({ tabs, activeTabId, onTabChange }: FilterDropdownProps)
   const [isOpen, setIsOpen] = useState(false);
   const [fadeAnim] = useState(new Animated.Value(0));
   
-  // Finde das aktive Tab
+  // Find the active tab
   const activeTab = tabs.find(tab => tab.id === activeTabId);
   
   const openDropdown = () => {
@@ -385,7 +385,7 @@ function FilterDropdown({ tabs, activeTabId, onTabChange }: FilterDropdownProps)
           dropdownStyles.buttonText,
           { color: colors.textPrimary }
         ]}>
-          {activeTab?.label || 'Kategorie wählen'}
+          {activeTab?.label || 'Select category'}
         </Text>
         <Ionicons 
           name={isOpen ? "chevron-up" : "chevron-down"} 
@@ -431,7 +431,7 @@ function FilterDropdown({ tabs, activeTabId, onTabChange }: FilterDropdownProps)
                 dropdownStyles.headerText,
                 { color: colors.textPrimary }
               ]}>
-                Kategorie auswählen
+                Select category
               </Text>
               <TouchableOpacity
                 onPress={closeDropdown}
@@ -532,10 +532,10 @@ const dropdownStyles = StyleSheet.create({
 });
 
 /**
- * Explore-Screen - Mit echten Tile-Daten aus ExploreTiles.md
+ * Explore-Screen - With real tile data from ExploreTiles.md, translated to English
  *
- * Zeigt FilterDropdown und entsprechende Tiles für jede Kategorie an.
- * @returns {React.ReactElement} Die gerenderte Explore-Komponente
+ * Shows FilterDropdown and corresponding tiles for each category.
+ * @returns {React.ReactElement} The rendered Explore component
  */
 export default function ExploreScreen(): React.ReactElement {
   const { t } = useTranslation();
@@ -544,19 +544,19 @@ export default function ExploreScreen(): React.ReactElement {
   const router = useRouter();
   
   // FilterTabs State
-  const [activeFilter, setActiveFilter] = React.useState('alle');
+  const [activeFilter, setActiveFilter] = React.useState('all');
 
-  // Handler für FilterTabs
+  // Handler for FilterTabs
   const handleFilterChange = (filterId: string) => {
     setActiveFilter(filterId);
   };
 
-  // Handler für Tile-Klicks
+  // Handler for Tile-Clicks
   const handleTilePress = (id: number) => {
     const tile = EXPLORE_TILES.find(t => t.id === id);
     if (tile) {
-      console.log('Tile geklickt:', tile.title);
-      // Navigation zu Olivia mit vorgefülltem Text
+      console.log('Tile clicked:', tile.title);
+      // Navigation to Olivia with pre-filled text
       router.push({
         pathname: '/chats/olivia',
         params: { 
@@ -566,31 +566,31 @@ export default function ExploreScreen(): React.ReactElement {
     }
   };
 
-  // Handler für Olivia Chat
+  // Handler for Olivia Chat
   const handleOliviaChat = () => {
-    console.log('Navigation zu Olivia Chat');
+    console.log('Navigation to Olivia Chat');
     router.navigate('/chats/olivia');
   };
 
-  // FilterTabs-Konfiguration
+  // FilterTabs-Configuration
   const FILTER_TABS: FilterTabItem[] = [
-    { id: 'alle', label: 'Alle' },
-    { id: 'steuern', label: 'Steuern' },
-    { id: 'immobilien', label: 'Immobilien' },
-    { id: 'mitarbeiter', label: 'Mitarbeiter' },
-    { id: 'kundengewinnung', label: 'Kundengewinnung' },
-    { id: 'ki', label: 'Künstliche Intelligenz' },
+    { id: 'all', label: 'All' },
+    { id: 'taxes', label: 'Taxes' },
+    { id: 'real-estate', label: 'Real Estate' },
+    { id: 'employees', label: 'Employees' },
+    { id: 'customer-acquisition', label: 'Customer Acquisition' },
+    { id: 'ai', label: 'Artificial Intelligence' },
     { id: 'investments', label: 'Investments' },
-    { id: 'finanzierung', label: 'Finanzierung' },
-    { id: 'unternehmensstruktur', label: 'Unternehmensstruktur' },
-    { id: 'recht-sicherheit', label: 'Recht & Sicherheit' },
-    { id: 'auswandern', label: 'Auswandern' },
-    { id: 'verkauf-exit', label: 'Verkauf & Exit' },
-    { id: 'persoenliches-wachstum', label: 'Persönliches Wachstum' }
+    { id: 'financing', label: 'Financing' },
+    { id: 'corporate-structure', label: 'Corporate Structure' },
+    { id: 'legal-security', label: 'Legal & Security' },
+    { id: 'emigration', label: 'Emigration' },
+    { id: 'sales-exit', label: 'Sales & Exit' },
+    { id: 'personal-growth', label: 'Personal Growth' }
   ];
 
-  // Filtere Tiles basierend auf ausgewählter Kategorie
-  const filteredTiles = activeFilter === 'alle' 
+  // Filter tiles based on selected category
+  const filteredTiles = activeFilter === 'all' 
     ? EXPLORE_TILES 
     : EXPLORE_TILES.filter(tile => tile.category === activeFilter);
   
@@ -599,7 +599,7 @@ export default function ExploreScreen(): React.ReactElement {
       backgroundColor: colors.backgroundPrimary,
       paddingTop: insets.top 
     }]}>
-      {/* Einfacher Header Text - keine komplexe Komponente */}
+      {/* Simple header text - no complex component */}
       <View style={styles.headerSection}>
         <Text style={styles.headerTitle}>Explore</Text>
       </View>
@@ -628,16 +628,16 @@ export default function ExploreScreen(): React.ReactElement {
         </ScrollView>
       </View>
       
-      {/* Text über Button */}
+      {/* Text above button */}
       <View style={styles.preButtonTextSection}>
         <Text style={[styles.preButtonText, { color: colors.textSecondary }]}>
-          Noch nicht das richtige dabei?
+          Not quite what you're looking for?
         </Text>
       </View>
       
       {/* Footer Action Button */}
       <FooterActionButton
-        label="Sag Olivia was du willst!"
+        label="Tell Olivia what you want!"
         onPress={handleOliviaChat}
         icon="semantic-web"
         iconLibrary="material-community"
