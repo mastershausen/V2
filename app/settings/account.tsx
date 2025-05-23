@@ -15,32 +15,32 @@ import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigatio
 
 /**
  * Account Settings Screen
- * Alle account-spezifischen Einstellungen und Verwaltungsfunktionen
+ * All account-specific settings and management functions
  */
 export default function AccountSettingsScreen() {
   const colors = useThemeColor();
   const router = useRouter();
   
-  // Handler für Navigation zu verschiedenen Screens
+  // Handler for navigation to different screens
   const handleNavigation = (route: string) => {
     router.push(route as any);
   };
   
-  // Handler für kritische Account-Aktionen
+  // Handler for critical account actions
   const handleDeleteAccount = () => {
     Alert.alert(
-      'Account löschen',
-      'Sind Sie sicher, dass Sie Ihren Account endgültig löschen möchten? Alle Daten inklusive gespeicherter Inhalte werden unwiderruflich gelöscht.',
+      'Delete Account',
+      'Are you sure you want to permanently delete your account? All data including saved content will be irreversibly deleted.',
       [
-        { text: 'Abbrechen', style: 'cancel' },
+        { text: 'Cancel', style: 'cancel' },
         { 
-          text: 'Löschen', 
+          text: 'Delete', 
           style: 'destructive',
           onPress: () => {
-            // Hier würde die Account-Löschung über E-Mail-Bestätigung erfolgen
+            // Here the account deletion via email confirmation would occur
             Alert.alert(
-              'Bestätigung erforderlich',
-              'Wir haben Ihnen eine E-Mail zur Bestätigung der Account-Löschung gesendet. Bitte folgen Sie den Anweisungen in der E-Mail.',
+              'Confirmation Required',
+              'We have sent you an email to confirm the account deletion. Please follow the instructions in the email.',
               [{ text: 'OK' }]
             );
           }
@@ -52,7 +52,7 @@ export default function AccountSettingsScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="Account-Einstellungen"
+        title="Account Settings"
         showBackButton={true}
         onBackPress={() => router.back()}
         titleStyle={styles.headerTitle}
@@ -64,32 +64,32 @@ export default function AccountSettingsScreen() {
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Account & Sicherheit */}
-        <SettingsSection title="Account & Sicherheit">
+        {/* Account & Security */}
+        <SettingsSection title="Account & Security">
           <SettingsItem
-            label="E-Mail ändern"
+            label="Change Email"
             icon="mail-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/change-email')}
           />
           <SettingsItem
-            label="Passwort ändern"
+            label="Change Password"
             icon="lock-closed-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/change-password')}
           />
           <SettingsItem
-            label="Push-Benachrichtigungen"
+            label="Push Notifications"
             icon="notifications-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/notifications')}
           />
         </SettingsSection>
         
-        {/* Abo & Zahlungen */}
-        <SettingsSection title="Abo & Zahlungen">
+        {/* Subscription & Payments */}
+        <SettingsSection title="Subscription & Payments">
           <SettingsItem
-            label="Mein Abo & Zahlungen"
+            label="My Subscription & Payments"
             icon="card-outline"
             value="Free Plan"
             showArrow={true}
@@ -97,38 +97,38 @@ export default function AccountSettingsScreen() {
           />
         </SettingsSection>
         
-        {/* Rechtliches */}
-        <SettingsSection title="Rechtliches">
+        {/* Legal */}
+        <SettingsSection title="Legal">
           <SettingsItem
-            label="Impressum"
+            label="Imprint"
             icon="document-text-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/imprint')}
           />
           <SettingsItem
-            label="AGB"
+            label="Terms & Conditions"
             icon="clipboard-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/terms')}
           />
           <SettingsItem
-            label="Datenschutz"
+            label="Privacy Policy"
             icon="shield-checkmark-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/privacy')}
           />
           <SettingsItem
-            label="Über Solvbox"
+            label="About Solvbox"
             icon="information-circle-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/about')}
           />
         </SettingsSection>
         
-        {/* Account-Verwaltung */}
-        <SettingsSection title="Account-Verwaltung">
+        {/* Account Management */}
+        <SettingsSection title="Account Management">
           <SettingsItem
-            label="Account löschen"
+            label="Delete Account"
             icon="trash-outline"
             showArrow={true}
             onPress={handleDeleteAccount}

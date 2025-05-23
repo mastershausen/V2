@@ -19,13 +19,13 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 
 /**
- * Hauptkomponente für alle Einstellungen
+ * Main component for all settings
  */
 export default function SettingsScreen() {
   const colors = useThemeColor();
   const router = useRouter();
   
-  // Handler für Navigation zu verschiedenen Screens
+  // Handler for navigation to different screens
   const handleNavigation = (route: string) => {
     router.push(route as any);
   };
@@ -33,15 +33,15 @@ export default function SettingsScreen() {
   // Logout Handler
   const handleLogout = () => {
     Alert.alert(
-      'Abmelden',
-      'Möchten Sie sich wirklich abmelden?',
+      'Log out',
+      'Do you really want to log out?',
       [
-        { text: 'Abbrechen', style: 'cancel' },
+        { text: 'Cancel', style: 'cancel' },
         { 
-          text: 'Abmelden', 
+          text: 'Log out', 
           style: 'destructive',
           onPress: () => {
-            // Hier würde die Logout-Logik kommen
+            // Here the logout logic would come
             console.log('User logged out');
             router.replace('/auth/login' as any);
           }
@@ -53,7 +53,7 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="Einstellungen"
+        title="Settings"
         showBackButton={false}
         titleStyle={styles.headerTitle}
         containerStyle={styles.headerContainer}
@@ -64,18 +64,18 @@ export default function SettingsScreen() {
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Allgemein */}
-        <SettingsSection title="Allgemein">
+        {/* General */}
+        <SettingsSection title="General">
           <SettingsItem
-            label="Erscheinungsbild"
+            label="Appearance"
             icon="color-palette-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/appearance')}
           />
           <SettingsItem
-            label="Sprache"
+            label="Language"
             icon="language-outline"
-            value="Deutsch"
+            value="English"
             showArrow={true}
             onPress={() => handleNavigation('/settings/language')}
           />
@@ -86,13 +86,13 @@ export default function SettingsScreen() {
             onPress={() => handleNavigation('/settings/tutorial')}
           />
           <SettingsItem
-            label="Gespeichert / Favoriten"
+            label="Saved / Favorites"
             icon="bookmark-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/saved')}
           />
           <SettingsItem
-            label="Hilfe & Support"
+            label="Help & Support"
             icon="help-circle-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/support')}
@@ -108,13 +108,13 @@ export default function SettingsScreen() {
         {/* Account */}
         <SettingsSection title="Account">
           <SettingsItem
-            label="Account-Einstellungen"
+            label="Account Settings"
             icon="settings-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/account')}
           />
           <SettingsItem
-            label="Abmelden"
+            label="Log out"
             icon="log-out-outline"
             showArrow={false}
             onPress={handleLogout}
