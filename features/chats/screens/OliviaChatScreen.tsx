@@ -831,6 +831,7 @@ export default function OliviaChatScreen() {
                   value={message}
                   onChangeText={setMessage}
                   multiline={false}
+                  keyboardAppearance="dark"
                 />
               </View>
               
