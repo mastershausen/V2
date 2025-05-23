@@ -425,6 +425,12 @@ export default function OliviaChatScreen() {
     router.push('/upload');
   }, [router]);
 
+  // Chat speichern
+  const handleSaveNavigation = useCallback(() => {
+    // Hier kannst du später die Speicher-Logik implementieren
+    console.log('Chat wird gespeichert...');
+  }, []);
+
   // Nachrichten nach Datum gruppieren
   const groupMessagesByDate = useCallback(() => {
     const messagesByDate: Record<string, typeof chat.messages> = {};
@@ -788,7 +794,10 @@ export default function OliviaChatScreen() {
               </Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.menuButton} onPress={handleUploadNavigation}>
+          <TouchableOpacity style={styles.menuButton} onPress={handleSaveNavigation}>
+            <Ionicons name="bookmark" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.menuButton, styles.searchButton]} onPress={handleUploadNavigation}>
             <Ionicons name="add-circle" size={24} color="#FFFFFF" />
           </TouchableOpacity>
           <TouchableOpacity style={[styles.menuButton, styles.searchButton]} onPress={handleExploreNavigation}>
