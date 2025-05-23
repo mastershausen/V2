@@ -20,7 +20,7 @@ import {
   Alert
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -783,7 +783,12 @@ export default function OliviaChatScreen() {
           </TouchableOpacity>
           <View style={styles.headerTitleContainer}>
             <View style={styles.chatAvatarContainer}>
-              <Image source={oliviaAvatar} style={styles.chatAvatar} />
+              <MaterialCommunityIcons 
+                name="semantic-web" 
+                size={36} 
+                color="#FFFFFF" 
+                style={styles.chatAvatar}
+              />
             </View>
             <View>
               <Text style={[styles.headerTitle, { color: '#FFFFFF' }]}>

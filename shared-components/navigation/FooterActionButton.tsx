@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import {
   StyleSheet,
@@ -18,6 +18,7 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 
 // Typ für Ionicons name Property
 type IoniconsName = React.ComponentProps<typeof Ionicons>['name'];
+type MaterialCommunityIconsName = React.ComponentProps<typeof MaterialCommunityIcons>['name'];
 
 interface FooterActionButtonProps {
   label: string;
@@ -25,6 +26,7 @@ interface FooterActionButtonProps {
   backgroundColor?: string;
   textColor?: string;
   icon?: string;
+  iconLibrary?: 'ionicons' | 'material-community';
   iconPosition?: 'left' | 'right';
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
@@ -53,6 +55,7 @@ export function FooterActionButton({
   backgroundColor,
   textColor,
   icon,
+  iconLibrary = 'ionicons',
   iconPosition = 'left',
   disabled = false,
   style,
@@ -99,6 +102,41 @@ export function FooterActionButton({
   const iconColor = getTextColor();
   const iconSpacing = spacing.xs;
 
+  // Icon-Renderer basierend auf der gewählten Library
+  const renderIcon = (position: 'left' | 'right') => {
+    if (!icon) return null;
+    
+    const marginStyle = position === 'left' 
+      ? { marginRight: iconSpacing } 
+      : { marginLeft: iconSpacing };
+    
+    if (iconLibrary === 'material-community') {
+      return (
+        <MaterialCommunityIcons 
+          name={icon as MaterialCommunityIconsName} 
+          size={ui.icon.medium} 
+          color={iconColor} 
+          style={[
+            position === 'left' ? styles.iconLeft : styles.iconRight, 
+            marginStyle
+          ]} 
+        />
+      );
+    } else {
+      return (
+        <Ionicons 
+          name={icon as IoniconsName} 
+          size={ui.icon.medium} 
+          color={iconColor} 
+          style={[
+            position === 'left' ? styles.iconLeft : styles.iconRight, 
+            marginStyle
+          ]} 
+        />
+      );
+    }
+  };
+
   return (
     <View style={containerStyles} accessible={true} accessibilityRole="none">
       <TouchableOpacity 
@@ -110,27 +148,13 @@ export function FooterActionButton({
         accessibilityLabel={label}
         accessibilityState={{ disabled }}
       >
-        {icon && iconPosition === 'left' && (
-          <Ionicons 
-            name={icon as IoniconsName} 
-            size={ui.icon.medium} 
-            color={iconColor} 
-            style={[styles.iconLeft, { marginRight: iconSpacing }]} 
-          />
-        )}
+        {iconPosition === 'left' && renderIcon('left')}
         
         <Text style={textStyles}>
           {label}
         </Text>
         
-        {icon && iconPosition === 'right' && (
-          <Ionicons 
-            name={icon as IoniconsName} 
-            size={ui.icon.medium}
-            color={iconColor} 
-            style={[styles.iconRight, { marginLeft: iconSpacing }]} 
-          />
-        )}
+        {iconPosition === 'right' && renderIcon('right')}
       </TouchableOpacity>
     </View>
   );

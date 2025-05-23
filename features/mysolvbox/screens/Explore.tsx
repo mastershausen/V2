@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Modal, FlatList, Animated, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { FilterTabItem } from '@/shared-components/navigation/FilterTabs';
@@ -540,6 +541,7 @@ export default function ExploreScreen(): React.ReactElement {
   const { t } = useTranslation();
   const colors = useThemeColor();
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   
   // FilterTabs State
   const [activeFilter, setActiveFilter] = React.useState('alle');
@@ -559,7 +561,7 @@ export default function ExploreScreen(): React.ReactElement {
   // Handler für Olivia Chat
   const handleOliviaChat = () => {
     console.log('Navigation zu Olivia Chat');
-    // TODO: Navigation zu Olivia Chat Screen
+    router.navigate('/chats/olivia');
   };
 
   // FilterTabs-Konfiguration
@@ -629,7 +631,8 @@ export default function ExploreScreen(): React.ReactElement {
       <FooterActionButton
         label="Sag Olivia was du willst!"
         onPress={handleOliviaChat}
-        icon="chatbubble-ellipses"
+        icon="semantic-web"
+        iconLibrary="material-community"
         iconPosition="left"
         backgroundColor={colors.primary}
         textColor="#FFFFFF"
