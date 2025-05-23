@@ -5,7 +5,7 @@
  * Bietet verschiedene Aktionen für die Texteingabe und Medien.
  */
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   StyleSheet, 
   View, 
@@ -14,8 +14,10 @@ import {
   ViewStyle, 
   Platform,
   KeyboardAvoidingView,
-  Text
+  Text,
+  Keyboard
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -90,6 +92,24 @@ function KeyboardToolbar({
   style
 }: KeyboardToolbarProps): React.ReactElement | null {
   const colors = useThemeColor();
+  const insets = useSafeAreaInsets();
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => setKeyboardVisible(true)
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => setKeyboardVisible(false)
+    );
+
+    return () => {
+      keyboardDidShowListener?.remove();
+      keyboardDidHideListener?.remove();
+    };
+  }, []);
   
   // Wenn die Toolbar nicht sichtbar sein soll, nichts rendern
   if (!visible) return null;
@@ -101,6 +121,7 @@ function KeyboardToolbar({
         { 
           backgroundColor: colors.backgroundSecondary,
           borderTopColor: colors.divider,
+          paddingBottom: keyboardVisible ? spacing.xs : spacing.xs + insets.bottom,
         },
         style
       ]}
@@ -171,7 +192,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    paddingVertical: spacing.xs,
+    paddingTop: spacing.xs,
     paddingHorizontal: spacing.s,
     borderTopWidth: 1,
   },
