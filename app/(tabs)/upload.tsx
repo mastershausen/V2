@@ -80,10 +80,10 @@ export default function UploadScreen() {
         router.push('/casestudies/create/NowThenFrame');
         break;
       case FrameType.OUTSIDE_BOX:
-        console.log('Um die Ecke gedacht ausgewählt - Navigation noch nicht implementiert');
+        router.push('/casestudies/create/ThinkDifferentFrame');
         break;
       case FrameType.CREATE_NEW:
-        console.log('Neues erschaffen ausgewählt - Navigation noch nicht implementiert');
+        router.push('/casestudies/create/NewStuffFrame');
         break;
     }
   };
