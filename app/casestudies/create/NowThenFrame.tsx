@@ -16,6 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
+import { KeyboardToolbar, ToolbarAction } from '@/shared-components/navigation/KeyboardToolbar';
 import { InfoBox } from '@/shared-components/ui/InfoBox';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -89,6 +90,33 @@ export default function NowThenFrameScreen() {
     }
   };
 
+  // Kontext für Olivia
+  const handleContextForOlivia = () => {
+    Alert.alert(
+      "Kontext für Olivia",
+      "Diese Funktion wird bald verfügbar sein!"
+    );
+  };
+
+  // KeyboardToolbar Actions
+  const toolbarActions: ToolbarAction[] = [
+    {
+      id: 'save',
+      icon: 'checkmark-circle-outline',
+      label: 'Fallstudie speichern',
+      onPress: handleSubmit,
+      disabled: !isValid,
+      accessibilityLabel: 'Fallstudie speichern'
+    },
+    {
+      id: 'context',
+      icon: 'information-circle-outline',
+      label: 'Kontext für Olivia',
+      onPress: handleContextForOlivia,
+      accessibilityLabel: 'Kontext für Olivia'
+    }
+  ];
+
   // Erstelle Fortschrittsbalken für die Textlänge
   const renderCharacterProgress = (currentLength: number, minChars: number) => {
     const progress = Math.min(currentLength / minChars, 1);
@@ -156,11 +184,7 @@ export default function NowThenFrameScreen() {
   };
 
   return (
-    <KeyboardAvoidingView 
-      style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 88 : 0}
-    >
+    <View style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <SafeAreaView style={styles.safeArea}>
         <Stack.Screen 
           options={{ 
@@ -237,30 +261,19 @@ export default function NowThenFrameScreen() {
             true
           )}
         </ScrollView>
-
-        {/* Footer mit Speichern-Button */}
-        <View style={[styles.footer, { borderTopColor: colors.divider }]}>
-          <TouchableOpacity
-            style={[
-              styles.submitButton,
-              { opacity: isValid ? 1 : 0.6 }
-            ]}
-            onPress={handleSubmit}
-            disabled={!isValid}
-          >
-            <LinearGradient
-              colors={[colors.primary, colors.primary]}
-              style={styles.buttonGradient}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-            >
-              <Text style={styles.buttonText}>Fallstudie speichern</Text>
-              <Ionicons name="checkmark-circle" size={20} color="#FFFFFF" style={styles.buttonIcon} />
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
       </SafeAreaView>
-    </KeyboardAvoidingView>
+
+      {/* KeyboardToolbar mit KeyboardAvoidingView für Tastatur-Bewegung */}
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={0}
+      >
+        <KeyboardToolbar 
+          actions={toolbarActions}
+          style={styles.keyboardToolbar}
+        />
+      </KeyboardAvoidingView>
+    </View>
   );
 }
 
@@ -348,27 +361,8 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.xs,
     textAlign: 'left',
   },
-  footer: {
-    padding: spacing.m,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
-  submitButton: {
-    borderRadius: ui.borderRadius.m,
-    overflow: 'hidden',
-    height: 50,
-  },
-  buttonGradient: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.semiBold as any,
-  },
-  buttonIcon: {
-    marginLeft: spacing.xs,
+  keyboardToolbar: {
+    paddingVertical: spacing.xs,
+    paddingHorizontal: spacing.m,
   },
 }); 

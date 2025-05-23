@@ -13,10 +13,12 @@ import {
   StyleProp, 
   ViewStyle, 
   Platform,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Text
 } from 'react-native';
 
 import { spacing } from '@/config/theme/spacing';
+import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/ui/useThemeColor';
 
@@ -50,6 +52,11 @@ export interface ToolbarAction {
    * Beschreibung für Screenreader (Barrierefreiheit)
    */
   accessibilityLabel?: string;
+  
+  /**
+   * Text-Label, das unter dem Icon angezeigt wird
+   */
+  label?: string;
 }
 
 interface KeyboardToolbarProps {
@@ -88,54 +95,74 @@ function KeyboardToolbar({
   if (!visible) return null;
   
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 10 : 0}
+    <View 
+      style={[
+        styles.container, 
+        { 
+          backgroundColor: colors.backgroundSecondary,
+          borderTopColor: colors.divider,
+        },
+        style
+      ]}
     >
-      <View 
-        style={[
-          styles.container, 
-          { 
-            backgroundColor: colors.backgroundSecondary,
-            borderTopColor: colors.divider,
-          },
-          style
-        ]}
-      >
-        {actions.map((action) => (
-          <TouchableOpacity
-            key={action.id}
-            style={[
-              styles.actionButton,
-              action.selected && {
-                backgroundColor: colors.backgroundTertiary,
-                borderRadius: ui.borderRadius.m,
+      {actions.map((action) => (
+        <TouchableOpacity
+          key={action.id}
+          style={[
+            styles.actionButton,
+            {
+              backgroundColor: action.disabled 
+                ? colors.backgroundTertiary
+                : action.id === 'save' 
+                  ? colors.primary
+                  : 'transparent',
+              borderWidth: 1,
+              borderColor: action.disabled
+                ? colors.divider
+                : colors.primary,
+            },
+            action.selected && {
+              backgroundColor: colors.backgroundTertiary,
+              borderColor: colors.primary,
+            }
+          ]}
+          onPress={action.onPress}
+          disabled={action.disabled}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel={action.accessibilityLabel || action.label || action.id}
+          accessibilityState={{ 
+            disabled: action.disabled,
+            selected: action.selected
+          }}
+        >
+          <Ionicons 
+            name={action.icon as keyof typeof Ionicons.glyphMap} 
+            size={16} 
+            color={action.disabled 
+              ? colors.textTertiary 
+              : action.id === 'save'
+                ? '#FFFFFF'
+                : colors.primary
+            } 
+          />
+          {action.label && (
+            <Text style={[
+              styles.label,
+              {
+                color: action.disabled 
+                  ? colors.textTertiary 
+                  : action.id === 'save'
+                    ? '#FFFFFF'
+                    : colors.primary
               }
-            ]}
-            onPress={action.onPress}
-            disabled={action.disabled}
-            accessible={true}
-            accessibilityRole="button"
-            accessibilityLabel={action.accessibilityLabel || action.id}
-            accessibilityState={{ 
-              disabled: action.disabled,
-              selected: action.selected
-            }}
-          >
-            <Ionicons 
-              name={action.icon as keyof typeof Ionicons.glyphMap} 
-              size={24} 
-              color={action.disabled 
-                ? colors.textTertiary 
-                : action.selected 
-                  ? colors.primary 
-                  : colors.textSecondary
-              } 
-            />
-          </TouchableOpacity>
-        ))}
-      </View>
-    </KeyboardAvoidingView>
+            ]}>
+              {action.label}
+            </Text>
+          )}
+        </TouchableOpacity>
+      ))}
+    </View>
   );
 }
 
@@ -149,8 +176,21 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   actionButton: {
-    padding: spacing.s,
-    borderRadius: ui.borderRadius.m,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: spacing.xs,
+    paddingHorizontal: spacing.s,
+    borderRadius: 18,
+    minHeight: 32,
+    flex: 1,
+    marginHorizontal: spacing.xs,
+    justifyContent: 'center',
+  },
+  label: {
+    fontSize: typography.fontSize.s,
+    marginLeft: spacing.xs,
+    flexShrink: 1,
+    fontWeight: typography.fontWeight.medium as any,
   }
 });
 
