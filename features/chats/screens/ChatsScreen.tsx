@@ -22,17 +22,17 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { FloatingChatButton } from '@/shared-components/button';
 import { navigateToAssistantChat } from '@/shared-components/navigation/ChatNavigation';
 
-// Avatar-Bild importieren
+// Import avatar image
 const solvboxAvatar = require('@/assets/small rounded Icon.png') as ImageSourcePropType;
 
-// Mock-Daten für die fixierten Solvbox-Chats
+// Mock data for fixed Solvbox chats
 const FIXED_CHATS = [
   {
     id: '1',
     name: 'Olivia',
     avatar: solvboxAvatar,
     isBot: true,
-    lastMessage: 'Wie kann ich Ihnen heute helfen?',
+    lastMessage: 'How can I help you today?',
     time: '14:30',
     unread: 1,
     isFixed: true,
@@ -46,8 +46,8 @@ const REGULAR_CHATS = [
     name: 'Thomas Müller',
     avatar: solvboxAvatar, 
     isBot: true,
-    lastMessage: 'Hier sind die Informationen zu Ihrer Steuererklärung...',
-    time: '12.10.23',
+    lastMessage: 'Here is the information about your tax return...',
+    time: 'Oct 12',
     unread: 0,
     isFixed: false,
   },
@@ -56,8 +56,8 @@ const REGULAR_CHATS = [
     name: 'Laura Schmidt',
     avatar: solvboxAvatar,
     isBot: true, 
-    lastMessage: 'Ich habe Ihre Anlagestrategie analysiert.',
-    time: '05.10.23',
+    lastMessage: 'I have analyzed your investment strategy.',
+    time: 'Oct 5',
     unread: 2,
     isFixed: false,
   },
@@ -66,8 +66,8 @@ const REGULAR_CHATS = [
     name: 'Markus Weber',
     avatar: solvboxAvatar,
     isBot: true,
-    lastMessage: 'Hier sind einige Tipps für Ihr nächstes Meeting...',
-    time: '02.10.23',
+    lastMessage: 'Here are some tips for your next meeting...',
+    time: 'Oct 2',
     unread: 0,
     isFixed: false,
   },
@@ -76,8 +76,8 @@ const REGULAR_CHATS = [
     name: 'Sophia Becker',
     avatar: solvboxAvatar,
     isBot: false,
-    lastMessage: 'Vielen Dank für Ihre Anfrage. Wir werden...',
-    time: '24.09.23',
+    lastMessage: 'Thank you for your inquiry. We will...',
+    time: 'Sep 24',
     unread: 0,
     isFixed: false,
   },
@@ -90,13 +90,13 @@ const CHAT_SECTIONS = [
     data: FIXED_CHATS
   },
   {
-    title: 'Weitere Chats',
+    title: 'Other Chats',
     data: REGULAR_CHATS
   }
 ];
 
 /**
- * Chat-Screen der Anwendung
+ * Chat screen of the application
  */
 export default function ChatsScreen() {
   const colors = useThemeColor();
@@ -104,7 +104,7 @@ export default function ChatsScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredSections, setFilteredSections] = useState(CHAT_SECTIONS);
 
-  // Filtert Kontakte basierend auf der Suchanfrage
+  // Filter contacts based on search query
   const handleSearch = (text: string) => {
     setSearchQuery(text);
     
@@ -113,7 +113,7 @@ export default function ChatsScreen() {
     } else {
       const searchLower = text.toLowerCase();
       
-      // Filtere beide Chat-Gruppen
+      // Filter both chat groups
       const filteredSections = CHAT_SECTIONS.map(section => {
         const filteredData = section.data.filter(
           contact => contact.name.toLowerCase().includes(searchLower)
@@ -122,30 +122,30 @@ export default function ChatsScreen() {
           ...section,
           data: filteredData
         };
-      }).filter(section => section.data.length > 0); // Entferne leere Abschnitte
+      }).filter(section => section.data.length > 0); // Remove empty sections
       
       setFilteredSections(filteredSections);
     }
   };
 
-  // Navigiert zum einzelnen Chat
+  // Navigate to individual chat
   const handleChatPress = (contact: (typeof FIXED_CHATS)[0]) => {
-    console.log(`Chat mit ${contact.name} öffnen`);
+    console.log(`Opening chat with ${contact.name}`);
     
-    // Für Olivia direkt zum OliviaChatScreen navigieren
+    // Navigate directly to OliviaChatScreen for Olivia
     if (contact.name === 'Olivia') {
       router.push('/chats/olivia');
       return;
     }
     
-    // Für alle anderen Chats zum regulären ChatDetailScreen navigieren
+    // Navigate to regular ChatDetailScreen for all other chats
     router.push({
       pathname: `/chats/${contact.id}`,
       params: { name: contact.name }
     });
   };
 
-  // Rendert einen Chat-Kontakt
+  // Renders a chat contact
   const renderChatContact = ({ item }: { item: (typeof FIXED_CHATS)[0] }) => {
     const isOliviaChat = item.name === 'Olivia';
     
@@ -187,7 +187,7 @@ export default function ChatsScreen() {
           )}
         </View>
         
-        {/* Kontaktinfo */}
+        {/* Contact info */}
         <View style={styles.contactInfo}>
           <View style={styles.contactHeader}>
             <Text style={[
@@ -222,7 +222,7 @@ export default function ChatsScreen() {
     );
   };
 
-  // Rendert einen Abschnitts-Header
+  // Renders a section header
   const renderSectionHeader = ({ section }: { section: { title: string, data: any[] } }) => (
     <View style={[styles.sectionHeader, { backgroundColor: colors.backgroundPrimary }]}>
       <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
@@ -231,7 +231,7 @@ export default function ChatsScreen() {
     </View>
   );
 
-  // Rendert einen Abschnitts-Footer (nur für den ersten Abschnitt)
+  // Renders a section footer (only for the first section)
   const renderSectionFooter = ({ section }: { section: { title: string } }) => {
     if (section.title === 'Solvbox') {
       return (
@@ -243,7 +243,7 @@ export default function ChatsScreen() {
     return null;
   };
 
-  // Rendert die Header-Komponente
+  // Renders the header component
   const renderHeader = () => (
     <View style={styles.headerContainer}>
       <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
@@ -255,13 +255,13 @@ export default function ChatsScreen() {
     </View>
   );
 
-  // Rendert die Suchleiste
+  // Renders the search bar
   const renderSearchBar = () => (
     <View style={[styles.searchContainer, { backgroundColor: colors.backgroundSecondary }]}>
       <Ionicons name="search-outline" size={20} color={colors.textTertiary} style={styles.searchIcon} />
       <TextInput
         style={[styles.searchInput, { color: colors.textPrimary }]}
-        placeholder="Suchen..."
+        placeholder="Search..."
         placeholderTextColor={colors.textTertiary}
         value={searchQuery}
         onChangeText={handleSearch}
@@ -277,17 +277,17 @@ export default function ChatsScreen() {
     </View>
   );
 
-  // Rendert eine leere Zustandsanzeige
+  // Renders an empty state display
   const renderEmptyState = () => (
     <View style={styles.emptyStateContainer}>
       <View style={[styles.emptyIconContainer, { backgroundColor: colors.backgroundSecondary }]}>
         <Ionicons name="chatbubble-ellipses-outline" size={40} color={colors.textTertiary} />
       </View>
       <Text style={[styles.emptyStateTitle, { color: colors.textPrimary }]}>
-        Keine Chats gefunden
+        No chats found
       </Text>
       <Text style={[styles.emptyStateSubtitle, { color: colors.textSecondary }]}>
-        {searchQuery ? 'Versuchen Sie eine andere Suche' : 'Starten Sie einen neuen Chat mit dem Solvbox-Assistenten'}
+        {searchQuery ? 'Try a different search' : 'Start a new chat with the Solvbox assistant'}
       </Text>
       {!searchQuery && (
         <TouchableOpacity 
@@ -295,14 +295,14 @@ export default function ChatsScreen() {
           onPress={() => handleChatPress(FIXED_CHATS[0])}
         >
           <Text style={styles.newAssistantChatButtonText}>
-            Mit Assistenten chatten
+            Chat with assistant
           </Text>
         </TouchableOpacity>
       )}
     </View>
   );
 
-  // Prüfen, ob beide Sektionen leer sind
+  // Check if both sections are empty
   const isEmpty = filteredSections.length === 0 || 
     (filteredSections.length > 0 && filteredSections.every(section => section.data.length === 0));
 
@@ -313,10 +313,10 @@ export default function ChatsScreen() {
       {/* Header */}
       {renderHeader()}
       
-      {/* Suchleiste */}
+      {/* Search bar */}
       {renderSearchBar()}
       
-      {/* Chat-Liste mit Abschnitten */}
+      {/* Chat list with sections */}
       {isEmpty ? (
         renderEmptyState()
       ) : (
@@ -332,8 +332,8 @@ export default function ChatsScreen() {
         />
       )}
       
-      {/* Im Chat-Screen benötigen wir keinen FloatingChatButton */}
-      {/* Button entfernt, da wir uns bereits im Chat-Bereich befinden */}
+      {/* No FloatingChatButton needed in Chat screen */}
+      {/* Button removed as we are already in the chat area */}
     </View>
   );
 }
