@@ -32,16 +32,16 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { logger } from '@/utils/logger';
 import FallstudieDetail from '../components/FallstudieDetail';
 
-// Avatar-Bild importieren
+// Import avatar image
 const oliviaAvatar = require('@/assets/small rounded Icon.png') as ImageSourcePropType;
 
-// Keine Konvertierungsfunktion mehr notwendig, da wir direkt mit ChatCardData arbeiten
+// No conversion function necessary anymore since we work directly with ChatCardData
 
 /**
- * Olivia Chat Screen - Eigenständige Komponente für den Olivia-Chatbot
+ * Olivia Chat Screen - Independent component for the Olivia chatbot
  * 
- * Diese Komponente implementiert einen spezialisierten Chat mit Olivia
- * und bietet eine maßgeschneiderte Benutzeroberfläche und Interaktion.
+ * This component implements a specialized chat with Olivia
+ * and offers a customized user interface and interaction.
  */
 export default function OliviaChatScreen() {
   const colors = useThemeColor();
@@ -70,66 +70,66 @@ export default function OliviaChatScreen() {
     messages: [
       {
         id: '1',
-        text: 'Hallo! Ich bin Olivia. Wie kann ich Ihnen heute helfen?',
+        text: 'Hello! I am Olivia. How can I help you today?',
         time: '14:30',
         isUser: false,
-        date: 'Heute'
+        date: 'Today'
       },
       {
         id: '2',
-        text: 'Ich brauche kurzfristig einen Bauingenieur.',
+        text: 'I need a civil engineer urgently.',
         time: '14:32',
         isUser: true,
-        date: 'Heute'
+        date: 'Today'
       },
       {
         id: '3',
-        text: 'Verstanden, Sie benötigen kurzfristig einen Bauingenieur. Um Ihnen bestmöglich helfen zu können, bräuchte ich noch einige Informationen:\n\n1. Handelt es sich um einen temporären oder langfristigen Bedarf?\n2. Für welche Art von Projekt benötigen Sie den Bauingenieur?\n3. Welche speziellen Qualifikationen sollte der Ingenieur mitbringen?\n4. In welchem Budgetrahmen bewegen wir uns?\n5. Bis wann wird der Ingenieur benötigt?',
+        text: 'Understood, you need a civil engineer urgently. To help you in the best possible way, I would need some more information:\n\n1. Is this a temporary or long-term need?\n2. What type of project do you need the civil engineer for?\n3. What special qualifications should the engineer have?\n4. What budget range are we working with?\n5. When is the engineer needed by?',
         time: '14:33',
         isUser: false,
-        date: 'Heute'
+        date: 'Today'
       },
       {
         id: '4',
-        text: 'Es ist ein temporärer Bedarf für ca. 3 Monate. Wir haben ein Sanierungsprojekt für ein Mehrfamilienhaus und brauchen jemanden mit Erfahrung in der Statik. Budget liegt bei max. 15.000€ pro Monat. Der Ingenieur sollte idealerweise nächste Woche anfangen können.',
+        text: 'It is a temporary need for about 3 months. We have a renovation project for an apartment building and need someone with experience in structural engineering. Budget is max. €15,000 per month. The engineer should ideally be able to start next week.',
         time: '14:35',
         isUser: true,
-        date: 'Heute'
+        date: 'Today'
       },
       {
         id: '5',
-        text: 'Danke für die Informationen. Handelt es sich um ein Projekt in Deutschland? Und gibt es Präferenzen bezüglich der Arbeitsweise - remote, vor Ort oder hybrid?',
+        text: 'Thank you for the information. Is this a project in Germany? And are there preferences regarding the working style - remote, on-site, or hybrid?',
         time: '14:36',
         isUser: false,
-        date: 'Heute'
+        date: 'Today'
       },
       {
         id: '6',
-        text: 'Ja, das Projekt ist in München. Wir benötigen jemanden, der mindestens 3 Tage pro Woche vor Ort sein kann. Die restliche Zeit kann remote gearbeitet werden.',
+        text: 'Yes, the project is in Munich. We need someone who can be on-site at least 3 days per week. The rest of the time can be worked remotely.',
         time: '14:37',
         isUser: true,
-        date: 'Heute'
+        date: 'Today'
       },
       {
         id: '7',
-        text: 'Soll der Bauingenieur als Freelancer oder als temporärer Angestellter eingestellt werden? Und haben Sie besondere Anforderungen an die Berufserfahrung?',
+        text: 'Should the civil engineer be hired as a freelancer or as a temporary employee? And do you have special requirements for professional experience?',
         time: '14:38',
         isUser: false,
-        date: 'Heute'
+        date: 'Today'
       },
       {
         id: '8',
-        text: 'Freelancer wäre bevorzugt. Die Person sollte mindestens 5 Jahre Berufserfahrung haben, idealerweise mit ähnlichen Sanierungsprojekten.',
+        text: 'Freelancer would be preferred. The person should have at least 5 years of professional experience, ideally with similar renovation projects.',
         time: '14:39',
         isUser: true,
-        date: 'Heute'
+        date: 'Today'
       },
       {
         id: '9',
-        text: 'Sehr gut. Ich habe jetzt alle Infos, die ich brauche. Ich habe drei Fallstudien gefunden, die perfekt zu Ihrer aktuellen Situation passen. Wählen Sie eine aus:',
+        text: 'Very good. I now have all the information I need. I have found three case studies that perfectly match your current situation. Choose one:',
         time: '14:40',
         isUser: false,
-        date: 'Heute'
+        date: 'Today'
       }
     ]
   });
@@ -138,23 +138,23 @@ export default function OliviaChatScreen() {
   const fallstudienErgebnisse = [
     {
       id: '1',
-      titel: 'Statik-Expertise für Mehrfamilienhäuser',
-      kurzbeschreibung: 'Erfolgreiche Sanierung von komplexen Wohngebäuden mit statischen Herausforderungen',
-      context: 'Ein denkmalgeschütztes Mehrfamilienhaus in München-Schwabing sollte umfassend saniert werden. Die Bausubstanz wies erhebliche statische Mängel auf, die Eigentümergemeinschaft stand unter Zeitdruck und die Kosten mussten im Rahmen bleiben.',
-      action: 'Unser Team führte eine umfassende Analyse der Baustruktur durch, erstellte ein detailliertes Sanierungskonzept mit BIM-Technologie und koordinierte die Arbeiten mit lokalen Handwerksbetrieben. Durch innovative Lösungsansätze konnten wir die statischen Probleme beheben, ohne die historische Substanz zu beeinträchtigen.',
+      titel: 'Statik-Expertise for Multi-Family Homes',
+      kurzbeschreibung: 'Successful renovation of complex residential buildings with static challenges',
+      context: 'A listed multi-family house in Munich-Schwabing should be comprehensively renovated. The building structure had significant static defects, and the owner community was under time pressure and had to keep costs within the budget.',
+      action: 'Our team conducted a comprehensive analysis of the building structure, created a detailed renovation concept with BIM technology, and coordinated the work with local craftsmen. Through innovative solutions, we were able to resolve the static problems without affecting the historical structure.',
       result: {
-        text: 'Das Projekt wurde termingerecht und innerhalb des Budgetrahmens abgeschlossen. Konkrete Ergebnisse:',
+        text: 'The project was completed on time and within the budget.',
         bulletpoints: [
-          'Erhaltung von 90% der historischen Bausubstanz bei gleichzeitiger Modernisierung',
-          'Kosteneinsparung von 18% gegenüber vergleichbaren Projekten',
-          'Energetische Optimierung mit Einsparung von 35% der Heizkosten',
-          'Abschluss der Hauptarbeiten 2 Wochen vor dem Zeitplan'
+          'Preservation of 90% of the historical building structure while modernizing',
+          'Cost savings of 18% compared to similar projects',
+          'Energy optimization with a 35% reduction in heating costs',
+          'Completion of the main work 2 weeks ahead of schedule'
         ]
       },
       anbieter: {
         name: 'Baustatik München GmbH',
-        erfahrung: '15 Jahre Spezialisierung auf Altbausanierung',
-        erfolgsrate: '96% termingerechte Projektabschlüsse',
+        erfahrung: '15 years of specialization in building renovation',
+        erfolgsrate: '96% timely project completions',
         kontakt: {
           email: 'kontakt@baustatik-muenchen.de',
           telefon: '+49 89 12345678'
@@ -163,24 +163,24 @@ export default function OliviaChatScreen() {
     },
     {
       id: '2',
-      titel: 'Industriegebäude-Umnutzung mit hohen Anforderungen',
-      kurzbeschreibung: 'Transformation eines Industriegebäudes zu modernen Wohnlofts bei Erhalt der historischen Fassade',
-      context: 'Ein ehemaliges Industriegebäude aus den 1920er Jahren in München sollte zu hochwertigen Wohnlofts umgebaut werden. Die Bausubstanz war teilweise marode, die Stahlträger korrodiert, doch die charakteristische Fassade sollte unbedingt erhalten bleiben. Der Bauherr hatte ein ambitioniertes Zeitfenster von nur 14 Monaten vorgegeben.',
-      action: 'Wir entwickelten ein zweistufiges Sanierungskonzept mit Fokus auf die statische Ertüchtigung der Tragkonstruktion bei gleichzeitigem Erhalt der Fassade. Durch den Einsatz moderner Materialverbundtechniken konnten wir die vorhandene Struktur verstärken, ohne den industriellen Charakter zu verlieren. Parallel wurden maßgeschneiderte Lösungen für Schall- und Wärmeschutz entwickelt.',
+      titel: 'Industrial Building-Use Transformation with High Requirements',
+      kurzbeschreibung: 'Transformation of an industrial building into modern lofts while preserving the historical facade',
+      context: 'An old industrial building from the 1920s in Munich should be converted into high-quality lofts. The building structure was partially worn out, the steel beams corroded, but the characteristic facade had to be preserved. The building owner had a very ambitious time window of only 14 months.',
+      action: 'We developed a two-stage renovation concept with focus on the static strengthening of the load-bearing structure while preserving the facade. Through the use of modern material bonding techniques, we were able to strengthen the existing structure without losing the industrial character. Parallel, tailor-made solutions were developed for sound and thermal insulation.',
       result: {
-        text: 'Die Umnutzung wurde erfolgreich abgeschlossen mit folgenden Ergebnissen:',
+        text: 'The transformation was completed successfully with the following results:',
         bulletpoints: [
-          'Vollständiger Erhalt der historischen Industriefassade',
-          'Schaffung von 24 individuellen Loftwohnungen mit modernstem Standard',
-          'Unterschreitung des Zeitplans um 6 Wochen',
-          'Einhaltung des Budgets trotz unvorhergesehener Herausforderungen',
-          'Auszeichnung mit dem lokalen Architekturpreis für gelungene Umnutzung'
+          'Complete preservation of the historical industrial facade',
+          'Creation of 24 individual loft apartments with modern standard',
+          'Underachievement of the time plan by 6 weeks',
+          'Budget adherence despite unforeseen challenges',
+          'Awarded the local architecture prize for successful transformation'
         ]
       },
       anbieter: {
         name: 'Industriebau Umnutzung GmbH',
-        erfahrung: '20+ Jahre Spezialisierung auf Umnutzungsprojekte',
-        erfolgsrate: '92% positive Kundenbewertungen',
+        erfahrung: '20+ years of specialization in transformation projects',
+        erfolgsrate: '92% positive customer reviews',
         kontakt: {
           email: 'info@industriebau-umnutzung.de',
           telefon: '+49 89 98765432'
@@ -189,24 +189,24 @@ export default function OliviaChatScreen() {
     },
     {
       id: '3',
-      titel: 'Kostengünstige Sanierung eines Wohnkomplexes',
-      kurzbeschreibung: 'Budgetorientierte Sanierung eines 70er-Jahre Wohnkomplexes mit neuem Nutzungskonzept',
-      context: 'Ein Wohnkomplex aus den 1970er Jahren mit 42 Wohneinheiten in München-Pasing wies erhebliche bauliche und statische Mängel auf. Die Eigentümergemeinschaft verfügte über ein begrenztes Budget und wünschte eine wirtschaftliche Sanierungslösung ohne Beeinträchtigung der Wohnqualität.',
-      action: 'Unser Team entwickelte ein maßgeschneidertes, kostenbewusstes Sanierungskonzept mit Schwerpunkt auf die statische Ertüchtigung des Gebäudes. Durch digitale Bauwerkserfassung konnten wir präzise Schwachstellen identifizieren und gezielt beheben. Wir koordinierten die Arbeiten unter laufendem Betrieb mit minimaler Beeinträchtigung der Bewohner und implementierten kosteneffiziente, aber langlebige Lösungen.',
+      titel: 'Cost-Effective Renovation of a Residential Complex',
+      kurzbeschreibung: 'Cost-oriented renovation of a 70s residential complex with new usage concept',
+      context: 'A residential complex from the 1970s with 42 residential units in Munich-Pasing had significant structural and static defects. The owner community had a limited budget and wanted a cost-effective renovation solution without affecting the living quality.',
+      action: 'Our team developed a tailored, cost-conscious renovation concept with focus on the static strengthening of the building. Through digital building inspection, we were able to identify and target weak points precisely and implement cost-efficient, but durable solutions.',
       result: {
-        text: 'Die Sanierung wurde erfolgreich abgeschlossen mit hervorragenden Ergebnissen:',
+        text: 'The renovation was completed successfully with outstanding results:',
         bulletpoints: [
-          'Kostenersparnis von 22% gegenüber vergleichbaren Sanierungsprojekten',
-          'Verlängerung der Gebäudelebensdauer um mindestens 30 Jahre',
-          'Steigerung der Energieeffizienz um 48% mit entsprechender Heizkostenreduzierung',
-          'Minimale Beeinträchtigung der Bewohner während der Bauphase durch effiziente Planung',
-          'Wertsteigerung der Immobilie um durchschnittlich 31% nach Abschluss der Maßnahmen'
+          'Cost savings of 22% compared to similar renovation projects',
+          'Extension of the building life expectancy by at least 30 years',
+          'Energy efficiency increase by 48% with corresponding heating cost reduction',
+          'Minimal disturbance of the residents during the construction phase through efficient planning',
+          'Property value increase by an average of 31% after completion of the measures'
         ]
       },
       anbieter: {
         name: 'Effiziente Bausanierung GmbH',
-        erfahrung: '12 Jahre Spezialisierung auf kostenbewusste Sanierungen',
-        erfolgsrate: '97% Budgeteinhaltung',
+        erfahrung: '12 years of specialization in cost-conscious renovations',
+        erfolgsrate: '97% budget adherence',
         kontakt: {
           email: 'kontakt@effiziente-bausanierung.de',
           telefon: '+49 172 3456789'
@@ -304,22 +304,22 @@ export default function OliviaChatScreen() {
     }
   }, []);
 
-  // Link hinzufügen
+  // Add link
   const handleAddLink = useCallback(() => {
-    // Dialog zum Eingeben eines Links anzeigen
+    // Show dialog to enter a link
     Alert.prompt(
-      "Link hinzufügen",
-      "Geben Sie die URL ein:",
+      "Add Link",
+      "Enter the URL:",
       [
         {
-          text: "Abbrechen",
+          text: "Cancel",
           style: "cancel"
         },
         {
           text: "OK",
           onPress: (url) => {
             if (url && url.trim()) {
-              // Einfache URL-Validierung
+              // Simple URL validation
               if (!url.startsWith('http://') && !url.startsWith('https://')) {
                 url = 'https://' + url;
               }
@@ -333,48 +333,48 @@ export default function OliviaChatScreen() {
     );
   }, []);
 
-  // Anhänge entfernen
+  // Remove attachments
   const handleClearAttachments = useCallback(() => {
     setAttachedImage(null);
     setAttachedLink(null);
   }, []);
 
-  // Spracheingabe starten/stoppen
+  // Start/stop voice input
   const handleVoiceInput = useCallback(() => {
     if (isRecording) {
-      // Aufnahme beenden (nur visuell, keine echte Funktionalität)
+      // End recording (visual only, no real functionality)
       setIsRecording(false);
     } else {
-      // Aufnahme starten (nur visuell, keine echte Funktionalität)
+      // Start recording (visual only, no real functionality)
       setIsRecording(true);
     }
   }, [isRecording]);
 
-  // Formatiere die Aufnahmezeit
+  // Format recording time
   const formatRecordingTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
-  // Nachricht mit Anhängen senden
+  // Send message with attachments
   const handleSendMessage = useCallback(() => {
     if (!message.trim() && !attachedImage && !attachedLink) return;
 
     let messageText = message;
     
-    // Füge Link zur Nachricht hinzu
+    // Add link to message
     if (attachedLink) {
       messageText += messageText ? `\n${attachedLink}` : attachedLink;
     }
 
-    // Lokales Senden der Nachricht
+    // Local sending of message
     const newUserMessage = {
       id: `u-${Date.now()}`,
       text: messageText,
       time: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
       isUser: true,
-      date: 'Heute',
+      date: 'Today',
       image: attachedImage,
       link: attachedLink,
     };
@@ -388,14 +388,14 @@ export default function OliviaChatScreen() {
     setIsTyping(true);
     handleClearAttachments();
 
-    // Simulierte Antwort des Assistenten (kann später durch API-Aufruf ersetzt werden)
+    // Simulated assistant response (can be replaced by API call later)
     setTimeout(() => {
       const assistantResponses = [
-        "Natürlich, ich helfe Ihnen gerne bei dieser Frage. Lassen Sie mich das recherchieren.",
-        "Das ist eine interessante Fragestellung. Aus meiner Analyse würde ich folgendes vorschlagen...",
-        "Basierend auf den aktuellen Markttrends kann ich Ihnen folgende Informationen geben...",
-        "Ich habe verschiedene Lösungsansätze für dieses Problem. Hier ist meine Empfehlung...",
-        "Für Ihre Situation würde ich einen strukturierten Ansatz empfehlen. Beginnen wir mit..."
+        "Of course, I'm happy to help you with that. I'll look into it.",
+        "That's an interesting question. Based on my analysis, I would suggest...",
+        "Based on the current market trends, I can give you some information...",
+        "I have several solutions for this problem. Here's my recommendation...",
+        "For your situation, I would recommend a structured approach. Let's start with..."
       ];
       
       const randomResponse = assistantResponses[Math.floor(Math.random() * assistantResponses.length)];
@@ -405,7 +405,7 @@ export default function OliviaChatScreen() {
         text: randomResponse,
         time: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }),
         isUser: false,
-        date: 'Heute'
+        date: 'Today'
       };
 
       setChat(prev => ({
@@ -417,29 +417,29 @@ export default function OliviaChatScreen() {
     }, 1500);
   }, [message, attachedImage, attachedLink]);
 
-  // Zurück-Navigation
+  // Back navigation
   const handleGoBack = useCallback(() => {
-    // Navigiere zum ChatTab anstatt zurück
+    // Navigate to ChatTab instead of back
     router.navigate('/(tabs)/chats');
   }, [router]);
 
-  // Zum Explore-Tab navigieren
+  // Navigate to Explore tab
   const handleExploreNavigation = useCallback(() => {
     router.navigate('/(tabs)/mysolvbox');
   }, [router]);
 
-  // Zum Upload-Screen navigieren
+  // Navigate to Upload screen
   const handleUploadNavigation = useCallback(() => {
     router.push('/upload');
   }, [router]);
 
-  // Chat speichern
+  // Save chat
   const handleSaveNavigation = useCallback(() => {
-    // Hier kannst du später die Speicher-Logik implementieren
-    console.log('Chat wird gespeichert...');
+    // You can implement save logic later
+    console.log('Chat is being saved...');
   }, []);
 
-  // Nachrichten nach Datum gruppieren
+  // Group messages by date
   const groupMessagesByDate = useCallback(() => {
     const messagesByDate: Record<string, typeof chat.messages> = {};
     
@@ -453,17 +453,17 @@ export default function OliviaChatScreen() {
     return messagesByDate;
   }, [chat.messages]);
 
-  // Einzelne Nachricht rendern
+  // Render individual message
   const renderMessage = useCallback(({ item, index }: { item: (typeof chat.messages)[0] & {image?: string | null, link?: string | null}, index: number }) => {
     const isLastInGroup = index === chat.messages.length - 1 || 
                           chat.messages[index + 1].date !== item.date || 
                           chat.messages[index + 1].isUser !== item.isUser;
     
-    // Einheitliche Textfarbe für alle Nachrichten
+    // Consistent text color for all messages
     const textColor = '#F1F5F9';
     const timeColor = 'rgba(241, 245, 249, 0.7)';
 
-    // Wenn es sich um die letzte Nachricht von Olivia handelt, zeige die GigCards an
+    // If this is the last message from Olivia, show the GigCards
     if (item.id === '9' && !item.isUser) {
       return (
         <View style={[
@@ -512,14 +512,14 @@ export default function OliviaChatScreen() {
             {item.text}
           </Text>
           
-          {/* Anzeige von Bildern */}
+          {/* Display images */}
           {item.image && (
             <View style={styles.attachmentContainer}>
               <Image source={{ uri: item.image }} style={styles.attachedImage} />
             </View>
           )}
           
-          {/* Anzeige von Links */}
+          {/* Display links */}
           {item.link && !item.text.includes(item.link) && (
             <TouchableOpacity 
               style={[styles.linkContainer]}
@@ -542,7 +542,7 @@ export default function OliviaChatScreen() {
     );
   }, []);
 
-  // Nachricht mit Fallstudien-Ergebnissen anzeigen
+  // Display message with case study results
   const renderMessageWithResults = (item: any, messageText: string) => {
     return (
       <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -558,13 +558,13 @@ export default function OliviaChatScreen() {
             {messageText}
           </Text>
           
-          {/* Fallstudien-Ergebnisse */}
+          {/* Case study results */}
           <View style={styles.fallstudienContainer}>
             {fallstudienErgebnisse.map((studie) => (
               <View key={studie.id} style={styles.fallstudieItem}>
                 <View style={styles.fallstudieHeader}>
                   <Text style={styles.fallstudieTitle}>
-                    Fallstudie {studie.id}: {studie.titel}
+                    Case Study {studie.id}: {studie.titel}
                   </Text>
                   <TouchableOpacity 
                     style={styles.infoButton}
@@ -603,7 +603,7 @@ export default function OliviaChatScreen() {
     </View>
   ), [colors]);
 
-  // Tipp-Indikator rendern
+  // Render typing indicator
   const renderTypingIndicator = useCallback(() => {
     if (!isTyping) return null;
     
@@ -629,7 +629,7 @@ export default function OliviaChatScreen() {
     );
   }, [isTyping, typingDots]);
 
-  // Gruppierte Nachrichten mit Datumstrennern
+  // Grouped messages with date separators
   const renderGroupedMessages = useCallback(() => {
     const messagesByDate = groupMessagesByDate();
     const dates = Object.keys(messagesByDate);
@@ -644,13 +644,13 @@ export default function OliviaChatScreen() {
     ]);
   }, [groupMessagesByDate, renderDateSeparator, renderMessage]);
 
-  // Header und Nachrichten zusammen rendern
+  // Render header and messages together
   const renderHeaderAndMessages = useCallback(() => {
     return (
       <View style={styles.messagesContainer}>
-        {/* Solvbox-Style Header als Teil des scrollbaren Inhalts */}
+        {/* Solvbox-style header as part of scrollable content */}
         <View style={[styles.solvboxHeaderContainer, chat.messages.length === 1 ? styles.solvboxHeaderContainerNoChat : null]}>
-          {/* Hintergrund-Gradient mit absoluter Positionierung */}
+          {/* Background gradient with absolute positioning */}
           <LinearGradient
             colors={[
               'rgba(52, 199, 89, 0.25)', 
@@ -664,7 +664,7 @@ export default function OliviaChatScreen() {
             style={styles.solvboxHeaderGradient}
           />
           
-          {/* Inhalt-Container, der unabhängig vom Gradient zentriert ist */}
+          {/* Content container that is centered independently of the gradient */}
           <View style={styles.solvboxContentContainer}>
             <MaterialCommunityIcons 
               name="semantic-web" 
@@ -674,17 +674,17 @@ export default function OliviaChatScreen() {
             />
             <View style={styles.solvboxTextContainer}>
               <Text style={[styles.solvboxHeaderSubtitle, { color: '#F1F5F9' }]}>
-                Ich bin Olivia und mein Job ist es neue Möglichkeiten zu entdecken, wie Sie Ihre Liquidität steigern können. Sollten Sie Fragen oder ungelöste Probleme in Ihrem Unternehmen haben bin ich immer für Sie da und suche innerhalb von wenigen Sekunden nach der besten Lösung.
+                I'm Olivia and my job is to discover new opportunities for you to increase your liquidity. If you have questions or unresolved problems in your company, I'm always here for you and I'll find the best solution within a few seconds.
               </Text>
               <Text style={[styles.solvboxHeaderSignature, { color: '#F1F5F9' }]}>
-                Auf eine gute Zusammenarbeit!
+                Looking forward to a good collaboration!
               </Text>
               <View style={[styles.solvboxHeaderDivider, { backgroundColor: '#1E6B55' }]} />
             </View>
           </View>
         </View>
         
-        {/* Chat-Nachrichten in einem Container mit Padding */}
+        {/* Chat messages in a container with padding */}
         <View style={styles.chatMessagesContainer}>
           {renderGroupedMessages()}
         </View>
@@ -692,7 +692,7 @@ export default function OliviaChatScreen() {
     );
   }, [colors, renderGroupedMessages, chat.messages.length]);
 
-  // Anhang-Menü rendern
+  // Render attachment menu
   const renderAttachmentMenu = () => (
     <Modal
       visible={showAttachmentMenu}
@@ -713,7 +713,7 @@ export default function OliviaChatScreen() {
             <View style={[styles.attachmentIconContainer, { backgroundColor: '#4CAF50' }]}>
               <Ionicons name="image-outline" size={24} color="#FFFFFF" />
             </View>
-            <Text style={[styles.attachmentOptionText, { color: colors.textPrimary }]}>Bild senden</Text>
+            <Text style={[styles.attachmentOptionText, { color: colors.textPrimary }]}>Send Image</Text>
           </TouchableOpacity>
           
           <TouchableOpacity 
@@ -723,21 +723,21 @@ export default function OliviaChatScreen() {
             <View style={[styles.attachmentIconContainer, { backgroundColor: '#9C27B0' }]}>
               <Ionicons name="link-outline" size={24} color="#FFFFFF" />
             </View>
-            <Text style={[styles.attachmentOptionText, { color: colors.textPrimary }]}>Link senden</Text>
+            <Text style={[styles.attachmentOptionText, { color: colors.textPrimary }]}>Send Link</Text>
           </TouchableOpacity>
           
           <TouchableOpacity 
             style={[styles.cancelButton, { backgroundColor: colors.backgroundSecondary }]} 
             onPress={() => setShowAttachmentMenu(false)}
           >
-            <Text style={[styles.cancelButtonText, { color: colors.textPrimary }]}>Abbrechen</Text>
+            <Text style={[styles.cancelButtonText, { color: colors.textPrimary }]}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
     </Modal>
   );
 
-  // Anzeige der ausgewählten Anhänge
+  // Display selected attachments
   const renderAttachmentPreview = () => {
     if (!attachedImage && !attachedLink) return null;
     
@@ -769,7 +769,7 @@ export default function OliviaChatScreen() {
     );
   };
 
-  // Renderingfunktion für die Aufnahmeansicht
+  // Render function for recording view
   const renderRecordingView = () => {
     if (!isRecording) return null;
     
@@ -779,7 +779,7 @@ export default function OliviaChatScreen() {
           styles.recordingIndicator,
           { opacity: recordingAnimation, backgroundColor: '#E53935' }
         ]} />
-        <Text style={styles.recordingText}>Aufnahme läuft... {formatRecordingTime(recordingDuration)}</Text>
+        <Text style={styles.recordingText}>Recording... {formatRecordingTime(recordingDuration)}</Text>
         <TouchableOpacity 
           style={styles.stopRecordingButton}
           onPress={handleVoiceInput}
@@ -838,10 +838,10 @@ export default function OliviaChatScreen() {
           </TouchableOpacity>
         </View>
         
-        {/* Chat-Nachrichten */}
+        {/* Chat messages */}
         <FlatList
           ref={flatListRef}
-          data={[]} // Leere Daten, da wir einen benutzerdefinierten Renderer verwenden
+          data={[]} // Empty data since we use a custom renderer
           renderItem={() => null}
           ListHeaderComponent={renderHeaderAndMessages()}
           ListFooterComponent={renderTypingIndicator()}
@@ -852,7 +852,7 @@ export default function OliviaChatScreen() {
         
       </SafeAreaView>
       
-      {/* Eingabebereich außerhalb der SafeAreaView */}
+      {/* Input area outside SafeAreaView */}
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         keyboardVerticalOffset={Platform.OS === 'ios' ? -35 : 0}
@@ -878,7 +878,7 @@ export default function OliviaChatScreen() {
             <View style={styles.inputFieldContainer}>
               <TextInput
                 style={styles.input}
-                placeholder="Nachricht an Olivia..."
+                placeholder="Message to Olivia..."
                 placeholderTextColor="rgba(255, 255, 255, 0.7)"
                 value={message}
                 onChangeText={setMessage}
@@ -906,10 +906,10 @@ export default function OliviaChatScreen() {
         )}
       </KeyboardAvoidingView>
       
-      {/* Anhang-Menü Modal */}
+      {/* Attachment menu modal */}
       {renderAttachmentMenu()}
       
-      {/* Fallstudie Detail Modal */}
+      {/* Case study detail modal */}
       <FallstudieDetail 
         visible={showFallstudieDetail}
         onClose={() => setShowFallstudieDetail(false)}

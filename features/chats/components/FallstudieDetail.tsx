@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   View, 
   Text, 
@@ -48,8 +48,16 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
   onClose,
   fallstudie
 }) => {
+  const [isSaved, setIsSaved] = useState(false);
+
   if (!fallstudie) return null;
   
+  const handleSave = () => {
+    setIsSaved(!isSaved);
+    // Here you could implement actual save logic
+    console.log(`Case study ${isSaved ? 'unsaved' : 'saved'}:`, fallstudie.titel);
+  };
+
   return (
     <Modal
       visible={visible}
@@ -71,7 +79,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
           {/* Header mit Titel und Schließen-Button */}
           <View style={styles.header}>
             <View style={styles.titleContainer}>
-              <Text style={styles.titleLabel}>Fallstudie</Text>
+              <Text style={styles.titleLabel}>Case Study</Text>
               <Text style={styles.title}>{fallstudie.titel}</Text>
             </View>
             <TouchableOpacity 
@@ -105,7 +113,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   <Text style={styles.sectionTitle}>Context</Text>
                 </View>
                 <Text style={styles.sectionText}>{fallstudie.context}</Text>
-                <Text style={styles.sectionHint}>Ausgangslage / Kunde / Herausforderung</Text>
+                <Text style={styles.sectionHint}>Initial situation / Customer / Challenge</Text>
               </View>
 
               {/* Action */}
@@ -117,7 +125,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   <Text style={styles.sectionTitle}>Action</Text>
                 </View>
                 <Text style={styles.sectionText}>{fallstudie.action}</Text>
-                <Text style={styles.sectionHint}>Was wurde gemacht? Wie wurde vorgegangen?</Text>
+                <Text style={styles.sectionHint}>What was done? How was the approach?</Text>
               </View>
 
               {/* Result */}
@@ -146,7 +154,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   </View>
                 )}
                 
-                <Text style={styles.sectionHint}>Ergebnis mit messbaren Erfolgen</Text>
+                <Text style={styles.sectionHint}>Results with measurable successes</Text>
               </View>
 
               {/* Anbieter/Vermittler Informationen */}
@@ -202,16 +210,20 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
           <BlurView intensity={20} tint="dark" style={styles.footerBlur}>
             <View style={styles.footer}>
               <TouchableOpacity 
-                style={styles.secondaryButton} 
-                onPress={onClose}
+                style={styles.iconButton} 
+                onPress={handleSave}
               >
-                <Text style={styles.secondaryButtonText}>Zurück</Text>
+                <Ionicons 
+                  name={isSaved ? "bookmark" : "bookmark-outline"} 
+                  size={24} 
+                  color="#1E6B55" 
+                />
               </TouchableOpacity>
               
               <TouchableOpacity
                 style={styles.primaryButton}
                 onPress={() => {
-                  // Hier könnte eine Aktion wie "Auswählen" oder "Kontaktieren" implementiert werden
+                  // Here an action like "Select" or "Contact" could be implemented
                   onClose();
                 }}
               >
@@ -221,7 +233,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
                 >
-                  <Text style={styles.primaryButtonText}>Auswählen</Text>
+                  <Text style={styles.primaryButtonText}>I want this too!</Text>
                 </LinearGradient>
               </TouchableOpacity>
             </View>
@@ -416,13 +428,8 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
-  secondaryButton: {
+  iconButton: {
     padding: 12,
-  },
-  secondaryButtonText: {
-    color: '#555555',
-    fontSize: 16,
-    fontWeight: '500',
   },
   primaryButton: {
     borderRadius: 12,
