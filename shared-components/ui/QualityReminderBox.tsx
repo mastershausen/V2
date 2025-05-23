@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, StyleProp, ViewStyle, TextStyle } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -40,35 +40,24 @@ export function QualityReminderBox({
     <View style={[
       styles.reminderBox, 
       { 
-        backgroundColor: `${colors.secondary}08`,
+        backgroundColor: `${colors.secondary}10`,
         borderColor: `${colors.secondary}30`,
       }, 
       containerStyle
     ]}>
-      <MaterialCommunityIcons 
-        name="lightbulb-on" 
-        size={20} 
+      <Ionicons 
+        name="information-circle-outline" 
+        size={24} 
         color={colors.secondary} 
         style={styles.reminderIcon} 
       />
-      <View style={styles.reminderTextContainer}>
-        <Text style={[
-          styles.reminderTitle, 
-          { color: colors.secondary }, 
-          textStyle
-        ]}>
-          💡 Tipp für bessere Matches
-        </Text>
-        <Text style={[
-          styles.reminderText, 
-          { color: colors.textSecondary }, 
-          textStyle
-        ]}>
-          Je ausführlicher, klarer und präziser Sie Ihre Fallstudie beschreiben, desto 
-          besser kann Olivia passende Matches finden. Das führt zu qualitativ hochwertigeren 
-          Leads für Sie.
-        </Text>
-      </View>
+      <Text style={[
+        styles.reminderText, 
+        { color: colors.textSecondary }, 
+        textStyle
+      ]}>
+        Je ausführlicher, klarer und präziser Sie Ihre Fallstudie beschreiben, desto besser kann Olivia passende Matches finden. Das führt zu qualitativ hochwertigeren Leads für Sie.
+      </Text>
     </View>
   );
 }
@@ -78,26 +67,19 @@ const styles = StyleSheet.create({
     borderRadius: ui.borderRadius.m,
     padding: spacing.m,
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     borderWidth: 1,
-    borderStyle: 'dashed',
   },
   reminderIcon: {
     marginRight: spacing.s,
-    marginTop: 2, // Leichte Ausrichtung mit dem ersten Textzeile
-  },
-  reminderTextContainer: {
-    flex: 1,
-  },
-  reminderTitle: {
-    fontSize: typography.fontSize.s,
-    fontWeight: typography.fontWeight.semiBold as any,
-    marginBottom: spacing.xs,
-    lineHeight: 18,
   },
   reminderText: {
-    fontSize: typography.fontSize.xs,
-    lineHeight: 16,
+    flex: 1,
+    fontSize: typography.fontSize.s,
+    lineHeight: 18,
+  },
+  reminderTitle: {
+    fontWeight: typography.fontWeight.semiBold as any,
   },
 });
 
