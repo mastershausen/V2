@@ -11,7 +11,7 @@ import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { FallstudienListe } from './FallstudienListe';
 
-// Fensterbreite für Berechnungen
+// Window width for calculations
 const windowWidth = Dimensions.get('window').width;
 
 interface ChatProfileProps {
@@ -20,67 +20,67 @@ interface ChatProfileProps {
 }
 
 /**
- * ChatProfile-Komponente
+ * ChatProfile Component
  * 
- * Zeigt detaillierte Informationen zu einem Chat-Kontakt an.
+ * Displays detailed information about a chat contact.
  */
 export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
   const colors = useThemeColor();
   const router = useRouter();
   const [showFallstudien, setShowFallstudien] = useState(false);
 
-  // Mock-Daten für das Profil
+  // Mock data for the profile
   const profileData = {
     name: name || 'Thomas Müller',
     verified: true,
     status: 'Online',
-    specialization: 'Spezialisiert auf Unternehmensstruktur, digitale Finanzplanung und steueroptimierte Exitstrategien.',
+    specialization: 'Specialized in corporate structure, digital financial planning and tax-optimized exit strategies.',
     profileImage: 'https://placehold.co/600x400/1E6B55/FFFFFF?text=' + encodeURIComponent(name?.substring(0, 2) || 'TM'),
-    activeSince: '22.09.2023',
+    activeSince: 'Sep 22, 2023',
     responseRate: '98%',
-    lastCaseStudy: 'Holdingstruktur spart 84.000 € jährlich',
-    lastCaseStudyDate: '03.05.2025',
+    lastCaseStudy: 'Holding structure saves €84,000 annually',
+    lastCaseStudyDate: 'May 3, 2025',
     contactInfo: {
-      email: 'kontakt@beispiel.de',
-      website: 'www.beispiel.de',
+      email: 'contact@example.com',
+      website: 'www.example.com',
       phone: '+49 123 456789'
     },
-    topics: ['Steuerstruktur', 'Exitplanung', 'Digitale Buchhaltung']
+    topics: ['Tax Structure', 'Exit Planning', 'Digital Accounting']
   };
 
-  // Navigiere zurück zum Chat
+  // Navigate back to chat
   const handleBackPress = () => {
     router.back();
   };
 
-  // Navigiere zum EditProfilScreen
+  // Navigate to EditProfile screen
   const handleEditProfile = () => {
     router.push('/profile/edit-chat');
   };
 
-  // Öffne die Website
+  // Open the website
   const handleOpenWebsite = () => {
     Linking.openURL('https://' + profileData.contactInfo.website);
   };
 
-  // Öffne eine E-Mail
+  // Open an email
   const handleSendEmail = () => {
     Linking.openURL('mailto:' + profileData.contactInfo.email);
   };
 
-  // Telefonanruf starten
+  // Start phone call
   const handlePhoneCall = () => {
     Linking.openURL('tel:' + profileData.contactInfo.phone);
   };
 
-  // Zeige alle Fallstudien
+  // Show all case studies
   const handleShowCaseStudies = () => {
     setShowFallstudien(true);
   };
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
-      {/* Header mit Zurück-Button */}
+      {/* Header with back button */}
       <HeaderNavigation
         title=""
         showBackButton={true}
@@ -92,7 +92,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
         }
       />
 
-      {/* Profilbild (größer und prominent positioniert) */}
+      {/* Profile image (larger and prominently positioned) */}
       <View style={styles.profileImageContainer}>
         <ProfileImage
           source={{ uri: profileData.profileImage }}
@@ -103,61 +103,61 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
         />
       </View>
 
-      {/* Profil-Inhalt */}
+      {/* Profile content */}
       <ScrollView style={styles.contentContainer}>
-        {/* Name und Berufsbezeichnung */}
+        {/* Name and job title */}
         <View style={styles.nameContainer}>
           <Text style={[styles.nameText, { color: colors.textPrimary }]}>
             {profileData.name}
           </Text>
         </View>
 
-        {/* Spezialisierung */}
+        {/* Specialization */}
         <View style={[styles.section, { borderBottomColor: colors.divider }]}>
           <Text style={[styles.specializationText, { color: colors.textPrimary }]}>
             {profileData.specialization}
           </Text>
         </View>
 
-        {/* Fallstudien-Button */}
+        {/* Case studies button */}
         <TouchableOpacity 
           style={[styles.caseStudiesButton, { backgroundColor: colors.pastel.primary }]}
           onPress={handleShowCaseStudies}
         >
           <Ionicons name="search" size={18} color={colors.primary} />
           <Text style={[styles.caseStudiesButtonText, { color: colors.primary }]}>
-            Alle Fallstudien anzeigen
+            View All Case Studies
           </Text>
         </TouchableOpacity>
 
-        {/* Statistiken */}
+        {/* Statistics */}
         <View style={[styles.section, { borderBottomColor: colors.divider }]}>
           <View style={styles.statRow}>
             <Ionicons name="trending-up" size={20} color={colors.primary} style={styles.statIcon} />
             <Text style={[styles.infoText, { color: colors.textPrimary }]}>
-              Aktiv auf Solvbox seit: {profileData.activeSince}
+              Active on Solvbox since: {profileData.activeSince}
             </Text>
           </View>
           <View style={styles.statRow}>
             <Ionicons name="chatbubble-ellipses-outline" size={20} color={colors.primary} style={styles.statIcon} />
             <Text style={[styles.infoText, { color: colors.textPrimary }]}>
-              Antwortrate: {profileData.responseRate}
+              Response rate: {profileData.responseRate}
             </Text>
           </View>
           <View style={styles.statRow}>
             <Ionicons name="document-text-outline" size={20} color={colors.primary} style={styles.statIcon} />
             <Text style={[styles.infoText, { color: colors.textPrimary }]}>
-              Letzte Fallstudie: „{profileData.lastCaseStudy}" ({profileData.lastCaseStudyDate})
+              Latest case study: "{profileData.lastCaseStudy}" ({profileData.lastCaseStudyDate})
             </Text>
           </View>
         </View>
 
-        {/* Kontakt */}
+        {/* Contact */}
         <View style={[styles.section, { borderBottomColor: colors.divider }]}>
           <View style={styles.contactHeader}>
             <Ionicons name="mail" size={20} color={colors.primary} style={styles.contactIcon} />
             <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-              Kontakt:
+              Contact:
             </Text>
           </View>
           <TouchableOpacity onPress={handlePhoneCall} style={styles.contactLink}>
@@ -180,10 +180,10 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
           </TouchableOpacity>
         </View>
 
-        {/* Themenbereiche */}
+        {/* Topic areas */}
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-            📊 Themenbereiche:
+            📊 Topic Areas:
           </Text>
           <View style={styles.topicsContainer}>
             {profileData.topics.map((topic, index) => (
@@ -200,7 +200,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
         </View>
       </ScrollView>
 
-      {/* Fallstudien Modal */}
+      {/* Case studies modal */}
       <FallstudienListe 
         visible={showFallstudien}
         onClose={() => setShowFallstudien(false)}

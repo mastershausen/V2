@@ -16,35 +16,35 @@ interface EditChatProfileProps {
 }
 
 /**
- * EditChatProfile-Komponente
+ * EditChatProfile Component
  * 
- * Ermöglicht die Bearbeitung der Chat-Profil-Informationen.
+ * Allows editing of chat profile information.
  */
 export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
   const colors = useThemeColor();
   const router = useRouter();
 
-  // State für alle bearbeitbaren Felder
+  // State for all editable fields
   const [profileName, setProfileName] = useState(name || 'Thomas Müller');
-  const [specialization, setSpecialization] = useState('Spezialisiert auf Unternehmensstruktur, digitale Finanzplanung und steueroptimierte Exitstrategien.');
-  const [email, setEmail] = useState('kontakt@beispiel.de');
-  const [website, setWebsite] = useState('www.beispiel.de');
+  const [specialization, setSpecialization] = useState('Specialized in corporate structure, digital financial planning and tax-optimized exit strategies.');
+  const [email, setEmail] = useState('contact@example.com');
+  const [website, setWebsite] = useState('www.example.com');
   const [phone, setPhone] = useState('+49 123 456789');
-  const [topics, setTopics] = useState(['Steuerstruktur', 'Exitplanung', 'Digitale Buchhaltung']);
+  const [topics, setTopics] = useState(['Tax Structure', 'Exit Planning', 'Digital Accounting']);
 
-  // Mock-Profilbild
+  // Mock profile image
   const profileImage = 'https://placehold.co/600x400/1E6B55/FFFFFF?text=' + encodeURIComponent(profileName.substring(0, 2));
 
-  // Navigation zurück
+  // Navigate back
   const handleBackPress = () => {
     router.back();
   };
 
-  // Speichern der Änderungen
+  // Save changes
   const handleSave = () => {
     Alert.alert(
-      'Erfolgreich gespeichert',
-      'Die Profil-Änderungen wurden erfolgreich gespeichert.',
+      'Successfully Saved',
+      'The profile changes have been saved successfully.',
       [
         {
           text: 'OK',
@@ -54,24 +54,24 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
     );
   };
 
-  // Profilbild ändern
+  // Change profile image
   const handleChangeProfileImage = () => {
     Alert.alert(
-      'Profilbild ändern',
-      'Diese Funktion wird in einer zukünftigen Version verfügbar sein.',
+      'Change Profile Image',
+      'This feature will be available in a future version.',
       [{ text: 'OK' }]
     );
   };
 
-  // Thema hinzufügen
+  // Add topic
   const handleAddTopic = () => {
     Alert.alert(
-      'Thema hinzufügen',
-      'Geben Sie ein neues Thema ein:',
+      'Add Topic',
+      'Enter a new topic:',
       [
-        { text: 'Abbrechen', style: 'cancel' },
+        { text: 'Cancel', style: 'cancel' },
         {
-          text: 'Hinzufügen',
+          text: 'Add',
           onPress: (text) => {
             if (text && text.trim()) {
               setTopics([...topics, text.trim()]);
@@ -82,7 +82,7 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
     );
   };
 
-  // Thema entfernen
+  // Remove topic
   const handleRemoveTopic = (index: number) => {
     const newTopics = topics.filter((_, i) => i !== index);
     setTopics(newTopics);
@@ -92,19 +92,19 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       {/* Header */}
       <HeaderNavigation
-        title="Profil bearbeiten"
+        title="Edit Profile"
         showBackButton={true}
         onBackPress={handleBackPress}
         rightContent={
           <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
             <Text style={[styles.saveButtonText, { color: colors.primary }]}>
-              Speichern
+              Save
             </Text>
           </TouchableOpacity>
         }
       />
 
-      {/* Profilbild */}
+      {/* Profile image */}
       <View style={styles.profileImageContainer}>
         <TouchableOpacity onPress={handleChangeProfileImage}>
           <ProfileImage
@@ -120,7 +120,7 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
         </TouchableOpacity>
       </View>
 
-      {/* Bearbeitbare Felder */}
+      {/* Editable fields */}
       <ScrollView style={styles.contentContainer}>
         {/* Name */}
         <View style={styles.inputGroup}>
@@ -133,14 +133,14 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
             }]}
             value={profileName}
             onChangeText={setProfileName}
-            placeholder="Name eingeben"
+            placeholder="Enter name"
             placeholderTextColor={colors.textSecondary}
           />
         </View>
 
-        {/* Spezialisierung */}
+        {/* Specialization */}
         <View style={styles.inputGroup}>
-          <Text style={[styles.label, { color: colors.textSecondary }]}>Spezialisierung</Text>
+          <Text style={[styles.label, { color: colors.textSecondary }]}>Specialization</Text>
           <TextInput
             style={[styles.textArea, { 
               backgroundColor: colors.backgroundSecondary,
@@ -149,7 +149,7 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
             }]}
             value={specialization}
             onChangeText={setSpecialization}
-            placeholder="Beschreibung der Spezialisierung"
+            placeholder="Description of specialization"
             placeholderTextColor={colors.textSecondary}
             multiline
             numberOfLines={3}
@@ -157,12 +157,12 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
           />
         </View>
 
-        {/* Kontaktinformationen */}
+        {/* Contact information */}
         <View style={[styles.section, { borderTopColor: colors.divider }]}>
-          <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Kontaktinformationen</Text>
+          <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Contact Information</Text>
           
           <View style={styles.inputGroup}>
-            <Text style={[styles.label, { color: colors.textSecondary }]}>E-Mail</Text>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>Email</Text>
             <TextInput
               style={[styles.input, { 
                 backgroundColor: colors.backgroundSecondary,
@@ -171,7 +171,7 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
               }]}
               value={email}
               onChangeText={setEmail}
-              placeholder="E-Mail-Adresse"
+              placeholder="Email address"
               placeholderTextColor={colors.textSecondary}
               keyboardType="email-address"
               autoCapitalize="none"
@@ -188,7 +188,7 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
               }]}
               value={website}
               onChangeText={setWebsite}
-              placeholder="Website-URL"
+              placeholder="Website URL"
               placeholderTextColor={colors.textSecondary}
               keyboardType="url"
               autoCapitalize="none"
@@ -196,7 +196,7 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
           </View>
 
           <View style={styles.inputGroup}>
-            <Text style={[styles.label, { color: colors.textSecondary }]}>Telefon</Text>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>Phone</Text>
             <TextInput
               style={[styles.input, { 
                 backgroundColor: colors.backgroundSecondary,
@@ -205,17 +205,17 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
               }]}
               value={phone}
               onChangeText={setPhone}
-              placeholder="Telefonnummer"
+              placeholder="Phone number"
               placeholderTextColor={colors.textSecondary}
               keyboardType="phone-pad"
             />
           </View>
         </View>
 
-        {/* Themenbereiche */}
+        {/* Topic areas */}
         <View style={[styles.section, { borderTopColor: colors.divider }]}>
           <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Themenbereiche</Text>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Topic Areas</Text>
             <TouchableOpacity onPress={handleAddTopic} style={styles.addButton}>
               <Ionicons name="add-circle-outline" size={24} color={colors.primary} />
             </TouchableOpacity>
@@ -241,7 +241,7 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
           </View>
         </View>
 
-        {/* Abstand für bessere Scrollbarkeit */}
+        {/* Spacing for better scrollability */}
         <View style={styles.bottomSpacing} />
       </ScrollView>
     </SafeAreaView>
