@@ -67,18 +67,6 @@ export default function SettingsScreen() {
         {/* Allgemein */}
         <SettingsSection title="Allgemein">
           <SettingsItem
-            label="Mein Profil"
-            icon="person-outline"
-            showArrow={true}
-            onPress={() => handleNavigation('/settings/profile')}
-          />
-          <SettingsItem
-            label="Benachrichtigungen"
-            icon="notifications-outline"
-            showArrow={true}
-            onPress={() => handleNavigation('/settings/notifications')}
-          />
-          <SettingsItem
             label="Erscheinungsbild"
             icon="color-palette-outline"
             showArrow={true}
