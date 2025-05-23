@@ -336,12 +336,14 @@ const styles = StyleSheet.create({
     paddingTop: spacing.m,
     fontSize: typography.fontSize.m,
     minHeight: 60,
+    marginBottom: 2,
   },
   textInputLarge: {
     minHeight: 120,
   },
   progressContainer: {
-    marginTop: spacing.xs,
+    marginTop: 2,
+    marginBottom: spacing.m,
     height: 4,
     borderRadius: 2,
     backgroundColor: '#E0E0E0',
@@ -356,7 +358,7 @@ const styles = StyleSheet.create({
   },
   progressText: {
     fontSize: typography.fontSize.xs,
-    marginTop: spacing.s,
+    marginTop: spacing.xs,
     textAlign: 'right',
   },
   footer: {
