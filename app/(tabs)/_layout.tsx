@@ -129,13 +129,6 @@ export default function TabLayout() {
 
   return (
     <>
-      {/* App-Modus-Toggle (nur im Development-Build sichtbar) */}
-      {__DEV__ && (
-        <View style={styles.appModeToggleContainer}>
-          <AppModeToggle style={styles.appModeToggle} />
-        </View>
-      )}
-      
       <Tabs
         screenOptions={{
           tabBarStyle: {
@@ -223,17 +216,4 @@ export default function TabLayout() {
   );
 }
 
-// Stilinformationen für dieses Layout
-const styles = StyleSheet.create({
-  appModeToggleContainer: {
-    position: 'absolute',
-    top: 50,
-    right: 15,
-    zIndex: 1000,
-    padding: 0,
-    backgroundColor: 'transparent',
-  },
-  appModeToggle: {
-    marginVertical: 0,
-  }
-}); 
+// Stilinformationen für dieses Layout - AppModeToggle Styles entfernt 
