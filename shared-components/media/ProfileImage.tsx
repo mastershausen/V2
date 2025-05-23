@@ -61,6 +61,17 @@ interface ProfileImageProps {
    * Zusätzliche Styles für den Fallback-Text
    */
   textStyle?: StyleProp<TextStyle>;
+  
+  /**
+   * Breite des Randes in Pixeln
+   * @default 0
+   */
+  borderWidth?: number;
+  
+  /**
+   * Farbe des Randes (überschreibt die primäre Farbe)
+   */
+  borderColor?: string;
 }
 
 /**
@@ -77,6 +88,8 @@ interface ProfileImageProps {
  * @param root0.style
  * @param root0.imageStyle
  * @param root0.textStyle
+ * @param root0.borderWidth
+ * @param root0.borderColor
  */
 export function ProfileImage({
   source,
@@ -86,7 +99,9 @@ export function ProfileImage({
   isRealMode = true,
   style,
   imageStyle,
-  textStyle
+  textStyle,
+  borderWidth = 2,
+  borderColor
 }: ProfileImageProps) {
   const colors = useThemeColor();
   
@@ -132,6 +147,9 @@ export function ProfileImage({
     return 'U';
   }, [source, fallbackText]);
   
+  // Randfarbe festlegen (nutze übergebene borderColor oder die primäre Farbe)
+  const actualBorderColor = borderColor || colors.primary;
+  
   return (
     <View style={[styles.container, style]}>
       <View 
@@ -140,7 +158,9 @@ export function ProfileImage({
           {
             width: size,
             height: size,
-            borderRadius: borderRadius
+            borderRadius: borderRadius,
+            borderWidth: borderWidth,
+            borderColor: actualBorderColor
           }
         ]}
       >
@@ -149,7 +169,7 @@ export function ProfileImage({
             source={{ uri: imageUri }}
             style={[
               styles.image,
-              { borderRadius },
+              { borderRadius: borderRadius - borderWidth }, // Verringere den Border-Radius für das Bild
               imageStyle
             ]}
           />
@@ -159,7 +179,7 @@ export function ProfileImage({
               styles.fallbackContainer,
               { 
                 backgroundColor: colors.primary,
-                borderRadius
+                borderRadius: borderRadius - borderWidth // Verringere den Border-Radius für den Fallback
               }
             ]}
           >

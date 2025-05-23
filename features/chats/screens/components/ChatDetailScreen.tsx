@@ -370,10 +370,16 @@ export default function ChatDetailScreen() {
           style={styles.backButton}
           onPress={handleGoBack}
         >
-          <Ionicons name="chevron-back" size={24} color={colors.secondary} />
+          <Ionicons name="chevron-back" size={24} color={colors.primary} />
         </TouchableOpacity>
         
-        <View style={styles.headerTitleContainer}>
+        <TouchableOpacity 
+          style={styles.headerTitleContainer}
+          onPress={() => router.push({
+            pathname: `/profile/${chat.id}`,
+            params: { name: chat.name }
+          })}
+        >
           <View style={styles.headerAvatarContainer}>
             {chat.isSolvboxChat ? (
               <Image source={solvboxAvatar} style={styles.headerAvatarImage} />
@@ -391,7 +397,7 @@ export default function ChatDetailScreen() {
               {isTyping ? 'Schreibt...' : 'Online'}
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
         
         <TouchableOpacity style={styles.moreButton}>
           <Ionicons name="ellipsis-vertical" size={20} color={colors.textSecondary} />
@@ -448,7 +454,7 @@ export default function ChatDetailScreen() {
       >
         <View style={[styles.inputContainer, { borderTopColor: colors.divider }]}>
           <TouchableOpacity style={styles.attachButton}>
-            <Ionicons name="add-circle-outline" size={24} color={colors.secondary} />
+            <Ionicons name="add-circle-outline" size={24} color={colors.primary} />
           </TouchableOpacity>
           
           <View style={[styles.inputWrapper, { backgroundColor: colors.backgroundSecondary }]}>
@@ -466,7 +472,7 @@ export default function ChatDetailScreen() {
           <TouchableOpacity 
             style={[
               styles.sendButton, 
-              { backgroundColor: message.trim() ? colors.secondary : colors.backgroundSecondary }
+              { backgroundColor: message.trim() ? colors.primary : colors.backgroundSecondary }
             ]}
             onPress={handleSendMessage}
             disabled={message.trim() === ''}

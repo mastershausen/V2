@@ -389,7 +389,7 @@ export default function CreateDetailsScreen({
             <Ionicons 
               name={type === 'gig' ? "document-text-outline" : "bookmark-outline"} 
               size={22} 
-              color={type === 'gig' ? "#5E5CE6" : "#34C759"} 
+              color={type === 'gig' ? "#5E5CE6" : "#1E6B55"} 
             />
           </View>
           <Text style={[styles.actionButtonLabel, { color: colors.textSecondary }]}>
