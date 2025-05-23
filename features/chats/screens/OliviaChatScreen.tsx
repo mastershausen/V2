@@ -23,6 +23,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -54,10 +55,12 @@ export default function OliviaChatScreen() {
   const [recordingDuration, setRecordingDuration] = useState(0);
   const [showFallstudieDetail, setShowFallstudieDetail] = useState(false);
   const [selectedFallstudie, setSelectedFallstudie] = useState<any>(null);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
   const recordingInterval = useRef<NodeJS.Timeout | null>(null);
   const flatListRef = useRef<FlatList>(null);
   const typingDots = useRef(new Animated.Value(0)).current;
   const recordingAnimation = useRef(new Animated.Value(1)).current;
+  const insets = useSafeAreaInsets();
 
   // Mock-Daten für den Olivia-Chat
   const [chat, setChat] = useState({
@@ -805,55 +808,61 @@ export default function OliviaChatScreen() {
           keyboardShouldPersistTaps="handled"
         />
         
-        {/* Eingabebereich */}
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
-          style={styles.keyboardView}
-        >
-          {renderAttachmentPreview()}
-          {renderRecordingView()}
-          
-          {!isRecording && (
-            <View style={styles.inputContainer}>
-              <TouchableOpacity 
-                style={styles.attachButton} 
-                onPress={() => setShowAttachmentMenu(true)}
-              >
-                <Ionicons name="add-outline" size={20} color="rgba(255, 255, 255, 0.9)" />
-              </TouchableOpacity>
-              
-              <View style={styles.inputFieldContainer}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Nachricht an Olivia..."
-                  placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                  value={message}
-                  onChangeText={setMessage}
-                  multiline={false}
-                  keyboardAppearance="dark"
-                />
-              </View>
-              
-              {message.trim() || attachedImage || attachedLink ? (
-                <TouchableOpacity 
-                  style={styles.sendButton} 
-                  onPress={handleSendMessage}
-                >
-                  <Ionicons name="send" size={16} color="#FFFFFF" />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity 
-                  style={styles.voiceButton} 
-                  onPress={handleVoiceInput}
-                >
-                  <Ionicons name="mic" size={16} color="#FFFFFF" />
-                </TouchableOpacity>
-              )}
-            </View>
-          )}
-        </KeyboardAvoidingView>
       </SafeAreaView>
+      
+      {/* Eingabebereich außerhalb der SafeAreaView */}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? -35 : 0}
+        style={styles.keyboardView}
+      >
+        {renderAttachmentPreview()}
+        {renderRecordingView()}
+        
+        {!isRecording && (
+          <View style={[
+            styles.inputContainer,
+            {
+              paddingBottom: keyboardVisible ? 0 : 8 + insets.bottom,
+            }
+          ]}>
+            <TouchableOpacity 
+              style={styles.attachButton} 
+              onPress={() => setShowAttachmentMenu(true)}
+            >
+              <Ionicons name="add-outline" size={20} color="rgba(255, 255, 255, 0.9)" />
+            </TouchableOpacity>
+            
+            <View style={styles.inputFieldContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Nachricht an Olivia..."
+                placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                value={message}
+                onChangeText={setMessage}
+                multiline={false}
+                keyboardAppearance="dark"
+              />
+            </View>
+            
+            {message.trim() || attachedImage || attachedLink ? (
+              <TouchableOpacity 
+                style={styles.sendButton} 
+                onPress={handleSendMessage}
+              >
+                <Ionicons name="send" size={16} color="#FFFFFF" />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity 
+                style={styles.voiceButton} 
+                onPress={handleVoiceInput}
+              >
+                <Ionicons name="mic" size={16} color="#FFFFFF" />
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
+      </KeyboardAvoidingView>
       
       {/* Anhang-Menü Modal */}
       {renderAttachmentMenu()}
