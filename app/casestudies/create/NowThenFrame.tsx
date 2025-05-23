@@ -26,7 +26,7 @@ import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useFirstTimeVisit } from '@/hooks/useFirstTimeVisit';
 
-// Mindestzeichenzahlen für die verschiedenen Felder
+// Minimum character counts for different fields
 const MIN_CHARS = {
   headline: 30,
   initialSituation: 200,
@@ -35,15 +35,15 @@ const MIN_CHARS = {
 };
 
 /**
- * NowThenFrame Screen - "Vorher → Nachher" Frame für Fallstudien
- * Formular zum Erstellen einer Fallstudie mit dem Vorher-Nachher-Ansatz
+ * NowThenFrame Screen - "Before → After" frame for case studies
+ * Form for creating a case study with the before-after approach
  */
 export default function NowThenFrameScreen() {
   const colors = useThemeColor();
   const router = useRouter();
   const { isFirstVisit, isLoading, markAsVisited } = useFirstTimeVisit('nowThenFrame');
   
-  // Formularfelder
+  // Form fields
   const [headline, setHeadline] = useState('');
   const [initialSituation, setInitialSituation] = useState('');
   const [implementation, setImplementation] = useState('');
@@ -53,7 +53,7 @@ export default function NowThenFrameScreen() {
   const [contextModalVisible, setContextModalVisible] = useState(false);
   const [contextForOlivia, setContextForOlivia] = useState('');
 
-  // Zustand für die Validierungsfehler
+  // State for validation errors
   const [errors, setErrors] = useState({
     headline: false,
     initialSituation: false,
@@ -61,10 +61,10 @@ export default function NowThenFrameScreen() {
     results: false
   });
 
-  // Zustand für Formular-Gültigkeit
+  // State for form validity
   const [isValid, setIsValid] = useState(false);
 
-  // Aktualisiere die Validierung, wenn sich die Eingabefelder ändern
+  // Update validation when input fields change
   useEffect(() => {
     const newErrors = {
       headline: headline.length < MIN_CHARS.headline,
@@ -77,13 +77,13 @@ export default function NowThenFrameScreen() {
     setIsValid(!Object.values(newErrors).some(error => error));
   }, [headline, initialSituation, implementation, results]);
 
-  // Formular absenden
+  // Submit form
   const handleSubmit = () => {
     if (isValid) {
-      // Hier würden die Daten gespeichert/gesendet werden
+      // Here the data would be saved/sent
       Alert.alert(
-        "Erfolgreich",
-        "Deine Fallstudie wurde erfolgreich erstellt!",
+        "Success",
+        "Your case study has been created successfully!",
         [
           { 
             text: "OK", 
@@ -93,13 +93,13 @@ export default function NowThenFrameScreen() {
       );
     } else {
       Alert.alert(
-        "Unvollständige Eingaben",
-        "Bitte fülle alle Felder mit der Mindestanzahl an Zeichen aus."
+        "Incomplete inputs",
+        "Please fill all fields with the minimum number of characters."
       );
     }
   };
 
-  // Kontext für Olivia
+  // Context for Olivia
   const handleContextForOlivia = () => {
     setContextModalVisible(true);
   };
@@ -118,21 +118,21 @@ export default function NowThenFrameScreen() {
     {
       id: 'context',
       icon: 'information-circle-outline',
-      label: 'Kontext für Olivia',
+      label: 'Context for Olivia',
       onPress: handleContextForOlivia,
-      accessibilityLabel: 'Kontext für Olivia'
+      accessibilityLabel: 'Context for Olivia'
     },
     {
       id: 'save',
       icon: 'checkmark-circle-outline',
-      label: 'Fallstudie speichern',
+      label: 'Save case study',
       onPress: handleSubmit,
       disabled: !isValid,
-      accessibilityLabel: 'Fallstudie speichern'
+      accessibilityLabel: 'Save case study'
     }
   ];
 
-  // Erstelle Fortschrittsbalken für die Textlänge
+  // Create progress bar for text length
   const renderCharacterProgress = (currentLength: number, minChars: number) => {
     const progress = Math.min(currentLength / minChars, 1);
     
@@ -151,7 +151,7 @@ export default function NowThenFrameScreen() {
         </View>
         <View style={styles.progressTextContainer}>
           <Text style={[styles.minCharsText, { color: colors.textTertiary }]}>
-            (Mindestens {minChars} Zeichen)
+            (Minimum {minChars} characters)
           </Text>
         </View>
       </View>
@@ -210,81 +210,81 @@ export default function NowThenFrameScreen() {
         {/* Header */}
         <View style={styles.headerContainer}>
           <HeaderNavigation
-            title="Vorher → Nachher"
+            title="Before → After"
             showBackButton={true}
             onBackPress={() => router.back()}
           />
         </View>
 
-        {/* Inhalt */}
+        {/* Content */}
         <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
-          {/* Einleitung */}
+          {/* Introduction */}
           <View style={styles.introContainer}>
             <Text style={[styles.introText, { color: colors.textSecondary }]}>
-              Zeige eine klare Transformation mit messbaren Ergebnissen.
+              Show a clear transformation with measurable results.
             </Text>
           </View>
           
-          {/* Hinweise zur Eingabe */}
+          {/* Input hints */}
           <View style={styles.infoBoxContainer}>
-            {/* Erste-Besuch InfoBox - nur einmalig */}
+            {/* First visit InfoBox - only once */}
             {!isLoading && isFirstVisit && (
               <View style={styles.firstTimeInfoContainer}>
                 <FirstTimeInfoBox 
-                  text="Die Eingabefelder dienen nur als Struktur. Der eingegebene Text wird später als Fließtext mit strukturierter Ansicht angezeigt."
+                  text="The input fields are only for structure. The text entered will be displayed later as a flowing text with structured view."
                   onUnderstood={markAsVisited}
                   iconName="information-circle-outline"
                 />
               </View>
             )}
             
-            {/* Qualitäts-Reminder - immer sichtbar */}
+            {/* Quality reminder - always visible */}
             <QualityReminderBox />
           </View>
 
-          {/* Eingabefelder mit einheitlichem Stil */}
+          {/* Input fields with consistent style */}
           {renderInputField(
-            "Überschrift",
-            "Ergebnisorientierte Headline für deine Fallstudie",
+            "Headline",
+            "Result-oriented headline for your case study",
             headline,
             setHeadline,
-            "z.B. Holdingstruktur spart 84.000 € jährlich",
+            "e.g. Holding structure saves 84,000 € annually",
             MIN_CHARS.headline
           )}
 
           {renderInputField(
-            "Ausgangssituation",
-            "Was war das Problem oder der Zustand davor?",
+            "Initial Situation",
+            "What was the problem or state before?",
             initialSituation,
             setInitialSituation,
-            "Beschreibe die Ausgangssituation ausführlich...",
+            "Describe the initial situation in detail...",
             MIN_CHARS.initialSituation,
             true
           )}
 
           {renderInputField(
-            "Umsetzung",
-            "Was wurde gemacht? Schwierigkeiten und Widrigkeiten gehören hier ebenfalls rein.",
+            "Implementation",
+            "What was done? Difficulties and hindrances also belong here.",
             implementation,
             setImplementation,
-            "Beschreibe die Umsetzung im Detail...",
+            "Describe the implementation in detail...",
             MIN_CHARS.implementation,
             true
           )}
 
           {renderInputField(
-            "Ergebnis",
-            "Was kam dabei raus? Zahlen, Wirkung, Veränderung",
+            "Result",
+            "What came out? Numbers, effect, change",
             results,
             setResults,
-            "Beschreibe die erzielten Ergebnisse...",
+            "Describe the results achieved...",
             MIN_CHARS.results,
             true
           )}
         </ScrollView>
       </SafeAreaView>
 
-      {/* KeyboardToolbar mit KeyboardAvoidingView für Tastatur-Bewegung */}
+      {/* KeyboardToolbar with KeyboardAvoidingView for keyboard movement */}
       <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={0}

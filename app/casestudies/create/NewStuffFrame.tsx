@@ -24,7 +24,7 @@ import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
-// Mindestzeichenzahlen für die verschiedenen Felder
+// Minimum character counts for different fields
 const MIN_CHARS = {
   headline: 30,
   ideaGoal: 200,
@@ -34,13 +34,13 @@ const MIN_CHARS = {
 };
 
 /**
- * NewStuffFrame Screen - "Neues erschaffen" Frame für Fallstudien
- * Formular zum Erstellen einer Fallstudie mit innovativem Konzept oder neuer Lösung
+ * NewStuffFrame Screen - "Creating Something New" frame for case studies
+ * Form for creating a case study with innovative concept or new solution
  */
 export default function NewStuffFrameScreen() {
   const colors = useThemeColor();
   
-  // Formularfelder
+  // Form fields
   const [headline, setHeadline] = useState('');
   const [ideaGoal, setIdeaGoal] = useState('');
   const [implementation, setImplementation] = useState('');
@@ -51,7 +51,7 @@ export default function NewStuffFrameScreen() {
   const [contextModalVisible, setContextModalVisible] = useState(false);
   const [contextForOlivia, setContextForOlivia] = useState('');
 
-  // Zustand für die Validierungsfehler
+  // State for validation errors
   const [errors, setErrors] = useState({
     headline: false,
     ideaGoal: false,
@@ -60,10 +60,10 @@ export default function NewStuffFrameScreen() {
     results: false
   });
 
-  // Zustand für Formular-Gültigkeit
+  // State for form validity
   const [isValid, setIsValid] = useState(false);
 
-  // Aktualisiere die Validierung, wenn sich die Eingabefelder ändern
+  // Update validation when input fields change
   useEffect(() => {
     const newErrors = {
       headline: headline.length < MIN_CHARS.headline,
@@ -77,13 +77,13 @@ export default function NewStuffFrameScreen() {
     setIsValid(!Object.values(newErrors).some(error => error));
   }, [headline, ideaGoal, implementation, marketEntry, results]);
 
-  // Formular absenden
+  // Submit form
   const handleSubmit = () => {
     if (isValid) {
-      // Hier würden die Daten gespeichert/gesendet werden
+      // Here the data would be saved/sent
       Alert.alert(
-        "Erfolgreich",
-        "Deine Fallstudie wurde erfolgreich erstellt!",
+        "Success",
+        "Your case study has been created successfully!",
         [
           { 
             text: "OK", 
@@ -93,13 +93,13 @@ export default function NewStuffFrameScreen() {
       );
     } else {
       Alert.alert(
-        "Unvollständige Eingaben",
-        "Bitte fülle alle Felder mit der Mindestanzahl an Zeichen aus."
+        "Incomplete inputs",
+        "Please fill all fields with the minimum number of characters."
       );
     }
   };
 
-  // Kontext für Olivia
+  // Context for Olivia
   const handleContextForOlivia = () => {
     setContextModalVisible(true);
   };
@@ -118,21 +118,21 @@ export default function NewStuffFrameScreen() {
     {
       id: 'context',
       icon: 'information-circle-outline',
-      label: 'Kontext für Olivia',
+      label: 'Context for Olivia',
       onPress: handleContextForOlivia,
-      accessibilityLabel: 'Kontext für Olivia'
+      accessibilityLabel: 'Context for Olivia'
     },
     {
       id: 'save',
       icon: 'checkmark-circle-outline',
-      label: 'Fallstudie speichern',
+      label: 'Save Case Study',
       onPress: handleSubmit,
       disabled: !isValid,
-      accessibilityLabel: 'Fallstudie speichern'
+      accessibilityLabel: 'Save Case Study'
     }
   ];
 
-  // Erstelle Fortschrittsbalken für die Textlänge
+  // Create progress bar for text length
   const renderCharacterProgress = (currentLength: number, minChars: number) => {
     const progress = Math.min(currentLength / minChars, 1);
     
@@ -151,7 +151,7 @@ export default function NewStuffFrameScreen() {
         </View>
         <View style={styles.progressTextContainer}>
           <Text style={[styles.minCharsText, { color: colors.textTertiary }]}>
-            (Mindestens {minChars} Zeichen)
+            (Minimum {minChars} characters)
           </Text>
         </View>
       </View>
@@ -210,25 +210,25 @@ export default function NewStuffFrameScreen() {
         {/* Header */}
         <View style={styles.headerContainer}>
           <HeaderNavigation
-            title="Neues erschaffen"
+            title="Creating Something New"
             showBackButton={true}
             onBackPress={() => router.back()}
           />
         </View>
 
-        {/* Inhalt */}
+        {/* Content */}
         <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
-          {/* Einleitung */}
+          {/* Introduction */}
           <View style={styles.introContainer}>
             <Text style={[styles.introText, { color: colors.textSecondary }]}>
-              Stelle ein innovatives Konzept oder eine neue Lösung vor.
+              Present an innovative concept or a new solution.
             </Text>
           </View>
           
-          {/* Hinweis zur Eingabe */}
+          {/* Info box */}
           <View style={styles.infoBoxContainer}>
             <InfoBox 
-              text="Die Eingabefelder dienen nur als Struktur. Der eingegebene Text wird später als Fließtext mit strukturierter Ansicht angezeigt."
+              text="The input fields are only for structure. The entered text will be displayed later as a flowing text with structured view."
               backgroundColor={`${colors.primary}10`}
               iconColor={colors.primary}
               textColor={colors.textSecondary}
@@ -236,59 +236,59 @@ export default function NewStuffFrameScreen() {
             />
           </View>
 
-          {/* Eingabefelder mit einheitlichem Stil */}
+          {/* Input fields with consistent style */}
           {renderInputField(
-            "Überschrift",
-            "Was wurde konkret realisiert oder gelauncht?",
+            "Headline",
+            "What was concretely realized or launched?",
             headline,
             setHeadline,
-            "z.B. Digitale Steuerberatung-App revolutioniert Branche",
+            "e.g. Digital Tax Consulting App revolutionizes Industry",
             MIN_CHARS.headline
           )}
 
           {renderInputField(
-            "Idee / Ziel",
-            "Was war die Vision oder Absicht?",
+            "Idea / Goal",
+            "What was the vision or intention?",
             ideaGoal,
             setIdeaGoal,
-            "Beschreibe die ursprüngliche Vision und die Ziele des Projekts...",
+            "Describe the original vision and the goals of the project...",
             MIN_CHARS.ideaGoal,
             true
           )}
 
           {renderInputField(
-            "Umsetzung",
-            "Wie lief der Aufbau? Was lief gut, was war schwierig?",
+            "Implementation",
+            "How did the construction go? What went well, what was difficult?",
             implementation,
             setImplementation,
-            "Erkläre den Entwicklungsprozess mit Erfolgen und Herausforderungen...",
+            "Explain the development process with successes and challenges...",
             MIN_CHARS.implementation,
             true
           )}
 
           {renderInputField(
-            "Markteintritt / Rollout",
-            "Wie wurde das Ganze in die Welt gebracht?",
+            "Market Entry / Rollout",
+            "How was everything brought into the world?",
             marketEntry,
             setMarketEntry,
-            "Beschreibe die Markteinführung und Rollout-Strategie...",
+            "Describe the market entry and rollout strategy...",
             MIN_CHARS.marketEntry,
             true
           )}
 
           {renderInputField(
-            "Ergebnis",
-            "Was war der messbare Output oder Effekt?",
+            "Result",
+            "What was the measurable output or effect?",
             results,
             setResults,
-            "Beschreibe die konkreten Ergebnisse und Auswirkungen...",
+            "Describe the specific results and impacts...",
             MIN_CHARS.results,
             true
           )}
         </ScrollView>
       </SafeAreaView>
 
-      {/* KeyboardToolbar mit KeyboardAvoidingView für Tastatur-Bewegung */}
+      {/* KeyboardToolbar with KeyboardAvoidingView for keyboard movement */}
       <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={0}
