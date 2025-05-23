@@ -201,6 +201,15 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
+          name="upload"
+          options={{
+            title: 'Upload',
+            tabBarIcon: ({ color }) => (
+              <BottomTabIcon name="upload" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tabs.Screen
           name="settings"
           options={{
             title: 'Einstellungen',
