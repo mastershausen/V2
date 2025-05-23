@@ -17,6 +17,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 import { KeyboardToolbar, ToolbarAction } from '@/shared-components/navigation/KeyboardToolbar';
+import { ContextModal } from '@/shared-components/modals/ContextModal';
 import { InfoBox } from '@/shared-components/ui/InfoBox';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -43,6 +44,10 @@ export default function NowThenFrameScreen() {
   const [initialSituation, setInitialSituation] = useState('');
   const [implementation, setImplementation] = useState('');
   const [results, setResults] = useState('');
+
+  // Context Modal State
+  const [contextModalVisible, setContextModalVisible] = useState(false);
+  const [contextForOlivia, setContextForOlivia] = useState('');
 
   // Zustand für die Validierungsfehler
   const [errors, setErrors] = useState({
@@ -92,10 +97,16 @@ export default function NowThenFrameScreen() {
 
   // Kontext für Olivia
   const handleContextForOlivia = () => {
-    Alert.alert(
-      "Kontext für Olivia",
-      "Diese Funktion wird bald verfügbar sein!"
-    );
+    setContextModalVisible(true);
+  };
+
+  // Context Modal Handlers
+  const handleContextSave = (context: string) => {
+    setContextForOlivia(context);
+  };
+
+  const handleContextClose = () => {
+    setContextModalVisible(false);
   };
 
   // KeyboardToolbar Actions
@@ -273,6 +284,14 @@ export default function NowThenFrameScreen() {
           style={styles.keyboardToolbar}
         />
       </KeyboardAvoidingView>
+
+      {/* Context Modal */}
+      <ContextModal
+        visible={contextModalVisible}
+        onClose={handleContextClose}
+        onSave={handleContextSave}
+        initialValue={contextForOlivia}
+      />
     </View>
   );
 }
