@@ -7,10 +7,10 @@ import {
   SafeAreaView, 
   ScrollView,
   Image,
-  Dimensions 
+  Dimensions,
+  Platform
 } from 'react-native';
 import { Stack } from 'expo-router';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
@@ -117,80 +117,73 @@ export default function UploadScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
-      <Stack.Screen 
-        options={{ 
-          headerShown: false,
-        }} 
-      />
-      
-      {/* Header */}
-      <HeaderNavigation
-        title="Fallstudie erstellen"
-        showBackButton={false}
-      />
-
-      {/* Inhalt */}
-      <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
-        {/* Einleitung */}
-        <View style={styles.introContainer}>
-          <Text style={[styles.introTitle, { color: colors.textPrimary }]}>
-            Welche Art von Fallstudie möchtest du erstellen?
-          </Text>
-          <Text style={[styles.introText, { color: colors.textSecondary }]}>
-            Wähle den passenden Frame für deine Fallstudie, um deinen Erfolg am besten zu präsentieren.
-          </Text>
+    <View style={[styles.outerContainer, { backgroundColor: colors.backgroundPrimary }]}>
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
+        <Stack.Screen 
+          options={{ 
+            headerShown: false,
+          }} 
+        />
+        
+        {/* Header - vollständig sichtbar */}
+        <View style={styles.headerContainer}>
+          <HeaderNavigation
+            title="Fallstudie erstellen"
+            showBackButton={false}
+            containerStyle={styles.headerNavStyle}
+          />
         </View>
 
-        {/* Frame-Optionen */}
-        <View style={styles.framesContainer}>
-          {frameOptions.map(renderFrameOption)}
-        </View>
-
-        {/* Zusätzliche Informationen */}
-        <View style={styles.infoContainer}>
-          <View style={[styles.infoBox, { backgroundColor: `${colors.primary}10` }]}>
-            <Ionicons name="information-circle-outline" size={24} color={colors.primary} style={styles.infoIcon} />
-            <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-              Die Wahl des richtigen Frames hilft dabei, deine Fallstudie strukturiert und überzeugend zu präsentieren.
+        {/* Inhalt */}
+        <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
+          {/* Einleitung */}
+          <View style={styles.introContainer}>
+            <Text style={[styles.introTitle, { color: colors.textPrimary }]}>
+              Welche Art von Fallstudie möchtest du erstellen?
+            </Text>
+            <Text style={[styles.introText, { color: colors.textSecondary }]}>
+              Wähle den passenden Frame für deine Fallstudie, um deinen Erfolg am besten zu präsentieren.
             </Text>
           </View>
-        </View>
-      </ScrollView>
 
-      {/* Footer mit Aktionsbutton */}
-      <View style={[styles.footer, { backgroundColor: colors.backgroundPrimary, borderTopColor: colors.divider }]}>
-        <TouchableOpacity
-          style={[
-            styles.continueButton,
-            { opacity: selectedFrame ? 1 : 0.6 }
-          ]}
-          disabled={!selectedFrame}
-          onPress={() => {
-            if (selectedFrame) {
-              // Hier zum nächsten Schritt navigieren
-              console.log("Weiter zum nächsten Schritt");
-            }
-          }}
-        >
-          <LinearGradient
-            colors={[colors.primary, colors.primary]}
-            style={styles.buttonGradient}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-          >
-            <Text style={styles.buttonText}>Weiter</Text>
-            <Ionicons name="arrow-forward" size={20} color="#FFFFFF" style={styles.buttonIcon} />
-          </LinearGradient>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+          {/* Frame-Optionen */}
+          <View style={styles.framesContainer}>
+            {frameOptions.map(renderFrameOption)}
+          </View>
+
+          {/* Zusätzliche Informationen */}
+          <View style={styles.infoContainer}>
+            <View style={[styles.infoBox, { backgroundColor: `${colors.primary}10` }]}>
+              <Ionicons name="information-circle-outline" size={24} color={colors.primary} style={styles.infoIcon} />
+              <Text style={[styles.infoText, { color: colors.textSecondary }]}>
+                Die Wahl des richtigen Frames hilft dabei, deine Fallstudie strukturiert und überzeugend zu präsentieren.
+              </Text>
+            </View>
+          </View>
+        </ScrollView>
+
+        {/* Footer-Button wurde entfernt */}
+      </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    flex: 1,
+  },
   container: {
     flex: 1,
+  },
+  headerContainer: {
+    width: '100%',
+    paddingTop: Platform.OS === 'ios' ? spacing.m : spacing.xl,
+    paddingBottom: spacing.xs,
+    marginBottom: spacing.s,
+    zIndex: 10,
+  },
+  headerNavStyle: {
+    height: 56,
   },
   content: {
     flex: 1,
@@ -259,28 +252,5 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: typography.fontSize.s,
     lineHeight: 18,
-  },
-  footer: {
-    padding: spacing.m,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
-  continueButton: {
-    borderRadius: ui.borderRadius.m,
-    overflow: 'hidden',
-    height: 50,
-  },
-  buttonGradient: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.semiBold as any,
-  },
-  buttonIcon: {
-    marginLeft: spacing.xs,
   },
 }); 

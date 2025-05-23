@@ -166,6 +166,15 @@ export default function TabLayout() {
           headerShown: false,
         }}>
         <Tabs.Screen
+          name="mysolvbox"
+          options={{
+            title: 'Explore',
+            tabBarIcon: ({ color }) => (
+              <BottomTabIcon name="search" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tabs.Screen
           name="chats"
           options={{
             title: t('tabs.chats'),
@@ -189,15 +198,6 @@ export default function TabLayout() {
               // Navigiere zum eigenständigen Olivia-Assistenten
               router.navigate('/chats/olivia');
             },
-          }}
-        />
-        <Tabs.Screen
-          name="mysolvbox"
-          options={{
-            title: 'Explore',
-            tabBarIcon: ({ color }) => (
-              <BottomTabIcon name="search" color={color} size={26} />
-            ),
           }}
         />
         <Tabs.Screen

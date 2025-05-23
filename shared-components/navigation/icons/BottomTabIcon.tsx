@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { View, StyleProp, ViewStyle } from 'react-native';
 
@@ -24,7 +24,7 @@ const getIconName = (name: BottomTabIconProps['name']): keyof typeof Ionicons.gl
     case 'chat':
       return 'chatbubble';
     case 'ai':
-      return 'hardware-chip';
+      return 'flash'; // Fallback für Ionicons
     case 'settings':
       return 'settings';
     case 'search':
@@ -52,6 +52,21 @@ export function BottomTabIcon({
 }: BottomTabIconProps) {
   const iconName = getIconName(name);
   
+  // Spezieller Fall für AI-Icon, verwende MaterialCommunityIcons
+  // Verwende "semantic-web"-Icon, um Vernetzung und Kommunikation darzustellen
+  if (name === 'ai') {
+    return (
+      <View style={style} accessible={true} accessibilityRole="image" accessibilityLabel={name}>
+        <MaterialCommunityIcons 
+          name="semantic-web" 
+          color={color}
+          size={size}
+        />
+      </View>
+    );
+  }
+  
+  // Standard-Fall: Ionicons verwenden
   return (
     <View style={style} accessible={true} accessibilityRole="image" accessibilityLabel={name}>
       <Ionicons 

@@ -417,6 +417,11 @@ export default function OliviaChatScreen() {
     router.navigate('/(tabs)/mysolvbox');
   }, [router]);
 
+  // Zum Upload-Screen navigieren
+  const handleUploadNavigation = useCallback(() => {
+    router.push('/upload');
+  }, [router]);
+
   // Nachrichten nach Datum gruppieren
   const groupMessagesByDate = useCallback(() => {
     const messagesByDate: Record<string, typeof chat.messages> = {};
@@ -780,7 +785,10 @@ export default function OliviaChatScreen() {
               </Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.menuButton} onPress={handleExploreNavigation}>
+          <TouchableOpacity style={styles.menuButton} onPress={handleUploadNavigation}>
+            <Ionicons name="add-circle" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.menuButton, styles.searchButton]} onPress={handleExploreNavigation}>
             <Ionicons name="search" size={24} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
@@ -949,6 +957,9 @@ const styles = StyleSheet.create({
   },
   menuButton: {
     padding: spacing.xs,
+  },
+  searchButton: {
+    marginLeft: spacing.s,
   },
   assistantBanner: {
     flexDirection: 'row',
