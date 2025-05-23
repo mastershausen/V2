@@ -10,7 +10,7 @@ import {
   Dimensions,
   Platform
 } from 'react-native';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
@@ -72,9 +72,19 @@ export default function UploadScreen() {
   // Frame auswählen und zum nächsten Schritt gehen
   const handleSelectFrame = (frameType: FrameType) => {
     setSelectedFrame(frameType);
-    // Hier würden wir normalerweise zum nächsten Schritt navigieren
-    console.log(`Frame ausgewählt: ${frameType}`);
-    // TODO: Navigation zum nächsten Schritt implementieren
+    
+    // Navigation basierend auf dem ausgewählten Frame-Typ
+    switch (frameType) {
+      case FrameType.BEFORE_AFTER:
+        router.push('/casestudies/create/NowThenFrame');
+        break;
+      case FrameType.OUTSIDE_BOX:
+        console.log('Um die Ecke gedacht ausgewählt - Navigation noch nicht implementiert');
+        break;
+      case FrameType.CREATE_NEW:
+        console.log('Neues erschaffen ausgewählt - Navigation noch nicht implementiert');
+        break;
+    }
   };
 
   // Rendert eine einzelne Frame-Option
