@@ -95,18 +95,62 @@ export default function NowThenFrameScreen() {
     
     return (
       <View style={styles.progressContainer}>
-        <View 
-          style={[
-            styles.progressBar, 
-            { 
-              width: `${progress * 100}%`,
-              backgroundColor: progress >= 1 ? colors.success : colors.primary 
-            }
-          ]} 
-        />
-        <Text style={[styles.progressText, { color: colors.textTertiary }]}>
-          {currentLength}/{minChars} Zeichen
+        <View style={styles.progressBarContainer}>
+          <View 
+            style={[
+              styles.progressBar, 
+              { 
+                width: `${progress * 100}%`,
+                backgroundColor: progress >= 1 ? colors.success : colors.primary 
+              }
+            ]} 
+          />
+        </View>
+        <View style={styles.progressTextContainer}>
+          <Text style={[styles.minCharsText, { color: colors.textTertiary }]}>
+            (Mindestens {minChars} Zeichen)
+          </Text>
+        </View>
+      </View>
+    );
+  };
+
+  const renderInputField = (
+    label: string,
+    description: string,
+    value: string,
+    setValue: (text: string) => void,
+    placeholder: string,
+    minChars: number,
+    isLarge: boolean = false
+  ) => {
+    return (
+      <View style={styles.fieldContainer}>
+        <Text style={[styles.fieldLabel, { color: colors.textPrimary }]}>
+          {label}
         </Text>
+        <Text style={[styles.fieldDescription, { color: colors.textSecondary }]}>
+          {description}
+        </Text>
+        <View style={styles.inputWrapper}>
+          <TextInput
+            style={[
+              styles.textInput,
+              isLarge && styles.textInputLarge,
+              { 
+                backgroundColor: colors.backgroundSecondary,
+                color: colors.textPrimary,
+              }
+            ]}
+            value={value}
+            onChangeText={setValue}
+            placeholder={placeholder}
+            placeholderTextColor={colors.textTertiary}
+            multiline
+            textAlignVertical="top"
+          />
+          {renderCharacterProgress(value.length, minChars)}
+        </View>
       </View>
     );
   };
@@ -153,112 +197,45 @@ export default function NowThenFrameScreen() {
             />
           </View>
 
-          {/* Überschrift */}
-          <View style={styles.fieldContainer}>
-            <Text style={[styles.fieldLabel, { color: colors.textPrimary }]}>
-              Überschrift
-            </Text>
-            <Text style={[styles.fieldDescription, { color: colors.textSecondary }]}>
-              Ergebnisorientierte Headline für deine Fallstudie
-            </Text>
-            <TextInput
-              style={[
-                styles.textInput,
-                { 
-                  backgroundColor: colors.backgroundSecondary,
-                  color: colors.textPrimary,
-                }
-              ]}
-              value={headline}
-              onChangeText={setHeadline}
-              placeholder="z.B. Holdingstruktur spart 84.000 € jährlich"
-              placeholderTextColor={colors.textTertiary}
-              multiline
-              textAlignVertical="top"
-            />
-            {renderCharacterProgress(headline.length, MIN_CHARS.headline)}
-          </View>
+          {/* Eingabefelder mit einheitlichem Stil */}
+          {renderInputField(
+            "Überschrift",
+            "Ergebnisorientierte Headline für deine Fallstudie",
+            headline,
+            setHeadline,
+            "z.B. Holdingstruktur spart 84.000 € jährlich",
+            MIN_CHARS.headline
+          )}
 
-          {/* Ausgangssituation */}
-          <View style={styles.fieldContainer}>
-            <Text style={[styles.fieldLabel, { color: colors.textPrimary }]}>
-              Ausgangssituation
-            </Text>
-            <Text style={[styles.fieldDescription, { color: colors.textSecondary }]}>
-              Was war das Problem oder der Zustand davor?
-            </Text>
-            <TextInput
-              style={[
-                styles.textInput,
-                styles.textInputLarge,
-                { 
-                  backgroundColor: colors.backgroundSecondary,
-                  color: colors.textPrimary,
-                }
-              ]}
-              value={initialSituation}
-              onChangeText={setInitialSituation}
-              placeholder="Beschreibe die Ausgangssituation ausführlich..."
-              placeholderTextColor={colors.textTertiary}
-              multiline
-              textAlignVertical="top"
-            />
-            {renderCharacterProgress(initialSituation.length, MIN_CHARS.initialSituation)}
-          </View>
+          {renderInputField(
+            "Ausgangssituation",
+            "Was war das Problem oder der Zustand davor?",
+            initialSituation,
+            setInitialSituation,
+            "Beschreibe die Ausgangssituation ausführlich...",
+            MIN_CHARS.initialSituation,
+            true
+          )}
 
-          {/* Umsetzung */}
-          <View style={styles.fieldContainer}>
-            <Text style={[styles.fieldLabel, { color: colors.textPrimary }]}>
-              Umsetzung
-            </Text>
-            <Text style={[styles.fieldDescription, { color: colors.textSecondary }]}>
-              Was wurde gemacht? Schwierigkeiten und Widrigkeiten gehören hier ebenfalls rein.
-            </Text>
-            <TextInput
-              style={[
-                styles.textInput,
-                styles.textInputLarge,
-                { 
-                  backgroundColor: colors.backgroundSecondary,
-                  color: colors.textPrimary,
-                }
-              ]}
-              value={implementation}
-              onChangeText={setImplementation}
-              placeholder="Beschreibe die Umsetzung im Detail..."
-              placeholderTextColor={colors.textTertiary}
-              multiline
-              textAlignVertical="top"
-            />
-            {renderCharacterProgress(implementation.length, MIN_CHARS.implementation)}
-          </View>
+          {renderInputField(
+            "Umsetzung",
+            "Was wurde gemacht? Schwierigkeiten und Widrigkeiten gehören hier ebenfalls rein.",
+            implementation,
+            setImplementation,
+            "Beschreibe die Umsetzung im Detail...",
+            MIN_CHARS.implementation,
+            true
+          )}
 
-          {/* Ergebnis */}
-          <View style={styles.fieldContainer}>
-            <Text style={[styles.fieldLabel, { color: colors.textPrimary }]}>
-              Ergebnis
-            </Text>
-            <Text style={[styles.fieldDescription, { color: colors.textSecondary }]}>
-              Was kam dabei raus? Zahlen, Wirkung, Veränderung
-            </Text>
-            <TextInput
-              style={[
-                styles.textInput,
-                styles.textInputLarge,
-                { 
-                  backgroundColor: colors.backgroundSecondary,
-                  color: colors.textPrimary,
-                }
-              ]}
-              value={results}
-              onChangeText={setResults}
-              placeholder="Beschreibe die erzielten Ergebnisse..."
-              placeholderTextColor={colors.textTertiary}
-              multiline
-              textAlignVertical="top"
-            />
-            {renderCharacterProgress(results.length, MIN_CHARS.results)}
-          </View>
+          {renderInputField(
+            "Ergebnis",
+            "Was kam dabei raus? Zahlen, Wirkung, Veränderung",
+            results,
+            setResults,
+            "Beschreibe die erzielten Ergebnisse...",
+            MIN_CHARS.results,
+            true
+          )}
         </ScrollView>
 
         {/* Footer mit Speichern-Button */}
@@ -329,37 +306,47 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.s,
     marginBottom: spacing.s,
   },
+  inputWrapper: {
+    marginBottom: 0,
+  },
   textInput: {
     borderWidth: 0,
     borderRadius: ui.borderRadius.s,
-    padding: spacing.m,
     paddingTop: spacing.m,
+    paddingLeft: spacing.m,
+    paddingRight: spacing.m,
+    paddingBottom: 20,
     fontSize: typography.fontSize.m,
-    minHeight: 60,
-    marginBottom: 2,
+    minHeight: 40,
+    marginBottom: 0,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
   },
   textInputLarge: {
-    minHeight: 120,
+    minHeight: 60,
   },
   progressContainer: {
-    marginTop: 2,
+    marginTop: 0,
     marginBottom: spacing.m,
+  },
+  progressBarContainer: {
     height: 4,
-    borderRadius: 2,
     backgroundColor: '#E0E0E0',
-    position: 'relative',
+    borderBottomLeftRadius: ui.borderRadius.s,
+    borderBottomRightRadius: ui.borderRadius.s,
+    overflow: 'hidden',
   },
   progressBar: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
     height: '100%',
-    borderRadius: 2,
   },
-  progressText: {
+  progressTextContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 4,
+  },
+  minCharsText: {
     fontSize: typography.fontSize.xs,
-    marginTop: spacing.xs,
-    textAlign: 'right',
+    textAlign: 'left',
   },
   footer: {
     padding: spacing.m,
