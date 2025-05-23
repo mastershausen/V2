@@ -16,6 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
+import { InfoBox } from '@/shared-components/ui/InfoBox';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
@@ -140,6 +141,17 @@ export default function NowThenFrameScreen() {
               Zeige eine klare Transformation mit messbaren Ergebnissen.
             </Text>
           </View>
+          
+          {/* Hinweis zur Eingabe */}
+          <View style={styles.infoBoxContainer}>
+            <InfoBox 
+              text="Die Eingabefelder dienen nur als Struktur. Der eingegebene Text wird später als Fließtext mit strukturierter Ansicht angezeigt."
+              backgroundColor={`${colors.primary}10`}
+              iconColor={colors.primary}
+              textColor={colors.textSecondary}
+              iconName="information-circle-outline"
+            />
+          </View>
 
           {/* Überschrift */}
           <View style={styles.fieldContainer}>
@@ -152,11 +164,9 @@ export default function NowThenFrameScreen() {
             <TextInput
               style={[
                 styles.textInput,
-                errors.headline && styles.errorInput,
                 { 
                   backgroundColor: colors.backgroundSecondary,
                   color: colors.textPrimary,
-                  borderColor: errors.headline ? colors.error : colors.divider
                 }
               ]}
               value={headline}
@@ -181,11 +191,9 @@ export default function NowThenFrameScreen() {
               style={[
                 styles.textInput,
                 styles.textInputLarge,
-                errors.initialSituation && styles.errorInput,
                 { 
                   backgroundColor: colors.backgroundSecondary,
                   color: colors.textPrimary,
-                  borderColor: errors.initialSituation ? colors.error : colors.divider
                 }
               ]}
               value={initialSituation}
@@ -210,11 +218,9 @@ export default function NowThenFrameScreen() {
               style={[
                 styles.textInput,
                 styles.textInputLarge,
-                errors.implementation && styles.errorInput,
                 { 
                   backgroundColor: colors.backgroundSecondary,
                   color: colors.textPrimary,
-                  borderColor: errors.implementation ? colors.error : colors.divider
                 }
               ]}
               value={implementation}
@@ -239,11 +245,9 @@ export default function NowThenFrameScreen() {
               style={[
                 styles.textInput,
                 styles.textInputLarge,
-                errors.results && styles.errorInput,
                 { 
                   backgroundColor: colors.backgroundSecondary,
                   color: colors.textPrimary,
-                  borderColor: errors.results ? colors.error : colors.divider
                 }
               ]}
               value={results}
@@ -304,11 +308,14 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xxl,
   },
   introContainer: {
-    marginBottom: spacing.l,
+    marginBottom: spacing.m,
   },
   introText: {
     fontSize: typography.fontSize.m,
     lineHeight: 22,
+  },
+  infoBoxContainer: {
+    marginBottom: spacing.l,
   },
   fieldContainer: {
     marginBottom: spacing.xl,
@@ -323,7 +330,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.s,
   },
   textInput: {
-    borderWidth: 1,
+    borderWidth: 0,
     borderRadius: ui.borderRadius.s,
     padding: spacing.m,
     paddingTop: spacing.m,
@@ -332,9 +339,6 @@ const styles = StyleSheet.create({
   },
   textInputLarge: {
     minHeight: 120,
-  },
-  errorInput: {
-    borderWidth: 2,
   },
   progressContainer: {
     marginTop: spacing.xs,

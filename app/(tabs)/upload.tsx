@@ -14,6 +14,7 @@ import { Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
+import { InfoBox } from '@/shared-components/ui/InfoBox';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
@@ -163,12 +164,12 @@ export default function UploadScreen() {
 
           {/* Zusätzliche Informationen */}
           <View style={styles.infoContainer}>
-            <View style={[styles.infoBox, { backgroundColor: `${colors.primary}10` }]}>
-              <Ionicons name="information-circle-outline" size={24} color={colors.primary} style={styles.infoIcon} />
-              <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-                Die Wahl des richtigen Frames hilft dabei, deine Fallstudie strukturiert und überzeugend zu präsentieren.
-              </Text>
-            </View>
+            <InfoBox 
+              text="Die Wahl des richtigen Frames hilft dabei, deine Fallstudie strukturiert und überzeugend zu präsentieren."
+              backgroundColor={`${colors.primary}10`}
+              iconColor={colors.primary}
+              textColor={colors.textSecondary}
+            />
           </View>
         </ScrollView>
 
@@ -248,19 +249,5 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     marginBottom: spacing.xl,
-  },
-  infoBox: {
-    borderRadius: ui.borderRadius.m,
-    padding: spacing.m,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  infoIcon: {
-    marginRight: spacing.s,
-  },
-  infoText: {
-    flex: 1,
-    fontSize: typography.fontSize.s,
-    lineHeight: 18,
   },
 }); 
