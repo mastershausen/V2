@@ -554,8 +554,16 @@ export default function ExploreScreen(): React.ReactElement {
   // Handler für Tile-Klicks
   const handleTilePress = (id: number) => {
     const tile = EXPLORE_TILES.find(t => t.id === id);
-    console.log('Tile geklickt:', tile?.title);
-    // TODO: Navigation zu Detail-Screen
+    if (tile) {
+      console.log('Tile geklickt:', tile.title);
+      // Navigation zu Olivia mit vorgefülltem Text
+      router.push({
+        pathname: '/chats/olivia',
+        params: { 
+          prefillText: tile.title
+        }
+      });
+    }
   };
 
   // Handler für Olivia Chat

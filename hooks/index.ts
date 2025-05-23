@@ -10,6 +10,7 @@
 export { useColorScheme } from './useColorScheme';
 export { useTheme } from './useTheme';
 export { useThemeColor } from './useThemeColor';
+export { useFirstTimeVisit } from './useFirstTimeVisit';
 
 // Geschäftslogik-Hooks
 export { useAuth } from './useAuth';

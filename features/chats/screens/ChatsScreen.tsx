@@ -11,7 +11,7 @@ import {
   SectionList,
   ImageSourcePropType
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -166,7 +166,15 @@ export default function ChatsScreen() {
         
         {/* Avatar */}
         <View style={styles.avatarContainer}>
-          {item.isFixed ? (
+          {item.isFixed && item.name === 'Olivia' ? (
+            <View style={[styles.oliviaAvatarContainer, { backgroundColor: colors.primary }]}>
+              <MaterialCommunityIcons 
+                name="semantic-web" 
+                size={24} 
+                color="white" 
+              />
+            </View>
+          ) : item.isFixed ? (
             <Image source={item.avatar} style={styles.avatarImage} />
           ) : (
             <View style={[styles.avatar, { backgroundColor: colors.primary }]}>
@@ -506,5 +514,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: typography.fontSize.m,
     fontWeight: typography.fontWeight.semiBold as any,
+  },
+  oliviaAvatarContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }); 

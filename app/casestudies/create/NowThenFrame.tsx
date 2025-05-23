@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { 
   View, 
   Text, 
@@ -11,18 +11,20 @@ import {
   KeyboardAvoidingView,
   Platform
 } from 'react-native';
-import { Stack, router } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 import { KeyboardToolbar, ToolbarAction } from '@/shared-components/navigation/KeyboardToolbar';
 import { ContextModal } from '@/shared-components/modals/ContextModal';
-import { InfoBox } from '@/shared-components/ui/InfoBox';
+import { FirstTimeInfoBox } from '@/shared-components/ui/FirstTimeInfoBox';
+import { QualityReminderBox } from '@/shared-components/ui/QualityReminderBox';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { useFirstTimeVisit } from '@/hooks/useFirstTimeVisit';
 
 // Mindestzeichenzahlen für die verschiedenen Felder
 const MIN_CHARS = {
@@ -38,6 +40,8 @@ const MIN_CHARS = {
  */
 export default function NowThenFrameScreen() {
   const colors = useThemeColor();
+  const router = useRouter();
+  const { isFirstVisit, isLoading, markAsVisited } = useFirstTimeVisit('nowThenFrame');
   
   // Formularfelder
   const [headline, setHeadline] = useState('');
@@ -221,15 +225,21 @@ export default function NowThenFrameScreen() {
             </Text>
           </View>
           
-          {/* Hinweis zur Eingabe */}
+          {/* Hinweise zur Eingabe */}
           <View style={styles.infoBoxContainer}>
-            <InfoBox 
-              text="Die Eingabefelder dienen nur als Struktur. Der eingegebene Text wird später als Fließtext mit strukturierter Ansicht angezeigt."
-              backgroundColor={`${colors.primary}10`}
-              iconColor={colors.primary}
-              textColor={colors.textSecondary}
-              iconName="information-circle-outline"
-            />
+            {/* Erste-Besuch InfoBox - nur einmalig */}
+            {!isLoading && isFirstVisit && (
+              <View style={styles.firstTimeInfoContainer}>
+                <FirstTimeInfoBox 
+                  text="Die Eingabefelder dienen nur als Struktur. Der eingegebene Text wird später als Fließtext mit strukturierter Ansicht angezeigt."
+                  onUnderstood={markAsVisited}
+                  iconName="information-circle-outline"
+                />
+              </View>
+            )}
+            
+            {/* Qualitäts-Reminder - immer sichtbar */}
+            <QualityReminderBox />
           </View>
 
           {/* Eingabefelder mit einheitlichem Stil */}
@@ -383,5 +393,8 @@ const styles = StyleSheet.create({
   keyboardToolbar: {
     paddingVertical: spacing.xs,
     paddingHorizontal: spacing.m,
+  },
+  firstTimeInfoContainer: {
+    marginBottom: spacing.m,
   },
 }); 

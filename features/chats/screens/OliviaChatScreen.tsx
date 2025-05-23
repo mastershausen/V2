@@ -19,7 +19,7 @@ import {
   Linking,
   Alert
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
@@ -46,6 +46,7 @@ const oliviaAvatar = require('@/assets/small rounded Icon.png') as ImageSourcePr
 export default function OliviaChatScreen() {
   const colors = useThemeColor();
   const router = useRouter();
+  const params = useLocalSearchParams();
   const [message, setMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
@@ -281,6 +282,13 @@ export default function OliviaChatScreen() {
     };
   }, [isRecording, recordingAnimation]);
 
+  // Vorfüllen des Textfelds wenn Parameter vorhanden
+  useEffect(() => {
+    if (params.prefillText && typeof params.prefillText === 'string') {
+      setMessage(params.prefillText);
+    }
+  }, [params.prefillText]);
+
   // Bild auswählen
   const handlePickImage = useCallback(async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -464,7 +472,12 @@ export default function OliviaChatScreen() {
           !isLastInGroup && styles.otherMessageGrouped
         ]}>
           <View style={styles.avatarContainer}>
-            <Image source={oliviaAvatar} style={styles.avatar} />
+            <MaterialCommunityIcons 
+              name="semantic-web" 
+              size={28} 
+              color="#FFFFFF" 
+              style={styles.avatar}
+            />
           </View>
           {renderMessageWithResults(item, item.text)}
         </View>
@@ -479,7 +492,12 @@ export default function OliviaChatScreen() {
       ]}>
         {!item.isUser && (
           <View style={styles.avatarContainer}>
-            <Image source={oliviaAvatar} style={styles.avatar} />
+            <MaterialCommunityIcons 
+              name="semantic-web" 
+              size={28} 
+              color="#FFFFFF" 
+              style={styles.avatar}
+            />
           </View>
         )}
         <View style={[
@@ -592,7 +610,12 @@ export default function OliviaChatScreen() {
     return (
       <View style={styles.typingContainer}>
         <View style={styles.avatarContainer}>
-          <Image source={oliviaAvatar} style={styles.avatar} />
+          <MaterialCommunityIcons 
+            name="semantic-web" 
+            size={28} 
+            color="#FFFFFF" 
+            style={styles.avatar}
+          />
         </View>
         <View style={[
           styles.typingBubble,
@@ -643,7 +666,12 @@ export default function OliviaChatScreen() {
           
           {/* Inhalt-Container, der unabhängig vom Gradient zentriert ist */}
           <View style={styles.solvboxContentContainer}>
-            <Image source={oliviaAvatar} style={styles.solvboxLogo} />
+            <MaterialCommunityIcons 
+              name="semantic-web" 
+              size={80} 
+              color="#FFFFFF" 
+              style={styles.solvboxLogo}
+            />
             <View style={styles.solvboxTextContainer}>
               <Text style={[styles.solvboxHeaderSubtitle, { color: '#F1F5F9' }]}>
                 Ich bin Olivia und mein Job ist es neue Möglichkeiten zu entdecken, wie Sie Ihre Liquidität steigern können. Sollten Sie Fragen oder ungelöste Probleme in Ihrem Unternehmen haben bin ich immer für Sie da und suche innerhalb von wenigen Sekunden nach der besten Lösung.
