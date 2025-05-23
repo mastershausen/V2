@@ -38,43 +38,43 @@ interface FrameOption {
 }
 
 /**
- * Upload Screen für Fallstudien
- * Ermöglicht die Auswahl verschiedener Frame-Typen für den Upload-Prozess
+ * Upload Screen for Case Studies
+ * Allows selection of different frame types for the upload process
  */
 export default function UploadScreen() {
   const colors = useThemeColor();
   const [selectedFrame, setSelectedFrame] = useState<FrameType | null>(null);
 
-  // Frame-Optionen
+  // Frame options
   const frameOptions: FrameOption[] = [
     {
       id: FrameType.BEFORE_AFTER,
-      title: 'Vorher → Nachher',
-      description: 'Zeige eine klare Transformation mit messbaren Ergebnissen.',
+      title: 'Before → After',
+      description: 'Show a clear transformation with measurable results.',
       icon: 'sync-outline',
       color: colors.primary
     },
     {
       id: FrameType.OUTSIDE_BOX,
-      title: 'Um die Ecke gedacht',
-      description: 'Präsentiere einen kreativen, unerwarteten Lösungsansatz.',
+      title: 'Thinking Outside the Box',
+      description: 'Present a creative, unexpected solution approach.',
       icon: 'bulb-outline',
-      color: '#6B5C1E' // Alternative Farbe für Unterscheidung
+      color: '#6B5C1E' // Alternative color for distinction
     },
     {
       id: FrameType.CREATE_NEW,
-      title: 'Neues erschaffen',
-      description: 'Stelle ein innovatives Konzept oder eine neue Lösung vor.',
+      title: 'Creating Something New',
+      description: 'Present an innovative concept or a new solution.',
       icon: 'add-circle-outline',
-      color: '#3E1E6B' // Alternative Farbe für Unterscheidung
+      color: '#3E1E6B' // Alternative color for distinction
     }
   ];
 
-  // Frame auswählen und zum nächsten Schritt gehen
+  // Select frame and go to next step
   const handleSelectFrame = (frameType: FrameType) => {
     setSelectedFrame(frameType);
     
-    // Navigation basierend auf dem ausgewählten Frame-Typ
+    // Navigation based on selected frame type
     switch (frameType) {
       case FrameType.BEFORE_AFTER:
         router.push('/casestudies/create/NowThenFrame');
@@ -88,7 +88,7 @@ export default function UploadScreen() {
     }
   };
 
-  // Rendert eine einzelne Frame-Option
+  // Render a single frame option
   const renderFrameOption = (option: FrameOption) => {
     const isSelected = selectedFrame === option.id;
     
@@ -136,36 +136,36 @@ export default function UploadScreen() {
           }} 
         />
         
-        {/* Header - vollständig sichtbar */}
+        {/* Header - fully visible */}
         <View style={styles.headerContainer}>
           <HeaderNavigation
-            title="Fallstudie erstellen"
+            title="Create Case Study"
             showBackButton={false}
             containerStyle={styles.headerNavStyle}
           />
         </View>
 
-        {/* Inhalt */}
+        {/* Content */}
         <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
-          {/* Einleitung */}
+          {/* Introduction */}
           <View style={styles.introContainer}>
             <Text style={[styles.introTitle, { color: colors.textPrimary }]}>
-              Welche Art von Fallstudie möchtest du erstellen?
+              What type of case study would you like to create?
             </Text>
             <Text style={[styles.introText, { color: colors.textSecondary }]}>
-              Wähle den passenden Frame für deine Fallstudie, um deinen Erfolg am besten zu präsentieren.
+              Choose the appropriate frame for your case study to best present your success.
             </Text>
           </View>
 
-          {/* Frame-Optionen */}
+          {/* Frame options */}
           <View style={styles.framesContainer}>
             {frameOptions.map(renderFrameOption)}
           </View>
 
-          {/* Zusätzliche Informationen */}
+          {/* Additional information */}
           <View style={styles.infoContainer}>
             <InfoBox 
-              text="Die Wahl des richtigen Frames hilft dabei, deine Fallstudie strukturiert und überzeugend zu präsentieren."
+              text="Choosing the right frame helps to present your case study in a structured and convincing way."
               backgroundColor={`${colors.primary}10`}
               iconColor={colors.primary}
               textColor={colors.textSecondary}
@@ -173,7 +173,7 @@ export default function UploadScreen() {
           </View>
         </ScrollView>
 
-        {/* Footer-Button wurde entfernt */}
+        {/* Footer button was removed */}
       </SafeAreaView>
     </View>
   );
