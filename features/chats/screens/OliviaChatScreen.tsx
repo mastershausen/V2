@@ -57,6 +57,8 @@ export default function OliviaChatScreen() {
   const [showFallstudieDetail, setShowFallstudieDetail] = useState(false);
   const [selectedFallstudie, setSelectedFallstudie] = useState<any>(null);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [showPreferencesPopup, setShowPreferencesPopup] = useState(false);
+  const [userPreferences, setUserPreferences] = useState('');
   const recordingInterval = useRef<NodeJS.Timeout | null>(null);
   const flatListRef = useRef<FlatList>(null);
   const typingDots = useRef(new Animated.Value(0)).current;
@@ -424,9 +426,9 @@ export default function OliviaChatScreen() {
   }, [router]);
 
   // Navigate to Explore tab
-  const handleExploreNavigation = useCallback(() => {
-    router.navigate('/(tabs)/mysolvbox');
-  }, [router]);
+  const handleExploreNavigation = () => {
+    router.back();
+  };
 
   // Navigate to Upload screen
   const handleUploadNavigation = useCallback(() => {
@@ -727,10 +729,10 @@ export default function OliviaChatScreen() {
           </TouchableOpacity>
           
           <TouchableOpacity 
-            style={[styles.cancelButton, { backgroundColor: colors.backgroundSecondary }]} 
+            style={[styles.attachmentCancelButton, { backgroundColor: colors.backgroundSecondary }]} 
             onPress={() => setShowAttachmentMenu(false)}
           >
-            <Text style={[styles.cancelButtonText, { color: colors.textPrimary }]}>Cancel</Text>
+            <Text style={[styles.attachmentCancelButtonText, { color: colors.textPrimary }]}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -790,6 +792,18 @@ export default function OliviaChatScreen() {
     );
   };
 
+  // Handler for opening preferences popup
+  const handleOpenPreferences = () => {
+    setShowPreferencesPopup(true);
+  };
+
+  // Handler for saving user preferences
+  const handleSavePreferences = () => {
+    // TODO: Save to AsyncStorage or backend
+    console.log('Saved preferences:', userPreferences);
+    setShowPreferencesPopup(false);
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -809,7 +823,7 @@ export default function OliviaChatScreen() {
           <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
             <Ionicons name="chevron-back" size={24} color="#FFFFFF" />
           </TouchableOpacity>
-          <View style={styles.headerTitleContainer}>
+          <TouchableOpacity style={styles.headerTitleContainer} onPress={handleOpenPreferences}>
             <View style={styles.chatAvatarContainer}>
               <MaterialCommunityIcons 
                 name="semantic-web" 
@@ -826,7 +840,7 @@ export default function OliviaChatScreen() {
                 Online
               </Text>
             </View>
-          </View>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.menuButton} onPress={handleSaveNavigation}>
             <Ionicons name="bookmark" size={24} color="#FFFFFF" />
           </TouchableOpacity>
@@ -915,6 +929,65 @@ export default function OliviaChatScreen() {
         onClose={() => setShowFallstudieDetail(false)}
         fallstudie={selectedFallstudie}
       />
+
+      {/* User Preferences Popup */}
+      <Modal
+        visible={showPreferencesPopup}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowPreferencesPopup(false)}
+      >
+        <View style={styles.popupOverlay}>
+          <View style={styles.preferencesPopup}>
+            <View style={styles.popupHeader}>
+              <Text style={styles.popupTitle}>
+                Personal Preferences
+              </Text>
+              <TouchableOpacity 
+                onPress={() => setShowPreferencesPopup(false)}
+                style={styles.popupCloseButton}
+              >
+                <Ionicons name="close" size={24} color="#333333" />
+              </TouchableOpacity>
+            </View>
+            
+            <View style={styles.popupContent}>
+              <Text style={styles.popupDescription}>
+                Here you can enter everything that Olivia should consider for future search suggestions.
+                {'\n\n'}
+                For example: "I prefer to work with regional partners", "I am very conservative with tax matters", or "I am open to unconventional solutions."
+              </Text>
+              
+              <TextInput
+                style={styles.popupInput}
+                placeholder="Tell Olivia about your preferences..."
+                placeholderTextColor="#999999"
+                value={userPreferences}
+                onChangeText={setUserPreferences}
+                multiline={true}
+                numberOfLines={6}
+                textAlignVertical="top"
+              />
+            </View>
+            
+            <View style={styles.popupActions}>
+              <TouchableOpacity 
+                style={[styles.popupButton, styles.cancelButton]}
+                onPress={() => setShowPreferencesPopup(false)}
+              >
+                <Text style={styles.cancelButtonText}>Cancel</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity 
+                style={[styles.popupButton, styles.saveButton]}
+                onPress={handleSavePreferences}
+              >
+                <Text style={styles.saveButtonText}>Save Preferences</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -1193,8 +1266,10 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: spacing.l,
   },
   attachmentMenuContainer: {
     borderTopLeftRadius: 20,
@@ -1219,13 +1294,13 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.m,
     fontWeight: '500',
   },
-  cancelButton: {
+  attachmentCancelButton: {
     borderRadius: ui.borderRadius.l,
     padding: spacing.m,
     alignItems: 'center',
     marginTop: spacing.m,
   },
-  cancelButtonText: {
+  attachmentCancelButtonText: {
     fontWeight: '600',
   },
   attachmentContainer: {
@@ -1369,5 +1444,84 @@ const styles = StyleSheet.create({
   stopRecordingButton: {
     padding: spacing.xs,
   },
-  // Die Styles für die Chat-Karten wurden in die ChatCard- und ChatCardContainer-Komponenten verschoben
+  popupOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: spacing.l,
+  },
+  preferencesPopup: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: spacing.l,
+    width: '100%',
+    maxHeight: '80%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 10,
+    elevation: 10,
+  },
+  popupHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.m,
+  },
+  popupTitle: {
+    fontSize: typography.fontSize.l,
+    fontWeight: '600',
+    color: '#333333',
+  },
+  popupCloseButton: {
+    padding: spacing.xs,
+  },
+  popupContent: {
+    marginBottom: spacing.l,
+  },
+  popupDescription: {
+    fontSize: typography.fontSize.s,
+    color: '#666666',
+    lineHeight: 20,
+    marginBottom: spacing.m,
+  },
+  popupInput: {
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    borderRadius: 12,
+    padding: spacing.m,
+    fontSize: 15,
+    color: '#333333',
+    minHeight: 100,
+    backgroundColor: '#F8F9FA',
+  },
+  popupActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: spacing.s,
+  },
+  popupButton: {
+    flex: 1,
+    paddingVertical: spacing.m,
+    paddingHorizontal: spacing.l,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  cancelButton: {
+    backgroundColor: '#F5F5F5',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+  },
+  cancelButtonText: {
+    fontWeight: '600',
+    color: '#666666',
+  },
+  saveButton: {
+    backgroundColor: '#34C759',
+  },
+  saveButtonText: {
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
 }); 

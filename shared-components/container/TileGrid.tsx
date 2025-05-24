@@ -150,12 +150,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     width: '100%',
-    padding: spacing.xs,
   },
   tileWrapper: {
     width: '30%',
     marginBottom: spacing.m,
-    marginHorizontal: spacing.xxs,
   },
   errorContainer: {
     padding: spacing.m,

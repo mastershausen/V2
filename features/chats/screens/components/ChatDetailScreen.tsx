@@ -398,10 +398,6 @@ export default function ChatDetailScreen() {
             </Text>
           </View>
         </TouchableOpacity>
-        
-        <TouchableOpacity style={styles.moreButton}>
-          <Ionicons name="ellipsis-vertical" size={20} color={colors.textSecondary} />
-        </TouchableOpacity>
       </View>
       
       {/* Chat-Verlauf */}
@@ -534,9 +530,6 @@ const styles = StyleSheet.create({
   },
   headerSubtitle: {
     fontSize: typography.fontSize.xs,
-  },
-  moreButton: {
-    padding: spacing.s,
   },
   chatContent: {
     paddingHorizontal: spacing.m,
