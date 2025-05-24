@@ -14,6 +14,7 @@ import {
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -101,6 +102,7 @@ const CHAT_SECTIONS = [
 export default function ChatsScreen() {
   const colors = useThemeColor();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredSections, setFilteredSections] = useState(CHAT_SECTIONS);
 
@@ -249,15 +251,15 @@ export default function ChatsScreen() {
       <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
         Chats
       </Text>
-      <TouchableOpacity style={styles.newChatButton}>
-        <Ionicons name="create-outline" size={24} color={colors.primary} />
-      </TouchableOpacity>
     </View>
   );
 
   // Renders the search bar
   const renderSearchBar = () => (
-    <View style={[styles.searchContainer, { backgroundColor: colors.backgroundSecondary }]}>
+    <View style={[styles.searchContainer, { 
+      backgroundColor: '#F3F4F6',
+      borderColor: '#E5E7EB',
+    }]}>
       <Ionicons name="search-outline" size={20} color={colors.textTertiary} style={styles.searchIcon} />
       <TextInput
         style={[styles.searchInput, { color: colors.textPrimary }]}
@@ -307,7 +309,10 @@ export default function ChatsScreen() {
     (filteredSections.length > 0 && filteredSections.every(section => section.data.length === 0));
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
+    <View style={[styles.container, { 
+      backgroundColor: colors.backgroundPrimary,
+      paddingTop: insets.top 
+    }]}>
       <StatusBar barStyle="dark-content" />
       
       {/* Header */}
@@ -343,23 +348,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     paddingHorizontal: spacing.m,
-    paddingTop: spacing.xl,
-    paddingBottom: spacing.m,
+    paddingVertical: spacing.m,
   },
   headerTitle: {
-    fontSize: typography.fontSize.xxl,
-    fontWeight: typography.fontWeight.bold as any,
-  },
-  newChatButton: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 20,
+    fontSize: 28,
+    fontWeight: 'bold',
+    textAlign: 'left',
   },
   searchContainer: {
     flexDirection: 'row',
@@ -369,6 +364,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.s,
     height: 44,
     borderRadius: ui.borderRadius.m,
+    borderWidth: 1,
   },
   searchIcon: {
     marginRight: spacing.s,
