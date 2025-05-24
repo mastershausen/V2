@@ -58,9 +58,10 @@ export default function OliviaChatScreen() {
   const [selectedFallstudie, setSelectedFallstudie] = useState<any>(null);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [showPreferencesPopup, setShowPreferencesPopup] = useState(false);
-  const [userPreferences, setUserPreferences] = useState('');
+  const [userPreferences, setUserPreferences] = useState('Here you can tell me everything I should consider for future search suggestions.\n\nFor example: "I prefer to work with regional partners", "I am very conservative with tax matters", or "I am open to unconventional solutions."');
   const recordingInterval = useRef<NodeJS.Timeout | null>(null);
   const flatListRef = useRef<FlatList>(null);
+  const preferencesInputRef = useRef<TextInput>(null);
   const typingDots = useRef(new Animated.Value(0)).current;
   const recordingAnimation = useRef(new Animated.Value(1)).current;
   const insets = useSafeAreaInsets();
@@ -290,6 +291,15 @@ export default function OliviaChatScreen() {
       setMessage(params.prefillText);
     }
   }, [params.prefillText]);
+
+  // Auto-focus TextInput when preferences popup opens
+  useEffect(() => {
+    if (showPreferencesPopup) {
+      setTimeout(() => {
+        preferencesInputRef.current?.focus();
+      }, 100);
+    }
+  }, [showPreferencesPopup]);
 
   // Bild auswählen
   const handlePickImage = useCallback(async () => {
@@ -898,6 +908,7 @@ export default function OliviaChatScreen() {
                 onChangeText={setMessage}
                 multiline={false}
                 keyboardAppearance="dark"
+                ref={preferencesInputRef}
               />
             </View>
             
@@ -937,7 +948,10 @@ export default function OliviaChatScreen() {
         animationType="fade"
         onRequestClose={() => setShowPreferencesPopup(false)}
       >
-        <View style={styles.popupOverlay}>
+        <KeyboardAvoidingView
+          style={styles.popupOverlay}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
           <View style={styles.preferencesPopup}>
             <View style={styles.popupHeader}>
               <Text style={styles.popupTitle}>
@@ -952,41 +966,29 @@ export default function OliviaChatScreen() {
             </View>
             
             <View style={styles.popupContent}>
-              <Text style={styles.popupDescription}>
-                Here you can enter everything that Olivia should consider for future search suggestions.
-                {'\n\n'}
-                For example: "I prefer to work with regional partners", "I am very conservative with tax matters", or "I am open to unconventional solutions."
-              </Text>
-              
               <TextInput
                 style={styles.popupInput}
-                placeholder="Tell Olivia about your preferences..."
+                ref={preferencesInputRef}
+                placeholder="Tell me about your preferences..."
                 placeholderTextColor="#999999"
                 value={userPreferences}
                 onChangeText={setUserPreferences}
                 multiline={true}
-                numberOfLines={6}
+                numberOfLines={8}
                 textAlignVertical="top"
               />
             </View>
             
             <View style={styles.popupActions}>
               <TouchableOpacity 
-                style={[styles.popupButton, styles.cancelButton]}
-                onPress={() => setShowPreferencesPopup(false)}
-              >
-                <Text style={styles.cancelButtonText}>Cancel</Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity 
                 style={[styles.popupButton, styles.saveButton]}
                 onPress={handleSavePreferences}
               >
-                <Text style={styles.saveButtonText}>Save Preferences</Text>
+                <Text style={styles.saveButtonText}>Save</Text>
               </TouchableOpacity>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </View>
   );
@@ -1267,9 +1269,8 @@ const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: spacing.l,
+    justifyContent: 'flex-end',
+    paddingHorizontal: 0,
   },
   attachmentMenuContainer: {
     borderTopLeftRadius: 20,
@@ -1447,21 +1448,23 @@ const styles = StyleSheet.create({
   popupOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: spacing.l,
+    justifyContent: 'flex-end',
+    paddingHorizontal: 0,
   },
   preferencesPopup: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 20,
-    padding: spacing.l,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingTop: spacing.l,
+    paddingHorizontal: spacing.l,
+    paddingBottom: spacing.xl,
     width: '100%',
-    maxHeight: '80%',
+    maxHeight: '85%',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 10,
-    elevation: 10,
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 15,
   },
   popupHeader: {
     flexDirection: 'row',
@@ -1480,42 +1483,27 @@ const styles = StyleSheet.create({
   popupContent: {
     marginBottom: spacing.l,
   },
-  popupDescription: {
-    fontSize: typography.fontSize.s,
-    color: '#666666',
-    lineHeight: 20,
-    marginBottom: spacing.m,
-  },
   popupInput: {
     borderWidth: 1,
     borderColor: '#E0E0E0',
-    borderRadius: 12,
-    padding: spacing.m,
-    fontSize: 15,
+    borderRadius: 16,
+    padding: spacing.l,
+    fontSize: 16,
     color: '#333333',
-    minHeight: 100,
+    minHeight: 160,
     backgroundColor: '#F8F9FA',
+    marginBottom: spacing.l,
   },
   popupActions: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: spacing.s,
+    justifyContent: 'center',
   },
   popupButton: {
-    flex: 1,
     paddingVertical: spacing.m,
-    paddingHorizontal: spacing.l,
+    paddingHorizontal: spacing.xl,
     borderRadius: 12,
     alignItems: 'center',
-  },
-  cancelButton: {
-    backgroundColor: '#F5F5F5',
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-  },
-  cancelButtonText: {
-    fontWeight: '600',
-    color: '#666666',
+    minWidth: 120,
   },
   saveButton: {
     backgroundColor: '#34C759',
