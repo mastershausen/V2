@@ -59,6 +59,7 @@ export default function OliviaChatScreen() {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [showPreferencesPopup, setShowPreferencesPopup] = useState(false);
   const [userPreferences, setUserPreferences] = useState('Here you can tell me everything I should consider for future search suggestions.\n\nFor example: "I prefer to work with regional partners", "I am very conservative with tax matters", or "I am open to unconventional solutions."');
+  const [isPrefilledText, setIsPrefilledText] = useState(true);
   const recordingInterval = useRef<NodeJS.Timeout | null>(null);
   const flatListRef = useRef<FlatList>(null);
   const preferencesInputRef = useRef<TextInput>(null);
@@ -804,6 +805,7 @@ export default function OliviaChatScreen() {
 
   // Handler for opening preferences popup
   const handleOpenPreferences = () => {
+    setIsPrefilledText(true);
     setShowPreferencesPopup(true);
   };
 
@@ -812,6 +814,17 @@ export default function OliviaChatScreen() {
     // TODO: Save to AsyncStorage or backend
     console.log('Saved preferences:', userPreferences);
     setShowPreferencesPopup(false);
+  };
+
+  // Handler for preferences text change
+  const handlePreferencesTextChange = (text: string) => {
+    if (isPrefilledText) {
+      // Clear prefilled text and start fresh when user begins typing
+      setUserPreferences(text);
+      setIsPrefilledText(false);
+    } else {
+      setUserPreferences(text);
+    }
   };
 
   return (
@@ -976,12 +989,19 @@ export default function OliviaChatScreen() {
             
             <View style={styles.popupContent}>
               <TextInput
-                style={styles.popupInput}
+                style={[
+                  styles.popupInput,
+                  {
+                    color: isPrefilledText ? 'rgba(241, 245, 249, 0.5)' : '#F1F5F9',
+                    fontSize: isPrefilledText ? 14 : 16,
+                    fontStyle: isPrefilledText ? 'italic' : 'normal',
+                  }
+                ]}
                 ref={preferencesInputRef}
                 placeholder="Here you can tell me everything I should consider for future search suggestions..."
                 placeholderTextColor="rgba(241, 245, 249, 0.4)"
                 value={userPreferences}
-                onChangeText={setUserPreferences}
+                onChangeText={handlePreferencesTextChange}
                 multiline={true}
                 numberOfLines={8}
                 textAlignVertical="top"
@@ -994,7 +1014,8 @@ export default function OliviaChatScreen() {
                 style={styles.saveButton}
                 onPress={handleSavePreferences}
               >
-                <Text style={styles.saveButtonText}>Save</Text>
+                <Ionicons name="checkmark-circle-outline" size={20} color="#FFFFFF" style={styles.saveButtonIcon} />
+                <Text style={styles.saveButtonText}>Save Preferences</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -1503,7 +1524,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: spacing.l,
     fontSize: 16,
-    color: '#F1F5F9',
     minHeight: 160,
     backgroundColor: 'rgba(10, 24, 40, 0.6)',
     marginBottom: spacing.l,
@@ -1522,7 +1542,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.xl,
     borderRadius: 12,
     alignItems: 'center',
-    minWidth: 120,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    width: '100%',
     backgroundColor: '#1E6B55',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -1534,5 +1556,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#FFFFFF',
     fontSize: 16,
+  },
+  saveButtonIcon: {
+    marginRight: spacing.xs,
   },
 }); 
