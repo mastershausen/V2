@@ -297,7 +297,7 @@ export default function NowThenFrameScreen() {
             {/* InfoBox with conversion tip */}
             <View style={styles.roiInfoContainer}>
               <InfoBox
-                text="Fallstudien mit klarem ROI konvertieren ca. 12x besser als andere Fallstudien"
+                text="Case studies with clear ROI convert approx. 12x better than other case studies"
                 iconName="trending-up-outline"
                 iconColor={colors.primary}
                 backgroundColor={`${colors.primary}15`}

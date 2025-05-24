@@ -226,22 +226,19 @@ export default function ChatsScreen() {
 
   // Renders a section header
   const renderSectionHeader = ({ section }: { section: { title: string, data: any[] } }) => (
-    <View style={[styles.sectionHeader, { backgroundColor: colors.backgroundPrimary }]}>
+    <View style={[
+      styles.sectionHeader, 
+      { backgroundColor: colors.backgroundPrimary },
+      section.title === 'Other Chats' && styles.otherChatsHeader
+    ]}>
       <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
         {section.title}
       </Text>
     </View>
   );
 
-  // Renders a section footer (only for the first section)
+  // Renders a section footer (removed divider line)
   const renderSectionFooter = ({ section }: { section: { title: string } }) => {
-    if (section.title === 'Solvbox') {
-      return (
-        <View style={[styles.sectionFooter, { backgroundColor: colors.backgroundPrimary }]}>
-          <View style={[styles.divider, { backgroundColor: colors.divider }]} />
-        </View>
-      );
-    }
     return null;
   };
 
@@ -517,5 +514,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  otherChatsHeader: {
+    paddingTop: spacing.l,
   },
 }); 

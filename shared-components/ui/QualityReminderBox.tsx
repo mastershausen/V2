@@ -56,7 +56,7 @@ export function QualityReminderBox({
         { color: colors.textSecondary }, 
         textStyle
       ]}>
-        Je ausführlicher, klarer und präziser Sie Ihre Fallstudie beschreiben, desto besser kann Olivia passende Matches finden. Das führt zu qualitativ hochwertigeren Leads für Sie.
+        The more detailed, clear and precise you describe your case study, the better Olivia can find suitable matches. This leads to higher quality leads for you.
       </Text>
     </View>
   );

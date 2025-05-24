@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 import { ProfileImage } from '@/shared-components/media/ProfileImage';
+import { VerifyBadge } from '@/shared-components/badges';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
@@ -110,6 +111,11 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
           <Text style={[styles.nameText, { color: colors.textPrimary }]}>
             {profileData.name}
           </Text>
+          
+          {/* Verified Badge */}
+          {profileData.verified && (
+            <VerifyBadge />
+          )}
         </View>
 
         {/* Specialization */}
@@ -192,7 +198,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
                 style={[styles.topicTag, { backgroundColor: colors.pastel.primary }]}
               >
                 <Text style={[styles.topicText, { color: colors.primary }]}>
-                  [{topic}]
+                  {topic}
                 </Text>
               </View>
             ))}
