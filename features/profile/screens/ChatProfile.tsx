@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, Dimensions, Linking } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, Dimensions, Linking, Alert, Modal } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -29,6 +29,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
   const colors = useThemeColor();
   const router = useRouter();
   const [showFallstudien, setShowFallstudien] = useState(false);
+  const [showVerificationInfo, setShowVerificationInfo] = useState(false);
 
   // Mock data for the profile
   const profileData = {
@@ -112,9 +113,23 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
             {profileData.name}
           </Text>
           
-          {/* Verified Badge */}
+          {/* Verified Badge with Info Icon */}
           {profileData.verified && (
-            <VerifyBadge />
+            <View style={styles.verifyContainer}>
+              <View style={styles.badgeWrapper}>
+                <VerifyBadge />
+              </View>
+              <TouchableOpacity 
+                style={styles.infoIcon}
+                onPress={() => setShowVerificationInfo(true)}
+              >
+                <Ionicons 
+                  name="information-circle" 
+                  size={20} 
+                  color="#FF9500" 
+                />
+              </TouchableOpacity>
+            </View>
           )}
         </View>
 
@@ -212,6 +227,65 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
         onClose={() => setShowFallstudien(false)}
         profileId={id}
       />
+
+      {/* Verification info modal */}
+      <Modal
+        visible={showVerificationInfo}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowVerificationInfo(false)}
+      >
+        <TouchableOpacity 
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={() => setShowVerificationInfo(false)}
+        >
+          <TouchableOpacity style={[styles.modalContent, { backgroundColor: colors.backgroundPrimary }]} activeOpacity={1}>
+            <View style={styles.modalHeader}>
+              <Text style={[styles.modalTitle, { color: colors.textPrimary }]}>Account Verifizierung</Text>
+            </View>
+            
+            <View style={styles.modalBody}>
+              <Text style={[styles.modalSubtitle, { color: colors.textPrimary }]}>
+                Warum verifizieren?
+              </Text>
+              
+              <View style={styles.benefitsList}>
+                <View style={styles.benefitItem}>
+                  <Ionicons name="trending-up" size={16} color={colors.primary} style={styles.benefitIcon} />
+                  <Text style={[styles.benefitText, { color: colors.textSecondary }]}>
+                    12x bessere Kundenkonvertierung
+                  </Text>
+                </View>
+                <View style={styles.benefitItem}>
+                  <Ionicons name="heart" size={16} color={colors.primary} style={styles.benefitIcon} />
+                  <Text style={[styles.benefitText, { color: colors.textSecondary }]}>
+                    Massiv gesteigertes Vertrauen
+                  </Text>
+                </View>
+                <View style={styles.benefitItem}>
+                  <Ionicons name="time" size={16} color={colors.primary} style={styles.benefitIcon} />
+                  <Text style={[styles.benefitText, { color: colors.textSecondary }]}>
+                    Kostenlos in unter 60 Sekunden
+                  </Text>
+                </View>
+              </View>
+            </View>
+            
+            <TouchableOpacity
+              style={[styles.verifyButton, { backgroundColor: colors.primary }]}
+              onPress={() => {
+                setShowVerificationInfo(false);
+                // Hier würde die Verifizierung gestartet werden
+                console.log('Verifizierung gestartet');
+              }}
+            >
+              <Ionicons name="checkmark-circle" size={18} color="white" style={styles.buttonIcon} />
+              <Text style={styles.verifyButtonText}>Jetzt verifizieren</Text>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -339,5 +413,83 @@ const styles = StyleSheet.create({
   },
   editButton: {
     padding: spacing.xs,
+  },
+  verifyContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+  },
+  badgeWrapper: {
+    alignItems: 'center',
+  },
+  infoIcon: {
+    padding: spacing.xs,
+    position: 'absolute',
+    right: -spacing.xl,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    padding: spacing.m,
+    paddingTop: spacing.l,
+    borderRadius: 20,
+    width: '80%',
+    alignItems: 'center',
+  },
+  modalHeader: {
+    alignItems: 'center',
+    marginBottom: spacing.m,
+  },
+  modalTitle: {
+    fontSize: typography.fontSize.m,
+    fontWeight: typography.fontWeight.bold as any,
+    textAlign: 'center',
+  },
+  modalBody: {
+    width: '100%',
+    marginBottom: spacing.m,
+  },
+  modalSubtitle: {
+    fontSize: typography.fontSize.m,
+    fontWeight: typography.fontWeight.bold as any,
+    marginBottom: spacing.s,
+    textAlign: 'left',
+  },
+  benefitsList: {
+    width: '100%',
+  },
+  benefitItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.s,
+  },
+  benefitIcon: {
+    marginRight: spacing.s,
+  },
+  benefitText: {
+    fontSize: typography.fontSize.m,
+    flex: 1,
+  },
+  verifyButton: {
+    paddingHorizontal: spacing.m,
+    paddingVertical: spacing.s,
+    borderRadius: ui.borderRadius.m,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  verifyButtonText: {
+    fontSize: typography.fontSize.m,
+    fontWeight: typography.fontWeight.semiBold as any,
+    color: 'white',
+  },
+  buttonIcon: {
+    marginRight: spacing.s,
   },
 });
