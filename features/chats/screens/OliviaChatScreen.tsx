@@ -952,6 +952,15 @@ export default function OliviaChatScreen() {
           style={styles.popupOverlay}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
+          {/* Same gradient background as main screen */}
+          <LinearGradient
+            colors={['#1E5B4E', '#1E4B5B', '#1E3B6B', '#0A1828']}
+            locations={[0, 0.3, 0.6, 1.0]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            style={styles.popupBackgroundGradient}
+          />
+          
           <View style={styles.preferencesPopup}>
             <View style={styles.popupHeader}>
               <Text style={styles.popupTitle}>
@@ -961,7 +970,7 @@ export default function OliviaChatScreen() {
                 onPress={() => setShowPreferencesPopup(false)}
                 style={styles.popupCloseButton}
               >
-                <Ionicons name="close" size={24} color="#333333" />
+                <Ionicons name="close" size={24} color="#F1F5F9" />
               </TouchableOpacity>
             </View>
             
@@ -969,19 +978,20 @@ export default function OliviaChatScreen() {
               <TextInput
                 style={styles.popupInput}
                 ref={preferencesInputRef}
-                placeholder="Tell me about your preferences..."
-                placeholderTextColor="#999999"
+                placeholder="Here you can tell me everything I should consider for future search suggestions..."
+                placeholderTextColor="rgba(241, 245, 249, 0.4)"
                 value={userPreferences}
                 onChangeText={setUserPreferences}
                 multiline={true}
                 numberOfLines={8}
                 textAlignVertical="top"
+                keyboardAppearance="dark"
               />
             </View>
             
             <View style={styles.popupActions}>
               <TouchableOpacity 
-                style={[styles.popupButton, styles.saveButton]}
+                style={styles.saveButton}
                 onPress={handleSavePreferences}
               >
                 <Text style={styles.saveButtonText}>Save</Text>
@@ -1268,7 +1278,7 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     justifyContent: 'flex-end',
     paddingHorizontal: 0,
   },
@@ -1447,12 +1457,19 @@ const styles = StyleSheet.create({
   },
   popupOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     justifyContent: 'flex-end',
     paddingHorizontal: 0,
   },
+  popupBackgroundGradient: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+  },
   preferencesPopup: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'transparent',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     paddingTop: spacing.l,
@@ -1460,11 +1477,6 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xl,
     width: '100%',
     maxHeight: '85%',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
-    elevation: 15,
   },
   popupHeader: {
     flexDirection: 'row',
@@ -1475,41 +1487,52 @@ const styles = StyleSheet.create({
   popupTitle: {
     fontSize: typography.fontSize.l,
     fontWeight: '600',
-    color: '#333333',
+    color: '#F1F5F9',
   },
   popupCloseButton: {
     padding: spacing.xs,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 20,
   },
   popupContent: {
     marginBottom: spacing.l,
   },
   popupInput: {
     borderWidth: 1,
-    borderColor: '#E0E0E0',
+    borderColor: 'rgba(255, 255, 255, 0.3)',
     borderRadius: 16,
     padding: spacing.l,
     fontSize: 16,
-    color: '#333333',
+    color: '#F1F5F9',
     minHeight: 160,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: 'rgba(10, 24, 40, 0.6)',
     marginBottom: spacing.l,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   popupActions: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  popupButton: {
+  saveButton: {
     paddingVertical: spacing.m,
     paddingHorizontal: spacing.xl,
     borderRadius: 12,
     alignItems: 'center',
     minWidth: 120,
-  },
-  saveButton: {
-    backgroundColor: '#34C759',
+    backgroundColor: '#1E6B55',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   saveButtonText: {
     fontWeight: '600',
     color: '#FFFFFF',
+    fontSize: 16,
   },
 }); 
