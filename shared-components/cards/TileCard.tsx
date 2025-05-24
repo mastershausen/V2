@@ -66,18 +66,14 @@ export function TileCard({
     Math.floor(tileWidth * 0.08) // Erhöht von 0.05 auf 0.08
   );
 
-  // Shadow Styles basierend auf der Plattform
-  const shadowStyle = Platform.select({
-    ios: {
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 6 },
-      shadowOpacity: 0.3,
-      shadowRadius: 8,
-    },
-    android: {
-      elevation: 10,
-    },
-  });
+  // Unified Shadow Styles für beide Plattformen
+  const shadowStyle = {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+    elevation: 8, // Fallback für ältere Android-Versionen
+  };
 
   // Kombinierte Styles
   const tileStyles = [

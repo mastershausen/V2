@@ -60,6 +60,7 @@ export default function OliviaChatScreen() {
   const [showPreferencesPopup, setShowPreferencesPopup] = useState(false);
   const [userPreferences, setUserPreferences] = useState('Here you can tell me everything I should consider for future search suggestions.\n\nFor example: "I prefer to work with regional partners", "I am very conservative with tax matters", or "I am open to unconventional solutions."');
   const [isPrefilledText, setIsPrefilledText] = useState(true);
+  const [messageRating, setMessageRating] = useState<'up' | 'down' | null>(null);
   const recordingInterval = useRef<NodeJS.Timeout | null>(null);
   const flatListRef = useRef<FlatList>(null);
   const preferencesInputRef = useRef<TextInput>(null);
@@ -596,6 +597,39 @@ export default function OliviaChatScreen() {
             ))}
           </View>
           
+          {/* Rating buttons inside the bubble */}
+          <View style={styles.ratingContainer}>
+            <Text style={styles.ratingLabel}>Was this helpful?</Text>
+            <View style={styles.ratingButtons}>
+              <TouchableOpacity
+                style={[
+                  styles.ratingButton,
+                  messageRating === 'up' && styles.ratingButtonActive
+                ]}
+                onPress={() => handleRatingPress('up')}
+              >
+                <MaterialCommunityIcons 
+                  name={messageRating === 'up' ? "thumb-up" : "thumb-up-outline"} 
+                  size={20} 
+                  color={messageRating === 'up' ? '#1E6B55' : 'rgba(241, 245, 249, 0.7)'} 
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.ratingButton,
+                  messageRating === 'down' && styles.ratingButtonActive
+                ]}
+                onPress={() => handleRatingPress('down')}
+              >
+                <MaterialCommunityIcons 
+                  name={messageRating === 'down' ? "thumb-down" : "thumb-down-outline"} 
+                  size={20} 
+                  color={messageRating === 'down' ? '#E53935' : 'rgba(241, 245, 249, 0.7)'} 
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          
           <Text style={[
             styles.timeText,
             { color: 'rgba(241, 245, 249, 0.7)' }
@@ -663,20 +697,6 @@ export default function OliviaChatScreen() {
       <View style={styles.messagesContainer}>
         {/* Solvbox-style header as part of scrollable content */}
         <View style={[styles.solvboxHeaderContainer, chat.messages.length === 1 ? styles.solvboxHeaderContainerNoChat : null]}>
-          {/* Background gradient with absolute positioning */}
-          <LinearGradient
-            colors={[
-              'rgba(52, 199, 89, 0.25)', 
-              'rgba(52, 199, 89, 0.15)', 
-              'rgba(52, 199, 89, 0.05)', 
-              'rgba(52, 199, 89, 0)'
-            ]}
-            locations={[0, 0.3, 0.6, 0.9]}
-            start={{ x: 0.5, y: 0 }}
-            end={{ x: 0.5, y: 1 }}
-            style={styles.solvboxHeaderGradient}
-          />
-          
           {/* Content container that is centered independently of the gradient */}
           <View style={styles.solvboxContentContainer}>
             <MaterialCommunityIcons 
@@ -825,6 +845,13 @@ export default function OliviaChatScreen() {
     } else {
       setUserPreferences(text);
     }
+  };
+
+  // Handler for message rating
+  const handleRatingPress = (rating: 'up' | 'down') => {
+    setMessageRating(rating);
+    // TODO: Send rating to backend/analytics
+    console.log('Message rated:', rating);
   };
 
   return (
@@ -1559,5 +1586,29 @@ const styles = StyleSheet.create({
   },
   saveButtonIcon: {
     marginRight: spacing.xs,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: spacing.m,
+    paddingTop: spacing.s,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(241, 245, 249, 0.1)',
+  },
+  ratingLabel: {
+    fontSize: typography.fontSize.s,
+    fontWeight: '600',
+    color: 'rgba(241, 245, 249, 0.8)',
+    marginRight: spacing.s,
+  },
+  ratingButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ratingButton: {
+    padding: spacing.xs,
+  },
+  ratingButtonActive: {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
 }); 

@@ -20,6 +20,7 @@ import { KeyboardToolbar, ToolbarAction } from '@/shared-components/navigation/K
 import { ContextModal } from '@/shared-components/modals/ContextModal';
 import { FirstTimeInfoBox } from '@/shared-components/ui/FirstTimeInfoBox';
 import { QualityReminderBox } from '@/shared-components/ui/QualityReminderBox';
+import { InfoBox } from '@/shared-components/ui/InfoBox';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
@@ -48,6 +49,7 @@ export default function NowThenFrameScreen() {
   const [initialSituation, setInitialSituation] = useState('');
   const [implementation, setImplementation] = useState('');
   const [results, setResults] = useState('');
+  const [roi, setRoi] = useState('');
 
   // Context Modal State
   const [contextModalVisible, setContextModalVisible] = useState(false);
@@ -281,6 +283,46 @@ export default function NowThenFrameScreen() {
             MIN_CHARS.results,
             true
           )}
+
+          {/* ROI Field with InfoBox */}
+          <View style={styles.fieldContainer}>
+            <Text style={[styles.fieldLabel, { color: colors.textPrimary }]}>
+              Return on Investment (ROI)
+              <Text style={[styles.optionalText, { color: colors.textTertiary }]}> (Optional)</Text>
+            </Text>
+            <Text style={[styles.fieldDescription, { color: colors.textSecondary }]}>
+              Clear financial benefits and return on investment
+            </Text>
+            
+            {/* InfoBox with conversion tip */}
+            <View style={styles.roiInfoContainer}>
+              <InfoBox
+                text="Fallstudien mit klarem ROI konvertieren ca. 12x besser als andere Fallstudien"
+                iconName="trending-up-outline"
+                iconColor={colors.primary}
+                backgroundColor={`${colors.primary}15`}
+                textColor={colors.textSecondary}
+              />
+            </View>
+            
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={[
+                  styles.textInput,
+                  { 
+                    backgroundColor: colors.backgroundSecondary,
+                    color: colors.textPrimary,
+                  }
+                ]}
+                value={roi}
+                onChangeText={setRoi}
+                placeholder="e.g. 300% ROI within 18 months, €240,000 saved annually..."
+                placeholderTextColor={colors.textTertiary}
+                multiline
+                textAlignVertical="top"
+              />
+            </View>
+          </View>
         </ScrollView>
       </SafeAreaView>
 
@@ -396,5 +438,12 @@ const styles = StyleSheet.create({
   },
   firstTimeInfoContainer: {
     marginBottom: spacing.m,
+  },
+  roiInfoContainer: {
+    marginBottom: spacing.m,
+  },
+  optionalText: {
+    fontSize: typography.fontSize.xs,
+    fontWeight: typography.fontWeight.regular as any,
   },
 }); 
