@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Modal, FlatList, Animated, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { FilterTabItem } from '@/shared-components/navigation/FilterTabs';
 import { TileGrid } from '@/shared-components/container/TileGrid';
@@ -617,6 +617,12 @@ export default function ExploreScreen(): React.ReactElement {
       
       {/* "I want..." Introduction Text */}
       <View style={styles.introTextSection}>
+        <MaterialCommunityIcons 
+          name="semantic-web" 
+          size={24} 
+          color={colors.textPrimary} 
+          style={styles.introIcon}
+        />
         <Text style={[styles.introText, { color: colors.textPrimary }]}>
           I want...
         </Text>
@@ -704,10 +710,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.m,
     paddingTop: spacing.s,
     paddingBottom: spacing.s,
-    alignItems: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   introText: {
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  introIcon: {
+    marginRight: spacing.s,
   },
 }); 
