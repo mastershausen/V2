@@ -45,6 +45,9 @@ export function ContextModal({
   const colors = useThemeColor();
   const [contextText, setContextText] = useState(initialValue);
   const { t } = useTranslation();
+  
+  // Prüfen, ob es sich um das Pricing-Modal handelt
+  const isPricingModal = title === 'Pricing';
 
   const handleSave = () => {
     onSave(contextText);
@@ -207,5 +210,15 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.m,
     minHeight: 200,
     maxHeight: 400,
+  },
+  visibilityInfoContainer: {
+    marginTop: spacing.m,
+    paddingHorizontal: spacing.xs,
+  },
+  visibilityInfoText: {
+    fontSize: typography.fontSize.xs,
+    lineHeight: 16,
+    textAlign: 'center',
+    fontStyle: 'italic',
   },
 }); 

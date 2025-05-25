@@ -522,8 +522,15 @@
       "save": "Save",
       "additionalInfo": "Optional Additional Information",
       "infoDescription": "This information is only visible to Olivia and helps to find the best matches for your case study. It will not be displayed publicly.",
-      "infoExamples": "Examples: Target group, prerequisites, industry, company size, budget, etc.",
-      "placeholder": "e.g. Target group: Medium-sized companies with 50-200 employees that already have a basic structure..."
+      "infoExamples": "Examples: target audience, requirements, industry, company size, budget, etc.",
+      "placeholder": "e.g. Target audience: Medium-sized businesses with 50-200 employees that already have a basic structure..."
+    },
+    "pricingModal": {
+      "title": "Pricing",
+      "infoTitle": "Price Range Information",
+      "infoDescription": "This information is only visible to Olivia and helps to match you with better leads. Case studies with pricing receive 3-5x more inquiries.",
+      "infoExamples": "Examples: €5,000-10,000, starting from €2,500, fixed price €7,500, etc.",
+      "placeholder": "e.g. Price range: €5,000-10,000 depending on complexity and customization requirements"
     },
     "toolbar": {
       "save": "Save case study"

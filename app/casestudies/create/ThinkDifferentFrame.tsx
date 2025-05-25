@@ -71,8 +71,12 @@ export default function ThinkDifferentFrameScreen() {
     results: false
   });
 
-  // State for form validity
-  const [isValid, setIsValid] = useState(false);
+  // State for form validity and pricing validation
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [isPricingValid, setIsPricingValid] = useState(false);
+  
+  // Combined validation for the Save button
+  const isSaveEnabled = isFormValid && isPricingValid;
 
   // Update validation when input fields change
   useEffect(() => {
@@ -85,12 +89,17 @@ export default function ThinkDifferentFrameScreen() {
     };
     
     setErrors(newErrors);
-    setIsValid(!Object.values(newErrors).some(error => error));
+    setIsFormValid(!Object.values(newErrors).some(error => error));
   }, [headline, initialSituation, analysis, implementation, results]);
+  
+  // Update pricing validation when pricingInfo changes
+  useEffect(() => {
+    setIsPricingValid(pricingInfo.length > 0);
+  }, [pricingInfo]);
 
   // Submit form
   const handleSubmit = () => {
-    if (isValid) {
+    if (isSaveEnabled) {
       // Here the data would be saved/sent
       Alert.alert(
         "Success",
@@ -103,10 +112,17 @@ export default function ThinkDifferentFrameScreen() {
         ]
       );
     } else {
-      Alert.alert(
-        "Incomplete inputs",
-        "Please fill all fields with the minimum number of characters."
-      );
+      if (!isPricingValid) {
+        Alert.alert(
+          "Price information required",
+          "Please provide pricing information before saving."
+        );
+      } else {
+        Alert.alert(
+          "Incomplete inputs",
+          "Please fill all fields with the minimum number of characters."
+        );
+      }
     }
   };
 
@@ -151,6 +167,8 @@ export default function ThinkDifferentFrameScreen() {
       icon: 'logo-usd',
       label: 'Pricing',
       onPress: handlePricingOpen,
+      disabled: false,
+      selected: isPricingValid,
       accessibilityLabel: 'Pricing options'
     },
     {
@@ -158,7 +176,7 @@ export default function ThinkDifferentFrameScreen() {
       icon: 'checkmark-circle-outline',
       label: 'Save',
       onPress: handleSubmit,
-      disabled: !isValid,
+      disabled: !isSaveEnabled,
       accessibilityLabel: t('casestudy.toolbar.save')
     }
   ];
@@ -350,11 +368,11 @@ export default function ThinkDifferentFrameScreen() {
         onClose={handlePricingClose}
         onSave={handlePricingSave}
         initialValue={pricingInfo}
-        title="Pricing"
-        infoTitle="Price Range Information"
-        infoDescription="Define your price range for this case study. This helps potential clients understand the investment required for similar projects."
-        infoExamples="Examples: €5,000-10,000, starting from €2,500, fixed price €7,500, etc."
-        placeholder="e.g. Price range: €5,000-10,000 depending on complexity and customization requirements"
+        title={t('casestudy.pricingModal.title')}
+        infoTitle={t('casestudy.pricingModal.infoTitle')}
+        infoDescription={t('casestudy.pricingModal.infoDescription')}
+        infoExamples={t('casestudy.pricingModal.infoExamples')}
+        placeholder={t('casestudy.pricingModal.placeholder')}
       />
     </View>
   );

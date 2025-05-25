@@ -40,15 +40,15 @@ export function QualityReminderBox({
     <View style={[
       styles.reminderBox, 
       { 
-        backgroundColor: `${colors.secondary}10`,
-        borderColor: `${colors.secondary}30`,
+        backgroundColor: `${colors.primary}10`,
+        borderColor: `${colors.primary}30`,
       }, 
       containerStyle
     ]}>
       <Ionicons 
         name="information-circle-outline" 
         size={24} 
-        color={colors.secondary} 
+        color={colors.primary} 
         style={styles.reminderIcon} 
       />
       <Text style={[

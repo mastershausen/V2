@@ -134,17 +134,22 @@ function KeyboardToolbar({
             {
               backgroundColor: action.disabled 
                 ? colors.backgroundTertiary
-                : action.id === 'save' || action.id === 'pricing'
+                : action.id === 'save'
                   ? colors.primary
-                  : 'transparent',
+                  : action.id === 'pricing' 
+                    ? action.selected 
+                      ? colors.primary 
+                      : colors.backgroundTertiary  // Ausgegraut wenn nicht selected
+                    : 'transparent',
               borderWidth: 1,
               borderColor: action.disabled
                 ? colors.divider
-                : colors.primary,
+                : action.id === 'pricing' && !action.selected
+                  ? colors.divider  // Grauer Rahmen für nicht ausgewählten Pricing-Button
+                  : colors.primary,
             },
             action.selected && {
-              backgroundColor: colors.backgroundTertiary,
-              borderColor: colors.primary,
+              backgroundColor: colors.primary,
             }
           ]}
           onPress={action.onPress}
@@ -162,9 +167,11 @@ function KeyboardToolbar({
             size={16} 
             color={action.disabled 
               ? colors.textTertiary 
-              : action.id === 'save' || action.id === 'pricing'
+              : action.id === 'save' || (action.id === 'pricing' && action.selected) || action.selected
                 ? '#FFFFFF'
-                : colors.primary
+                : action.id === 'pricing' && !action.selected
+                  ? colors.textTertiary  // Graue Schrift für nicht ausgewählten Pricing-Button
+                  : colors.primary
             } 
           />
           {action.label && (
@@ -173,9 +180,11 @@ function KeyboardToolbar({
               {
                 color: action.disabled 
                   ? colors.textTertiary 
-                  : action.id === 'save' || action.id === 'pricing'
+                  : action.id === 'save' || (action.id === 'pricing' && action.selected) || action.selected
                     ? '#FFFFFF'
-                    : colors.primary
+                    : action.id === 'pricing' && !action.selected
+                      ? colors.textTertiary  // Graue Schrift für nicht ausgewählten Pricing-Button
+                      : colors.primary
               }
             ]}>
               {action.label}

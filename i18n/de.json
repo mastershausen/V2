@@ -496,6 +496,13 @@
       "infoExamples": "Beispiele: Zielgruppe, Voraussetzungen, Branche, Unternehmensgröße, Budget, etc.",
       "placeholder": "z.B. Zielgruppe: Mittelständische Unternehmen mit 50-200 Mitarbeitern, die bereits eine Grundstruktur haben..."
     },
+    "pricingModal": {
+      "title": "Preisgestaltung",
+      "infoTitle": "Preisinformationen",
+      "infoDescription": "Diese Information ist nur für Olivia sichtbar und hilft, bessere Leads für dich zu finden. Fallstudien mit Preisangaben erhalten 3-5x mehr Anfragen.",
+      "infoExamples": "Beispiele: €5.000-10.000, ab €2.500, Festpreis €7.500, etc.",
+      "placeholder": "z.B. Preisbereich: €5.000-10.000 abhängig von Komplexität und individuellen Anpassungen"
+    },
     "toolbar": {
       "save": "Fallstudie speichern"
     }
