@@ -447,8 +447,18 @@
         "freeAndFast": "Kostenlos in unter 60 Sekunden"
       },
       "button": "Jetzt verifizieren"
+    },
+    "notification": {
+      "title": "Fallstudie-Verifizierung",
+      "message": "{{partner}} hat Sie als Projektpartner in dieser Fallstudie angegeben. Bitte bestätigen Sie Ihre Mitwirkung."
+    },
+    "button": {
+      "view": "Fallstudie ansehen",
+      "verify": "Verifizieren",
+      "reject": "Ablehnen"
     }
   },
+  "verifyButtonText": "Fallstudie ansehen",
   "casestudy": {
     "header": {
       "title": "Case Study",
@@ -472,5 +482,34 @@
       "saveButton": "Save",
       "actionButton": "I want this too!"
     }
+  },
+  "chat": {
+    "status": {
+      "typing": "Schreibt...",
+      "online": "Online"
+    },
+    "greeting": "Hallo! Ich bin {{name}}. Wie kann ich Ihnen heute helfen?",
+    "solvbox": {
+      "welcome": "Ihr persönlicher Assistent für Unternehmensberatung und Problemlösungen."
+    },
+    "regular": {
+      "welcome": "Willkommen im Chat. Wie kann ich Ihnen heute helfen?"
+    },
+    "input": {
+      "placeholder": "Nachricht an {{name}}..."
+    },
+    "bot": {
+      "responses": {
+        "interesting": "Das ist eine interessante Frage. Ich habe einige Informationen für Sie zu diesem Thema.",
+        "help": "Gerne helfe ich Ihnen dabei. Hier sind einige relevante Informationen.",
+        "understand": "Ich verstehe Ihr Anliegen. Lassen Sie mich nachschauen.",
+        "information": "Ich habe zu diesem Thema verschiedene Informationen für Sie zusammengestellt.",
+        "thanks": "Vielen Dank für Ihre Anfrage. Ich schaue gleich nach den passenden Informationen."
+      }
+    }
+  },
+  "date": {
+    "today": "Heute",
+    "yesterday": "Gestern"
   }
 }

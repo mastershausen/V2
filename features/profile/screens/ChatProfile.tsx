@@ -120,7 +120,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
           {profileData.verified && (
             <View style={styles.verifyContainer}>
               <View style={styles.badgeWrapper}>
-                <VerifyBadge />
+                <VerifyBadge text="Verify Account now" />
               </View>
               <TouchableOpacity 
                 style={styles.infoIcon}

@@ -447,7 +447,46 @@
         "freeAndFast": "Free in under 60 seconds"
       },
       "button": "Verify now"
+    },
+    "notification": {
+      "title": "Case Study Verification",
+      "message": "{{partner}} has listed you as a project partner in this case study. Please confirm your participation."
+    },
+    "button": {
+      "view": "View Case Study",
+      "verify": "Verify",
+      "reject": "Reject"
     }
+  },
+  "verifyButtonText": "View Case Study",
+  "chat": {
+    "status": {
+      "typing": "Typing...",
+      "online": "Online"
+    },
+    "greeting": "Hello! I am {{name}}. How can I help you today?",
+    "solvbox": {
+      "welcome": "Your personal assistant for business consulting and problem-solving."
+    },
+    "regular": {
+      "welcome": "Welcome to chat. How can I help you today?"
+    },
+    "input": {
+      "placeholder": "Message to {{name}}..."
+    },
+    "bot": {
+      "responses": {
+        "interesting": "That's an interesting question. I have some information for you on this topic.",
+        "help": "I'd be happy to help you with that. Here is some relevant information.",
+        "understand": "I understand your concern. Let me look into it.",
+        "information": "I've gathered various information on this topic for you.",
+        "thanks": "Thank you for your inquiry. I'll look for the appropriate information right away."
+      }
+    }
+  },
+  "date": {
+    "today": "Today",
+    "yesterday": "Yesterday"
   },
   "casestudy": {
     "header": {

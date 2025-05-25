@@ -18,11 +18,13 @@ import {
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { changeLanguage } from '@/i18n/config';
 
 // Avatar-Bild importieren
 const solvboxAvatar = require('@/assets/small rounded Icon.png') as ImageSourcePropType;
@@ -38,6 +40,12 @@ export default function ChatDetailScreen() {
   const [isTyping, setIsTyping] = useState(false);
   const flatListRef = useRef<FlatList>(null);
   const typingDots = useRef(new Animated.Value(0)).current;
+  const { t } = useTranslation();
+
+  // Stelle die Sprache auf Englisch um
+  useEffect(() => {
+    changeLanguage('en');
+  }, []);
 
   // Bestimme, ob es sich um einen Solvbox-Chat handelt
   const isSolvboxChat = params.name?.includes('Solvbox-');
@@ -52,10 +60,10 @@ export default function ChatDetailScreen() {
       [
         {
           id: '1',
-          text: `Hallo! Ich bin der ${params.name}. Wie kann ich Ihnen heute helfen?`,
+          text: `${t('chat.greeting', { name: params.name })}`,
           time: '14:30',
           isUser: false,
-          date: 'Heute'
+          date: t('date.today')
         }
       ] : 
       // Ausführlichere Nachrichten für reguläre Chats (wie Thomas Müller)
@@ -121,7 +129,7 @@ export default function ChatDetailScreen() {
           text: 'Hallo! Wie kann ich Ihnen helfen?',
           time: '10:15',
           isUser: false,
-          date: 'Gestern'
+          date: t('date.yesterday')
         },
         {
           id: '3-2',
@@ -163,23 +171,23 @@ export default function ChatDetailScreen() {
           text: 'Guten Morgen. Haben Sie Ihre Unterlagen für die Steuererklärung schon vorbereitet?',
           time: '09:20',
           isUser: false,
-          date: 'Heute'
+          date: t('date.today')
         },
         {
           id: '4-2',
           text: 'Ja, ich habe alle Dokumente zusammengestellt. Wann könnten wir einen Termin vereinbaren?',
           time: '14:30',
           isUser: true,
-          date: 'Heute'
+          date: t('date.today')
         },
         // Fallstudie-Verifizierungsbenachrichtigung
         ...(params.name === 'Laura Schmidt' ? [
           {
             id: '5-1',
-            text: '📋 Fallstudie-Verifizierung: "Industrial Building-Use Transformation with High Requirements"\n\nMarkus Weber hat Sie als Projektpartner in dieser Fallstudie angegeben. Bitte bestätigen Sie Ihre Mitwirkung.',
+            text: `📋 Case Study Verification: "Industrial Building-Use Transformation with High Requirements"\n\nMarkus Weber has listed you as a project partner in this case study. Please confirm your participation.`,
             time: '14:35',
             isUser: false,
-            date: 'Heute',
+            date: t('date.today'),
             isVerificationNotification: true
           }
         ] : [])
@@ -225,7 +233,7 @@ export default function ChatDetailScreen() {
       text: message,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       isUser: true,
-      date: 'Heute'
+      date: t('date.today')
     };
     
     setChat(prev => ({
@@ -238,11 +246,11 @@ export default function ChatDetailScreen() {
     setIsTyping(true);
     setTimeout(() => {
       const responseOptions = [
-        "Das ist eine interessante Frage. Ich habe einige Informationen für Sie zu diesem Thema.",
-        "Gerne helfe ich Ihnen dabei. Hier sind einige relevante Informationen.",
-        "Ich verstehe Ihr Anliegen. Lassen Sie mich nachschauen.",
-        "Ich habe zu diesem Thema verschiedene Informationen für Sie zusammengestellt.",
-        "Vielen Dank für Ihre Anfrage. Ich schaue gleich nach den passenden Informationen.",
+        t('chat.bot.responses.interesting'),
+        t('chat.bot.responses.help'),
+        t('chat.bot.responses.understand'),
+        t('chat.bot.responses.information'),
+        t('chat.bot.responses.thanks'),
       ];
       
       const randomIndex = Math.floor(Math.random() * responseOptions.length);
@@ -252,7 +260,7 @@ export default function ChatDetailScreen() {
         text: responseOptions[randomIndex],
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         isUser: false,
-        date: 'Heute'
+        date: t('date.today')
       };
       
       setChat(prev => ({
@@ -326,7 +334,7 @@ export default function ChatDetailScreen() {
                       style={styles.verifyButtonGradient}
                     >
                       <Ionicons name="document-text-outline" size={14} color="white" style={styles.buttonIcon} />
-                      <Text style={styles.verifyButtonText}>Fallstudie ansehen</Text>
+                      <Text style={styles.verifyButtonText}>View Case Study</Text>
                     </LinearGradient>
                   </TouchableOpacity>
                 </View>
@@ -423,7 +431,7 @@ export default function ChatDetailScreen() {
               {chat.name}
             </Text>
             <Text style={[styles.headerSubtitle, { color: colors.textTertiary }]}>
-              {isTyping ? 'Schreibt...' : 'Online'}
+              {isTyping ? t('chat.status.typing') : t('chat.status.online')}
             </Text>
           </View>
         </TouchableOpacity>
@@ -461,8 +469,8 @@ export default function ChatDetailScreen() {
                 </Text>
                 <Text style={[styles.chatStartSubtitle, { color: colors.textSecondary }]}>
                   {chat.isSolvboxChat 
-                    ? 'Ihr persönlicher Assistent für Unternehmensberatung und Problemlösungen.'
-                    : 'Willkommen im Chat. Wie kann ich Ihnen heute helfen?'
+                    ? t('chat.solvbox.welcome')
+                    : t('chat.regular.welcome')
                   }
                 </Text>
               </LinearGradient>
@@ -487,7 +495,7 @@ export default function ChatDetailScreen() {
               style={[styles.input, { color: colors.textPrimary }]}
               value={message}
               onChangeText={setMessage}
-              placeholder={`Nachricht an ${chat.name}...`}
+              placeholder={t('chat.input.placeholder', { name: chat.name })}
               placeholderTextColor={colors.textTertiary}
               multiline
               maxLength={1000}
