@@ -76,6 +76,14 @@ export function VerifyBadge({
   
   const badgeText = text || t('verification.badge.text');
   
+  // Erweiterte Gradient-Farben für 3D-Effekt
+  const enhanced3DColors: readonly [string, string, string, string] = [
+    '#00B84A', // Helleres Grün oben
+    gradientColors[0], // Original Grün
+    gradientColors[1], // Dunkleres Grün
+    '#006B2F', // Noch dunkleres Grün unten
+  ];
+  
   return (
     <TouchableOpacity 
       style={[styles.verifiedBadge, style]}
@@ -84,9 +92,10 @@ export function VerifyBadge({
       activeOpacity={0.8}
     >
       <LinearGradient
-        colors={gradientColors}
+        colors={enhanced3DColors}
         start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+        end={{ x: 0, y: 1 }}
+        locations={[0, 0.3, 0.7, 1]}
         style={styles.verifiedGradient}
       >
         {showIcon && (
@@ -107,16 +116,12 @@ export function VerifyBadge({
 
 const styles = StyleSheet.create({
   verifiedBadge: {
-    borderRadius: ui.borderRadius.l,
+    borderRadius: ui.borderRadius.m,
     marginTop: spacing.m,
-    shadowColor: '#008F39',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.4,
-    shadowRadius: 8,
-    elevation: 8,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.3)',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
   },
   verifiedIcon: {
     marginRight: spacing.xs,
@@ -129,9 +134,9 @@ const styles = StyleSheet.create({
   verifiedGradient: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: ui.borderRadius.l,
-    paddingHorizontal: spacing.m,
-    paddingVertical: spacing.s,
+    borderRadius: ui.borderRadius.m,
+    paddingHorizontal: spacing.s,
+    paddingVertical: spacing.xs,
   },
 });
 
