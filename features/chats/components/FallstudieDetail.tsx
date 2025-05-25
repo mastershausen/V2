@@ -44,6 +44,7 @@ interface FallstudieDetailProps {
       }
     }
     isVerified?: boolean;
+    needsVerification?: boolean;
   } | null;
 }
 
@@ -250,19 +251,41 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
               </TouchableOpacity>
               
               <TouchableOpacity
-                style={styles.primaryButton}
+                style={[
+                  styles.primaryButton,
+                  fallstudie.needsVerification && styles.verifyButton
+                ]}
                 onPress={() => {
-                  // Here an action like "Select" or "Contact" could be implemented
+                  // Hier könnte eine Aktion wie "Auswählen" oder "Kontakt" implementiert werden
                   onClose();
                 }}
               >
                 <LinearGradient
-                  colors={['#1E6B55', '#15503F']}
+                  colors={fallstudie.needsVerification 
+                    ? ['#FFD700', '#FFA500'] // Gold-Gradient für Verify now
+                    : ['#1E6B55', '#15503F'] // Grün-Gradient für I want this too
+                  }
                   style={styles.buttonGradient}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
                 >
-                  <Text style={styles.primaryButtonText}>{t('casestudy.footer.actionButton')}</Text>
+                  <Text style={[
+                    styles.primaryButtonText,
+                    fallstudie.needsVerification && styles.verifyButtonText
+                  ]}>
+                    {fallstudie.needsVerification && (
+                      <Ionicons 
+                        name="shield-checkmark" 
+                        size={18} 
+                        color="#FFFFFF" 
+                        style={styles.buttonIcon} 
+                      />
+                    )}
+                    {fallstudie.needsVerification 
+                      ? t('verification.modal.button') // "Verify now!"
+                      : t('casestudy.footer.actionButton') // "I want this too!"
+                    }
+                  </Text>
                 </LinearGradient>
               </TouchableOpacity>
             </View>
@@ -479,6 +502,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  verifyButtonText: {
+    color: '#FFFFFF',
+  },
   verifiedBadgeContainer: {
     marginLeft: 8,
     marginTop: 0,
@@ -501,6 +527,12 @@ const styles = StyleSheet.create({
   },
   verifiedTitle: {
     color: '#FFFFFF',
+  },
+  buttonIcon: {
+    marginRight: 8,
+  },
+  verifyButton: {
+    backgroundColor: '#FFD700',
   },
 });
 

@@ -140,7 +140,28 @@ export default function OliviaChatScreen() {
   });
 
   // Fallstudien-Daten für die Chat-Bubble
-  const fallstudienErgebnisse = [
+  const fallstudienErgebnisse: Array<{
+    id: string;
+    titel: string;
+    kurzbeschreibung: string;
+    context: string;
+    action: string;
+    result: {
+      text: string;
+      bulletpoints: string[];
+    };
+    anbieter: {
+      name: string;
+      erfahrung: string;
+      erfolgsrate: string;
+      kontakt: {
+        email: string;
+        telefon: string;
+      }
+    },
+    isVerified?: boolean;
+    needsVerification?: boolean;
+  }> = [
     {
       id: '1',
       titel: 'Statik-Expertise for Multi-Family Homes',
@@ -583,11 +604,17 @@ export default function OliviaChatScreen() {
                   <TouchableOpacity 
                     style={styles.infoButton}
                     onPress={() => {
-                      // Nur für Case Study 1 das isVerified-Flag setzen
-                      const studieWithVerifiedFlag = studie.id === '1' 
-                        ? {...studie, isVerified: true} 
-                        : studie;
-                      setSelectedFallstudie(studieWithVerifiedFlag);
+                      // Case Study 1 bekommt isVerified-Flag
+                      // Case Study 2 bekommt needsVerification-Flag
+                      let studieWithFlags = studie;
+                      
+                      if (studie.id === '1') {
+                        studieWithFlags = {...studie, isVerified: true};
+                      } else if (studie.id === '2') {
+                        studieWithFlags = {...studie, needsVerification: true};
+                      }
+                      
+                      setSelectedFallstudie(studieWithFlags);
                       setShowFallstudieDetail(true);
                     }}
                   >
