@@ -57,6 +57,10 @@ export default function NowThenFrameScreen() {
   // Context Modal State
   const [contextModalVisible, setContextModalVisible] = useState(false);
   const [contextForOlivia, setContextForOlivia] = useState('');
+  
+  // Pricing Modal State
+  const [pricingModalVisible, setPricingModalVisible] = useState(false);
+  const [pricingInfo, setPricingInfo] = useState('');
 
   // State for validation errors
   const [errors, setErrors] = useState({
@@ -117,6 +121,19 @@ export default function NowThenFrameScreen() {
   const handleContextClose = () => {
     setContextModalVisible(false);
   };
+  
+  // Pricing Modal
+  const handlePricingOpen = () => {
+    setPricingModalVisible(true);
+  };
+  
+  const handlePricingSave = (pricing: string) => {
+    setPricingInfo(pricing);
+  };
+  
+  const handlePricingClose = () => {
+    setPricingModalVisible(false);
+  };
 
   // KeyboardToolbar Actions
   const toolbarActions: ToolbarAction[] = [
@@ -131,8 +148,7 @@ export default function NowThenFrameScreen() {
       id: 'pricing',
       icon: 'logo-usd',
       label: 'Pricing',
-      onPress: () => {},
-      disabled: !isValid,
+      onPress: handlePricingOpen,
       accessibilityLabel: 'Pricing options'
     },
     {
@@ -354,6 +370,19 @@ export default function NowThenFrameScreen() {
         onClose={handleContextClose}
         onSave={handleContextSave}
         initialValue={contextForOlivia}
+      />
+      
+      {/* Pricing Modal */}
+      <ContextModal
+        visible={pricingModalVisible}
+        onClose={handlePricingClose}
+        onSave={handlePricingSave}
+        initialValue={pricingInfo}
+        title="Pricing"
+        infoTitle="Price Range Information"
+        infoDescription="Define your price range for this case study. This helps potential clients understand the investment required for similar projects."
+        infoExamples="Examples: €5,000-10,000, starting from €2,500, fixed price €7,500, etc."
+        placeholder="e.g. Price range: €5,000-10,000 depending on complexity and customization requirements"
       />
     </View>
   );

@@ -24,9 +24,24 @@ interface ContextModalProps {
   onClose: () => void;
   onSave: (context: string) => void;
   initialValue?: string;
+  title?: string;
+  infoTitle?: string;
+  infoDescription?: string;
+  infoExamples?: string;
+  placeholder?: string;
 }
 
-export function ContextModal({ visible, onClose, onSave, initialValue = '' }: ContextModalProps) {
+export function ContextModal({ 
+  visible, 
+  onClose, 
+  onSave, 
+  initialValue = '',
+  title,
+  infoTitle,
+  infoDescription,
+  infoExamples,
+  placeholder
+}: ContextModalProps) {
   const colors = useThemeColor();
   const [contextText, setContextText] = useState(initialValue);
   const { t } = useTranslation();
@@ -58,7 +73,7 @@ export function ContextModal({ visible, onClose, onSave, initialValue = '' }: Co
           </TouchableOpacity>
           
           <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
-            {t('casestudy.contextModal.title')}
+            {title || t('casestudy.contextModal.title')}
           </Text>
           
           <TouchableOpacity onPress={handleSave} style={styles.headerButtonRight}>
@@ -83,16 +98,16 @@ export function ContextModal({ visible, onClose, onSave, initialValue = '' }: Co
                   color={colors.primary} 
                 />
                 <Text style={[styles.explanationTitle, { color: colors.textPrimary }]}>
-                  {t('casestudy.contextModal.additionalInfo')}
+                  {infoTitle || t('casestudy.contextModal.additionalInfo')}
                 </Text>
               </View>
               
               <Text style={[styles.explanationText, { color: colors.textSecondary }]}>
-                {t('casestudy.contextModal.infoDescription')}
+                {infoDescription || t('casestudy.contextModal.infoDescription')}
               </Text>
               
               <Text style={[styles.explanationSubtext, { color: colors.textTertiary }]}>
-                {t('casestudy.contextModal.infoExamples')}
+                {infoExamples || t('casestudy.contextModal.infoExamples')}
               </Text>
             </View>
 
@@ -109,7 +124,7 @@ export function ContextModal({ visible, onClose, onSave, initialValue = '' }: Co
                 ]}
                 value={contextText}
                 onChangeText={setContextText}
-                placeholder={t('casestudy.contextModal.placeholder')}
+                placeholder={placeholder || t('casestudy.contextModal.placeholder')}
                 placeholderTextColor={colors.textTertiary}
                 multiline
                 textAlignVertical="top"
