@@ -432,5 +432,20 @@
       "buttonLabel": "{{label}}",
       "disabled": "Disabled"
     }
+  },
+  "verification": {
+    "badge": {
+      "text": "Verify Account Now"
+    },
+    "modal": {
+      "title": "Account Verification",
+      "subtitle": "Why verify?",
+      "benefits": {
+        "betterConversion": "18x better customer conversion",
+        "increasedTrust": "Massively increased trust",
+        "freeAndFast": "Free in under 60 seconds"
+      },
+      "button": "Verify now"
+    }
   }
 } 

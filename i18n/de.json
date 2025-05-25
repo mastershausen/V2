@@ -432,5 +432,20 @@
       "buttonLabel": "{{label}}",
       "disabled": "Deaktiviert"
     }
+  },
+  "verification": {
+    "badge": {
+      "text": "Konto jetzt verifizieren"
+    },
+    "modal": {
+      "title": "Account Verifizierung",
+      "subtitle": "Warum verifizieren?",
+      "benefits": {
+        "betterConversion": "18x bessere Kundenkonvertierung",
+        "increasedTrust": "Massiv gesteigertes Vertrauen",
+        "freeAndFast": "Kostenlos in unter 60 Sekunden"
+      },
+      "button": "Jetzt verifizieren"
+    }
   }
 }

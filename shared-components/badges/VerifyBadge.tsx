@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -61,7 +62,7 @@ interface VerifyBadgeProps {
  * ```
  */
 export function VerifyBadge({
-  text = 'Verify Account Now',
+  text,
   onPress,
   style,
   textStyle,
@@ -71,6 +72,9 @@ export function VerifyBadge({
   gradientColors = ['#00A041', '#008F39'] as [string, string],
   disabled = false,
 }: VerifyBadgeProps) {
+  const { t } = useTranslation();
+  
+  const badgeText = text || t('verification.badge.text');
   
   return (
     <TouchableOpacity 
@@ -94,7 +98,7 @@ export function VerifyBadge({
           />
         )}
         <Text style={[styles.verifiedText, textStyle]}>
-          {text}
+          {badgeText}
         </Text>
       </LinearGradient>
     </TouchableOpacity>

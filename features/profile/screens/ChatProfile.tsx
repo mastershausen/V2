@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, Dimensions, Linking, Alert, Modal } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 import { ProfileImage } from '@/shared-components/media/ProfileImage';
@@ -28,6 +30,7 @@ interface ChatProfileProps {
 export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   const [showFallstudien, setShowFallstudien] = useState(false);
   const [showVerificationInfo, setShowVerificationInfo] = useState(false);
 
@@ -242,46 +245,53 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
         >
           <TouchableOpacity style={[styles.modalContent, { backgroundColor: colors.backgroundPrimary }]} activeOpacity={1}>
             <View style={styles.modalHeader}>
-              <Text style={[styles.modalTitle, { color: colors.textPrimary }]}>Account Verifizierung</Text>
+              <Text style={[styles.modalTitle, { color: colors.textPrimary }]}>{t('verification.modal.title')}</Text>
             </View>
             
             <View style={styles.modalBody}>
               <Text style={[styles.modalSubtitle, { color: colors.textPrimary }]}>
-                Warum verifizieren?
+                {t('verification.modal.subtitle')}
               </Text>
               
               <View style={styles.benefitsList}>
                 <View style={styles.benefitItem}>
-                  <Ionicons name="trending-up" size={16} color={colors.primary} style={styles.benefitIcon} />
+                  <Ionicons name="trending-up" size={16} color="#00A041" style={styles.benefitIcon} />
                   <Text style={[styles.benefitText, { color: colors.textSecondary }]}>
-                    12x bessere Kundenkonvertierung
+                    {t('verification.modal.benefits.betterConversion')}
                   </Text>
                 </View>
                 <View style={styles.benefitItem}>
-                  <Ionicons name="heart" size={16} color={colors.primary} style={styles.benefitIcon} />
+                  <Ionicons name="heart" size={16} color="#00A041" style={styles.benefitIcon} />
                   <Text style={[styles.benefitText, { color: colors.textSecondary }]}>
-                    Massiv gesteigertes Vertrauen
+                    {t('verification.modal.benefits.increasedTrust')}
                   </Text>
                 </View>
                 <View style={styles.benefitItem}>
-                  <Ionicons name="time" size={16} color={colors.primary} style={styles.benefitIcon} />
+                  <Ionicons name="time" size={16} color="#00A041" style={styles.benefitIcon} />
                   <Text style={[styles.benefitText, { color: colors.textSecondary }]}>
-                    Kostenlos in unter 60 Sekunden
+                    {t('verification.modal.benefits.freeAndFast')}
                   </Text>
                 </View>
               </View>
             </View>
             
             <TouchableOpacity
-              style={[styles.verifyButton, { backgroundColor: colors.primary }]}
+              style={styles.verifyButton}
               onPress={() => {
                 setShowVerificationInfo(false);
                 // Hier würde die Verifizierung gestartet werden
                 console.log('Verifizierung gestartet');
               }}
             >
-              <Ionicons name="checkmark-circle" size={18} color="white" style={styles.buttonIcon} />
-              <Text style={styles.verifyButtonText}>Jetzt verifizieren</Text>
+              <LinearGradient
+                colors={['#00A041', '#008F39']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.verifyButtonGradient}
+              >
+                <Ionicons name="checkmark-circle" size={18} color="white" style={styles.buttonIcon} />
+                <Text style={styles.verifyButtonText}>{t('verification.modal.button')}</Text>
+              </LinearGradient>
             </TouchableOpacity>
           </TouchableOpacity>
         </TouchableOpacity>
@@ -476,18 +486,29 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   verifyButton: {
+    borderRadius: ui.borderRadius.m,
+    width: '100%',
+    shadowColor: '#008F39',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  verifyButtonText: {
+    fontSize: typography.fontSize.s,
+    fontWeight: typography.fontWeight.semiBold as any,
+    color: 'white',
+  },
+  verifyButtonGradient: {
     paddingHorizontal: spacing.m,
     paddingVertical: spacing.s,
     borderRadius: ui.borderRadius.m,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
-  },
-  verifyButtonText: {
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.semiBold as any,
-    color: 'white',
   },
   buttonIcon: {
     marginRight: spacing.s,

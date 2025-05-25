@@ -10,6 +10,7 @@ import {
   TextStyle,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -32,6 +33,8 @@ interface FooterActionButtonProps {
   style?: StyleProp<ViewStyle>;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
+  useGradient?: boolean;
+  gradientColors?: [string, string];
 }
 
 /**
@@ -61,6 +64,8 @@ export function FooterActionButton({
   style,
   buttonStyle,
   textStyle,
+  useGradient = false,
+  gradientColors = ['#00A041', '#008F39'],
 }: FooterActionButtonProps) {
   const colors = useThemeColor();
   const insets = useSafeAreaInsets();
@@ -140,7 +145,15 @@ export function FooterActionButton({
   return (
     <View style={containerStyles} accessible={true} accessibilityRole="none">
       <TouchableOpacity 
-        style={buttonStyles}
+        style={[
+          styles.button,
+          !useGradient && { 
+            backgroundColor: getBgColor(),
+            opacity: disabled ? ui.opacity.disabled : ui.opacity.active,
+          },
+          { borderRadius: ui.borderRadius.m },
+          buttonStyle
+        ]}
         onPress={onPress}
         disabled={disabled}
         accessible={true}
@@ -148,13 +161,34 @@ export function FooterActionButton({
         accessibilityLabel={label}
         accessibilityState={{ disabled }}
       >
-        {iconPosition === 'left' && renderIcon('left')}
-        
-        <Text style={textStyles}>
-          {label}
-        </Text>
-        
-        {iconPosition === 'right' && renderIcon('right')}
+        {useGradient ? (
+          <LinearGradient
+            colors={gradientColors}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={[
+              styles.gradientButton,
+              { 
+                opacity: disabled ? ui.opacity.disabled : ui.opacity.active,
+                borderRadius: ui.borderRadius.m,
+              }
+            ]}
+          >
+            {iconPosition === 'left' && renderIcon('left')}
+            <Text style={textStyles}>
+              {label}
+            </Text>
+            {iconPosition === 'right' && renderIcon('right')}
+          </LinearGradient>
+        ) : (
+          <>
+            {iconPosition === 'left' && renderIcon('left')}
+            <Text style={textStyles}>
+              {label}
+            </Text>
+            {iconPosition === 'right' && renderIcon('right')}
+          </>
+        )}
       </TouchableOpacity>
     </View>
   );
@@ -185,5 +219,13 @@ const styles = StyleSheet.create({
   },
   iconRight: {
     // Margin wird dynamisch angewendet
+  },
+  gradientButton: {
+    width: '100%',
+    height: BUTTON_HEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    ...ui.shadow.light,
   },
 }); 

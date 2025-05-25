@@ -657,7 +657,8 @@ export default function ExploreScreen(): React.ReactElement {
         icon="semantic-web"
         iconLibrary="material-community"
         iconPosition="left"
-        backgroundColor={colors.primary}
+        useGradient={true}
+        gradientColors={[colors.primary, '#165A48']}
         textColor="#FFFFFF"
         style={{ borderTopWidth: 0 }}
       />
