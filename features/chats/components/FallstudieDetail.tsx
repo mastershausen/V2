@@ -8,7 +8,10 @@ import {
   ScrollView,
   SafeAreaView,
   Dimensions,
-  StatusBar
+  StatusBar,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -54,6 +57,8 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
   fallstudie
 }) => {
   const [isSaved, setIsSaved] = useState(false);
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [username, setUsername] = useState('@');
   const { t } = useTranslation();
 
   if (!fallstudie) return null;
@@ -62,6 +67,15 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
     setIsSaved(!isSaved);
     // Here you could implement actual save logic
     console.log(`Case study ${isSaved ? 'unsaved' : 'saved'}:`, fallstudie.titel);
+  };
+
+  const handleUsernameChange = (text: string) => {
+    // Stelle sicher, dass das '@' immer am Anfang bleibt
+    if (!text.startsWith('@')) {
+      setUsername('@' + text.replace('@', ''));
+    } else {
+      setUsername(text);
+    }
   };
 
   return (
@@ -255,12 +269,16 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
               <TouchableOpacity
                 style={[
                   styles.primaryButton,
-                  fallstudie.needsVerification && styles.verifyButton,
+                  fallstudie.needsVerification && styles.actionVerifyButton,
                   fallstudie.needsVerification && styles.fullWidthButton
                 ]}
                 onPress={() => {
-                  // Hier könnte eine Aktion wie "Auswählen" oder "Kontakt" implementiert werden
-                  onClose();
+                  if (fallstudie.needsVerification) {
+                    setShowVerificationModal(true);
+                  } else {
+                    // Hier könnte eine Aktion wie "Auswählen" oder "Kontakt" implementiert werden
+                    onClose();
+                  }
                 }}
               >
                 <LinearGradient
@@ -296,6 +314,72 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
           </BlurView>
         </View>
       </SafeAreaView>
+
+      {/* Verification modal */}
+      <Modal
+        visible={showVerificationModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowVerificationModal(false)}
+      >
+        <KeyboardAvoidingView 
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{flex: 1}}
+        >
+          <TouchableOpacity 
+            style={styles.modalOverlay}
+            activeOpacity={1}
+            onPress={() => setShowVerificationModal(false)}
+          >
+            <TouchableOpacity 
+              style={styles.modalContent} 
+              activeOpacity={1}
+              onPress={(e) => e.stopPropagation()}
+            >
+              <View style={styles.modalHeader}>
+                <Text style={styles.modalTitle}>{t('verification.modal.title')}</Text>
+              </View>
+              
+              <View style={styles.modalBody}>
+                <Text style={styles.inputHint}>
+                  Tragen Sie hier den Benutzernamen Ihres Partners ein:
+                </Text>
+                
+                <TextInput
+                  style={styles.input}
+                  value={username}
+                  onChangeText={handleUsernameChange}
+                  placeholder="@benutzername"
+                  placeholderTextColor="rgba(0, 0, 0, 0.35)"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+              
+              <TouchableOpacity
+                style={styles.verifyButton}
+                onPress={() => {
+                  setShowVerificationModal(false);
+                  // Hier würde die Verifizierung mit dem Benutzernamen durchgeführt werden
+                  console.log('Verifizierung mit Benutzername:', username);
+                  setUsername('@'); // Zurücksetzen auf @ für die nächste Verwendung
+                  onClose();
+                }}
+              >
+                <LinearGradient
+                  colors={['#00A041', '#008F39']}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={styles.verifyButtonGradient}
+                >
+                  <Ionicons name="checkmark-circle-outline" size={18} color="white" style={styles.buttonIcon} />
+                  <Text style={styles.verifyButtonText}>{t('verification.modal.button')}</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </Modal>
     </Modal>
   );
 };
@@ -509,6 +593,8 @@ const styles = StyleSheet.create({
   },
   verifyButtonText: {
     color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '600',
   },
   verifiedBadgeContainer: {
     marginLeft: 8,
@@ -539,7 +625,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 20,
   },
-  verifyButton: {
+  actionVerifyButton: {
     backgroundColor: '#FFD700',
   },
   buttonIcon: {
@@ -548,6 +634,83 @@ const styles = StyleSheet.create({
   },
   fullWidthButton: {
     flex: 1,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingTop: '45%',
+  },
+  modalContent: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 24,
+    padding: 24,
+    width: '80%',
+    maxWidth: 400,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+    elevation: 16,
+  },
+  modalHeader: {
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: '#1E4B5B',
+    textAlign: 'center',
+  },
+  modalBody: {
+    width: '100%',
+    marginBottom: 16,
+  },
+  inputHint: {
+    fontSize: 15,
+    color: '#666666',
+    marginBottom: 12,
+    textAlign: 'center',
+    lineHeight: 20,
+    fontWeight: '400',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#DDDDDD',
+    borderRadius: 12,
+    padding: 16,
+    fontSize: 16,
+    backgroundColor: '#F5F5F5',
+    marginBottom: 24,
+    color: '#333333',
+    shadowColor: 'rgba(0,0,0,0.05)',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  verifyButton: {
+    borderRadius: 12,
+    overflow: 'hidden',
+    width: '100%',
+    shadowColor: '#008F39',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  verifyButtonGradient: {
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    borderRadius: 12,
   },
 });
 
