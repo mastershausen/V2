@@ -510,6 +510,11 @@
     "footer": {
       "saveButton": "Save",
       "actionButton": "I want this too!"
+    },
+    "list": {
+      "title": "Case Studies",
+      "intro": "Below you will find all case studies with details about achieved results and approaches.",
+      "result": "Result"
     }
   }
 } 

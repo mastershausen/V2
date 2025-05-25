@@ -481,6 +481,11 @@
     "footer": {
       "saveButton": "Save",
       "actionButton": "I want this too!"
+    },
+    "list": {
+      "title": "Fallstudien",
+      "intro": "Nachfolgend finden Sie alle Fallstudien mit Details zu erzielten Ergebnissen und Vorgehensweisen.",
+      "result": "Ergebnis"
     }
   },
   "chat": {
