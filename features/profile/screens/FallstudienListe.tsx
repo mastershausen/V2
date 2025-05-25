@@ -176,7 +176,7 @@ export function FallstudienListe({ visible, onClose, profileId }: FallstudienLis
         </Text>
       </View>
       <View style={styles.fallstudieArrow}>
-        <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
+        <Ionicons name="chevron-forward" size={24} color={colors.primary + '80'} />
       </View>
     </TouchableOpacity>
   );
@@ -216,7 +216,9 @@ export function FallstudienListe({ visible, onClose, profileId }: FallstudienLis
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.listContainer}
             showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
+            ItemSeparatorComponent={() => (
+              <View style={[styles.separator, { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.divider }]} />
+            )}
           />
         </SafeAreaView>
       </Modal>
@@ -243,6 +245,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: spacing.m,
     paddingVertical: spacing.m,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'rgba(0,0,0,0.1)',
+    backgroundColor: 'rgba(255,255,255,0.9)',
   },
   backButton: {
     padding: spacing.xs,
@@ -250,6 +255,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: typography.fontSize.l,
     fontWeight: typography.fontWeight.bold as any,
+    letterSpacing: -0.5,
   },
   headerRight: {
     width: 40, // Gleiche Breite wie der Zurück-Button für eine ausgeglichene Anordnung
@@ -257,22 +263,35 @@ const styles = StyleSheet.create({
   introContainer: {
     paddingHorizontal: spacing.m,
     paddingBottom: spacing.m,
+    paddingTop: spacing.s,
+    backgroundColor: 'rgba(245,247,250,0.5)',
   },
   introText: {
     fontSize: typography.fontSize.s,
     lineHeight: 20,
+    textAlign: 'center',
+    fontStyle: 'italic',
   },
   listContainer: {
     padding: spacing.m,
+    paddingTop: spacing.l,
   },
   separator: {
     height: spacing.m,
+    marginHorizontal: spacing.m,
   },
   fallstudieItem: {
     borderRadius: ui.borderRadius.m,
     padding: spacing.m,
     flexDirection: 'row',
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(0,0,0,0.05)',
   },
   fallstudieContent: {
     flex: 1,
@@ -289,6 +308,11 @@ const styles = StyleSheet.create({
   },
   fallstudieErgebnisContainer: {
     marginBottom: spacing.xs,
+    backgroundColor: 'rgba(30, 107, 85, 0.1)',
+    borderRadius: ui.borderRadius.s,
+    paddingHorizontal: spacing.xs,
+    paddingVertical: 2,
+    alignSelf: 'flex-start',
   },
   fallstudieErgebnis: {
     fontSize: typography.fontSize.s,
@@ -296,6 +320,7 @@ const styles = StyleSheet.create({
   },
   fallstudieDatum: {
     fontSize: typography.fontSize.xs,
+    fontStyle: 'italic',
   },
   fallstudieArrow: {
     marginLeft: spacing.s,
