@@ -253,7 +253,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
           {/* Footer mit Aktions-Button */}
           <BlurView intensity={20} tint="dark" style={styles.footerBlur}>
             <View style={styles.footer}>
-              {!fallstudie.needsVerification && (
+              {!fallstudie.needsVerification && fallstudie.id !== '3' && (
                 <TouchableOpacity 
                   style={styles.iconButton} 
                   onPress={handleSave}
@@ -266,50 +266,133 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                 </TouchableOpacity>
               )}
               
-              <TouchableOpacity
-                style={[
-                  styles.primaryButton,
-                  fallstudie.needsVerification && styles.actionVerifyButton,
-                  fallstudie.needsVerification && styles.fullWidthButton
-                ]}
-                onPress={() => {
-                  if (fallstudie.needsVerification) {
-                    setShowVerificationModal(true);
-                  } else {
-                    // Hier könnte eine Aktion wie "Auswählen" oder "Kontakt" implementiert werden
-                    onClose();
-                  }
-                }}
-              >
-                <LinearGradient
-                  colors={fallstudie.needsVerification 
-                    ? ['#FFD700', '#FFA500'] // Gold-Gradient für Verify now
-                    : ['#1E6B55', '#15503F'] // Grün-Gradient für I want this too
-                  }
-                  style={styles.buttonGradient}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
+              {fallstudie.id === '3' ? (
+                <View style={styles.buttonRow}>
+                  <TouchableOpacity
+                    style={[
+                      styles.primaryButton,
+                      styles.rejectButton,
+                      { flex: 1, marginRight: 8 }
+                    ]}
+                    onPress={() => {
+                      onClose();
+                    }}
+                  >
+                    <LinearGradient
+                      colors={['#E53935', '#C62828']}
+                      style={styles.buttonGradient}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                    >
+                      <View style={styles.buttonContentContainer}>
+                        <Ionicons 
+                          name="close-circle-outline" 
+                          size={17} 
+                          color="#FFFFFF"
+                          style={styles.buttonIcon}
+                        />
+                        <Text style={[
+                          styles.primaryButtonText,
+                          styles.verifyButtonText
+                        ]}>Reject</Text>
+                      </View>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity
+                    style={[
+                      styles.primaryButton,
+                      styles.verifyButton,
+                      { flex: 1 }
+                    ]}
+                    onPress={() => {
+                      onClose();
+                    }}
+                  >
+                    <LinearGradient
+                      colors={['#00A041', '#008F39']}
+                      style={styles.buttonGradient}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                    >
+                      <View style={styles.buttonContentContainer}>
+                        <Ionicons 
+                          name="checkmark-circle-outline" 
+                          size={17} 
+                          color="#FFFFFF"
+                          style={styles.buttonIcon}
+                        />
+                        <Text style={[
+                          styles.primaryButtonText,
+                          styles.verifyButtonText
+                        ]}>Verify</Text>
+                      </View>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <TouchableOpacity
+                  style={[
+                    styles.primaryButton,
+                    fallstudie.needsVerification && styles.actionVerifyButton,
+                    fallstudie.needsVerification && styles.fullWidthButton,
+                    fallstudie.id === '3' && styles.verifyButton,
+                    fallstudie.id === '3' && styles.fullWidthButton
+                  ]}
+                  onPress={() => {
+                    if (fallstudie.needsVerification) {
+                      setShowVerificationModal(true);
+                    } else {
+                      // Hier könnte eine Aktion wie "Auswählen" oder "Kontakt" implementiert werden
+                      onClose();
+                    }
+                  }}
                 >
-                  {fallstudie.needsVerification ? (
-                    <View style={styles.buttonContentContainer}>
-                      <Ionicons 
-                        name="checkmark-circle-outline" 
-                        size={17} 
-                        color="#FFFFFF"
-                        style={styles.buttonIcon}
-                      />
-                      <Text style={[
-                        styles.primaryButtonText,
-                        styles.verifyButtonText
-                      ]}>{t('verification.modal.button')}</Text>
-                    </View>
-                  ) : (
-                    <Text style={styles.primaryButtonText}>
-                      {t('casestudy.footer.actionButton')}
-                    </Text>
-                  )}
-                </LinearGradient>
-              </TouchableOpacity>
+                  <LinearGradient
+                    colors={fallstudie.needsVerification 
+                      ? ['#FFD700', '#FFA500'] // Gold-Gradient für Verify now
+                      : fallstudie.id === '3'
+                        ? ['#00A041', '#008F39'] // Grün-Gradient für Verify Case Study
+                        : ['#1E6B55', '#15503F'] // Grün-Gradient für I want this too
+                    }
+                    style={styles.buttonGradient}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                  >
+                    {fallstudie.needsVerification ? (
+                      <View style={styles.buttonContentContainer}>
+                        <Ionicons 
+                          name="checkmark-circle-outline" 
+                          size={17} 
+                          color="#FFFFFF"
+                          style={styles.buttonIcon}
+                        />
+                        <Text style={[
+                          styles.primaryButtonText,
+                          styles.verifyButtonText
+                        ]}>{t('verification.modal.button')}</Text>
+                      </View>
+                    ) : fallstudie.id === '3' ? (
+                      <View style={styles.buttonContentContainer}>
+                        <Ionicons 
+                          name="checkmark-circle-outline" 
+                          size={17} 
+                          color="#FFFFFF"
+                          style={styles.buttonIcon}
+                        />
+                        <Text style={[
+                          styles.primaryButtonText,
+                          styles.verifyButtonText
+                        ]}>Verify Case Study</Text>
+                      </View>
+                    ) : (
+                      <Text style={styles.primaryButtonText}>
+                        {t('casestudy.footer.actionButton')}
+                      </Text>
+                    )}
+                  </LinearGradient>
+                </TouchableOpacity>
+              )}
             </View>
           </BlurView>
         </View>
@@ -711,6 +794,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     borderRadius: 12,
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: 1,
+  },
+  rejectButton: {
+    borderRadius: 12,
+    overflow: 'hidden',
+    shadowColor: '#C62828',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
   },
 });
 
