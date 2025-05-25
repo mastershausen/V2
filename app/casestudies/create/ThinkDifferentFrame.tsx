@@ -15,6 +15,7 @@ import { Stack, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
+import i18n from '@/i18n/config';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 import { KeyboardToolbar, ToolbarAction } from '@/shared-components/navigation/KeyboardToolbar';
@@ -127,6 +128,13 @@ export default function ThinkDifferentFrameScreen() {
       label: t('casestudy.contextModal.title'),
       onPress: handleContextForOlivia,
       accessibilityLabel: t('casestudy.contextModal.title')
+    },
+    {
+      id: 'currency',
+      icon: i18n.language === 'de' ? 'logo-euro' : 'logo-usd',
+      label: i18n.language === 'de' ? '€' : '$',
+      onPress: () => {},
+      accessibilityLabel: i18n.language === 'de' ? 'Euro' : 'Dollar'
     },
     {
       id: 'save',
