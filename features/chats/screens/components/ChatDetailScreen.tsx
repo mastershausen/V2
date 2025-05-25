@@ -318,19 +318,16 @@ export default function ChatDetailScreen() {
               </Text>
               {isVerificationNotification && (
                 <View style={styles.verificationButtons}>
-                  <TouchableOpacity style={styles.verifyButton}>
+                  <TouchableOpacity style={[styles.viewCaseStudyButton, { width: '100%' }]}>
                     <LinearGradient
-                      colors={['#00A041', '#008F39']}
+                      colors={['#1E6B55', '#15503F']}
                       start={{ x: 0, y: 0 }}
                       end={{ x: 1, y: 1 }}
                       style={styles.verifyButtonGradient}
                     >
-                      <Ionicons name="checkmark-circle-outline" size={14} color="white" style={styles.buttonIcon} />
-                      <Text style={styles.verifyButtonText}>Verifizieren</Text>
+                      <Ionicons name="document-text-outline" size={14} color="white" style={styles.buttonIcon} />
+                      <Text style={styles.verifyButtonText}>Fallstudie ansehen</Text>
                     </LinearGradient>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.rejectButton}>
-                    <Text style={styles.rejectButtonText}>Ablehnen</Text>
                   </TouchableOpacity>
                 </View>
               )}
@@ -711,11 +708,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: spacing.m,
   },
-  verifyButton: {
+  viewCaseStudyButton: {
     borderRadius: ui.borderRadius.m,
     overflow: 'hidden',
     flex: 1,
-    marginRight: spacing.s,
   },
   verifyButtonGradient: {
     paddingVertical: spacing.s,
@@ -732,18 +728,5 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.s,
     fontWeight: typography.fontWeight.semiBold as any,
     color: 'white',
-  },
-  rejectButton: {
-    padding: spacing.s,
-    paddingHorizontal: spacing.m,
-    borderRadius: ui.borderRadius.m,
-    backgroundColor: '#F2F2F2',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  rejectButtonText: {
-    fontSize: typography.fontSize.s,
-    fontWeight: typography.fontWeight.semiBold as any,
-    color: '#666666',
   },
 }); 
