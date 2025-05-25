@@ -435,7 +435,7 @@
   },
   "verification": {
     "badge": {
-      "text": "Konto jetzt verifizieren",
+      "text": "Verifizieren",
       "verified": "Verifiziert"
     },
     "modal": {

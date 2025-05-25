@@ -15,6 +15,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import { useTranslation } from 'react-i18next';
 
+import { VerifyBadge } from '@/shared-components/badges';
+
 // Festlegen der Fensterbreite für Berechnungen
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -41,6 +43,7 @@ interface FallstudieDetailProps {
         telefon?: string;
       }
     }
+    isVerified?: boolean;
   } | null;
 }
 
@@ -69,20 +72,44 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
     >
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.modalContainer}>
-        <View style={styles.contentOuterContainer}>
+        <View style={[
+          styles.contentOuterContainer,
+          fallstudie.isVerified && styles.verifiedContentContainer
+        ]}>
           {/* Subtiler Hintergrundverlauf */}
           <LinearGradient
-            colors={['rgba(30, 91, 78, 0.05)', 'rgba(30, 75, 91, 0.07)', 'rgba(10, 24, 40, 0.1)']}
+            colors={fallstudie.isVerified 
+              ? ['rgba(0, 160, 65, 0.05)', 'rgba(0, 143, 57, 0.07)', 'rgba(0, 107, 47, 0.1)'] 
+              : ['rgba(30, 91, 78, 0.05)', 'rgba(30, 75, 91, 0.07)', 'rgba(10, 24, 40, 0.1)']}
             style={styles.backgroundGradient}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
           />
           
           {/* Header mit Titel und Schließen-Button */}
-          <View style={styles.header}>
+          <View style={[
+            styles.header, 
+            fallstudie.isVerified && styles.verifiedHeader
+          ]}>
             <View style={styles.titleContainer}>
-              <Text style={styles.titleLabel}>{t('casestudy.header.title')}</Text>
-              <Text style={styles.title}>{fallstudie.titel}</Text>
+              <View style={styles.titleLabelRow}>
+                <Text style={[
+                  styles.titleLabel,
+                  fallstudie.isVerified && styles.verifiedTitleLabel
+                ]}>{t('casestudy.header.title')}</Text>
+                {fallstudie.isVerified && (
+                  <VerifyBadge 
+                    text={t('verification.badge.verified')}
+                    iconName="checkmark-circle"
+                    iconSize={12}
+                    style={styles.verifiedBadgeContainer}
+                  />
+                )}
+              </View>
+              <Text style={[
+                styles.title,
+                fallstudie.isVerified && styles.verifiedTitle
+              ]}>{fallstudie.titel}</Text>
             </View>
             <TouchableOpacity 
               style={styles.closeButton}
@@ -281,6 +308,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 16,
   },
+  titleLabelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   titleLabel: {
     fontSize: 14,
     color: 'rgba(255, 255, 255, 0.7)',
@@ -447,6 +478,29 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
+  },
+  verifiedBadgeContainer: {
+    marginLeft: 8,
+    marginTop: 0,
+    transform: [{ scale: 0.8 }],
+  },
+  verifiedContentContainer: {
+    borderWidth: 1,
+    borderColor: 'rgba(0, 160, 65, 0.2)',
+    shadowColor: '#00A041',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  verifiedHeader: {
+    backgroundColor: '#00A041',
+  },
+  verifiedTitleLabel: {
+    color: 'rgba(255, 255, 255, 0.7)',
+  },
+  verifiedTitle: {
+    color: '#FFFFFF',
   },
 });
 

@@ -583,7 +583,11 @@ export default function OliviaChatScreen() {
                   <TouchableOpacity 
                     style={styles.infoButton}
                     onPress={() => {
-                      setSelectedFallstudie(studie);
+                      // Nur für Case Study 1 das isVerified-Flag setzen
+                      const studieWithVerifiedFlag = studie.id === '1' 
+                        ? {...studie, isVerified: true} 
+                        : studie;
+                      setSelectedFallstudie(studieWithVerifiedFlag);
                       setShowFallstudieDetail(true);
                     }}
                   >
