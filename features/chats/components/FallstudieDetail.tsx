@@ -239,21 +239,24 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
           {/* Footer mit Aktions-Button */}
           <BlurView intensity={20} tint="dark" style={styles.footerBlur}>
             <View style={styles.footer}>
-              <TouchableOpacity 
-                style={styles.iconButton} 
-                onPress={handleSave}
-              >
-                <Ionicons 
-                  name={isSaved ? "bookmark" : "bookmark-outline"} 
-                  size={24} 
-                  color="#1E6B55" 
-                />
-              </TouchableOpacity>
+              {!fallstudie.needsVerification && (
+                <TouchableOpacity 
+                  style={styles.iconButton} 
+                  onPress={handleSave}
+                >
+                  <Ionicons 
+                    name={isSaved ? "bookmark" : "bookmark-outline"} 
+                    size={24} 
+                    color="#1E6B55" 
+                  />
+                </TouchableOpacity>
+              )}
               
               <TouchableOpacity
                 style={[
                   styles.primaryButton,
-                  fallstudie.needsVerification && styles.verifyButton
+                  fallstudie.needsVerification && styles.verifyButton,
+                  fallstudie.needsVerification && styles.fullWidthButton
                 ]}
                 onPress={() => {
                   // Hier könnte eine Aktion wie "Auswählen" oder "Kontakt" implementiert werden
@@ -269,23 +272,24 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
                 >
-                  <Text style={[
-                    styles.primaryButtonText,
-                    fallstudie.needsVerification && styles.verifyButtonText
-                  ]}>
-                    {fallstudie.needsVerification && (
+                  {fallstudie.needsVerification ? (
+                    <View style={styles.buttonContentContainer}>
                       <Ionicons 
-                        name="shield-checkmark" 
-                        size={18} 
-                        color="#FFFFFF" 
-                        style={styles.buttonIcon} 
+                        name="checkmark-circle-outline" 
+                        size={17} 
+                        color="#FFFFFF"
+                        style={styles.buttonIcon}
                       />
-                    )}
-                    {fallstudie.needsVerification 
-                      ? t('verification.modal.button') // "Verify now!"
-                      : t('casestudy.footer.actionButton') // "I want this too!"
-                    }
-                  </Text>
+                      <Text style={[
+                        styles.primaryButtonText,
+                        styles.verifyButtonText
+                      ]}>{t('verification.modal.button')}</Text>
+                    </View>
+                  ) : (
+                    <Text style={styles.primaryButtonText}>
+                      {t('casestudy.footer.actionButton')}
+                    </Text>
+                  )}
                 </LinearGradient>
               </TouchableOpacity>
             </View>
@@ -496,6 +500,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
   },
   primaryButtonText: {
     color: '#FFFFFF',
@@ -528,11 +533,21 @@ const styles = StyleSheet.create({
   verifiedTitle: {
     color: '#FFFFFF',
   },
-  buttonIcon: {
-    marginRight: 8,
+  buttonContentContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 20,
   },
   verifyButton: {
     backgroundColor: '#FFD700',
+  },
+  buttonIcon: {
+    marginRight: 8,
+    marginTop: 1,
+  },
+  fullWidthButton: {
+    flex: 1,
   },
 });
 
