@@ -13,6 +13,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
+import { useTranslation } from 'react-i18next';
 
 // Festlegen der Fensterbreite für Berechnungen
 const windowWidth = Dimensions.get('window').width;
@@ -49,6 +50,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
   fallstudie
 }) => {
   const [isSaved, setIsSaved] = useState(false);
+  const { t } = useTranslation();
 
   if (!fallstudie) return null;
   
@@ -79,7 +81,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
           {/* Header mit Titel und Schließen-Button */}
           <View style={styles.header}>
             <View style={styles.titleContainer}>
-              <Text style={styles.titleLabel}>Case Study</Text>
+              <Text style={styles.titleLabel}>{t('casestudy.header.title')}</Text>
               <Text style={styles.title}>{fallstudie.titel}</Text>
             </View>
             <TouchableOpacity 
@@ -110,10 +112,10 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   <View style={styles.iconContainer}>
                     <Ionicons name="document-text-outline" size={20} color="#1E6B55" />
                   </View>
-                  <Text style={styles.sectionTitle}>Context</Text>
+                  <Text style={styles.sectionTitle}>{t('casestudy.sections.context.title')}</Text>
                 </View>
                 <Text style={styles.sectionText}>{fallstudie.context}</Text>
-                <Text style={styles.sectionHint}>Initial situation / Customer / Challenge</Text>
+                <Text style={styles.sectionHint}>{t('casestudy.sections.context.subtitle')}</Text>
               </View>
 
               {/* Action */}
@@ -122,10 +124,10 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   <View style={styles.iconContainer}>
                     <Ionicons name="cog-outline" size={20} color="#1E6B55" />
                   </View>
-                  <Text style={styles.sectionTitle}>Action</Text>
+                  <Text style={styles.sectionTitle}>{t('casestudy.sections.action.title')}</Text>
                 </View>
                 <Text style={styles.sectionText}>{fallstudie.action}</Text>
-                <Text style={styles.sectionHint}>What was done? How was the approach?</Text>
+                <Text style={styles.sectionHint}>{t('casestudy.sections.action.subtitle')}</Text>
               </View>
 
               {/* Result */}
@@ -134,7 +136,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   <View style={styles.iconContainer}>
                     <Ionicons name="trophy-outline" size={20} color="#1E6B55" />
                   </View>
-                  <Text style={styles.sectionTitle}>Result</Text>
+                  <Text style={styles.sectionTitle}>{t('casestudy.sections.result.title')}</Text>
                 </View>
                 <Text style={styles.sectionText}>{fallstudie.result.text}</Text>
                 
@@ -154,7 +156,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   </View>
                 )}
                 
-                <Text style={styles.sectionHint}>Results with measurable successes</Text>
+                <Text style={styles.sectionHint}>{t('casestudy.sections.result.subtitle')}</Text>
               </View>
 
               {/* Anbieter/Vermittler Informationen */}
@@ -233,7 +235,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
                 >
-                  <Text style={styles.primaryButtonText}>I want this too!</Text>
+                  <Text style={styles.primaryButtonText}>{t('casestudy.footer.actionButton')}</Text>
                 </LinearGradient>
               </TouchableOpacity>
             </View>

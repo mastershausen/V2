@@ -435,7 +435,8 @@
   },
   "verification": {
     "badge": {
-      "text": "Konto jetzt verifizieren"
+      "text": "Konto jetzt verifizieren",
+      "verified": "Verifiziert"
     },
     "modal": {
       "title": "Account Verifizierung",
@@ -446,6 +447,30 @@
         "freeAndFast": "Kostenlos in unter 60 Sekunden"
       },
       "button": "Jetzt verifizieren"
+    }
+  },
+  "casestudy": {
+    "header": {
+      "title": "Case Study",
+      "close": "Close"
+    },
+    "sections": {
+      "context": {
+        "title": "Context",
+        "subtitle": "Initial situation / Customer / Challenge"
+      },
+      "action": {
+        "title": "Action",
+        "subtitle": "What was done? How was the approach?"
+      },
+      "result": {
+        "title": "Result",
+        "subtitle": "Results with measurable successes"
+      }
+    },
+    "footer": {
+      "saveButton": "Save",
+      "actionButton": "I want this too!"
     }
   }
 }
