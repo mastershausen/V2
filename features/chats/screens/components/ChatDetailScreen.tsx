@@ -171,7 +171,18 @@ export default function ChatDetailScreen() {
           time: '14:30',
           isUser: true,
           date: 'Heute'
-        }
+        },
+        // Fallstudie-Verifizierungsbenachrichtigung
+        ...(params.name === 'Laura Schmidt' ? [
+          {
+            id: '5-1',
+            text: '📋 Fallstudie-Verifizierung: "Industrial Building-Use Transformation with High Requirements"\n\nMarkus Weber hat Sie als Projektpartner in dieser Fallstudie angegeben. Bitte bestätigen Sie Ihre Mitwirkung.',
+            time: '14:35',
+            isUser: false,
+            date: 'Heute',
+            isVerificationNotification: true
+          }
+        ] : [])
       ]
   });
 
@@ -275,8 +286,9 @@ export default function ChatDetailScreen() {
   };
 
   // Rendert eine einzelne Nachricht
-  const renderMessage = ({ item, index }: { item: typeof chat.messages[0], index: number }) => {
+  const renderMessage = ({ item, index }: { item: typeof chat.messages[0] & { isVerificationNotification?: boolean }, index: number }) => {
     const isUser = item.isUser;
+    const isVerificationNotification = item.isVerificationNotification;
     
     // Überprüfen, ob eine Datumstrenner-Linie angezeigt werden soll
     const shouldShowDateSeparator = index > 0 && 
@@ -294,14 +306,34 @@ export default function ChatDetailScreen() {
               styles.messageBubble,
               isUser 
                 ? [styles.userBubble, { backgroundColor: colors.primary }] 
-                : [styles.botBubble, { backgroundColor: colors.divider + '30' }]
+                : isVerificationNotification
+                  ? [styles.verificationBubble, { backgroundColor: '#FFA500' }]
+                  : [styles.botBubble, { backgroundColor: colors.divider + '30' }]
             ]}>
               <Text style={[
                 styles.messageText,
-                { color: isUser ? 'white' : colors.textPrimary }
+                { color: isUser || isVerificationNotification ? 'white' : colors.textPrimary }
               ]}>
                 {item.text}
               </Text>
+              {isVerificationNotification && (
+                <View style={styles.verificationButtons}>
+                  <TouchableOpacity style={styles.verifyButton}>
+                    <LinearGradient
+                      colors={['#00A041', '#008F39']}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                      style={styles.verifyButtonGradient}
+                    >
+                      <Ionicons name="checkmark-circle-outline" size={14} color="white" style={styles.buttonIcon} />
+                      <Text style={styles.verifyButtonText}>Verifizieren</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.rejectButton}>
+                    <Text style={styles.rejectButtonText}>Ablehnen</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
             <Text style={[
               styles.timeText, 
@@ -667,5 +699,51 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  verificationBubble: {
+    padding: spacing.m,
+    borderRadius: ui.borderRadius.l,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 165, 0, 0.3)',
+  },
+  verificationButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: spacing.m,
+  },
+  verifyButton: {
+    borderRadius: ui.borderRadius.m,
+    overflow: 'hidden',
+    flex: 1,
+    marginRight: spacing.s,
+  },
+  verifyButtonGradient: {
+    paddingVertical: spacing.s,
+    paddingHorizontal: spacing.m,
+    borderRadius: ui.borderRadius.m,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonIcon: {
+    marginRight: spacing.xs,
+  },
+  verifyButtonText: {
+    fontSize: typography.fontSize.s,
+    fontWeight: typography.fontWeight.semiBold as any,
+    color: 'white',
+  },
+  rejectButton: {
+    padding: spacing.s,
+    paddingHorizontal: spacing.m,
+    borderRadius: ui.borderRadius.m,
+    backgroundColor: '#F2F2F2',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  rejectButtonText: {
+    fontSize: typography.fontSize.s,
+    fontWeight: typography.fontWeight.semiBold as any,
+    color: '#666666',
   },
 }); 
