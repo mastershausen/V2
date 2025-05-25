@@ -134,7 +134,7 @@ function KeyboardToolbar({
             {
               backgroundColor: action.disabled 
                 ? colors.backgroundTertiary
-                : action.id === 'save' 
+                : action.id === 'save' || action.id === 'pricing'
                   ? colors.primary
                   : 'transparent',
               borderWidth: 1,
@@ -162,7 +162,7 @@ function KeyboardToolbar({
             size={16} 
             color={action.disabled 
               ? colors.textTertiary 
-              : action.id === 'save'
+              : action.id === 'save' || action.id === 'pricing'
                 ? '#FFFFFF'
                 : colors.primary
             } 
@@ -173,7 +173,7 @@ function KeyboardToolbar({
               {
                 color: action.disabled 
                   ? colors.textTertiary 
-                  : action.id === 'save'
+                  : action.id === 'save' || action.id === 'pricing'
                     ? '#FFFFFF'
                     : colors.primary
               }
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.s,
     marginLeft: spacing.xs,
     flexShrink: 1,
-    fontWeight: typography.fontWeight.medium as any,
+    fontWeight: typography.fontWeight.semiBold as any,
   }
 });
 

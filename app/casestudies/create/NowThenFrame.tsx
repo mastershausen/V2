@@ -123,21 +123,22 @@ export default function NowThenFrameScreen() {
     {
       id: 'context',
       icon: 'information-circle-outline',
-      label: t('casestudy.contextModal.title'),
+      label: 'Context',
       onPress: handleContextForOlivia,
       accessibilityLabel: t('casestudy.contextModal.title')
     },
     {
-      id: 'currency',
-      icon: i18n.language === 'de' ? 'logo-euro' : 'logo-usd',
-      label: i18n.language === 'de' ? '€' : '$',
+      id: 'pricing',
+      icon: 'logo-usd',
+      label: 'Pricing',
       onPress: () => {},
-      accessibilityLabel: i18n.language === 'de' ? 'Euro' : 'Dollar'
+      disabled: !isValid,
+      accessibilityLabel: 'Pricing options'
     },
     {
       id: 'save',
       icon: 'checkmark-circle-outline',
-      label: t('casestudy.toolbar.save'),
+      label: 'Save',
       onPress: handleSubmit,
       disabled: !isValid,
       accessibilityLabel: t('casestudy.toolbar.save')
