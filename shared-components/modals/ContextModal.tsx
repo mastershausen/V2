@@ -12,6 +12,7 @@ import {
   Platform
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -28,6 +29,7 @@ interface ContextModalProps {
 export function ContextModal({ visible, onClose, onSave, initialValue = '' }: ContextModalProps) {
   const colors = useThemeColor();
   const [contextText, setContextText] = useState(initialValue);
+  const { t } = useTranslation();
 
   const handleSave = () => {
     onSave(contextText);
@@ -49,19 +51,19 @@ export function ContextModal({ visible, onClose, onSave, initialValue = '' }: Co
       <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
         {/* Header */}
         <View style={[styles.header, { borderBottomColor: colors.divider }]}>
-          <TouchableOpacity onPress={handleCancel} style={styles.headerButton}>
+          <TouchableOpacity onPress={handleCancel} style={styles.headerButtonLeft}>
             <Text style={[styles.headerButtonText, { color: colors.textSecondary }]}>
-              Abbrechen
+              {t('casestudy.contextModal.cancel')}
             </Text>
           </TouchableOpacity>
           
           <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
-            Kontext für Olivia
+            {t('casestudy.contextModal.title')}
           </Text>
           
-          <TouchableOpacity onPress={handleSave} style={styles.headerButton}>
+          <TouchableOpacity onPress={handleSave} style={styles.headerButtonRight}>
             <Text style={[styles.headerButtonText, { color: colors.primary }]}>
-              Speichern
+              {t('casestudy.contextModal.save')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -81,16 +83,16 @@ export function ContextModal({ visible, onClose, onSave, initialValue = '' }: Co
                   color={colors.primary} 
                 />
                 <Text style={[styles.explanationTitle, { color: colors.textPrimary }]}>
-                  Optionale Zusatzinformationen
+                  {t('casestudy.contextModal.additionalInfo')}
                 </Text>
               </View>
               
               <Text style={[styles.explanationText, { color: colors.textSecondary }]}>
-                Diese Informationen sind nur für Olivia sichtbar und helfen dabei, die besten Matches für deine Fallstudie zu finden. Sie werden nicht öffentlich angezeigt.
+                {t('casestudy.contextModal.infoDescription')}
               </Text>
               
               <Text style={[styles.explanationSubtext, { color: colors.textTertiary }]}>
-                Beispiele: Zielgruppe, Voraussetzungen, Branche, Unternehmensgröße, Budget, etc.
+                {t('casestudy.contextModal.infoExamples')}
               </Text>
             </View>
 
@@ -107,7 +109,7 @@ export function ContextModal({ visible, onClose, onSave, initialValue = '' }: Co
                 ]}
                 value={contextText}
                 onChangeText={setContextText}
-                placeholder="z.B. Zielgruppe: Mittelständische Unternehmen mit 50-200 Mitarbeitern, die bereits eine Grundstruktur haben..."
+                placeholder={t('casestudy.contextModal.placeholder')}
                 placeholderTextColor={colors.textTertiary}
                 multiline
                 textAlignVertical="top"
@@ -133,8 +135,13 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.s,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  headerButton: {
+  headerButtonLeft: {
     minWidth: 80,
+    alignItems: 'flex-start',
+  },
+  headerButtonRight: {
+    minWidth: 80,
+    alignItems: 'flex-end',
   },
   headerButtonText: {
     fontSize: typography.fontSize.m,
@@ -143,6 +150,8 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: typography.fontSize.l,
     fontWeight: typography.fontWeight.semiBold as any,
+    textAlign: 'center',
+    flex: 1,
   },
   content: {
     flex: 1,

@@ -486,6 +486,18 @@
       "title": "Fallstudien",
       "intro": "Nachfolgend finden Sie alle Fallstudien mit Details zu erzielten Ergebnissen und Vorgehensweisen.",
       "result": "Ergebnis"
+    },
+    "contextModal": {
+      "title": "Kontext für Olivia",
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "additionalInfo": "Optionale Zusatzinformationen",
+      "infoDescription": "Diese Informationen sind nur für Olivia sichtbar und helfen dabei, die besten Matches für deine Fallstudie zu finden. Sie werden nicht öffentlich angezeigt.",
+      "infoExamples": "Beispiele: Zielgruppe, Voraussetzungen, Branche, Unternehmensgröße, Budget, etc.",
+      "placeholder": "z.B. Zielgruppe: Mittelständische Unternehmen mit 50-200 Mitarbeitern, die bereits eine Grundstruktur haben..."
+    },
+    "toolbar": {
+      "save": "Fallstudie speichern"
     }
   },
   "chat": {

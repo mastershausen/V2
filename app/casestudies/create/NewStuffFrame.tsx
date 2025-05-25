@@ -14,6 +14,7 @@ import {
 import { Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 import { KeyboardToolbar, ToolbarAction } from '@/shared-components/navigation/KeyboardToolbar';
@@ -39,6 +40,7 @@ const MIN_CHARS = {
  */
 export default function NewStuffFrameScreen() {
   const colors = useThemeColor();
+  const { t } = useTranslation();
   
   // Form fields
   const [headline, setHeadline] = useState('');
@@ -118,17 +120,17 @@ export default function NewStuffFrameScreen() {
     {
       id: 'context',
       icon: 'information-circle-outline',
-      label: 'Context for Olivia',
+      label: t('casestudy.contextModal.title'),
       onPress: handleContextForOlivia,
-      accessibilityLabel: 'Context for Olivia'
+      accessibilityLabel: t('casestudy.contextModal.title')
     },
     {
       id: 'save',
       icon: 'checkmark-circle-outline',
-      label: 'Save Case Study',
+      label: t('casestudy.toolbar.save'),
       onPress: handleSubmit,
       disabled: !isValid,
-      accessibilityLabel: 'Save Case Study'
+      accessibilityLabel: t('casestudy.toolbar.save')
     }
   ];
 

@@ -515,6 +515,18 @@
       "title": "Case Studies",
       "intro": "Below you will find all case studies with details about achieved results and approaches.",
       "result": "Result"
+    },
+    "contextModal": {
+      "title": "Context for Olivia",
+      "cancel": "Cancel",
+      "save": "Save",
+      "additionalInfo": "Optional Additional Information",
+      "infoDescription": "This information is only visible to Olivia and helps to find the best matches for your case study. It will not be displayed publicly.",
+      "infoExamples": "Examples: Target group, prerequisites, industry, company size, budget, etc.",
+      "placeholder": "e.g. Target group: Medium-sized companies with 50-200 employees that already have a basic structure..."
+    },
+    "toolbar": {
+      "save": "Save case study"
     }
   }
 } 

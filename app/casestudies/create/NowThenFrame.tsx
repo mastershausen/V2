@@ -14,6 +14,7 @@ import {
 import { Stack, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 import { KeyboardToolbar, ToolbarAction } from '@/shared-components/navigation/KeyboardToolbar';
@@ -43,6 +44,7 @@ export default function NowThenFrameScreen() {
   const colors = useThemeColor();
   const router = useRouter();
   const { isFirstVisit, isLoading, markAsVisited } = useFirstTimeVisit('nowThenFrame');
+  const { t } = useTranslation();
   
   // Form fields
   const [headline, setHeadline] = useState('');
@@ -120,17 +122,17 @@ export default function NowThenFrameScreen() {
     {
       id: 'context',
       icon: 'information-circle-outline',
-      label: 'Context for Olivia',
+      label: t('casestudy.contextModal.title'),
       onPress: handleContextForOlivia,
-      accessibilityLabel: 'Context for Olivia'
+      accessibilityLabel: t('casestudy.contextModal.title')
     },
     {
       id: 'save',
       icon: 'checkmark-circle-outline',
-      label: 'Save case study',
+      label: t('casestudy.toolbar.save'),
       onPress: handleSubmit,
       disabled: !isValid,
-      accessibilityLabel: 'Save case study'
+      accessibilityLabel: t('casestudy.toolbar.save')
     }
   ];
 
