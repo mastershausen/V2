@@ -108,6 +108,16 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
         }
       />
 
+      {/* Background gradient that extends to the screen edges */}
+      <View style={styles.gradientWrapper}>
+        <LinearGradient
+          colors={['rgba(210, 235, 225, 0.95)', 'rgba(210, 235, 225, 0.6)', 'rgba(245, 247, 250, 0)']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={styles.fullWidthGradient}
+        />
+      </View>
+
       {/* Profile image (larger and prominently positioned) */}
       <View style={styles.profileImageContainer}>
         <ProfileImage
@@ -155,12 +165,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
         </View>
 
         {/* Statistics section with gradient background */}
-        <LinearGradient
-          colors={[colors.pastel.primary, 'rgba(230, 241, 238, 0.3)', 'rgba(245, 247, 250, 0)']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 0.8 }}
-          style={styles.statsGradientContainer}
-        >
+        <View style={styles.statsSection}>
           {/* Upper metrics row (previously Performance metrics) */}
           <View style={styles.statsGridRow}>
             {/* Uploaded Case Studies - Mit Klickfunktion */}
@@ -219,7 +224,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
               </Text>
             </View>
           </View>
-        </LinearGradient>
+        </View>
 
         {/* Contact */}
         <View style={[styles.section, { borderBottomColor: colors.divider }]}>
@@ -559,11 +564,6 @@ const styles = StyleSheet.create({
   buttonIcon: {
     marginRight: spacing.s,
   },
-  statsGradientContainer: {
-    paddingVertical: spacing.m,
-    marginBottom: spacing.s,
-    width: '100%',
-  },
   statsGridRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -574,6 +574,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     paddingHorizontal: spacing.xs,
+    paddingVertical: spacing.s,
+    justifyContent: 'center',
   },
   clickableStatsItem: {
     alignItems: 'center',
@@ -612,5 +614,19 @@ const styles = StyleSheet.create({
   },
   clickableIcon: {
     marginLeft: spacing.xxs,
+  },
+  gradientWrapper: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    height: 250,
+    top: 390,
+    zIndex: -1,
+  },
+  fullWidthGradient: {
+    flex: 1,
+  },
+  statsSection: {
+    paddingVertical: spacing.m,
   },
 });
