@@ -60,7 +60,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
       // Communication metrics
       responseRatePercent: 98,
       avgResponseTime: '2.4h',
-      activeSinceDate: '09/2023'
+      requestsSent: 17
     }
   };
 
@@ -216,11 +216,11 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
               </Text>
             </View>
             
-            {/* Active Since */}
+            {/* Active Since → Requests Sent */}
             <View style={styles.statsGridItem}>
-              <Text style={[styles.statsValue, styles.secondaryStatsValue, { color: colors.textPrimary }]}>{profileData.stats.activeSinceDate}</Text>
+              <Text style={[styles.statsValue, styles.secondaryStatsValue, { color: colors.textPrimary }]}>{profileData.stats.requestsSent}</Text>
               <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
-                {t('profile.stats.activeSince')}
+                Requests Sent
               </Text>
             </View>
           </View>
