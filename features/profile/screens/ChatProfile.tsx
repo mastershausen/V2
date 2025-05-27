@@ -154,38 +154,34 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
           </Text>
         </View>
 
-        {/* Statistics Grid - Primary metrics (upper block with focus) */}
-        <View style={[styles.statsGridContainer, styles.primaryStatsContainer, { backgroundColor: colors.pastel.primary, borderColor: colors.pastel.primaryBorder }]}>
-          <Text style={[styles.statsGridTitle, { color: colors.primary }]}>
-            {t('profile.stats.performanceTitle')}
-          </Text>
-          
+        {/* Statistics section with gradient background */}
+        <LinearGradient
+          colors={[colors.pastel.primary, 'rgba(230, 241, 238, 0.3)', 'rgba(245, 247, 250, 0)']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 0.8 }}
+          style={styles.statsGradientContainer}
+        >
+          {/* Upper metrics row (previously Performance metrics) */}
           <View style={styles.statsGridRow}>
             {/* Uploaded Case Studies - Mit Klickfunktion */}
             <TouchableOpacity 
-              style={[styles.clickableStatsItem, { backgroundColor: 'rgba(30, 107, 85, 0.08)', borderColor: 'rgba(30, 107, 85, 0.2)', borderWidth: 1 }]}
+              style={[styles.clickableStatsItem, { backgroundColor: 'rgba(30, 107, 85, 0.08)' }]}
               onPress={handleShowCaseStudies}
               accessibilityLabel={t('profile.stats.caseStudies')}
               activeOpacity={0.7}
             >
               <Text style={[styles.statsValue, { color: colors.textPrimary }]}>{profileData.stats.caseStudiesCount}</Text>
-              <View style={styles.clickableLabel}>
-                <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
-                  {t('profile.stats.caseStudies')}
-                </Text>
-              </View>
+              <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
+                {t('profile.stats.caseStudies')}
+              </Text>
             </TouchableOpacity>
             
             {/* Verified Case Studies - Ohne Klickfunktion */}
-            <View 
-              style={styles.statsGridItem}
-            >
+            <View style={styles.statsGridItem}>
               <Text style={[styles.statsValue, { color: colors.textPrimary }]}>{profileData.stats.verifiedCaseStudies}</Text>
-              <View style={styles.clickableLabel}>
-                <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
-                  {t('profile.stats.verified')}
-                </Text>
-              </View>
+              <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
+                {t('profile.stats.verified')}
+              </Text>
             </View>
             
             {/* Received Requests */}
@@ -196,15 +192,9 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
               </Text>
             </View>
           </View>
-        </View>
-        
-        {/* Statistics Grid - Secondary metrics (communication behavior) */}
-        <View style={[styles.statsGridContainer, styles.secondaryStatsContainer]}>
-          <Text style={[styles.statsGridTitle, { color: colors.textSecondary }]}>
-            {t('profile.stats.communicationTitle')}
-          </Text>
           
-          <View style={styles.statsGridRow}>
+          {/* Lower metrics row (previously Communication metrics) */}
+          <View style={[styles.statsGridRow, styles.lowerStatsRow]}>
             {/* Response Rate */}
             <View style={styles.statsGridItem}>
               <Text style={[styles.statsValue, styles.secondaryStatsValue, { color: colors.textPrimary }]}>{profileData.stats.responseRatePercent}%</Text>
@@ -229,7 +219,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
               </Text>
             </View>
           </View>
-        </View>
+        </LinearGradient>
 
         {/* Contact */}
         <View style={[styles.section, { borderBottomColor: colors.divider }]}>
@@ -569,19 +559,16 @@ const styles = StyleSheet.create({
   buttonIcon: {
     marginRight: spacing.s,
   },
-  statsGridContainer: {
-    padding: spacing.m,
-    borderRadius: ui.borderRadius.m,
-    marginBottom: spacing.m,
-  },
-  statsGridTitle: {
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.bold as any,
+  statsGradientContainer: {
+    paddingVertical: spacing.m,
     marginBottom: spacing.s,
+    width: '100%',
   },
   statsGridRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingTop: spacing.xs,
+    paddingHorizontal: spacing.m,
   },
   statsGridItem: {
     alignItems: 'center',
@@ -594,11 +581,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.xs,
     paddingVertical: spacing.s,
     borderRadius: ui.borderRadius.s,
+    justifyContent: 'center',
   },
   statsValue: {
     fontSize: typography.fontSize.xl,
     fontWeight: typography.fontWeight.bold as any,
     marginBottom: spacing.xs,
+    textAlign: 'center',
   },
   statsLabel: {
     fontSize: typography.fontSize.xs,
@@ -606,21 +595,15 @@ const styles = StyleSheet.create({
     marginTop: spacing.xxs,
     paddingHorizontal: spacing.xs,
   },
-  primaryStatsContainer: {
-    borderWidth: 1,
-    shadowColor: '#1E6B55',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  secondaryStatsContainer: {
-    borderWidth: 0,
-    backgroundColor: '#F9F9F9',
-  },
   secondaryStatsValue: {
     fontSize: typography.fontSize.l,
     fontWeight: typography.fontWeight.medium as any,
+  },
+  lowerStatsRow: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'rgba(0,0,0,0.1)',
+    marginTop: spacing.m,
+    paddingTop: spacing.s,
   },
   clickableLabel: {
     alignItems: 'center',
