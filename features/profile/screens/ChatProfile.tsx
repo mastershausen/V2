@@ -158,7 +158,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
         </View>
 
         {/* Specialization */}
-        <View style={[styles.section, { borderBottomColor: colors.divider }]}>
+        <View style={styles.section}>
           <Text style={[styles.specializationText, { color: colors.textPrimary }]}>
             {profileData.specialization}
           </Text>
@@ -398,7 +398,6 @@ const styles = StyleSheet.create({
   },
   section: {
     paddingVertical: spacing.m,
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   specializationText: {
     fontSize: typography.fontSize.m,
