@@ -17,6 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import { useTranslation } from 'react-i18next';
+import { GradientButton } from '@/shared-components/button';
 
 import { VerifyBadge } from '@/shared-components/badges';
 
@@ -331,14 +332,26 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   </TouchableOpacity>
                 </View>
               ) : (
-                <TouchableOpacity
-                  style={[
-                    styles.primaryButton,
-                    fallstudie.needsVerification && styles.actionVerifyButton,
-                    fallstudie.needsVerification && styles.fullWidthButton,
-                    fallstudie.id === '3' && styles.verifyButton,
-                    fallstudie.id === '3' && styles.fullWidthButton
-                  ]}
+                <GradientButton
+                  label={fallstudie.needsVerification 
+                    ? t('verification.modal.button') 
+                    : fallstudie.id === '3' 
+                      ? 'Verify Case Study'
+                      : t('casestudy.footer.actionButton')
+                  }
+                  variant={fallstudie.needsVerification 
+                    ? 'attention' 
+                    : fallstudie.id === '3' 
+                      ? 'success'
+                      : 'primary'
+                  }
+                  icon={fallstudie.needsVerification || fallstudie.id === '3' ? 'checkmark-circle-outline' : undefined}
+                  iconSize={17}
+                  containerStyle={
+                    (fallstudie.needsVerification || fallstudie.id === '3') 
+                      ? styles.fullWidthButton 
+                      : undefined
+                  }
                   onPress={() => {
                     if (fallstudie.needsVerification) {
                       setShowVerificationModal(true);
@@ -347,51 +360,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                       onClose();
                     }
                   }}
-                >
-                  <LinearGradient
-                    colors={fallstudie.needsVerification 
-                      ? ['#FFD700', '#FFA500'] // Gold-Gradient für Verify now
-                      : fallstudie.id === '3'
-                        ? ['#00A041', '#008F39'] // Grün-Gradient für Verify Case Study
-                        : ['#1E6B55', '#15503F'] // Grün-Gradient für I want this too
-                    }
-                    style={styles.buttonGradient}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                  >
-                    {fallstudie.needsVerification ? (
-                      <View style={styles.buttonContentContainer}>
-                        <Ionicons 
-                          name="checkmark-circle-outline" 
-                          size={17} 
-                          color="#FFFFFF"
-                          style={styles.buttonIcon}
-                        />
-                        <Text style={[
-                          styles.primaryButtonText,
-                          styles.verifyButtonText
-                        ]}>{t('verification.modal.button')}</Text>
-                      </View>
-                    ) : fallstudie.id === '3' ? (
-                      <View style={styles.buttonContentContainer}>
-                        <Ionicons 
-                          name="checkmark-circle-outline" 
-                          size={17} 
-                          color="#FFFFFF"
-                          style={styles.buttonIcon}
-                        />
-                        <Text style={[
-                          styles.primaryButtonText,
-                          styles.verifyButtonText
-                        ]}>Verify Case Study</Text>
-                      </View>
-                    ) : (
-                      <Text style={styles.primaryButtonText}>
-                        {t('casestudy.footer.actionButton')}
-                      </Text>
-                    )}
-                  </LinearGradient>
-                </TouchableOpacity>
+                />
               )}
             </View>
           </BlurView>
@@ -420,12 +389,12 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
               onPress={(e) => e.stopPropagation()}
             >
               <View style={styles.modalHeader}>
-                <Text style={styles.modalTitle}>{t('verification.modal.title')}</Text>
+                <Text style={styles.modalTitle}>{t('verification.notification.title')}</Text>
               </View>
               
               <View style={styles.modalBody}>
-                <Text style={styles.inputHint}>
-                  Tragen Sie hier den Benutzernamen Ihres Partners ein:
+                <Text style={styles.inputLabel}>
+                  {t('verification.modal.usernamePrompt')}
                 </Text>
                 
                 <TextInput
@@ -439,8 +408,12 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                 />
               </View>
               
-              <TouchableOpacity
-                style={styles.verifyButton}
+              <GradientButton
+                label={t('verification.modal.button')}
+                variant="success"
+                icon="checkmark-circle-outline"
+                iconSize={18}
+                containerStyle={styles.verifyButtonContainer}
                 onPress={() => {
                   setShowVerificationModal(false);
                   // Hier würde die Verifizierung mit dem Benutzernamen durchgeführt werden
@@ -448,17 +421,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   setUsername('@'); // Zurücksetzen auf @ für die nächste Verwendung
                   onClose();
                 }}
-              >
-                <LinearGradient
-                  colors={['#00A041', '#008F39']}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={styles.verifyButtonGradient}
-                >
-                  <Ionicons name="checkmark-circle-outline" size={18} color="white" style={styles.buttonIcon} />
-                  <Text style={styles.verifyButtonText}>{t('verification.modal.button')}</Text>
-                </LinearGradient>
-              </TouchableOpacity>
+              />
             </TouchableOpacity>
           </TouchableOpacity>
         </KeyboardAvoidingView>
@@ -751,7 +714,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 16,
   },
-  inputHint: {
+  inputLabel: {
     fontSize: 15,
     color: '#666666',
     marginBottom: 12,
@@ -774,26 +737,17 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  verifyButton: {
-    borderRadius: 12,
-    overflow: 'hidden',
-    width: '100%',
-    shadowColor: '#008F39',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 6,
-  },
   verifyButtonGradient: {
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
-    borderRadius: 12,
+  },
+  verifyButtonContainer: {
+    marginTop: 20,
+    width: '100%',
   },
   buttonRow: {
     flexDirection: 'row',

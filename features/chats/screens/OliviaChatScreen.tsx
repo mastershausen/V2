@@ -24,6 +24,7 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { GradientButton } from '@/shared-components/button';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -1068,13 +1069,14 @@ export default function OliviaChatScreen() {
             </View>
             
             <View style={styles.popupActions}>
-              <TouchableOpacity 
-                style={styles.saveButton}
+              <GradientButton
+                label="Save Preferences"
+                variant="primary"
+                icon="checkmark-circle-outline"
+                iconSize={20}
                 onPress={handleSavePreferences}
-              >
-                <Ionicons name="checkmark-circle-outline" size={20} color="#FFFFFF" style={styles.saveButtonIcon} />
-                <Text style={styles.saveButtonText}>Save Preferences</Text>
-              </TouchableOpacity>
+                containerStyle={styles.saveButtonContainer}
+              />
             </View>
           </View>
         </KeyboardAvoidingView>
@@ -1609,6 +1611,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  saveButtonContainer: {
+    width: '100%',
   },
   saveButtonText: {
     fontWeight: '600',

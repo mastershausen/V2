@@ -16,6 +16,8 @@ import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { GradientButton } from '@/shared-components/button';
+import { buttonGradients } from '@/config/theme/buttons';
 
 // Typ für Ionicons name Property
 type IoniconsName = React.ComponentProps<typeof Ionicons>['name'];
@@ -70,126 +72,173 @@ export function FooterActionButton({
   const colors = useThemeColor();
   const insets = useSafeAreaInsets();
   
-  // Dynamische Farben basierend auf Props oder Theme
-  const getBgColor = () => {
-    if (disabled) return colors.ui.disabledBackground;
-    return backgroundColor || colors.ui.buttonBackground;
-  };
-  
-  const getTextColor = () => {
-    if (disabled) return colors.ui.disabledText;
-    return textColor || colors.ui.buttonText;
-  };
-
-  // Kombinierte Styles für Container, Button und Text
-  const containerStyles = [
+  // Container Style
+  const containerStyle = [
     styles.container, 
     { borderTopColor: colors.divider },
     style
   ];
-  
-  const buttonStyles = [
-    styles.button,
-    { 
-      backgroundColor: getBgColor(),
-      opacity: disabled ? ui.opacity.disabled : ui.opacity.active,
-      borderRadius: ui.borderRadius.m,
-    },
-    buttonStyle
-  ];
-  
-  const textStyles = [
-    styles.buttonText, 
-    { color: getTextColor() },
-    textStyle
-  ];
-  
-  const iconColor = getTextColor();
-  const iconSpacing = spacing.xs;
 
-  // Icon-Renderer basierend auf der gewählten Library
-  const renderIcon = (position: 'left' | 'right') => {
-    if (!icon) return null;
-    
-    const marginStyle = position === 'left' 
-      ? { marginRight: iconSpacing } 
-      : { marginLeft: iconSpacing };
-    
-    if (iconLibrary === 'material-community') {
-      return (
-        <MaterialCommunityIcons 
-          name={icon as MaterialCommunityIconsName} 
-          size={ui.icon.medium} 
-          color={iconColor} 
-          style={[
-            position === 'left' ? styles.iconLeft : styles.iconRight, 
-            marginStyle
-          ]} 
-        />
-      );
-    } else {
-      return (
-        <Ionicons 
-          name={icon as IoniconsName} 
-          size={ui.icon.medium} 
-          color={iconColor} 
-          style={[
-            position === 'left' ? styles.iconLeft : styles.iconRight, 
-            marginStyle
-          ]} 
-        />
-      );
+  // Die Icon-Komponente und Name korrekt konvertieren
+  const getIconName = (): keyof typeof Ionicons.glyphMap | undefined => {
+    if (!icon) return undefined;
+    if (iconLibrary === 'ionicons') {
+      return icon as keyof typeof Ionicons.glyphMap;
     }
+    return undefined;
   };
 
+  // Wenn Material Community Icons verwendet werden, rendern wir einen benutzerdefinierten Button
+  if (iconLibrary === 'material-community' && icon) {
+    return (
+      <View style={containerStyle} accessible={true} accessibilityRole="none">
+        <TouchableOpacity 
+          style={[
+            styles.button,
+            !useGradient && { 
+              backgroundColor: backgroundColor || colors.ui.buttonBackground,
+              opacity: disabled ? ui.opacity.disabled : ui.opacity.active,
+            },
+            { borderRadius: ui.borderRadius.m },
+            buttonStyle
+          ]}
+          onPress={onPress}
+          disabled={disabled}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel={label}
+          accessibilityState={{ disabled }}
+        >
+          {useGradient ? (
+            <LinearGradient
+              colors={gradientColors}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={[
+                styles.gradientButton,
+                { 
+                  opacity: disabled ? ui.opacity.disabled : ui.opacity.active,
+                  borderRadius: ui.borderRadius.m,
+                }
+              ]}
+            >
+              {iconPosition === 'left' && (
+                <MaterialCommunityIcons 
+                  name={icon as MaterialCommunityIconsName} 
+                  size={ui.icon.medium} 
+                  color={textColor || colors.ui.buttonText} 
+                  style={{ marginRight: spacing.xs }} 
+                />
+              )}
+              <Text style={[
+                styles.buttonText, 
+                { color: textColor || colors.ui.buttonText },
+                textStyle
+              ]}>
+                {label}
+              </Text>
+              {iconPosition === 'right' && (
+                <MaterialCommunityIcons 
+                  name={icon as MaterialCommunityIconsName} 
+                  size={ui.icon.medium} 
+                  color={textColor || colors.ui.buttonText} 
+                  style={{ marginLeft: spacing.xs }} 
+                />
+              )}
+            </LinearGradient>
+          ) : (
+            <>
+              {iconPosition === 'left' && (
+                <MaterialCommunityIcons 
+                  name={icon as MaterialCommunityIconsName} 
+                  size={ui.icon.medium} 
+                  color={textColor || colors.ui.buttonText} 
+                  style={{ marginRight: spacing.xs }} 
+                />
+              )}
+              <Text style={[
+                styles.buttonText, 
+                { color: textColor || colors.ui.buttonText },
+                textStyle
+              ]}>
+                {label}
+              </Text>
+              {iconPosition === 'right' && (
+                <MaterialCommunityIcons 
+                  name={icon as MaterialCommunityIconsName} 
+                  size={ui.icon.medium} 
+                  color={textColor || colors.ui.buttonText} 
+                  style={{ marginLeft: spacing.xs }} 
+                />
+              )}
+            </>
+          )}
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  // Für Ionicons und Standard-Buttons verwenden wir GradientButton
   return (
-    <View style={containerStyles} accessible={true} accessibilityRole="none">
-      <TouchableOpacity 
-        style={[
-          styles.button,
-          !useGradient && { 
-            backgroundColor: getBgColor(),
-            opacity: disabled ? ui.opacity.disabled : ui.opacity.active,
-          },
-          { borderRadius: ui.borderRadius.m },
-          buttonStyle
-        ]}
-        onPress={onPress}
-        disabled={disabled}
-        accessible={true}
-        accessibilityRole="button"
-        accessibilityLabel={label}
-        accessibilityState={{ disabled }}
-      >
-        {useGradient ? (
-          <LinearGradient
-            colors={gradientColors}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={[
-              styles.gradientButton,
-              { 
-                opacity: disabled ? ui.opacity.disabled : ui.opacity.active,
-                borderRadius: ui.borderRadius.m,
-              }
-            ]}
-          >
-            {iconPosition === 'left' && renderIcon('left')}
-            <Text style={textStyles}>
-              {label}
-            </Text>
-            {iconPosition === 'right' && renderIcon('right')}
-          </LinearGradient>
-        ) : (
-          <>
-            {iconPosition === 'left' && renderIcon('left')}
-            <Text style={textStyles}>
-              {label}
-            </Text>
-            {iconPosition === 'right' && renderIcon('right')}
-          </>
-        )}
-      </TouchableOpacity>
+    <View style={containerStyle} accessible={true} accessibilityRole="none">
+      {useGradient ? (
+        <GradientButton
+          label={label}
+          icon={getIconName()}
+          iconSize={ui.icon.medium}
+          gradientColors={gradientColors as readonly [string, string]}
+          onPress={onPress}
+          disabled={disabled}
+          containerStyle={buttonStyle as ViewStyle}
+          textStyle={{ 
+            color: textColor || colors.ui.buttonText,
+            ...(textStyle as object)
+          }}
+          gradientStyle={styles.gradientButton}
+        />
+      ) : (
+        <TouchableOpacity 
+          style={[
+            styles.button,
+            { 
+              backgroundColor: backgroundColor || colors.ui.buttonBackground,
+              opacity: disabled ? ui.opacity.disabled : ui.opacity.active,
+              borderRadius: ui.borderRadius.m,
+            },
+            buttonStyle
+          ]}
+          onPress={onPress}
+          disabled={disabled}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel={label}
+          accessibilityState={{ disabled }}
+        >
+          {iconPosition === 'left' && icon && (
+            <Ionicons 
+              name={icon as IoniconsName} 
+              size={ui.icon.medium} 
+              color={textColor || colors.ui.buttonText} 
+              style={{ marginRight: spacing.xs }} 
+            />
+          )}
+          <Text style={[
+            styles.buttonText, 
+            { color: textColor || colors.ui.buttonText },
+            textStyle
+          ]}>
+            {label}
+          </Text>
+          {iconPosition === 'right' && icon && (
+            <Ionicons 
+              name={icon as IoniconsName} 
+              size={ui.icon.medium} 
+              color={textColor || colors.ui.buttonText} 
+              style={{ marginLeft: spacing.xs }} 
+            />
+          )}
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -214,18 +263,7 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.m,
     fontWeight: typography.fontWeight.bold as TextStyle['fontWeight'],
   },
-  iconLeft: {
-    // Margin wird dynamisch angewendet
-  },
-  iconRight: {
-    // Margin wird dynamisch angewendet
-  },
   gradientButton: {
-    width: '100%',
     height: BUTTON_HEIGHT,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    ...ui.shadow.light,
   },
 }); 

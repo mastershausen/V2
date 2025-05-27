@@ -446,7 +446,8 @@
         "increasedTrust": "Massively increased trust",
         "freeAndFast": "Free in under 60 seconds"
       },
-      "button": "Verify now"
+      "button": "Verify now",
+      "usernamePrompt": "Enter your partner's username:"
     },
     "notification": {
       "title": "Case Study Verification",

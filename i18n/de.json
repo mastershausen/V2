@@ -446,7 +446,8 @@
         "increasedTrust": "Massiv gesteigertes Vertrauen",
         "freeAndFast": "Kostenlos in unter 60 Sekunden"
       },
-      "button": "Jetzt verifizieren"
+      "button": "Jetzt verifizieren",
+      "usernamePrompt": "Benutzernamen Ihres Partners eingeben:"
     },
     "notification": {
       "title": "Fallstudie-Verifizierung",
