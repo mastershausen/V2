@@ -528,7 +528,7 @@
     "pricingModal": {
       "title": "Pricing",
       "infoTitle": "Price Range Information",
-      "infoDescription": "This information is only visible to Olivia and helps to match you with better leads. Case studies with pricing receive 3-5x more inquiries.",
+      "infoDescription": "This information is only visible to Olivia and helps to find the perfect matches for your case study. Providing price information is crucial to connect you with the right potential clients.",
       "infoExamples": "Examples: €5,000-10,000, starting from €2,500, fixed price €7,500, etc.",
       "placeholder": "e.g. Price range: €5,000-10,000 depending on complexity and customization requirements"
     },
