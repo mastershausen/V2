@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -54,6 +55,7 @@ export function FirstTimeInfoBox({
   textStyle,
 }: FirstTimeInfoBoxProps) {
   const colors = useThemeColor();
+  const { t } = useTranslation();
 
   return (
     <View style={[
@@ -87,7 +89,7 @@ export function FirstTimeInfoBox({
           activeOpacity={0.8}
         >
           <Text style={[styles.understoodButtonText, { color: 'white' }]}>
-            Verstanden
+            {t('ui.firstTimeInfo.understood')}
           </Text>
         </TouchableOpacity>
       </View>

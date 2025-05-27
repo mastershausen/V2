@@ -278,7 +278,7 @@ export default function NowThenFrameScreen() {
             {!isLoading && isFirstVisit && (
               <View style={styles.firstTimeInfoContainer}>
                 <FirstTimeInfoBox 
-                  text="The input fields are only for structure. The text entered will be displayed later as a flowing text with structured view."
+                  text={t('ui.firstTimeInfo.inputFieldsStructure')}
                   onUnderstood={markAsVisited}
                   iconName="information-circle-outline"
                 />

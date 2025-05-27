@@ -9,12 +9,11 @@ This Style Guide documents the design system of the Solvbox App and provides new
 ### Primary Colors
 ```typescript
 primary: '#1E6B55'    // Petrol - Main app color
-secondary: '#34C759'  // Green - Secondary color, accents
 ```
 
 ### Status Colors
 ```typescript
-success: '#34C759'    // Success/Confirmation
+success: '#258E3E'    // Success/Confirmation
 error: '#FF3B30'      // Error/Warning
 warning: '#FFCC00'    // Notice/Attention
 info: '#0A7EA4'       // Information

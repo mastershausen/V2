@@ -431,6 +431,10 @@
     "footerButton": {
       "buttonLabel": "{{label}}",
       "disabled": "Disabled"
+    },
+    "firstTimeInfo": {
+      "inputFieldsStructure": "The input fields are only for structure. The text entered will be displayed later as a flowing text with structured view.",
+      "understood": "Understood"
     }
   },
   "verification": {
@@ -456,6 +460,7 @@
     "button": {
       "view": "View Case Study",
       "verify": "Verify",
+      "confirm": "Confirm",
       "reject": "Reject"
     }
   },

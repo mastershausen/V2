@@ -431,6 +431,10 @@
     "footerButton": {
       "buttonLabel": "{{label}}",
       "disabled": "Deaktiviert"
+    },
+    "firstTimeInfo": {
+      "inputFieldsStructure": "Die Eingabefelder dienen nur der Struktur. Der eingegebene Text wird später als fließender Text mit strukturierter Ansicht dargestellt.",
+      "understood": "Verstanden"
     }
   },
   "verification": {
@@ -456,6 +460,7 @@
     "button": {
       "view": "Fallstudie ansehen",
       "verify": "Verifizieren",
+      "confirm": "Bestätigen",
       "reject": "Ablehnen"
     }
   },

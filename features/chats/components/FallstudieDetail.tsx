@@ -326,7 +326,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                         <Text style={[
                           styles.primaryButtonText,
                           styles.verifyButtonText
-                        ]}>Verify</Text>
+                        ]}>{t('verification.button.confirm')}</Text>
                       </View>
                     </LinearGradient>
                   </TouchableOpacity>
@@ -336,7 +336,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   label={fallstudie.needsVerification 
                     ? t('verification.modal.button') 
                     : fallstudie.id === '3' 
-                      ? 'Verify Case Study'
+                      ? t('verification.button.confirm')
                       : t('casestudy.footer.actionButton')
                   }
                   variant={fallstudie.needsVerification 
