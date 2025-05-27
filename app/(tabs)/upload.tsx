@@ -27,7 +27,8 @@ const windowWidth = Dimensions.get('window').width;
 enum FrameType {
   BEFORE_AFTER = 'BEFORE_AFTER',
   OUTSIDE_BOX = 'OUTSIDE_BOX',
-  CREATE_NEW = 'CREATE_NEW'
+  CREATE_NEW = 'CREATE_NEW',
+  INTELLIGENT_INVESTMENTS = 'INTELLIGENT_INVESTMENTS'
 }
 
 interface FrameOption {
@@ -69,6 +70,13 @@ export default function UploadScreen() {
       description: 'Present an innovative concept or a new solution.',
       icon: 'add-circle-outline',
       color: '#3E1E6B' // Alternative color for distinction
+    },
+    {
+      id: FrameType.INTELLIGENT_INVESTMENTS,
+      title: 'Intelligent Investments',
+      description: 'Showcase strategic investments with significant ROI.',
+      icon: 'trending-up-outline',
+      color: '#1E6B4F' // New distinctive color for Intelligent Investments
     }
   ];
 
@@ -86,6 +94,9 @@ export default function UploadScreen() {
         break;
       case FrameType.CREATE_NEW:
         router.push('/casestudies/create/NewStuffFrame');
+        break;
+      case FrameType.INTELLIGENT_INVESTMENTS:
+        router.push('/casestudies/create/IntelligentInvestmentsFrame');
         break;
     }
   };
@@ -141,7 +152,7 @@ export default function UploadScreen() {
         {/* Header - fully visible */}
         <View style={styles.headerContainer}>
           <HeaderNavigation
-            title={t('casestudy.create.title')}
+            title=""
             showBackButton={false}
             containerStyle={styles.headerNavStyle}
           />
@@ -190,13 +201,13 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     width: '100%',
-    paddingTop: Platform.OS === 'ios' ? spacing.m : spacing.xl,
-    paddingBottom: spacing.xs,
-    marginBottom: spacing.s,
+    paddingTop: Platform.OS === 'ios' ? spacing.xs : spacing.s,
+    paddingBottom: 0,
+    marginBottom: 0,
     zIndex: 10,
   },
   headerNavStyle: {
-    height: 56,
+    height: 32,
   },
   content: {
     flex: 1,
