@@ -160,7 +160,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
           <View style={styles.statsCardContainer}>
             {/* Uploaded Case Studies - Mit Klickfunktion */}
             <TouchableOpacity 
-              style={styles.statsCard}
+              style={[styles.statsCard, styles.clickableStatsCard]}
               onPress={handleShowCaseStudies}
               accessibilityLabel={t('profile.stats.caseStudies')}
               accessibilityRole="button"
@@ -644,5 +644,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  clickableStatsCard: {
+    backgroundColor: '#E0F7E9',
   },
 });

@@ -449,6 +449,9 @@
     "firstTimeInfo": {
       "inputFieldsStructure": "Die Eingabefelder dienen nur der Struktur. Der eingegebene Text wird später als fließender Text mit strukturierter Ansicht dargestellt.",
       "understood": "Verstanden"
+    },
+    "casestudy": {
+      "infoBox": "Eine starke Fallstudie bringt dir jahrelange Sichtbarkeit und qualifizierte Anfragen – ohne aktiven Vertrieb."
     }
   },
   "verification": {
@@ -483,6 +486,11 @@
     "header": {
       "title": "Case Study",
       "close": "Close"
+    },
+    "create": {
+      "title": "Fallstudie erstellen",
+      "introTitle": "Welche Art von Fallstudie möchtest du erstellen?",
+      "introText": "Wähle den passenden Rahmen für deine Fallstudie, um deinen Erfolg optimal zu präsentieren."
     },
     "sections": {
       "context": {

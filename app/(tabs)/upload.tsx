@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { Stack, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 import { InfoBox } from '@/shared-components/ui/InfoBox';
@@ -44,6 +45,7 @@ interface FrameOption {
 export default function UploadScreen() {
   const colors = useThemeColor();
   const [selectedFrame, setSelectedFrame] = useState<FrameType | null>(null);
+  const { t } = useTranslation();
 
   // Frame options
   const frameOptions: FrameOption[] = [
@@ -139,7 +141,7 @@ export default function UploadScreen() {
         {/* Header - fully visible */}
         <View style={styles.headerContainer}>
           <HeaderNavigation
-            title="Create Case Study"
+            title={t('casestudy.create.title')}
             showBackButton={false}
             containerStyle={styles.headerNavStyle}
           />
@@ -150,10 +152,10 @@ export default function UploadScreen() {
           {/* Introduction */}
           <View style={styles.introContainer}>
             <Text style={[styles.introTitle, { color: colors.textPrimary }]}>
-              What type of case study would you like to create?
+              {t('casestudy.create.introTitle')}
             </Text>
             <Text style={[styles.introText, { color: colors.textSecondary }]}>
-              Choose the appropriate frame for your case study to best present your success.
+              {t('casestudy.create.introText')}
             </Text>
           </View>
 
@@ -165,7 +167,7 @@ export default function UploadScreen() {
           {/* Additional information */}
           <View style={styles.infoContainer}>
             <InfoBox 
-              text="Choosing the right frame helps to present your case study in a structured and convincing way."
+              text={t('ui.casestudy.infoBox')}
               backgroundColor={`${colors.primary}10`}
               iconColor={colors.primary}
               textColor={colors.textSecondary}

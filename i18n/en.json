@@ -447,8 +447,11 @@
       "disabled": "Disabled"
     },
     "firstTimeInfo": {
-      "inputFieldsStructure": "The input fields are only for structure. The text entered will be displayed later as a flowing text with structured view.",
+      "inputFieldsStructure": "The input fields are only for structure. The text entered will be displayed as a flowing text with structured view later.",
       "understood": "Understood"
+    },
+    "casestudy": {
+      "infoBox": "A strong case study brings you years of visibility and qualified inquiries – without active sales efforts."
     }
   },
   "verification": {
@@ -512,6 +515,11 @@
     "header": {
       "title": "Case Study",
       "close": "Close"
+    },
+    "create": {
+      "title": "Create Case Study",
+      "introTitle": "What type of case study would you like to create?",
+      "introText": "Choose the appropriate frame for your case study to best present your success."
     },
     "sections": {
       "context": {
