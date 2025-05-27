@@ -32,7 +32,6 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
   const router = useRouter();
   const { t } = useTranslation();
   const [showFallstudien, setShowFallstudien] = useState(false);
-  const [showVerifiedFallstudien, setShowVerifiedFallstudien] = useState(false);
   const [showVerificationInfo, setShowVerificationInfo] = useState(false);
 
   // Mock data for the profile
@@ -93,11 +92,6 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
   // Show all case studies
   const handleShowCaseStudies = () => {
     setShowFallstudien(true);
-  };
-
-  // Show only verified case studies
-  const handleShowVerifiedCaseStudies = () => {
-    setShowVerifiedFallstudien(true);
   };
 
   return (
@@ -169,43 +163,36 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
           <View style={styles.statsGridRow}>
             {/* Uploaded Case Studies - Mit Klickfunktion */}
             <TouchableOpacity 
-              style={[styles.clickableStatsItem, { backgroundColor: 'rgba(30, 107, 85, 0.08)' }]}
+              style={[styles.clickableStatsItem, { backgroundColor: 'rgba(30, 107, 85, 0.08)', borderColor: 'rgba(30, 107, 85, 0.2)', borderWidth: 1 }]}
               onPress={handleShowCaseStudies}
               accessibilityLabel={t('profile.stats.caseStudies')}
               activeOpacity={0.7}
             >
               <Text style={[styles.statsValue, { color: colors.textPrimary }]}>{profileData.stats.caseStudiesCount}</Text>
               <View style={styles.clickableLabel}>
-                <Ionicons name="document-text" size={14} color={colors.primary} style={{marginRight: spacing.xxs}} />
                 <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
                   {t('profile.stats.caseStudies')}
                 </Text>
-                <Ionicons name="chevron-forward" size={12} color={colors.primary} style={styles.clickableIcon} />
               </View>
             </TouchableOpacity>
             
-            {/* Verified Case Studies - Mit Klickfunktion */}
-            <TouchableOpacity 
-              style={[styles.clickableStatsItem, { backgroundColor: 'rgba(0, 160, 65, 0.08)' }]}
-              onPress={handleShowVerifiedCaseStudies}
-              accessibilityLabel={t('profile.stats.verified')}
-              activeOpacity={0.7}
+            {/* Verified Case Studies - Ohne Klickfunktion */}
+            <View 
+              style={styles.statsGridItem}
             >
               <Text style={[styles.statsValue, { color: colors.textPrimary }]}>{profileData.stats.verifiedCaseStudies}</Text>
               <View style={styles.clickableLabel}>
-                <Ionicons name="shield-checkmark" size={14} color={colors.success} style={{marginRight: spacing.xxs}} />
                 <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
                   {t('profile.stats.verified')}
                 </Text>
-                <Ionicons name="chevron-forward" size={12} color={colors.success} style={styles.clickableIcon} />
               </View>
-            </TouchableOpacity>
+            </View>
             
             {/* Received Requests */}
             <View style={styles.statsGridItem}>
               <Text style={[styles.statsValue, { color: colors.textPrimary }]}>{profileData.stats.receivedRequests}</Text>
               <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
-                <Ionicons name="mail" size={14} color={colors.primary} /> {t('profile.stats.requests')}
+                {t('profile.stats.requests')}
               </Text>
             </View>
           </View>
@@ -222,7 +209,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
             <View style={styles.statsGridItem}>
               <Text style={[styles.statsValue, styles.secondaryStatsValue, { color: colors.textPrimary }]}>{profileData.stats.responseRatePercent}%</Text>
               <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
-                <Ionicons name="chatbubble-ellipses" size={14} color={colors.primary} /> {t('profile.stats.responseRate')}
+                {t('profile.stats.responseRate')}
               </Text>
             </View>
             
@@ -230,7 +217,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
             <View style={styles.statsGridItem}>
               <Text style={[styles.statsValue, styles.secondaryStatsValue, { color: colors.textPrimary }]}>{profileData.stats.avgResponseTime}</Text>
               <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
-                <Ionicons name="time" size={14} color={colors.primary} /> {t('profile.stats.avgResponse')}
+                {t('profile.stats.avgResponse')}
               </Text>
             </View>
             
@@ -238,7 +225,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
             <View style={styles.statsGridItem}>
               <Text style={[styles.statsValue, styles.secondaryStatsValue, { color: colors.textPrimary }]}>{profileData.stats.activeSinceDate}</Text>
               <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
-                <Ionicons name="calendar" size={14} color={colors.primary} /> {t('profile.stats.activeSince')}
+                {t('profile.stats.activeSince')}
               </Text>
             </View>
           </View>
@@ -298,14 +285,6 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
         onClose={() => setShowFallstudien(false)}
         profileId={id}
         filterVerified={false}
-      />
-
-      {/* Verified case studies modal */}
-      <FallstudienListe 
-        visible={showVerifiedFallstudien}
-        onClose={() => setShowVerifiedFallstudien(false)}
-        profileId={id}
-        filterVerified={true}
       />
 
       {/* Verification info modal */}
@@ -623,9 +602,9 @@ const styles = StyleSheet.create({
   },
   statsLabel: {
     fontSize: typography.fontSize.xs,
-    flexDirection: 'row',
-    alignItems: 'center',
     textAlign: 'center',
+    marginTop: spacing.xxs,
+    paddingHorizontal: spacing.xs,
   },
   primaryStatsContainer: {
     borderWidth: 1,
@@ -644,9 +623,9 @@ const styles = StyleSheet.create({
     fontWeight: typography.fontWeight.medium as any,
   },
   clickableLabel: {
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: spacing.xxs,
   },
   clickableIcon: {
     marginLeft: spacing.xxs,
