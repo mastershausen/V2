@@ -108,6 +108,16 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
         }
       />
 
+      {/* Background gradient that extends to the screen edges */}
+      <View style={styles.gradientWrapper}>
+        <LinearGradient
+          colors={['rgba(210, 235, 225, 0.95)', 'rgba(210, 235, 225, 0.6)', 'rgba(245, 247, 250, 0)']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={styles.fullWidthGradient}
+        />
+      </View>
+
       {/* Profile image (larger and prominently positioned) */}
       <View style={styles.profileImageContainer}>
         <ProfileImage
@@ -154,74 +164,64 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
           </Text>
         </View>
 
-        {/* Statistiken-Bereich mit einzelnen Karten */}
-        <View style={styles.statsContainer}>
-          {/* Upper metrics row als Karten */}
-          <View style={styles.statsCardContainer}>
+        {/* Statistics section with gradient background */}
+        <View style={styles.statsSection}>
+          {/* Upper metrics row (previously Performance metrics) */}
+          <View style={styles.statsGridRow}>
             {/* Uploaded Case Studies - Mit Klickfunktion */}
             <TouchableOpacity 
-              style={styles.statsCard}
+              style={[styles.clickableStatsItem, { backgroundColor: 'rgba(30, 107, 85, 0.08)' }]}
               onPress={handleShowCaseStudies}
               accessibilityLabel={t('profile.stats.caseStudies')}
-              accessibilityRole="button"
               activeOpacity={0.7}
             >
-              <View style={styles.statsCardContent}>
-                <Text style={styles.statsCardValue}>{profileData.stats.caseStudiesCount}</Text>
-                <Text style={styles.statsCardLabel}>
-                  {t('profile.stats.caseStudies')}
-                </Text>
-              </View>
+              <Text style={[styles.statsValue, { color: colors.textPrimary }]}>{profileData.stats.caseStudiesCount}</Text>
+              <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
+                {t('profile.stats.caseStudies')}
+              </Text>
             </TouchableOpacity>
             
             {/* Verified Case Studies - Ohne Klickfunktion */}
-            <View style={styles.statsCard}>
-              <View style={styles.statsCardContent}>
-                <Text style={styles.statsCardValue}>{profileData.stats.verifiedCaseStudies}</Text>
-                <Text style={styles.statsCardLabel}>
-                  {t('profile.stats.verified')}
-                </Text>
-              </View>
+            <View style={styles.statsGridItem}>
+              <Text style={[styles.statsValue, { color: colors.textPrimary }]}>{profileData.stats.verifiedCaseStudies}</Text>
+              <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
+                {t('profile.stats.verified')}
+              </Text>
             </View>
             
             {/* Received Requests */}
-            <View style={styles.statsCard}>
-              <View style={styles.statsCardContent}>
-                <Text style={styles.statsCardValue}>{profileData.stats.receivedRequests}</Text>
-                <Text style={styles.statsCardLabel}>
-                  {t('profile.stats.requests')}
-                </Text>
-              </View>
+            <View style={styles.statsGridItem}>
+              <Text style={[styles.statsValue, { color: colors.textPrimary }]}>{profileData.stats.receivedRequests}</Text>
+              <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
+                {t('profile.stats.requests')}
+              </Text>
             </View>
           </View>
           
-          {/* Lower metrics row - verbesserte Lesbarkeit */}
-          <View style={styles.communicationMetricsContainer}>
-            <Text style={styles.communicationMetricsTitle}>Kommunikation</Text>
-            <View style={styles.communicationMetricsRow}>
-              {/* Response Rate */}
-              <View style={styles.communicationMetric}>
-                <Text style={styles.communicationMetricValue}>{profileData.stats.responseRatePercent}%</Text>
-                <Text style={styles.communicationMetricLabel}>
-                  {t('profile.stats.responseRate')}
-                </Text>
-              </View>
-              
-              {/* Average Response Time */}
-              <View style={styles.communicationMetric}>
-                <Text style={styles.communicationMetricValue}>{profileData.stats.avgResponseTime}</Text>
-                <Text style={styles.communicationMetricLabel}>
-                  {t('profile.stats.avgResponse')}
-                </Text>
-              </View>
-              
-              {/* Requests Sent */}
-              <View style={styles.communicationMetric}>
-                <Text style={styles.communicationMetricValue}>{profileData.stats.requestsSent}</Text>
-                <Text style={styles.communicationMetricLabel}>
-                  Requests Sent
-                </Text>
-              </View>
+          {/* Lower metrics row (previously Communication metrics) */}
+          <View style={[styles.statsGridRow, styles.lowerStatsRow]}>
+            {/* Response Rate */}
+            <View style={styles.statsGridItem}>
+              <Text style={[styles.statsValue, styles.secondaryStatsValue, { color: colors.textPrimary }]}>{profileData.stats.responseRatePercent}%</Text>
+              <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
+                {t('profile.stats.responseRate')}
+              </Text>
+            </View>
+            
+            {/* Average Response Time */}
+            <View style={styles.statsGridItem}>
+              <Text style={[styles.statsValue, styles.secondaryStatsValue, { color: colors.textPrimary }]}>{profileData.stats.avgResponseTime}</Text>
+              <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
+                {t('profile.stats.avgResponse')}
+              </Text>
+            </View>
+            
+            {/* Active Since → Requests Sent */}
+            <View style={styles.statsGridItem}>
+              <Text style={[styles.statsValue, styles.secondaryStatsValue, { color: colors.textPrimary }]}>{profileData.stats.requestsSent}</Text>
+              <Text style={[styles.statsLabel, { color: colors.textSecondary }]}>
+                Requests Sent
+              </Text>
             </View>
           </View>
         </View>
@@ -552,91 +552,6 @@ const styles = StyleSheet.create({
     fontWeight: typography.fontWeight.semiBold as any,
     color: 'white',
   },
-  buttonIcon: {
-    marginRight: spacing.s,
-  },
-  statsContainer: {
-    paddingVertical: spacing.m,
-    marginHorizontal: spacing.s,
-  },
-  statsCardContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: spacing.l,
-  },
-  statsCard: {
-    alignItems: 'center',
-    flex: 1,
-    paddingHorizontal: spacing.xs,
-    paddingVertical: spacing.m,
-    borderRadius: ui.borderRadius.xl,
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    marginHorizontal: spacing.xs,
-    borderWidth: ui.border.thin,
-    borderColor: 'rgba(0,0,0,0.12)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.15,
-    shadowRadius: 5,
-    elevation: 4,
-    transform: [{ translateY: -3 }],
-    aspectRatio: 1.2,
-  },
-  statsCardContent: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    flex: 1,
-  },
-  statsCardValue: {
-    fontSize: typography.fontSize.xxl,
-    fontWeight: typography.fontWeight.bold as any,
-    marginBottom: spacing.s,
-    textAlign: 'center',
-    color: '#1E6B55',
-  },
-  statsCardLabel: {
-    fontSize: typography.fontSize.s,
-    textAlign: 'center',
-    fontWeight: typography.fontWeight.medium as any,
-    paddingHorizontal: spacing.xs,
-    color: '#666666',
-  },
-  communicationMetricsContainer: {
-    backgroundColor: '#F5F5F5',
-    padding: spacing.m,
-    borderRadius: ui.borderRadius.l,
-    marginBottom: spacing.m,
-  },
-  communicationMetricsTitle: {
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.semiBold as any,
-    marginBottom: spacing.m,
-    color: '#333333',
-  },
-  communicationMetricsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  communicationMetric: {
-    alignItems: 'center',
-    flex: 1,
-  },
-  communicationMetricValue: {
-    fontSize: typography.fontSize.l,
-    fontWeight: typography.fontWeight.bold as any,
-    marginBottom: spacing.xs,
-    textAlign: 'center',
-    color: '#333333',
-  },
-  communicationMetricLabel: {
-    fontSize: typography.fontSize.s,
-    textAlign: 'center',
-    marginTop: spacing.xxs,
-    paddingHorizontal: spacing.xs,
-    color: '#666666',
-  },
   verifyButtonGradient: {
     paddingHorizontal: spacing.m,
     paddingVertical: spacing.s,
@@ -644,5 +559,73 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  buttonIcon: {
+    marginRight: spacing.s,
+  },
+  statsGridRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: spacing.xs,
+    paddingHorizontal: spacing.m,
+  },
+  statsGridItem: {
+    alignItems: 'center',
+    flex: 1,
+    paddingHorizontal: spacing.xs,
+    paddingVertical: spacing.s,
+    justifyContent: 'center',
+  },
+  clickableStatsItem: {
+    alignItems: 'center',
+    flex: 1,
+    paddingHorizontal: spacing.xs,
+    paddingVertical: spacing.s,
+    borderRadius: ui.borderRadius.s,
+    justifyContent: 'center',
+  },
+  statsValue: {
+    fontSize: typography.fontSize.xl,
+    fontWeight: typography.fontWeight.bold as any,
+    marginBottom: spacing.xs,
+    textAlign: 'center',
+  },
+  statsLabel: {
+    fontSize: typography.fontSize.xs,
+    textAlign: 'center',
+    marginTop: spacing.xxs,
+    paddingHorizontal: spacing.xs,
+  },
+  secondaryStatsValue: {
+    fontSize: typography.fontSize.l,
+    fontWeight: typography.fontWeight.medium as any,
+  },
+  lowerStatsRow: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'rgba(0,0,0,0.1)',
+    marginTop: spacing.m,
+    paddingTop: spacing.s,
+  },
+  clickableLabel: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: spacing.xxs,
+  },
+  clickableIcon: {
+    marginLeft: spacing.xxs,
+  },
+  gradientWrapper: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    height: 250,
+    top: 380,
+    zIndex: -1,
+  },
+  fullWidthGradient: {
+    flex: 1,
+  },
+  statsSection: {
+    paddingVertical: spacing.m,
   },
 });
