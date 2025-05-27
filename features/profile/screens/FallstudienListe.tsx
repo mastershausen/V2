@@ -121,6 +121,7 @@ interface FallstudienListeProps {
   visible: boolean;
   onClose: () => void;
   profileId?: string;
+  filterVerified?: boolean;
 }
 
 /**
@@ -128,7 +129,7 @@ interface FallstudienListeProps {
  * 
  * Zeigt eine Liste aller verfügbaren Fallstudien eines Beraters an.
  */
-export function FallstudienListe({ visible, onClose, profileId }: FallstudienListeProps) {
+export function FallstudienListe({ visible, onClose, profileId, filterVerified = false }: FallstudienListeProps) {
   const colors = useThemeColor();
   const [selectedFallstudie, setSelectedFallstudie] = useState<any>(null);
   const [showFallstudieDetail, setShowFallstudieDetail] = useState(false);
@@ -138,6 +139,17 @@ export function FallstudienListe({ visible, onClose, profileId }: FallstudienLis
   useEffect(() => {
     changeLanguage('en');
   }, []);
+
+  // Daten filtern basierend auf dem filterVerified-Parameter
+  const displayedFallstudien = filterVerified 
+    ? FALLSTUDIEN_MOCKDATA.filter((studie, index) => index % 2 === 0) // Simuliert verifizierte Fallstudien (für Demozwecke)
+    : FALLSTUDIEN_MOCKDATA;
+
+  // Bestimme, ob eine Fallstudie verifiziert ist (für dieses Beispiel: jede zweite)
+  const isVerified = (id: string) => {
+    const index = parseInt(id, 10) - 1;
+    return index >= 0 && index % 2 === 0;
+  };
 
   // Fallstudie zur detaillierten Ansicht auswählen
   const handleSelectFallstudie = (fallstudie: any) => {
@@ -157,9 +169,17 @@ export function FallstudienListe({ visible, onClose, profileId }: FallstudienLis
       onPress={() => handleSelectFallstudie(item)}
     >
       <View style={styles.fallstudieContent}>
-        <Text style={[styles.fallstudieTitel, { color: colors.textPrimary }]}>
-          {item.titel}
-        </Text>
+        <View style={styles.fallstudieTitelContainer}>
+          <Text style={[styles.fallstudieTitel, { color: colors.textPrimary }]}>
+            {item.titel}
+          </Text>
+          {isVerified(item.id) && (
+            <View style={styles.verifiedBadge}>
+              <Ionicons name="shield-checkmark" size={12} color="#00A041" />
+              <Text style={styles.verifiedText}>{t('verification.badge.verified')}</Text>
+            </View>
+          )}
+        </View>
         <Text 
           style={[styles.fallstudieKurzbeschreibung, { color: colors.textSecondary }]}
           numberOfLines={2}
@@ -197,7 +217,10 @@ export function FallstudienListe({ visible, onClose, profileId }: FallstudienLis
               <Ionicons name="arrow-back" size={24} color={colors.textPrimary} />
             </TouchableOpacity>
             <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
-              {t('casestudy.list.title')}
+              {filterVerified 
+                ? t('profile.stats.verified') + ' ' + t('casestudy.list.title')
+                : t('casestudy.list.title')
+              }
             </Text>
             <View style={styles.headerRight} />
           </View>
@@ -205,13 +228,16 @@ export function FallstudienListe({ visible, onClose, profileId }: FallstudienLis
           {/* Einleitung */}
           <View style={styles.introContainer}>
             <Text style={[styles.introText, { color: colors.textSecondary }]}>
-              {t('casestudy.list.intro')}
+              {filterVerified 
+                ? t('casestudy.list.verifiedIntro')
+                : t('casestudy.list.intro')
+              }
             </Text>
           </View>
 
           {/* Liste der Fallstudien */}
           <FlatList
-            data={FALLSTUDIEN_MOCKDATA}
+            data={displayedFallstudien}
             renderItem={renderFallstudieItem}
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.listContainer}
@@ -296,10 +322,29 @@ const styles = StyleSheet.create({
   fallstudieContent: {
     flex: 1,
   },
+  fallstudieTitelContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   fallstudieTitel: {
     fontSize: typography.fontSize.m,
     fontWeight: typography.fontWeight.bold as any,
     marginBottom: spacing.xs,
+  },
+  verifiedBadge: {
+    backgroundColor: 'rgba(0, 160, 65, 0.1)',
+    borderRadius: ui.borderRadius.s,
+    paddingHorizontal: spacing.xs,
+    paddingVertical: 2,
+    marginLeft: spacing.xs,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  verifiedText: {
+    fontSize: typography.fontSize.xs,
+    fontWeight: typography.fontWeight.semiBold as any,
+    color: '#00A041',
+    marginLeft: 2,
   },
   fallstudieKurzbeschreibung: {
     fontSize: typography.fontSize.s,

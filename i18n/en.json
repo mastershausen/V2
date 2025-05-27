@@ -297,6 +297,20 @@
     "permanentlyDelete": "Permanently delete account"
   },
   "profile": {
+    "edit": {
+      "title": "Edit Profile",
+      "save": "Save"
+    },
+    "stats": {
+      "performanceTitle": "Performance Metrics",
+      "communicationTitle": "Communication Metrics",
+      "caseStudies": "Case Studies",
+      "verified": "Verified",
+      "requests": "Requests",
+      "responseRate": "Response Rate",
+      "avgResponse": "Avg. Response",
+      "activeSince": "Active Since"
+    },
     "editProfile": "Edit profile",
     "sendMessage": "Send message",
     "personalInfo": "Personal information",
@@ -520,6 +534,7 @@
     "list": {
       "title": "Case Studies",
       "intro": "Below you will find all case studies with details about achieved results and approaches.",
+      "verifiedIntro": "Below you will find all verified case studies that have been confirmed by project partners.",
       "result": "Result"
     },
     "contextModal": {

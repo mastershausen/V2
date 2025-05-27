@@ -297,6 +297,20 @@
     "permanentlyDelete": "Konto dauerhaft löschen"
   },
   "profile": {
+    "edit": {
+      "title": "Profil bearbeiten",
+      "save": "Speichern"
+    },
+    "stats": {
+      "performanceTitle": "Leistungsmetriken",
+      "communicationTitle": "Kommunikationsmetriken",
+      "caseStudies": "Fallstudien",
+      "verified": "Verifiziert",
+      "requests": "Anfragen",
+      "responseRate": "Antwortrate",
+      "avgResponse": "Durchschn. Antwort",
+      "activeSince": "Aktiv seit"
+    },
     "editProfile": "Profil bearbeiten",
     "sendMessage": "Nachricht senden",
     "personalInfo": "Persönliche Informationen",
@@ -491,6 +505,7 @@
     "list": {
       "title": "Fallstudien",
       "intro": "Nachfolgend finden Sie alle Fallstudien mit Details zu erzielten Ergebnissen und Vorgehensweisen.",
+      "verifiedIntro": "Nachfolgend finden Sie alle verifizierten Fallstudien, die von Projektpartnern bestätigt wurden.",
       "result": "Ergebnis"
     },
     "contextModal": {
