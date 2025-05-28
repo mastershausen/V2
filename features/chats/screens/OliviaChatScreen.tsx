@@ -997,7 +997,7 @@ export default function OliviaChatScreen() {
                 <TextInput
                   style={styles.input}
                   placeholder="Message to Olivia..."
-                  placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                  placeholderTextColor="rgba(30, 41, 59, 0.6)"
                   value={message}
                   onChangeText={setMessage}
                   multiline={false}
@@ -1347,12 +1347,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     height: 36,
     borderWidth: 0.5,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
-    backgroundColor: 'rgba(10, 24, 40, 0.4)',
+    borderColor: 'rgba(30, 107, 85, 0.3)',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     justifyContent: 'center',
   },
   input: {
-    color: '#FFFFFF',
+    color: '#1E293B',
     fontSize: 15,
     paddingHorizontal: 12,
     paddingVertical: 0,
