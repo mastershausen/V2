@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
@@ -34,8 +35,27 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
   const [budgetDescription, setBudgetDescription] = useState('');
   const [isPublic, setIsPublic] = useState(true);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const [showInfoBox, setShowInfoBox] = useState(true);
+  const [showTemporaryInfo, setShowTemporaryInfo] = useState(false);
+
+  // AsyncStorage key für dauerhaftes Merken der Info-Bestätigung
+  const INFO_ACKNOWLEDGED_KEY = 'wizard_budget_info_acknowledged';
 
   useEffect(() => {
+    // Prüfen, ob Info bereits bestätigt wurde
+    const checkInfoAcknowledged = async () => {
+      try {
+        const acknowledged = await AsyncStorage.getItem(INFO_ACKNOWLEDGED_KEY);
+        if (acknowledged === 'true') {
+          setShowInfoBox(false);
+        }
+      } catch (error) {
+        console.log('Fehler beim Laden der Info-Einstellung:', error);
+      }
+    };
+
+    checkInfoAcknowledged();
+
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
       setKeyboardHeight(e.endCoordinates.height);
     });
@@ -48,6 +68,31 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
       keyboardDidHideListener?.remove();
     };
   }, []);
+
+  // Info dauerhaft bestätigen
+  const handleInfoAcknowledged = async () => {
+    try {
+      await AsyncStorage.setItem(INFO_ACKNOWLEDGED_KEY, 'true');
+      setShowInfoBox(false);
+    } catch (error) {
+      console.log('Fehler beim Speichern der Info-Einstellung:', error);
+      setShowInfoBox(false); // Trotzdem verstecken bei Fehler
+    }
+  };
+
+  // Info temporär anzeigen
+  const handleShowTemporaryInfo = () => {
+    setShowTemporaryInfo(true);
+    // Nach 4 Sekunden automatisch ausblenden
+    setTimeout(() => {
+      setShowTemporaryInfo(false);
+    }, 4000);
+  };
+
+  // Info temporär schließen
+  const handleCloseTemporaryInfo = () => {
+    setShowTemporaryInfo(false);
+  };
 
   const handleBack = () => {
     router.back();
@@ -105,20 +150,68 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
 
         {/* Question Section */}
         <View style={styles.questionContainer}>
-          <WizardQuestionTitle>
-            Welches Budgetvolumen hatte dieses Projekt?
-          </WizardQuestionTitle>
-          
-          {/* Infotext */}
-          <View style={[styles.infoBox, { 
-            backgroundColor: `${colors.primary}08`,
-            borderColor: `${colors.primary}20`
-          }]}>
-            <Ionicons name="information-circle-outline" size={20} color={colors.primary} style={styles.infoIcon} />
-            <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-              Je genauer dein Budgetrahmen (Min.–Max. oder Modellbeschreibung), desto präzisere Leads bringt dir Olivia.
-            </Text>
+          <View style={styles.titleRow}>
+            <WizardQuestionTitle>
+              Welches Budgetvolumen hatte dieses Projekt?
+            </WizardQuestionTitle>
+            
+            {/* Info Icon - nur sichtbar wenn Info bereits bestätigt wurde */}
+            {!showInfoBox && (
+              <TouchableOpacity 
+                onPress={handleShowTemporaryInfo}
+                style={styles.infoIconButton}
+                activeOpacity={0.7}
+              >
+                <Ionicons 
+                  name="information-circle-outline" 
+                  size={20} 
+                  color={colors.primary} 
+                />
+              </TouchableOpacity>
+            )}
           </View>
+          
+          {/* Permanente Info-Box - nur beim ersten Mal */}
+          {showInfoBox && (
+            <View style={[styles.infoBox, { 
+              backgroundColor: `${colors.primary}08`,
+              borderColor: `${colors.primary}20`
+            }]}>
+              <Ionicons name="information-circle-outline" size={20} color={colors.primary} style={styles.infoIcon} />
+              <View style={styles.infoContent}>
+                <Text style={[styles.infoText, { color: colors.textSecondary }]}>
+                  Mit klaren Budgetangaben bekommst du deutlich bessere Leads! Olivia bevorzugt im Zweifelsfall Fallstudien mit transparenten Budget-Infos.
+                </Text>
+                <TouchableOpacity 
+                  onPress={handleInfoAcknowledged}
+                  style={[styles.understoodButton, { backgroundColor: colors.primary }]}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.understoodButtonText}>Verstanden</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+
+          {/* Temporäre Info-Box - beim Tap auf Info-Icon */}
+          {showTemporaryInfo && (
+            <View style={[styles.temporaryInfoBox, { 
+              backgroundColor: `${colors.primary}08`,
+              borderColor: `${colors.primary}20`
+            }]}>
+              <Ionicons name="information-circle-outline" size={18} color={colors.primary} style={styles.infoIcon} />
+              <Text style={[styles.temporaryInfoText, { color: colors.textSecondary }]}>
+                Mit klaren Budgetangaben bekommst du deutlich bessere Leads!
+              </Text>
+              <TouchableOpacity 
+                onPress={handleCloseTemporaryInfo}
+                style={styles.closeButton}
+                activeOpacity={0.7}
+              >
+                <Ionicons name="close" size={16} color={colors.textSecondary} />
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
 
         {/* Budget Input Section */}
@@ -297,6 +390,15 @@ const styles = StyleSheet.create({
   questionContainer: {
     paddingBottom: spacing.l,
   },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  infoIconButton: {
+    padding: spacing.xs,
+    marginLeft: spacing.s,
+  },
   infoBox: {
     flexDirection: 'row',
     padding: spacing.m,
@@ -308,10 +410,43 @@ const styles = StyleSheet.create({
     marginRight: spacing.s,
     marginTop: 1,
   },
-  infoText: {
+  infoContent: {
     flex: 1,
+    flexDirection: 'column',
+  },
+  infoText: {
     fontSize: 14,
     lineHeight: 20,
+    marginBottom: spacing.s,
+  },
+  understoodButton: {
+    alignSelf: 'flex-end',
+    paddingHorizontal: spacing.m,
+    paddingVertical: spacing.xs,
+    borderRadius: 6,
+  },
+  understoodButtonText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  temporaryInfoBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: spacing.s,
+    borderRadius: 8,
+    borderWidth: 1,
+    marginTop: spacing.s,
+  },
+  temporaryInfoText: {
+    flex: 1,
+    fontSize: 13,
+    lineHeight: 18,
+    marginLeft: spacing.xs,
+    marginRight: spacing.s,
+  },
+  closeButton: {
+    padding: spacing.xs,
   },
   budgetSection: {
     paddingBottom: spacing.l,
