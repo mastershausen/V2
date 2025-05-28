@@ -171,7 +171,7 @@ export function useAuthNavigation(options: UseAuthNavigationOptions = {}) {
    * Navigiert zum Dashboard (nach erfolgreicher Authentifizierung)
    */
   const navigateToDashboard = useCallback(() => {
-    router.replace(Routes.TABS.HOME);
+    router.replace(Routes.MAIN.EXPLORE);
   }, [router]);
   
   return {

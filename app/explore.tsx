@@ -1,53 +1,26 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
-import { useThemeColor } from '@/hooks/useThemeColor';
-import { spacing } from '@/config/theme/spacing';
+import ExploreScreen from '@/features/mysolvbox/screens/Explore';
 
-export default function ExploreScreen() {
-  const colors = useThemeColor();
-
+/**
+ * Explore Route
+ * 
+ * Diese Seite zeigt den Explore-Screen an,
+ * der alle "I want..." Optionen und Filter enthält.
+ */
+export default function ExploreRoute() {
   return (
     <>
       <Stack.Screen
         options={{
-          title: 'Explore',
-          headerShown: true,
-          headerStyle: {
-            backgroundColor: colors.ui.headerBackground,
-          },
-          headerTintColor: colors.ui.headerText,
+          headerShown: false,
+          gestureEnabled: false
         }}
       />
-      <StatusBar style="auto" />
-      <View style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
-        <Text style={[styles.title, { color: colors.textPrimary }]}>
-          Explore Screen
-        </Text>
-        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
-          Hier können Sie neue Inhalte entdecken
-        </Text>
-      </View>
+      <StatusBar style="dark" />
+      <ExploreScreen />
     </>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: spacing.m,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: spacing.s,
-  },
-  subtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
-}); 
+} 

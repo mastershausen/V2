@@ -1,59 +1,57 @@
 /**
- * Zentrale Definition aller Routen in der App
+ * @file constants/routes.ts
+ * @description Zentrale Definition aller App-Routen für typsichere Navigation
  * 
- * Vorteile:
- * - Vermeidet Tippfehler oder Inkonsistenzen
- * - Ermöglicht Umbenennen eines Pfads an zentraler Stelle
- * - Bessere Autocomplete-Unterstützung in IDEs
- * - Einheitliche Dokumentation aller verfügbaren Routen
- * - Typsicherheit durch Literal-Union-Typen
+ * Diese Datei definiert alle verfügbaren Routen in der App und stellt
+ * Hilfsfunktionen für typsichere Navigation zur Verfügung.
  */
 
 import { useRouter } from 'expo-router';
 
-// Typdefinitionen für Routen mit festem Pfad
-export type TabRoute = '/(tabs)' | '/(tabs)/home' | '/(tabs)/mysolvbox' | '/(tabs)/chats' | '/(tabs)/solvboxai' | '/(tabs)/profile';
+// Typdefinitionen für verschiedene Route-Kategorien
 export type AuthRoute = '/(auth)' | '/(auth)/login' | '/(auth)/register' | '/(auth)/forgot-password' | '/(auth)/upgrade';
 export type SettingsRoute = '/settings' | '/settings/account' | '/settings/debug';
 export type StaticNuggetRoute = '/nuggets' | '/nuggets/create' | '/nuggets/create/createNugget';
 export type StaticGigRoute = '/gigs' | '/gigs/create' | '/gigs/create/createGigList';
 export type StaticCaseStudyRoute = '/casestudies' | '/casestudies/create' | '/casestudies/create/createCasestudyList';
+export type MainRoute = '/explore' | '/chats' | '/upload' | '/saved' | '/settings';
 export type MiscRoute = '/editprofile' | '+not-found';
 
-// Funktionstypen für dynamische Routen (mit ID)
+// Typ für dynamische Route-Builder (z.B. für IDs)
 export type DynamicRouteBuilder = (id: string) => string;
 
-// Union-Typ aller möglichen Routen
+// Haupt-App-Route-Typ (Union aller möglichen Routen)
 export type AppRoute = 
-  | TabRoute 
   | AuthRoute 
   | SettingsRoute 
   | StaticNuggetRoute 
   | StaticGigRoute 
   | StaticCaseStudyRoute 
+  | MainRoute
   | MiscRoute
   | ReturnType<DynamicRouteBuilder>; // Hinzufügen der dynamisch generierten Routen
 
-// Typ-Hilfsfunktion für Expo Router kompatible Pfade
-// Diese Funktion ist eine "Identitäts"-Funktion, die nur für die Typsystem-Integration verwendet wird
+/**
+ * Expo Router Path-Typ für bessere Integration
+ * Dieser Typ stellt sicher, dass unsere Routen mit Expo Router kompatibel sind
+ */
 export type ExpoRouterPath = Parameters<ReturnType<typeof useRouter>['push']>[0];
 
-// Interface für das Routes-Objekt
+// Interface für die Routes-Struktur
 interface RoutesInterface {
-  TABS: {
-    ROOT: '/(tabs)';
-    HOME: '/(tabs)/home';
-    MY_SOLVBOX: '/(tabs)/mysolvbox';
-    CHATS: '/(tabs)/chats';
-    SOLVBOX_AI: '/(tabs)/solvboxai';
-    PROFILE: '/(tabs)/profile';
-  };
   AUTH: {
     ROOT: '/(auth)';
     LOGIN: '/(auth)/login';
     REGISTER: '/(auth)/register';
     FORGOT_PASSWORD: '/(auth)/forgot-password';
     UPGRADE: '/(auth)/upgrade';
+  };
+  MAIN: {
+    EXPLORE: '/explore';
+    CHATS: '/chats';
+    UPLOAD: '/upload';
+    SAVED: '/saved';
+    SETTINGS: '/settings';
   };
   SETTINGS: {
     ROOT: '/settings';
@@ -93,20 +91,19 @@ interface RoutesInterface {
 
 // Definition des typsicheren Routes-Objekts
 const Routes: RoutesInterface = {
-  TABS: {
-    ROOT: '/(tabs)',
-    HOME: '/(tabs)/home',
-    MY_SOLVBOX: '/(tabs)/mysolvbox',
-    CHATS: '/(tabs)/chats',
-    SOLVBOX_AI: '/(tabs)/solvboxai',
-    PROFILE: '/(tabs)/profile',
-  },
   AUTH: {
     ROOT: '/(auth)',
     LOGIN: '/(auth)/login',
     REGISTER: '/(auth)/register',
     FORGOT_PASSWORD: '/(auth)/forgot-password',
     UPGRADE: '/(auth)/upgrade',
+  },
+  MAIN: {
+    EXPLORE: '/explore',
+    CHATS: '/chats',
+    UPLOAD: '/upload',
+    SAVED: '/saved',
+    SETTINGS: '/settings',
   },
   SETTINGS: {
     ROOT: '/settings',
@@ -187,7 +184,7 @@ export function navigateTo(router: ReturnType<typeof useRouter>, route: AppRoute
  * const navigation = useAppNavigation();
  * 
  * // In einem Event-Handler:
- * navigation.navigateTo(Routes.TABS.HOME);
+ * navigation.navigateTo(Routes.MAIN.EXPLORE);
  * ```
  */
 export function useAppNavigation() {
@@ -209,7 +206,7 @@ export function useAppNavigation() {
  *    ```
  *    import Routes from '@/constants/routes';
  *    
- *    <Link href={Routes.TABS.HOME}>Home</Link>
+ *    <Link href={Routes.MAIN.EXPLORE}>Explore</Link>
  *    ```
  * 
  * 2. Typsichere Navigation mit dem Hook:

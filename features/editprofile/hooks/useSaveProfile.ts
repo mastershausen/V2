@@ -83,7 +83,7 @@ export function useSaveProfile({
                 // Nach dem Schließen des Alerts navigieren, um sicherzustellen,
                 // dass der Root-Navigator vollständig gemountet ist
                 setTimeout(() => {
-                  navigation.navigateTo(Routes.TABS.PROFILE);
+                  navigation.navigateTo(Routes.MAIN.SETTINGS);
                 }, 300);
               }
             }]
