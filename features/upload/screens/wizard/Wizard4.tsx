@@ -18,11 +18,11 @@ import {
   WizardNextButton 
 } from '@/shared-components/wizard';
 
-interface Wizard3Props {
+interface Wizard4Props {
   onOpenSidebar?: () => void;
 }
 
-export default function Wizard3({ onOpenSidebar }: Wizard3Props) {
+export default function Wizard4({ onOpenSidebar }: Wizard4Props) {
   const colors = useThemeColor();
   const router = useRouter();
   const [answer, setAnswer] = useState('');
@@ -48,8 +48,8 @@ export default function Wizard3({ onOpenSidebar }: Wizard3Props) {
 
   const handleNext = () => {
     if (answer.trim()) {
-      // Navigation zu Wizard4
-      router.push('/wizard4');
+      // Navigation zu Wizard5 (später implementieren)
+      console.log('Antwort Frage 4:', answer);
     }
   };
 
@@ -58,7 +58,7 @@ export default function Wizard3({ onOpenSidebar }: Wizard3Props) {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="3 von 8 Fragen"
+        title="4 von 8 Fragen"
         onBackPress={handleBack}
         showBackButton={true}
       />
@@ -74,19 +74,19 @@ export default function Wizard3({ onOpenSidebar }: Wizard3Props) {
         keyboardDismissMode="interactive"
       >
         {/* Progress Bar */}
-        <WizardProgressBar currentStep={3} totalSteps={8} />
+        <WizardProgressBar currentStep={4} totalSteps={8} />
 
         {/* Question Section */}
         <WizardQuestionContainer
-          title="Was war die Ausgangssituation, die Idee oder das konkrete Problem?"
-          subtitle="Beschreibe den Kontext und was zu deiner Lösung geführt hat."
+          title="Was war das Ziel, das du erreichen wolltest?"
+          subtitle="Beschreibe das gewünschte Ergebnis oder den Erfolg, den du angestrebt hast."
         />
 
         {/* Input Section */}
         <WizardTextInput
           value={answer}
           onChangeText={setAnswer}
-          placeholder="z.B. Unser Unternehmen hatte Schwierigkeiten bei der Kundengewinnung..."
+          placeholder="z.B. Steigerung der Leads um 40%, Kostensenkung um 25%, Verbesserung der Kundenzufriedenheit..."
           numberOfLines={4}
           autoFocus={true}
         />
