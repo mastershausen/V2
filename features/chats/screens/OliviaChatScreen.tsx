@@ -1147,7 +1147,9 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#1E6B55',
+    backgroundColor: 'rgba(30, 107, 85, 0.2)',
+    borderWidth: 1,
+    borderColor: '#1E6B55',
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 8,
@@ -1155,7 +1157,7 @@ const styles = StyleSheet.create({
   infoButtonText: {
     fontSize: 12,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: '#1E6B55',
   },
   backgroundGradient: {
     position: 'absolute',
