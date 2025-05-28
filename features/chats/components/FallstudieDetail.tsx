@@ -62,6 +62,15 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
   const [username, setUsername] = useState('@');
   const { t } = useTranslation();
 
+  // Bearbeitbare Felder für KI-generierte Fallstudie
+  const [editedTitel, setEditedTitel] = useState(fallstudie?.titel || '');
+  const [editedContext, setEditedContext] = useState(fallstudie?.context || '');
+  const [editedAction, setEditedAction] = useState(fallstudie?.action || '');
+  const [editedResult, setEditedResult] = useState(fallstudie?.result.text || '');
+
+  // Ist das die bearbeitbare KI-generierte Fallstudie?
+  const isEditable = fallstudie?.id === 'ki-generated-1';
+
   if (!fallstudie) return null;
   
   const handleSave = () => {
@@ -114,10 +123,25 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   fallstudie.isVerified && styles.verifiedTitleLabel
                 ]}>{t('casestudy.header.title')}</Text>
               </View>
-              <Text style={[
-                styles.title,
-                fallstudie.isVerified && styles.verifiedTitle
-              ]}>{fallstudie.titel}</Text>
+              {isEditable ? (
+                <TextInput
+                  style={[
+                    styles.title,
+                    fallstudie.isVerified && styles.verifiedTitle,
+                    styles.editableTitle
+                  ]}
+                  value={editedTitel}
+                  onChangeText={setEditedTitel}
+                  placeholder="Titel eingeben..."
+                  placeholderTextColor="rgba(255, 255, 255, 0.5)"
+                  multiline
+                />
+              ) : (
+                <Text style={[
+                  styles.title,
+                  fallstudie.isVerified && styles.verifiedTitle
+                ]}>{fallstudie.titel}</Text>
+              )}
             </View>
             <TouchableOpacity 
               style={styles.closeButton}
@@ -149,7 +173,18 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   </View>
                   <Text style={styles.sectionTitle}>{t('casestudy.sections.context.title')}</Text>
                 </View>
-                <Text style={styles.sectionText}>{fallstudie.context}</Text>
+                {isEditable ? (
+                  <TextInput
+                    style={[styles.sectionText, styles.editableText]}
+                    value={editedContext}
+                    onChangeText={setEditedContext}
+                    placeholder="Context eingeben..."
+                    placeholderTextColor="rgba(51, 51, 51, 0.5)"
+                    multiline
+                  />
+                ) : (
+                  <Text style={styles.sectionText}>{fallstudie.context}</Text>
+                )}
                 <Text style={styles.sectionHint}>{t('casestudy.sections.context.subtitle')}</Text>
               </View>
 
@@ -161,7 +196,18 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   </View>
                   <Text style={styles.sectionTitle}>{t('casestudy.sections.action.title')}</Text>
                 </View>
-                <Text style={styles.sectionText}>{fallstudie.action}</Text>
+                {isEditable ? (
+                  <TextInput
+                    style={[styles.sectionText, styles.editableText]}
+                    value={editedAction}
+                    onChangeText={setEditedAction}
+                    placeholder="Action eingeben..."
+                    placeholderTextColor="rgba(51, 51, 51, 0.5)"
+                    multiline
+                  />
+                ) : (
+                  <Text style={styles.sectionText}>{fallstudie.action}</Text>
+                )}
                 <Text style={styles.sectionHint}>{t('casestudy.sections.action.subtitle')}</Text>
               </View>
 
@@ -173,7 +219,18 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   </View>
                   <Text style={styles.sectionTitle}>{t('casestudy.sections.result.title')}</Text>
                 </View>
-                <Text style={styles.sectionText}>{fallstudie.result.text}</Text>
+                {isEditable ? (
+                  <TextInput
+                    style={[styles.sectionText, styles.editableText]}
+                    value={editedResult}
+                    onChangeText={setEditedResult}
+                    placeholder="Result eingeben..."
+                    placeholderTextColor="rgba(51, 51, 51, 0.5)"
+                    multiline
+                  />
+                ) : (
+                  <Text style={styles.sectionText}>{fallstudie.result.text}</Text>
+                )}
                 
                 {fallstudie.result.bulletpoints && fallstudie.result.bulletpoints.length > 0 && (
                   <View style={styles.bulletpointContainer}>
@@ -348,6 +405,21 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   onPress={() => {
                     if (fallstudie.needsVerification) {
                       setShowVerificationModal(true);
+                    } else if (isEditable) {
+                      // Speichern der editierten Fallstudie
+                      const editedFallstudie = {
+                        ...fallstudie,
+                        titel: editedTitel,
+                        context: editedContext,
+                        action: editedAction,
+                        result: {
+                          ...fallstudie.result,
+                          text: editedResult
+                        }
+                      };
+                      console.log('Fallstudie gespeichert:', editedFallstudie);
+                      // Hier könnte eine Save-API-Call oder lokale Speicherung implementiert werden
+                      onClose();
                     } else {
                       // Hier könnte eine Aktion wie "Auswählen" oder "Kontakt" implementiert werden
                       onClose();
@@ -758,6 +830,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 6,
+  },
+  editableTitle: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  editableText: {
+    backgroundColor: 'rgba(51, 51, 51, 0.03)',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(30, 107, 85, 0.2)',
+    minHeight: 80,
   },
 });
 
