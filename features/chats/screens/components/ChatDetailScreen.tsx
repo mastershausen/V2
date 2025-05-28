@@ -13,12 +13,16 @@ import {
   SafeAreaView,
   Animated,
   ImageSourcePropType,
-  Image
+  Image,
+  Modal,
+  Alert
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
+import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -39,6 +43,7 @@ export default function ChatDetailScreen() {
   const params = useLocalSearchParams<{ id: string, name: string }>();
   const [message, setMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [showAttachmentMenu, setShowAttachmentMenu] = useState(false);
   const flatListRef = useRef<FlatList>(null);
   const typingDots = useRef(new Animated.Value(0)).current;
   const { t } = useTranslation();
@@ -277,6 +282,51 @@ export default function ChatDetailScreen() {
     router.back();
   };
 
+  // Attachment-Menü Funktionen
+  const handleAttachmentPress = () => {
+    setShowAttachmentMenu(true);
+  };
+
+  const handleImagePicker = async () => {
+    setShowAttachmentMenu(false);
+    
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      Alert.alert('Permission Required', 'Permission to access camera roll is required!');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      // Hier würdest du das Bild verarbeiten
+      Alert.alert('Image Selected', 'Image would be uploaded here');
+    }
+  };
+
+  const handleDocumentPicker = async () => {
+    setShowAttachmentMenu(false);
+    
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: '*/*',
+        copyToCacheDirectory: true,
+      });
+
+      if (!result.canceled) {
+        // Hier würdest du das Dokument verarbeiten
+        Alert.alert('Document Selected', `Document: ${result.assets[0].name}`);
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Failed to pick document');
+    }
+  };
+
   // Gruppiere Nachrichten nach Datum
   const groupMessagesByDate = () => {
     const grouped: { [key: string]: typeof chat.messages } = {};
@@ -297,62 +347,55 @@ export default function ChatDetailScreen() {
   // Rendert eine einzelne Nachricht
   const renderMessage = ({ item, index }: { item: typeof chat.messages[0] & { isVerificationNotification?: boolean }, index: number }) => {
     const isUser = item.isUser;
-    const isVerificationNotification = item.isVerificationNotification;
+    const isVerification = item.isVerificationNotification;
     
-    // Überprüfen, ob eine Datumstrenner-Linie angezeigt werden soll
-    const shouldShowDateSeparator = index > 0 && 
-      chat.messages[index].date !== chat.messages[index-1].date;
-    
-    return (
-      <>
-        {shouldShowDateSeparator && renderDateSeparator(item.date)}
-        <View style={[
-          styles.messageContainer,
-          isUser ? styles.userMessageContainer : styles.botMessageContainer
-        ]}>
+    if (isVerification) {
+      return (
+        <View style={[styles.messageContainer, styles.botMessageContainer]}>
           <View style={styles.messageContentContainer}>
-            <View style={[
-              styles.messageBubble,
-              isUser 
-                ? [styles.userBubble, { backgroundColor: colors === themeColors.dark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)' }] 
-                : isVerificationNotification
-                  ? [styles.verificationBubble, { backgroundColor: '#FFA500' }]
-                  : [styles.botBubble, { backgroundColor: colors.divider + '30' }]
-            ]}>
-              <Text style={[
-                styles.messageText,
-                { color: isUser || isVerificationNotification ? 'white' : colors.textPrimary }
-              ]}>
+            <View style={[styles.verificationBubble, { 
+              backgroundColor: 'rgba(255, 165, 0, 0.1)',
+              borderColor: 'rgba(255, 165, 0, 0.3)'
+            }]}>
+              <Text style={[styles.messageText, { color: colors.textPrimary }]}>
                 {item.text}
               </Text>
-              {isVerificationNotification && (
-                <View style={styles.verificationButtons}>
-                  <TouchableOpacity style={[styles.viewCaseStudyButton, { width: '100%' }]}>
-                    <LinearGradient
-                      colors={['#1E6B55', '#15503F']}
-                      start={{ x: 0, y: 0 }}
-                      end={{ x: 1, y: 1 }}
-                      style={styles.verifyButtonGradient}
-                    >
-                      <Ionicons name="document-text-outline" size={14} color="white" style={styles.buttonIcon} />
-                      <Text style={styles.verifyButtonText}>View Case Study</Text>
-                    </LinearGradient>
-                  </TouchableOpacity>
-                </View>
-              )}
+              <View style={styles.verificationButtons}>
+                <TouchableOpacity style={styles.viewCaseStudyButton}>
+                  <LinearGradient
+                    colors={['#FF8C00', '#FF6347']}
+                    style={styles.verifyButtonGradient}
+                  >
+                    <Ionicons name="eye" size={16} color="white" style={styles.buttonIcon} />
+                    <Text style={styles.verifyButtonText}>View Case Study</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              </View>
             </View>
-            <Text style={[
-              styles.timeText, 
-              { 
-                color: colors.textTertiary,
-                alignSelf: isUser ? 'flex-end' : 'flex-start' 
-              }
-            ]}>
+            <Text style={[styles.timeText, { color: colors.textSecondary }]}>
               {item.time}
             </Text>
           </View>
         </View>
-      </>
+      );
+    }
+
+    return (
+      <View style={[styles.messageContainer, isUser ? styles.userMessageContainer : styles.botMessageContainer]}>
+        <View style={styles.messageContentContainer}>
+          <View style={[
+            styles.messageBubble,
+            isUser ? [styles.userBubble, { backgroundColor: 'rgba(30, 107, 85, 0.1)' }] : [styles.botBubble, { backgroundColor: 'rgba(241, 245, 249, 1)' }]
+          ]}>
+            <Text style={[styles.messageText, { color: colors.textPrimary }]}>
+              {item.text}
+            </Text>
+          </View>
+          <Text style={[styles.timeText, { color: colors.textSecondary }]}>
+            {item.time}
+          </Text>
+        </View>
+      </View>
     );
   };
 
@@ -370,40 +413,74 @@ export default function ChatDetailScreen() {
   // "Bot tippt..."-Indikator
   const renderTypingIndicator = () => {
     if (!isTyping) return null;
-    
-    // Animierte Position der drei Punkte
-    const dot1Opacity = typingDots.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [0.3, 1, 0.3]
-    });
-    
-    const dot2Opacity = typingDots.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [0.5, 0.3, 0.5]
-    });
-    
-    const dot3Opacity = typingDots.interpolate({
-      inputRange: [0, 0.5, 1],
-      outputRange: [0.3, 0.5, 1]
-    });
-    
+
     return (
-      <View style={styles.messageContainer}>
-        <View style={[styles.typingContainer, { backgroundColor: colors.backgroundSecondary }]}>
-          <Animated.View style={[styles.typingDot, { opacity: dot1Opacity, backgroundColor: colors.textTertiary }]} />
-          <Animated.View style={[styles.typingDot, { opacity: dot2Opacity, backgroundColor: colors.textTertiary }]} />
-          <Animated.View style={[styles.typingDot, { opacity: dot3Opacity, backgroundColor: colors.textTertiary }]} />
+      <View style={[styles.messageContainer, styles.botMessageContainer]}>
+        <View style={styles.messageContentContainer}>
+          <View style={[styles.typingContainer, { backgroundColor: 'rgba(30, 107, 85, 0.1)' }]}>
+            <Animated.View style={[styles.typingDot, { backgroundColor: '#1E6B55', opacity: typingDots }]} />
+            <Animated.View style={[styles.typingDot, { backgroundColor: '#1E6B55', opacity: typingDots }]} />
+            <Animated.View style={[styles.typingDot, { backgroundColor: '#1E6B55', opacity: typingDots }]} />
+          </View>
         </View>
       </View>
     );
   };
+
+  // Attachment-Menü rendern
+  const renderAttachmentMenu = () => (
+    <Modal
+      visible={showAttachmentMenu}
+      transparent={true}
+      animationType="slide"
+      onRequestClose={() => setShowAttachmentMenu(false)}
+    >
+      <View style={styles.modalOverlay}>
+        <View style={[styles.attachmentMenuContainer, { 
+          backgroundColor: colors.backgroundPrimary,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 10,
+          elevation: 10,
+        }]}>
+          <TouchableOpacity style={styles.attachmentOption} onPress={handleImagePicker}>
+            <View style={[styles.attachmentIconContainer, { backgroundColor: '#1E6B55' }]}>
+              <Ionicons name="image" size={24} color="#FFFFFF" />
+            </View>
+            <Text style={[styles.attachmentOptionText, { color: colors.textPrimary }]}>
+              Photo & Video Library
+            </Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity style={styles.attachmentOption} onPress={handleDocumentPicker}>
+            <View style={[styles.attachmentIconContainer, { backgroundColor: '#1E6B55' }]}>
+              <Ionicons name="document-text" size={24} color="#FFFFFF" />
+            </View>
+            <Text style={[styles.attachmentOptionText, { color: colors.textPrimary }]}>
+              Document
+            </Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={[styles.attachmentCancelButton, { backgroundColor: colors.backgroundSecondary }]}
+            onPress={() => setShowAttachmentMenu(false)}
+          >
+            <Text style={[styles.attachmentCancelButtonText, { color: colors.textPrimary }]}>
+              Cancel
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+  );
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <StatusBar barStyle="dark-content" />
       
       {/* Header */}
-      <View style={[styles.header, { borderBottomColor: colors.divider }]}>
+      <View style={[styles.header]}>
         <TouchableOpacity 
           style={styles.backButton}
           onPress={handleGoBack}
@@ -431,7 +508,7 @@ export default function ChatDetailScreen() {
             <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
               {chat.name}
             </Text>
-            <Text style={[styles.headerSubtitle, { color: colors.textTertiary }]}>
+            <Text style={[styles.headerSubtitle, { color: colors.textSecondary }]}>
               {isTyping ? t('chat.status.typing') : t('chat.status.online')}
             </Text>
           </View>
@@ -484,21 +561,25 @@ export default function ChatDetailScreen() {
       {/* Eingabebereich */}
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
       >
-        <View style={[styles.inputContainer, { borderTopColor: colors.divider }]}>
-          <TouchableOpacity style={styles.attachButton}>
-            <Ionicons name="add-circle-outline" size={24} color={colors.primary} />
+        <View style={[styles.inputContainer, { borderTopColor: 'rgba(30, 107, 85, 0.1)' }]}>
+          <TouchableOpacity style={[styles.attachButton, { backgroundColor: '#1E6B55' }]} onPress={handleAttachmentPress}>
+            <Ionicons name="add-outline" size={22} color="#FFFFFF" />
           </TouchableOpacity>
           
-          <View style={[styles.inputWrapper, { backgroundColor: colors.backgroundSecondary }]}>
+          <View style={[styles.inputWrapper, { 
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            borderColor: 'rgba(30, 107, 85, 0.3)',
+            borderWidth: 0.5
+          }]}>
             <TextInput
-              style={[styles.input, { color: colors.textPrimary }]}
+              style={[styles.input, { color: '#1E293B' }]}
               value={message}
               onChangeText={setMessage}
               placeholder={t('chat.input.placeholder', { name: chat.name })}
-              placeholderTextColor={colors.textTertiary}
-              multiline
+              placeholderTextColor="rgba(30, 41, 59, 0.6)"
+              multiline={false}
               maxLength={1000}
             />
           </View>
@@ -506,19 +587,21 @@ export default function ChatDetailScreen() {
           <TouchableOpacity 
             style={[
               styles.sendButton, 
-              { backgroundColor: message.trim() ? colors.primary : colors.backgroundSecondary }
+              { backgroundColor: message.trim() ? '#1E6B55' : 'rgba(30, 107, 85, 0.3)' }
             ]}
             onPress={handleSendMessage}
             disabled={message.trim() === ''}
           >
             <Ionicons 
               name="send" 
-              size={18} 
-              color={message.trim() ? 'white' : colors.textTertiary} 
+              size={16} 
+              color={message.trim() ? '#FFFFFF' : 'rgba(255, 255, 255, 0.7)'} 
             />
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
+
+      {renderAttachmentMenu()}
     </SafeAreaView>
   );
 }
@@ -532,7 +615,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: spacing.m,
     paddingVertical: spacing.m,
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   backButton: {
     padding: spacing.xs,
@@ -679,30 +761,38 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: spacing.m,
-    paddingVertical: spacing.s,
+    backgroundColor: 'transparent',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
     borderTopWidth: StyleSheet.hairlineWidth,
   },
   inputWrapper: {
     flex: 1,
-    borderRadius: ui.borderRadius.l,
-    paddingHorizontal: spacing.m,
-    paddingVertical: spacing.xs,
-    marginHorizontal: spacing.s,
-    minHeight: 40,
-    maxHeight: 120,
+    borderRadius: 18,
+    marginHorizontal: 8,
+    minHeight: 36,
+    maxHeight: 100,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
   },
   input: {
-    fontSize: typography.fontSize.m,
-    maxHeight: 100,
+    color: '#1E293B',
+    fontSize: 15,
+    paddingVertical: 8,
+    minHeight: 36,
+    textAlignVertical: 'center',
   },
   attachButton: {
-    padding: spacing.xs,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   sendButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -737,5 +827,46 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSize.s,
     fontWeight: typography.fontWeight.semiBold as any,
     color: 'white',
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'transparent',
+  },
+  attachmentMenuContainer: {
+    width: '100%',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: spacing.m,
+  },
+  attachmentOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: spacing.m,
+    borderWidth: 1,
+    borderColor: 'rgba(30, 107, 85, 0.3)',
+    borderRadius: ui.borderRadius.m,
+    marginBottom: spacing.m,
+  },
+  attachmentIconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: spacing.m,
+  },
+  attachmentOptionText: {
+    fontSize: typography.fontSize.m,
+    fontWeight: typography.fontWeight.semiBold as any,
+  },
+  attachmentCancelButton: {
+    padding: spacing.m,
+    borderRadius: ui.borderRadius.m,
+    alignItems: 'center',
+  },
+  attachmentCancelButtonText: {
+    fontSize: typography.fontSize.m,
+    fontWeight: typography.fontWeight.bold as any,
   },
 }); 
