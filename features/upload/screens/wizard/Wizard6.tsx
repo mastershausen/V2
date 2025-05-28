@@ -48,8 +48,8 @@ export default function Wizard6({ onOpenSidebar }: Wizard6Props) {
 
   const handleNext = () => {
     if (answer.trim()) {
-      // Navigation zu Wizard7 (später implementieren)
-      console.log('Antwort Frage 6:', answer);
+      // Navigation zu Wizard7
+      router.push('/wizard7');
     }
   };
 
