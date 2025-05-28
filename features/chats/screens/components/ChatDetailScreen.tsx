@@ -314,7 +314,7 @@ export default function ChatDetailScreen() {
             <View style={[
               styles.messageBubble,
               isUser 
-                ? [styles.userBubble, { backgroundColor: colors === themeColors.dark ? '#1C1C1E' : '#F2F2F7' }] 
+                ? [styles.userBubble, { backgroundColor: colors === themeColors.dark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)' }] 
                 : isVerificationNotification
                   ? [styles.verificationBubble, { backgroundColor: '#FFA500' }]
                   : [styles.botBubble, { backgroundColor: colors.divider + '30' }]

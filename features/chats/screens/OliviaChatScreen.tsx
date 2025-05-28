@@ -528,7 +528,7 @@ export default function OliviaChatScreen() {
             styles.messageBubble,
             styles.userBubble,
             { 
-              backgroundColor: colors === themeColors.dark ? '#1C1C1E' : '#F2F2F7'
+              backgroundColor: colors === themeColors.dark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'
             }
           ]}>
             <Text style={[
@@ -1154,7 +1154,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    bottom: 0,
+    height: '45%', // Nur bis 45% der Bildschirmhöhe - noch höher
   },
   safeArea: {
     flex: 1,
@@ -1512,9 +1512,6 @@ const styles = StyleSheet.create({
     marginBottom: spacing.s,
     textAlign: 'center',
     lineHeight: 20,
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
   },
   solvboxHeaderSignature: {
     fontSize: typography.fontSize.s,
@@ -1522,9 +1519,6 @@ const styles = StyleSheet.create({
     marginBottom: spacing.s,
     textAlign: 'center',
     fontStyle: 'italic',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
   },
   solvboxHeaderDivider: {
     width: 40,
