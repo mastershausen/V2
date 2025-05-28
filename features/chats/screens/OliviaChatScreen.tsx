@@ -510,14 +510,6 @@ export default function OliviaChatScreen() {
           styles.otherMessageContainer,
           !isLastInGroup && styles.otherMessageGrouped
         ]}>
-          <View style={styles.avatarContainer}>
-            <MaterialCommunityIcons 
-              name="semantic-web" 
-              size={28} 
-              color="#FFFFFF" 
-              style={styles.avatar}
-            />
-          </View>
           {renderMessageWithResults(item, item.text)}
         </View>
       );
@@ -529,16 +521,6 @@ export default function OliviaChatScreen() {
         item.isUser ? styles.userMessageContainer : styles.otherMessageContainer,
         !isLastInGroup && (item.isUser ? styles.userMessageGrouped : styles.otherMessageGrouped)
       ]}>
-        {!item.isUser && (
-          <View style={styles.avatarContainer}>
-            <MaterialCommunityIcons 
-              name="semantic-web" 
-              size={28} 
-              color="#FFFFFF" 
-              style={styles.avatar}
-            />
-          </View>
-        )}
         <View style={[
           styles.messageBubble,
           item.isUser ? styles.userBubble : styles.otherBubble,
@@ -569,13 +551,6 @@ export default function OliviaChatScreen() {
               </Text>
             </TouchableOpacity>
           )}
-          
-          <Text style={[
-            styles.timeText,
-            { color: timeColor }
-          ]}>
-            {item.time}
-          </Text>
         </View>
       </View>
     );
@@ -664,13 +639,6 @@ export default function OliviaChatScreen() {
               </TouchableOpacity>
             </View>
           </View>
-          
-          <Text style={[
-            styles.timeText,
-            { color: 'rgba(241, 245, 249, 0.7)' }
-          ]}>
-            {item.time}
-          </Text>
         </View>
       </View>
     );
@@ -691,14 +659,6 @@ export default function OliviaChatScreen() {
     
     return (
       <View style={styles.typingContainer}>
-        <View style={styles.avatarContainer}>
-          <MaterialCommunityIcons 
-            name="semantic-web" 
-            size={28} 
-            color="#FFFFFF" 
-            style={styles.avatar}
-          />
-        </View>
         <View style={[
           styles.typingBubble,
           { backgroundColor: '#1F3949' }
