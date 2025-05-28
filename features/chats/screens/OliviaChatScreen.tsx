@@ -528,10 +528,7 @@ export default function OliviaChatScreen() {
           // User messages with theme-based bubble styling
           <View style={[
             styles.messageBubble,
-            styles.userBubble,
-            { 
-              backgroundColor: colors === themeColors.dark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'
-            }
+            styles.userBubble
           ]}>
             <Text style={[
               styles.messageText,
@@ -694,12 +691,11 @@ export default function OliviaChatScreen() {
     return (
       <View style={styles.typingContainer}>
         <View style={[
-          styles.typingBubble,
-          { backgroundColor: '#1F3949' }
+          styles.typingBubble
         ]}>
-          <Animated.View style={[styles.typingDot, { opacity: typingDots, backgroundColor: '#1E6B55' }]} />
-          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#1E6B55' }]} />
-          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4, backgroundColor: '#1E6B55' }]} />
+          <Animated.View style={[styles.typingDot, { opacity: typingDots }]} />
+          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4 }]} />
+          <Animated.View style={[styles.typingDot, { opacity: typingDots, marginLeft: 4 }]} />
         </View>
       </View>
     );
@@ -1119,30 +1115,39 @@ const styles = StyleSheet.create({
   },
   fallstudieItem: {
     marginBottom: 12,
-    backgroundColor: 'rgba(30, 107, 85, 0.1)',
+    backgroundColor: 'rgba(30, 107, 85, 0.03)',
+    borderLeftWidth: 3,
+    borderLeftColor: '#1E6B55',
     borderRadius: 8,
-    padding: 12,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
   },
   fallstudieHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 4,
+    marginBottom: 6,
   },
   fallstudieTitle: {
     fontWeight: '600',
-    fontSize: 14,
+    fontSize: 15,
     flex: 1,
+    color: '#1E6B55',
   },
   fallstudieErgebnis: {
-    fontSize: 13,
-    opacity: 0.9,
+    fontSize: 14,
+    opacity: 0.8,
+    lineHeight: 20,
   },
   infoButton: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    backgroundColor: 'rgba(30, 107, 85, 0.5)',
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#1E6B55',
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 8,
@@ -1150,6 +1155,7 @@ const styles = StyleSheet.create({
   infoButtonText: {
     fontSize: 12,
     fontWeight: 'bold',
+    color: '#FFFFFF',
   },
   backgroundGradient: {
     position: 'absolute',
@@ -1166,8 +1172,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing.m,
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'rgba(255, 255, 255, 0.2)',
   },
   backButton: {
     padding: spacing.xs,
@@ -1282,13 +1286,14 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 2,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 3,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   userBubble: {
     borderBottomRightRadius: 4,
+    backgroundColor: 'rgba(30, 107, 85, 0.1)',
   },
   otherBubble: {
     borderBottomLeftRadius: 4,
@@ -1318,17 +1323,18 @@ const styles = StyleSheet.create({
     padding: spacing.s,
     height: 40,
     width: 60,
+    backgroundColor: 'rgba(30, 107, 85, 0.1)',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.1,
     shadowRadius: 2,
-    elevation: 2,
+    elevation: 1,
   },
   typingDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#7AEEFF',
+    backgroundColor: '#1E6B55',
   },
   keyboardView: {
     width: '100%',
@@ -1340,6 +1346,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     paddingVertical: 8,
     paddingHorizontal: 12,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(30, 107, 85, 0.1)',
   },
   inputFieldContainer: {
     flex: 1,
@@ -1362,7 +1370,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: 'rgba(30, 107, 85, 0.8)',
+    backgroundColor: '#1E6B55',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -1370,17 +1378,15 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: 'rgba(30, 107, 85, 0.6)',
+    backgroundColor: '#1E6B55',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   voiceButton: {
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: 'rgba(30, 107, 85, 0.8)',
+    backgroundColor: '#1E6B55',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -1600,18 +1606,18 @@ const styles = StyleSheet.create({
   },
   popupInput: {
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderColor: 'rgba(30, 107, 85, 0.3)',
     borderRadius: 16,
     padding: spacing.l,
     fontSize: 16,
     minHeight: 160,
-    backgroundColor: 'rgba(10, 24, 40, 0.6)',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
     marginBottom: spacing.l,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 3,
   },
   popupActions: {
     flexDirection: 'row',
@@ -1649,8 +1655,8 @@ const styles = StyleSheet.create({
     marginTop: spacing.m,
     paddingTop: spacing.s,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(241, 245, 249, 0.1)',
-    backgroundColor: 'rgba(30, 107, 85, 0.1)',
+    borderTopColor: 'rgba(30, 107, 85, 0.1)',
+    backgroundColor: 'rgba(30, 107, 85, 0.02)',
     borderRadius: 8,
     padding: spacing.s,
   },
