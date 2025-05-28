@@ -86,18 +86,8 @@ export default function Wizard8({ onOpenSidebar }: Wizard8Props) {
           </WizardQuestionTitle>
           
           <WizardQuestionSubtitle>
-            Optional - besondere Auszeichnungen, Partner, Testimonials, überraschende Insights, wichtige USPs.
+            Optional - Auszeichnungen, Partner, Testimonials, besondere Insights oder andere Highlights, die noch nicht erwähnt wurden. Je mehr Details, desto aussagekräftiger wird deine Fallstudie!
           </WizardQuestionSubtitle>
-        </View>
-
-        {/* Hinweis Box */}
-        <View style={[styles.hintBox, { 
-          backgroundColor: `${colors.primary}08`,
-          borderColor: `${colors.primary}20`
-        }]}>
-          <Text style={[styles.hintText, { color: colors.textSecondary }]}>
-            Falls du noch individuelle Highlights oder spezielle Infos hast, die nicht in die anderen Fragen passten – hier deinen USP, Auszeichnungen oder kurze Erfolgsgeschichten eintragen.
-          </Text>
         </View>
 
         {/* Input Section */}
@@ -115,7 +105,7 @@ export default function Wizard8({ onOpenSidebar }: Wizard8Props) {
         onPress={handleNext}
         isEnabled={isValid}
         keyboardHeight={keyboardHeight}
-        title="Abschließen"
+        title="Fallstudie erstellen"
       />
     </SafeAreaView>
   );
@@ -135,16 +125,5 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     paddingBottom: spacing.l,
-  },
-  hintBox: {
-    padding: spacing.m,
-    borderRadius: 8,
-    borderWidth: 1,
-    marginBottom: spacing.l,
-  },
-  hintText: {
-    fontSize: 14,
-    lineHeight: 20,
-    fontStyle: 'italic',
   },
 }); 
