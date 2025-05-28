@@ -115,7 +115,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
           fallbackText={profileData.name}
           size={90}
           variant="circle"
-          borderWidth={3}
+          borderWidth={2}
         />
       </View>
 

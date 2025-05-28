@@ -935,12 +935,9 @@ export default function OliviaChatScreen() {
                   Olivia
                 </Text>
                 <Text style={[styles.headerSubtitle, { color: 'rgba(255, 255, 255, 0.8)' }]}>
-                  Online
+                  powered by Solvbox
                 </Text>
               </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.menuButton} onPress={handleSaveNavigation}>
-              <Ionicons name="bookmark" size={24} color="#FFFFFF" />
             </TouchableOpacity>
             <TouchableOpacity style={[styles.menuButton, styles.searchButton]} onPress={handleUploadNavigation}>
               <Ionicons name="add-circle" size={24} color="#FFFFFF" />

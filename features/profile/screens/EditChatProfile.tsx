@@ -112,7 +112,7 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
             fallbackText={profileName}
             size={90}
             variant="circle"
-            borderWidth={3}
+            borderWidth={2}
           />
           <View style={[styles.editImageOverlay, { backgroundColor: colors.primary }]}>
             <Ionicons name="camera" size={18} color="white" />
