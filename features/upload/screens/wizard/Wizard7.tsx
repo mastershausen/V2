@@ -133,6 +133,19 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
         title="7 von 8 Fragen"
         onBackPress={handleBack}
         showBackButton={true}
+        rightContent={!showInfoBox ? (
+          <TouchableOpacity 
+            onPress={handleShowTemporaryInfo}
+            style={styles.headerInfoButton}
+            activeOpacity={0.7}
+          >
+            <Ionicons 
+              name="information-circle-outline" 
+              size={24} 
+              color={colors.primary} 
+            />
+          </TouchableOpacity>
+        ) : undefined}
       />
       
       <ScrollView 
@@ -150,69 +163,52 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
 
         {/* Question Section */}
         <View style={styles.questionContainer}>
-          <View style={styles.titleRow}>
-            <WizardQuestionTitle>
-              Welches Budgetvolumen hatte dieses Projekt?
-            </WizardQuestionTitle>
-            
-            {/* Info Icon - nur sichtbar wenn Info bereits bestätigt wurde */}
-            {!showInfoBox && (
-              <TouchableOpacity 
-                onPress={handleShowTemporaryInfo}
-                style={styles.infoIconButton}
-                activeOpacity={0.7}
-              >
-                <Ionicons 
-                  name="information-circle-outline" 
-                  size={20} 
-                  color={colors.primary} 
-                />
-              </TouchableOpacity>
-            )}
-          </View>
-          
-          {/* Permanente Info-Box - nur beim ersten Mal */}
-          {showInfoBox && (
-            <View style={[styles.infoBox, { 
-              backgroundColor: `${colors.primary}08`,
-              borderColor: `${colors.primary}20`
-            }]}>
-              <Ionicons name="information-circle-outline" size={20} color={colors.primary} style={styles.infoIcon} />
-              <View style={styles.infoContent}>
-                <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-                  Mit klaren Budgetangaben bekommst du deutlich bessere Leads! Olivia bevorzugt im Zweifelsfall Fallstudien mit transparenten Budget-Infos.
-                </Text>
-                <TouchableOpacity 
-                  onPress={handleInfoAcknowledged}
-                  style={[styles.understoodButton, { backgroundColor: colors.primary }]}
-                  activeOpacity={0.8}
-                >
-                  <Text style={styles.understoodButtonText}>Verstanden</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          )}
+          <WizardQuestionTitle>
+            Welches Budgetvolumen hatte dieses Projekt?
+          </WizardQuestionTitle>
+        </View>
 
-          {/* Temporäre Info-Box - beim Tap auf Info-Icon */}
-          {showTemporaryInfo && (
-            <View style={[styles.temporaryInfoBox, { 
-              backgroundColor: `${colors.primary}08`,
-              borderColor: `${colors.primary}20`
-            }]}>
-              <Ionicons name="information-circle-outline" size={18} color={colors.primary} style={styles.infoIcon} />
-              <Text style={[styles.temporaryInfoText, { color: colors.textSecondary }]}>
-                Mit klaren Budgetangaben bekommst du deutlich bessere Leads!
+        {/* Permanente Info-Box - nur beim ersten Mal */}
+        {showInfoBox && (
+          <View style={[styles.infoBox, { 
+            backgroundColor: `${colors.primary}08`,
+            borderColor: `${colors.primary}20`
+          }]}>
+            <Ionicons name="information-circle-outline" size={20} color={colors.primary} style={styles.infoIcon} />
+            <View style={styles.infoContent}>
+              <Text style={[styles.infoText, { color: colors.textSecondary }]}>
+                Mit klaren Budgetangaben bekommst du deutlich bessere Leads! Olivia bevorzugt im Zweifelsfall Fallstudien mit transparenten Budget-Infos. Du kannst selbst entscheiden, ob dein Budget öffentlich oder nur intern sichtbar ist.
               </Text>
               <TouchableOpacity 
-                onPress={handleCloseTemporaryInfo}
-                style={styles.closeButton}
-                activeOpacity={0.7}
+                onPress={handleInfoAcknowledged}
+                style={[styles.understoodButton, { backgroundColor: colors.primary }]}
+                activeOpacity={0.8}
               >
-                <Ionicons name="close" size={16} color={colors.textSecondary} />
+                <Text style={styles.understoodButtonText}>Verstanden</Text>
               </TouchableOpacity>
             </View>
-          )}
-        </View>
+          </View>
+        )}
+
+        {/* Temporäre Info-Box - beim Tap auf Info-Icon */}
+        {showTemporaryInfo && (
+          <View style={[styles.temporaryInfoBox, { 
+            backgroundColor: `${colors.primary}08`,
+            borderColor: `${colors.primary}20`
+          }]}>
+            <Ionicons name="information-circle-outline" size={18} color={colors.primary} style={styles.infoIcon} />
+            <Text style={[styles.temporaryInfoText, { color: colors.textSecondary }]}>
+              Mit klaren Budgetangaben bekommst du deutlich bessere Leads! Olivia bevorzugt im Zweifelsfall Fallstudien mit transparenten Budget-Infos. Du kannst selbst entscheiden, ob dein Budget öffentlich oder nur intern sichtbar ist.
+            </Text>
+            <TouchableOpacity 
+              onPress={handleCloseTemporaryInfo}
+              style={styles.closeButton}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="close" size={16} color={colors.textSecondary} />
+            </TouchableOpacity>
+          </View>
+        )}
 
         {/* Budget Input Section */}
         <View style={styles.budgetSection}>
@@ -317,9 +313,6 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
 
         {/* Sichtbarkeits-Auswahl */}
         <View style={styles.visibilitySection}>
-          <Text style={[styles.sectionLabel, { color: colors.textPrimary }]}>
-            Sichtbarkeit
-          </Text>
           
           <View style={styles.toggleContainer}>
             <TouchableOpacity 
@@ -390,14 +383,12 @@ const styles = StyleSheet.create({
   questionContainer: {
     paddingBottom: spacing.l,
   },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  infoIconButton: {
+  headerInfoButton: {
     padding: spacing.xs,
-    marginLeft: spacing.s,
+  },
+  infoIcon: {
+    marginRight: spacing.s,
+    marginTop: 1,
   },
   infoBox: {
     flexDirection: 'row',
@@ -405,10 +396,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     marginTop: spacing.s,
-  },
-  infoIcon: {
-    marginRight: spacing.s,
-    marginTop: 1,
   },
   infoContent: {
     flex: 1,
@@ -494,7 +481,7 @@ const styles = StyleSheet.create({
     height: 48,
   },
   descriptionContainer: {
-    marginTop: spacing.s,
+    // Entfernt marginTop um auf gleicher Höhe wie Budget-Felder zu sein
   },
   descriptionInput: {
     borderWidth: 1,
