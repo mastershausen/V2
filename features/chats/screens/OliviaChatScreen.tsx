@@ -758,40 +758,43 @@ export default function OliviaChatScreen() {
       animationType="slide"
       onRequestClose={() => setShowAttachmentMenu(false)}
     >
-      <TouchableOpacity 
-        style={styles.modalOverlay} 
-        activeOpacity={1} 
-        onPress={() => setShowAttachmentMenu(false)}
-      >
-        <View style={[styles.attachmentMenuContainer, { backgroundColor: colors.backgroundPrimary }]}>
-          <TouchableOpacity 
-            style={styles.attachmentOption} 
-            onPress={handlePickImage}
-          >
-            <View style={[styles.attachmentIconContainer, { backgroundColor: '#4CAF50' }]}>
-              <Ionicons name="image-outline" size={24} color="#FFFFFF" />
+      <View style={styles.modalOverlay}>
+        <View style={[styles.attachmentMenuContainer, { 
+          backgroundColor: colors.backgroundPrimary,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 10,
+          elevation: 10,
+        }]}>
+          <TouchableOpacity style={styles.attachmentOption} onPress={handlePickImage}>
+            <View style={[styles.attachmentIconContainer, { backgroundColor: '#1E6B55' }]}>
+              <Ionicons name="image" size={24} color="#FFFFFF" />
             </View>
-            <Text style={[styles.attachmentOptionText, { color: colors.textPrimary }]}>Send Image</Text>
+            <Text style={[styles.attachmentOptionText, { color: colors.textPrimary }]}>
+              Photo & Video Library
+            </Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity style={styles.attachmentOption} onPress={handleAddLink}>
+            <View style={[styles.attachmentIconContainer, { backgroundColor: '#1E6B55' }]}>
+              <Ionicons name="document" size={24} color="#FFFFFF" />
+            </View>
+            <Text style={[styles.attachmentOptionText, { color: colors.textPrimary }]}>
+              Document
+            </Text>
           </TouchableOpacity>
           
           <TouchableOpacity 
-            style={styles.attachmentOption} 
-            onPress={handleAddLink}
-          >
-            <View style={[styles.attachmentIconContainer, { backgroundColor: '#9C27B0' }]}>
-              <Ionicons name="link-outline" size={24} color="#FFFFFF" />
-            </View>
-            <Text style={[styles.attachmentOptionText, { color: colors.textPrimary }]}>Send Link</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={[styles.attachmentCancelButton, { backgroundColor: colors.backgroundSecondary }]} 
+            style={[styles.attachmentCancelButton, { backgroundColor: colors.backgroundSecondary }]}
             onPress={() => setShowAttachmentMenu(false)}
           >
-            <Text style={[styles.attachmentCancelButtonText, { color: colors.textPrimary }]}>Cancel</Text>
+            <Text style={[styles.attachmentCancelButtonText, { color: colors.textPrimary }]}>
+              Cancel
+            </Text>
           </TouchableOpacity>
         </View>
-      </TouchableOpacity>
+      </View>
     </Modal>
   );
 
@@ -1382,7 +1385,7 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'transparent',
     justifyContent: 'flex-end',
     paddingHorizontal: 0,
   },
@@ -1395,7 +1398,11 @@ const styles = StyleSheet.create({
   attachmentOption: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: spacing.m,
+    padding: spacing.m,
+    borderWidth: 1,
+    borderColor: 'rgba(30, 107, 85, 0.3)',
+    borderRadius: ui.borderRadius.m,
+    marginBottom: spacing.m,
   },
   attachmentIconContainer: {
     width: 40,
@@ -1407,16 +1414,16 @@ const styles = StyleSheet.create({
   },
   attachmentOptionText: {
     fontSize: typography.fontSize.m,
-    fontWeight: '500',
+    fontWeight: typography.fontWeight.semiBold as any,
   },
   attachmentCancelButton: {
-    borderRadius: ui.borderRadius.l,
     padding: spacing.m,
+    borderRadius: ui.borderRadius.m,
     alignItems: 'center',
-    marginTop: spacing.m,
   },
   attachmentCancelButtonText: {
-    fontWeight: '600',
+    fontSize: typography.fontSize.m,
+    fontWeight: typography.fontWeight.bold as any,
   },
   attachmentContainer: {
     marginTop: spacing.s,
