@@ -18,11 +18,11 @@ import {
   WizardNextButton 
 } from '@/shared-components/wizard';
 
-interface Wizard4Props {
+interface Wizard5Props {
   onOpenSidebar?: () => void;
 }
 
-export default function Wizard4({ onOpenSidebar }: Wizard4Props) {
+export default function Wizard5({ onOpenSidebar }: Wizard5Props) {
   const colors = useThemeColor();
   const router = useRouter();
   const [answer, setAnswer] = useState('');
@@ -48,8 +48,8 @@ export default function Wizard4({ onOpenSidebar }: Wizard4Props) {
 
   const handleNext = () => {
     if (answer.trim()) {
-      // Navigation zu Wizard5
-      router.push('/wizard5');
+      // Navigation zu Wizard6 (später implementieren)
+      console.log('Antwort Frage 5:', answer);
     }
   };
 
@@ -58,7 +58,7 @@ export default function Wizard4({ onOpenSidebar }: Wizard4Props) {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="4 von 8 Fragen"
+        title="5 von 8 Fragen"
         onBackPress={handleBack}
         showBackButton={true}
       />
@@ -74,20 +74,20 @@ export default function Wizard4({ onOpenSidebar }: Wizard4Props) {
         keyboardDismissMode="interactive"
       >
         {/* Progress Bar */}
-        <WizardProgressBar currentStep={4} totalSteps={8} />
+        <WizardProgressBar currentStep={5} totalSteps={8} />
 
         {/* Question Section */}
         <WizardQuestionContainer
-          title="Was war das Ziel, das du erreichen wolltest?"
-          subtitle="Beschreibe das gewünschte Ergebnis oder den Erfolg, den du angestrebt hast."
+          title="Was wurde umgesetzt? (konkret & mit relevanten Maßnahmen)"
+          subtitle="Beschreibe die konkreten Schritte und Maßnahmen. Unkonventionelle oder kreative Ansätze gern nennen."
         />
 
         {/* Input Section */}
         <WizardTextInput
           value={answer}
           onChangeText={setAnswer}
-          placeholder="z.B. Steigerung der Leads um 40%, Kostensenkung um 25%, Verbesserung der Kundenzufriedenheit..."
-          numberOfLines={4}
+          placeholder="z.B. Implementierung einer KI-basierten Leadqualifizierung, Guerilla-Marketing-Kampagne, Umstellung auf agile Arbeitsweise..."
+          numberOfLines={5}
           autoFocus={true}
         />
       </ScrollView>
