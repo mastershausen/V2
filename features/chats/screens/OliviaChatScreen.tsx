@@ -521,37 +521,69 @@ export default function OliviaChatScreen() {
         item.isUser ? styles.userMessageContainer : styles.otherMessageContainer,
         !isLastInGroup && (item.isUser ? styles.userMessageGrouped : styles.otherMessageGrouped)
       ]}>
-        <View style={[
-          styles.messageBubble,
-          item.isUser ? styles.userBubble : styles.otherBubble,
-          { backgroundColor: item.isUser ? '#2C5063' : '#1F3949' }
-        ]}>
-          <Text style={[
-            styles.messageText,
-            { color: '#F1F5F9' }
+        {item.isUser ? (
+          // User messages keep their bubble styling
+          <View style={[
+            styles.messageBubble,
+            styles.userBubble,
+            { backgroundColor: '#2C5063' }
           ]}>
-            {item.text}
-          </Text>
-          
-          {/* Display images */}
-          {item.image && (
-            <View style={styles.attachmentContainer}>
-              <Image source={{ uri: item.image }} style={styles.attachedImage} />
-            </View>
-          )}
-          
-          {/* Display links */}
-          {item.link && !item.text.includes(item.link) && (
-            <TouchableOpacity 
-              style={[styles.linkContainer]}
-              onPress={() => Linking.openURL(item.link || '')}
-            >
-              <Text style={[styles.linkText, { color: '#1E6B55' }]}>
-                {item.link}
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
+            <Text style={[
+              styles.messageText,
+              { color: '#F1F5F9' }
+            ]}>
+              {item.text}
+            </Text>
+            
+            {/* Display images */}
+            {item.image && (
+              <View style={styles.attachmentContainer}>
+                <Image source={{ uri: item.image }} style={styles.attachedImage} />
+              </View>
+            )}
+            
+            {/* Display links */}
+            {item.link && !item.text.includes(item.link) && (
+              <TouchableOpacity 
+                style={[styles.linkContainer]}
+                onPress={() => Linking.openURL(item.link || '')}
+              >
+                <Text style={[styles.linkText, { color: '#1E6B55' }]}>
+                  {item.link}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        ) : (
+          // Olivia messages without bubble - just text
+          <View style={styles.oliviaMessageContainer}>
+            <Text style={[
+              styles.oliviaMessageText,
+              { color: '#F1F5F9' }
+            ]}>
+              {item.text}
+            </Text>
+            
+            {/* Display images */}
+            {item.image && (
+              <View style={styles.attachmentContainer}>
+                <Image source={{ uri: item.image }} style={styles.attachedImage} />
+              </View>
+            )}
+            
+            {/* Display links */}
+            {item.link && !item.text.includes(item.link) && (
+              <TouchableOpacity 
+                style={[styles.linkContainer]}
+                onPress={() => Linking.openURL(item.link || '')}
+              >
+                <Text style={[styles.linkText, { color: '#1E6B55' }]}>
+                  {item.link}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
       </View>
     );
   }, []);
@@ -559,85 +591,80 @@ export default function OliviaChatScreen() {
   // Display message with case study results
   const renderMessageWithResults = (item: any, messageText: string) => {
     return (
-      <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-        <View style={[
-          styles.messageBubble,
-          styles.otherBubble,
-          { backgroundColor: '#1F3949' }
+      <View style={styles.caseStudyContainer}>
+        {/* Olivia's message text without bubble */}
+        <Text style={[
+          styles.oliviaMessageText,
+          { color: '#F1F5F9', marginBottom: spacing.m }
         ]}>
-          <Text style={[
-            styles.messageText,
-            { color: '#F1F5F9' }
-          ]}>
-            {messageText}
-          </Text>
-          
-          {/* Case study results */}
-          <View style={styles.fallstudienContainer}>
-            {fallstudienErgebnisse.map((studie) => (
-              <View key={studie.id} style={styles.fallstudieItem}>
-                <View style={styles.fallstudieHeader}>
-                  <Text style={styles.fallstudieTitle}>
-                    Case Study {studie.id}: {studie.titel}
-                  </Text>
-                  <TouchableOpacity 
-                    style={styles.infoButton}
-                    onPress={() => {
-                      // Case Study 1 bekommt isVerified-Flag
-                      // Case Study 2 bekommt needsVerification-Flag
-                      let studieWithFlags = studie;
-                      
-                      if (studie.id === '1') {
-                        studieWithFlags = {...studie, isVerified: true};
-                      } else if (studie.id === '2') {
-                        studieWithFlags = {...studie, needsVerification: true};
-                      }
-                      
-                      setSelectedFallstudie(studieWithFlags);
-                      setShowFallstudieDetail(true);
-                    }}
-                  >
-                    <Text style={styles.infoButtonText}>i</Text>
-                  </TouchableOpacity>
-                </View>
-                <Text style={styles.fallstudieErgebnis}>
-                  {studie.kurzbeschreibung}
+          {messageText}
+        </Text>
+        
+        {/* Case study results */}
+        <View style={styles.fallstudienContainer}>
+          {fallstudienErgebnisse.map((studie) => (
+            <View key={studie.id} style={styles.fallstudieItem}>
+              <View style={styles.fallstudieHeader}>
+                <Text style={styles.fallstudieTitle}>
+                  Case Study {studie.id}: {studie.titel}
                 </Text>
+                <TouchableOpacity 
+                  style={styles.infoButton}
+                  onPress={() => {
+                    // Case Study 1 bekommt isVerified-Flag
+                    // Case Study 2 bekommt needsVerification-Flag
+                    let studieWithFlags = studie;
+                    
+                    if (studie.id === '1') {
+                      studieWithFlags = {...studie, isVerified: true};
+                    } else if (studie.id === '2') {
+                      studieWithFlags = {...studie, needsVerification: true};
+                    }
+                    
+                    setSelectedFallstudie(studieWithFlags);
+                    setShowFallstudieDetail(true);
+                  }}
+                >
+                  <Text style={styles.infoButtonText}>i</Text>
+                </TouchableOpacity>
               </View>
-            ))}
-          </View>
-          
-          {/* Rating buttons inside the bubble */}
-          <View style={styles.ratingContainer}>
-            <Text style={styles.ratingLabel}>Was this helpful?</Text>
-            <View style={styles.ratingButtons}>
-              <TouchableOpacity
-                style={[
-                  styles.ratingButton,
-                  messageRating === 'up' && styles.ratingButtonActive
-                ]}
-                onPress={() => handleRatingPress('up')}
-              >
-                <MaterialCommunityIcons 
-                  name={messageRating === 'up' ? "thumb-up" : "thumb-up-outline"} 
-                  size={20} 
-                  color={messageRating === 'up' ? '#1E6B55' : 'rgba(241, 245, 249, 0.7)'} 
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.ratingButton,
-                  messageRating === 'down' && styles.ratingButtonActive
-                ]}
-                onPress={() => handleRatingPress('down')}
-              >
-                <MaterialCommunityIcons 
-                  name={messageRating === 'down' ? "thumb-down" : "thumb-down-outline"} 
-                  size={20} 
-                  color={messageRating === 'down' ? '#E53935' : 'rgba(241, 245, 249, 0.7)'} 
-                />
-              </TouchableOpacity>
+              <Text style={styles.fallstudieErgebnis}>
+                {studie.kurzbeschreibung}
+              </Text>
             </View>
+          ))}
+        </View>
+        
+        {/* Rating buttons */}
+        <View style={styles.ratingContainer}>
+          <Text style={styles.ratingLabel}>Was this helpful?</Text>
+          <View style={styles.ratingButtons}>
+            <TouchableOpacity
+              style={[
+                styles.ratingButton,
+                messageRating === 'up' && styles.ratingButtonActive
+              ]}
+              onPress={() => handleRatingPress('up')}
+            >
+              <MaterialCommunityIcons 
+                name={messageRating === 'up' ? "thumb-up" : "thumb-up-outline"} 
+                size={20} 
+                color={messageRating === 'up' ? '#1E6B55' : 'rgba(241, 245, 249, 0.7)'} 
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.ratingButton,
+                messageRating === 'down' && styles.ratingButtonActive
+              ]}
+              onPress={() => handleRatingPress('down')}
+            >
+              <MaterialCommunityIcons 
+                name={messageRating === 'down' ? "thumb-down" : "thumb-down-outline"} 
+                size={20} 
+                color={messageRating === 'down' ? '#E53935' : 'rgba(241, 245, 249, 0.7)'} 
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -1207,6 +1234,7 @@ const styles = StyleSheet.create({
   },
   otherMessageContainer: {
     alignSelf: 'flex-start',
+    maxWidth: '95%',
   },
   userMessageGrouped: {
     marginBottom: 2,
@@ -1598,6 +1626,9 @@ const styles = StyleSheet.create({
     paddingTop: spacing.s,
     borderTopWidth: 1,
     borderTopColor: 'rgba(241, 245, 249, 0.1)',
+    backgroundColor: 'rgba(30, 107, 85, 0.1)',
+    borderRadius: 8,
+    padding: spacing.s,
   },
   ratingLabel: {
     fontSize: typography.fontSize.s,
@@ -1614,5 +1645,19 @@ const styles = StyleSheet.create({
   },
   ratingButtonActive: {
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  oliviaMessageContainer: {
+    marginBottom: spacing.s,
+    flexDirection: 'row',
+    maxWidth: '95%',
+  },
+  oliviaMessageText: {
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '400',
+  },
+  caseStudyContainer: {
+    marginBottom: spacing.m,
+    width: '100%',
   },
 }); 
