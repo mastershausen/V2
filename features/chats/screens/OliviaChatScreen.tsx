@@ -18,7 +18,8 @@ import {
   ScrollView,
   Linking,
   Alert,
-  Dimensions
+  Dimensions,
+  useColorScheme
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -49,6 +50,7 @@ const oliviaAvatar = require('@/assets/small rounded Icon.png') as ImageSourcePr
  */
 export default function OliviaChatScreen() {
   const colors = useThemeColor();
+  const colorScheme = useColorScheme();
   const router = useRouter();
   const params = useLocalSearchParams();
   const [message, setMessage] = useState('');
@@ -988,7 +990,7 @@ export default function OliviaChatScreen() {
                 style={styles.attachButton} 
                 onPress={() => setShowAttachmentMenu(true)}
               >
-                <Ionicons name="add-outline" size={20} color="rgba(255, 255, 255, 0.9)" />
+                <Ionicons name="add-outline" size={22} color="#FFFFFF" />
               </TouchableOpacity>
               
               <View style={styles.inputFieldContainer}>
@@ -999,7 +1001,7 @@ export default function OliviaChatScreen() {
                   value={message}
                   onChangeText={setMessage}
                   multiline={false}
-                  keyboardAppearance="dark"
+                  keyboardAppearance={colorScheme === 'dark' ? 'dark' : 'default'}
                   ref={preferencesInputRef}
                 />
               </View>
@@ -1084,7 +1086,7 @@ export default function OliviaChatScreen() {
                   multiline={true}
                   numberOfLines={8}
                   textAlignVertical="top"
-                  keyboardAppearance="dark"
+                  keyboardAppearance={colorScheme === 'dark' ? 'dark' : 'default'}
                 />
               </View>
               
@@ -1357,22 +1359,28 @@ const styles = StyleSheet.create({
     height: 36,
   },
   sendButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'rgba(30, 107, 85, 0.8)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   attachButton: {
-    width: 28,
-    height: 28,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'rgba(30, 107, 85, 0.6)',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   voiceButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'rgba(30, 107, 85, 0.8)',
     alignItems: 'center',
     justifyContent: 'center',
   },
