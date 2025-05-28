@@ -18,11 +18,11 @@ import {
   WizardNextButton 
 } from '@/shared-components/wizard';
 
-interface Wizard5Props {
+interface Wizard6Props {
   onOpenSidebar?: () => void;
 }
 
-export default function Wizard5({ onOpenSidebar }: Wizard5Props) {
+export default function Wizard6({ onOpenSidebar }: Wizard6Props) {
   const colors = useThemeColor();
   const router = useRouter();
   const [answer, setAnswer] = useState('');
@@ -48,8 +48,8 @@ export default function Wizard5({ onOpenSidebar }: Wizard5Props) {
 
   const handleNext = () => {
     if (answer.trim()) {
-      // Navigation zu Wizard6
-      router.push('/wizard6');
+      // Navigation zu Wizard7 (später implementieren)
+      console.log('Antwort Frage 6:', answer);
     }
   };
 
@@ -58,7 +58,7 @@ export default function Wizard5({ onOpenSidebar }: Wizard5Props) {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="5 von 8 Fragen"
+        title="6 von 8 Fragen"
         onBackPress={handleBack}
         showBackButton={true}
       />
@@ -74,19 +74,19 @@ export default function Wizard5({ onOpenSidebar }: Wizard5Props) {
         keyboardDismissMode="interactive"
       >
         {/* Progress Bar */}
-        <WizardProgressBar currentStep={5} totalSteps={8} />
+        <WizardProgressBar currentStep={6} totalSteps={8} />
 
         {/* Question Section */}
         <WizardQuestionContainer
-          title="Was wurde umgesetzt? (konkret & mit relevanten Maßnahmen)"
-          subtitle="Beschreibe die konkreten Schritte und Maßnahmen. Unkonventionelle oder kreative Ansätze gern nennen."
+          title="Was waren die konkreten Ergebnisse – in Wirkung und Zahlen?"
+          subtitle="💡 Tipp: Je mehr harte Fakten (Zahlen, Daten, Fakten), desto besser dein Matching."
         />
 
         {/* Input Section */}
         <WizardTextInput
           value={answer}
           onChangeText={setAnswer}
-          placeholder="z.B. Implementierung einer KI-basierten Leadqualifizierung, Guerilla-Marketing-Kampagne, Umstellung auf agile Arbeitsweise..."
+          placeholder="z.B. 40% mehr Leads, 25% Kostensenkung, ROI von 300%, 95% Kundenzufriedenheit, 6 Wochen früher fertig..."
           numberOfLines={5}
           autoFocus={true}
         />
