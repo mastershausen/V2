@@ -246,7 +246,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
           {/* Footer mit Aktions-Button */}
           <BlurView intensity={20} tint="dark" style={styles.footerBlur}>
             <View style={styles.footer}>
-              {!fallstudie.needsVerification && fallstudie.id !== '3' && (
+              {!fallstudie.needsVerification && fallstudie.id !== '3' && fallstudie.id !== 'ki-generated-1' && (
                 <TouchableOpacity 
                   style={styles.iconButton} 
                   onPress={handleSave}
@@ -341,7 +341,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                     : 'checkmark-circle-outline'}
                   iconSize={17}
                   containerStyle={
-                    (fallstudie.needsVerification || fallstudie.id === '3') 
+                    (fallstudie.needsVerification || fallstudie.id === '3' || fallstudie.id === 'ki-generated-1') 
                       ? styles.fullWidthButton 
                       : undefined
                   }
