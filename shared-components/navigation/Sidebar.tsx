@@ -106,7 +106,7 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
   const renderMenuItem = (item: MenuItem) => (
     <TouchableOpacity
       key={item.id}
-      style={[styles.menuItem, { borderBottomColor: colors.divider }]}
+      style={styles.menuItem}
       onPress={() => item.route ? handleNavigation(item.route) : undefined}
       activeOpacity={0.7}
     >
@@ -114,14 +114,13 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
         <Ionicons 
           name={item.icon as any} 
           size={20} 
-          color={colors.textSecondary} 
           style={styles.menuIcon}
         />
         <Text style={[styles.menuItemText, { color: colors.textPrimary }]}>
           {item.title}
         </Text>
         {item.badge && (
-          <View style={[styles.badge, { backgroundColor: colors.primary }]}>
+          <View style={styles.badge}>
             <Text style={styles.badgeText}>{item.badge}</Text>
           </View>
         )}
@@ -152,15 +151,14 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
     >
       <SafeAreaView style={styles.safeArea}>
         {/* Header mit Solvbox Branding */}
-        <View style={[styles.header, { borderBottomColor: colors.divider }]}>
+        <View style={styles.header}>
           <View style={styles.brandContainer}>
             <MaterialCommunityIcons 
               name="semantic-web" 
               size={32} 
-              color={colors.textPrimary} 
               style={styles.brandIcon}
             />
-            <Text style={[styles.brandText, { color: colors.textPrimary }]}>
+            <Text style={styles.brandText}>
               Solvbox
             </Text>
           </View>
@@ -172,15 +170,15 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
         </ScrollView>
 
         {/* Footer */}
-        <View style={[styles.footer, { borderTopColor: colors.divider }]}>
+        <View style={styles.footer}>
           <TouchableOpacity style={styles.userProfile}>
-            <View style={[styles.avatar, { backgroundColor: colors.primary }]}>
+            <View style={styles.avatar}>
               <Text style={styles.avatarText}>SS</Text>
             </View>
             <Text style={[styles.userName, { color: colors.textPrimary }]}>
               Sascha Schneiders
             </Text>
-            <Ionicons name="ellipsis-horizontal" size={20} color={colors.textSecondary} />
+            <Ionicons name="ellipsis-horizontal" size={20} color="#1E6B55" />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -209,8 +207,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: spacing.m,
-    borderBottomWidth: 1,
-    gap: spacing.s,
+    paddingVertical: spacing.l,
   },
   brandContainer: {
     flexDirection: 'row',
@@ -219,10 +216,12 @@ const styles = StyleSheet.create({
   },
   brandIcon: {
     width: 32,
+    color: '#1E6B55',
   },
   brandText: {
     fontSize: 20,
     fontWeight: '600',
+    color: '#1E6B55',
   },
   content: {
     flex: 1,
@@ -239,7 +238,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   menuItem: {
-    borderBottomWidth: 0.5,
+    marginHorizontal: spacing.s,
+    marginVertical: 2,
+    borderRadius: 8,
   },
   menuItemContent: {
     flexDirection: 'row',
@@ -250,25 +251,14 @@ const styles = StyleSheet.create({
   },
   menuIcon: {
     width: 24,
+    color: '#1E6B55',
   },
   menuItemText: {
     flex: 1,
     fontSize: 16,
-  },
-  badge: {
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 12,
-    minWidth: 24,
-    alignItems: 'center',
-  },
-  badgeText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '500',
   },
   footer: {
-    borderTopWidth: 1,
     padding: spacing.m,
   },
   userProfile: {
@@ -282,6 +272,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#1E6B55',
   },
   avatarText: {
     color: '#fff',
@@ -292,5 +283,18 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontWeight: '500',
+  },
+  badge: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 12,
+    minWidth: 24,
+    alignItems: 'center',
+    backgroundColor: '#1E6B55',
+  },
+  badgeText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
   },
 }); 
