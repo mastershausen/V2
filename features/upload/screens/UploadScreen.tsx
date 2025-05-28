@@ -1,27 +1,19 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { 
   View, 
-  Text, 
   StyleSheet, 
-  TouchableOpacity, 
-  SafeAreaView, 
-  ScrollView 
+  SafeAreaView,
+  TouchableOpacity,
+  Animated,
+  Text
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { spacing } from '@/config/theme/spacing';
-import { typography } from '@/config/theme/typography';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
-
-interface FrameOption {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  route: string;
-}
+import { spacing } from '@/config/theme/spacing';
 
 interface UploadScreenProps {
   onOpenSidebar?: () => void;
@@ -30,41 +22,34 @@ interface UploadScreenProps {
 export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
   const colors = useThemeColor();
   const router = useRouter();
+  
+  // Animationen
+  const pulseAnim = useRef(new Animated.Value(1)).current;
+  const scaleAnim = useRef(new Animated.Value(1)).current;
 
-  const frameOptions: FrameOption[] = [
-    {
-      id: 'before-after',
-      title: 'Before → After',
-      description: 'Show a clear transformation with measurable results.',
-      icon: 'refresh-outline',
-      route: '/casestudies/create/NowThenFrame'
-    },
-    {
-      id: 'thinking-outside',
-      title: 'Thinking Outside the Box',
-      description: 'Present a creative, unexpected solution approach.',
-      icon: 'bulb-outline',
-      route: '/casestudies/create/ThinkDifferentFrame'
-    },
-    {
-      id: 'creating-new',
-      title: 'Creating Something New',
-      description: 'Present an innovative concept or a new solution.',
-      icon: 'add-circle-outline',
-      route: '/casestudies/create/NewStuffFrame'
-    },
-    {
-      id: 'intelligent-investments',
-      title: 'Intelligent Investments',
-      description: 'Present strategic investments with high ROI and smart resource allocation.',
-      icon: 'trending-up-outline',
-      route: '/casestudies/create/IntelligentInvestmentsFrame'
-    }
-  ];
+  useEffect(() => {
+    // Subtile Pulsation
+    const pulse = Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulseAnim, {
+          toValue: 1.05,
+          duration: 2000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulseAnim, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: true,
+        }),
+      ])
+    );
 
-  const handleFrameSelection = (route: string) => {
-    router.push(route as any);
-  };
+    pulse.start();
+
+    return () => {
+      pulse.stop();
+    };
+  }, []);
 
   const handleBackPress = () => {
     if (onOpenSidebar) {
@@ -74,41 +59,26 @@ export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
     }
   };
 
-  const renderFrameOption = (option: FrameOption) => (
-    <TouchableOpacity
-      key={option.id}
-      style={[styles.frameOption, { backgroundColor: colors.backgroundSecondary }]}
-      onPress={() => handleFrameSelection(option.route)}
-      activeOpacity={0.7}
-    >
-      <View style={styles.frameContent}>
-        <View style={[styles.iconContainer, { backgroundColor: colors.backgroundTertiary }]}>
-          <Ionicons 
-            name={option.icon as any} 
-            size={24} 
-            color={colors.primary} 
-          />
-        </View>
-        
-        <View style={styles.textContainer}>
-          <Text style={[styles.frameTitle, { color: colors.textPrimary }]}>
-            {option.title}
-          </Text>
-          <Text style={[styles.frameDescription, { color: colors.textSecondary }]}>
-            {option.description}
-          </Text>
-        </View>
-        
-        <View style={styles.arrowContainer}>
-          <Ionicons 
-            name="chevron-forward" 
-            size={20} 
-            color={colors.textTertiary} 
-          />
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+  const handleCreateCaseStudy = () => {
+    // Hier wird später der Wizard gestartet
+    console.log('🚀 Case Study Wizard starten');
+  };
+
+  const handlePressIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 0.95,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      tension: 100,
+      friction: 3,
+      useNativeDriver: true,
+    }).start();
+  };
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
@@ -119,37 +89,54 @@ export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
         showBackButton={true}
       />
       
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {/* Header Content */}
-        <View style={styles.header}>
-          <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
-            What type of case study would you like to create?
+      {/* Content */}
+      <View style={styles.content}>
+        {/* 3D CTA Button */}
+        <View style={styles.ctaContainer}>
+          {/* Main Button */}
+          <Animated.View
+            style={[
+              styles.buttonContainer,
+              {
+                transform: [
+                  { scale: Animated.multiply(scaleAnim, pulseAnim) }
+                ],
+              },
+            ]}
+          >
+            <TouchableOpacity
+              style={styles.ctaButton}
+              onPress={handleCreateCaseStudy}
+              onPressIn={handlePressIn}
+              onPressOut={handlePressOut}
+              activeOpacity={1}
+            >
+              <LinearGradient
+                colors={['#2A8A6B', '#1E6B55', '#164A42']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.buttonGradient}
+              >
+                {/* Inner Highlight */}
+                <View style={styles.innerHighlight} />
+                
+                {/* Plus Icon */}
+                <Ionicons 
+                  name="add" 
+                  size={48} 
+                  color="white" 
+                  style={styles.plusIcon}
+                />
+              </LinearGradient>
+            </TouchableOpacity>
+          </Animated.View>
+          
+          {/* Subtitle */}
+          <Text style={[styles.ctaText, { color: colors.textSecondary }]}>
+            Neue Case Study erstellen
           </Text>
-          <Text style={[styles.description, { color: colors.textSecondary }]}>
-            Choose the appropriate frame for your case study to best present your success.
-          </Text>
         </View>
-
-        {/* Frame Options */}
-        <View style={styles.optionsContainer}>
-          {frameOptions.map(renderFrameOption)}
-        </View>
-
-        {/* Info Box */}
-        <View style={[styles.infoBox, { backgroundColor: colors.backgroundSecondary }]}>
-          <View style={styles.infoContent}>
-            <Ionicons 
-              name="information-circle-outline" 
-              size={20} 
-              color={colors.textSecondary} 
-              style={styles.infoIcon}
-            />
-            <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-              Choosing the right frame helps to present your case study in a structured and convincing way.
-            </Text>
-          </View>
-        </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -158,85 +145,59 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  scrollView: {
+  content: {
     flex: 1,
-  },
-  header: {
-    paddingHorizontal: spacing.l,
-    paddingTop: spacing.l,
-    paddingBottom: spacing.l,
-  },
-  subtitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: spacing.m,
-    textAlign: 'left',
-  },
-  description: {
-    fontSize: 16,
-    lineHeight: 22,
-    textAlign: 'left',
-  },
-  optionsContainer: {
-    paddingHorizontal: spacing.l,
-    gap: spacing.m,
-  },
-  frameOption: {
-    borderRadius: 12,
-    padding: spacing.l,
-    marginBottom: spacing.s,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  frameContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  iconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: spacing.m,
   },
-  textContainer: {
-    flex: 1,
+  ctaContainer: {
+    alignItems: 'center',
   },
-  frameTitle: {
-    fontSize: 16,
+  buttonContainer: {
+    position: 'relative',
+  },
+  ctaButton: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    overflow: 'hidden',
+    marginBottom: spacing.l,
+    // iOS Shadow
+    shadowColor: '#1E6B55',
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    // Android Shadow
+    elevation: 12,
+  },
+  buttonGradient: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  innerHighlight: {
+    position: 'absolute',
+    top: 8,
+    left: 8,
+    right: 8,
+    height: 25,
+    borderRadius: 50,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  },
+  plusIcon: {
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
+  },
+  ctaText: {
+    fontSize: 18,
     fontWeight: '600',
-    marginBottom: spacing.xs,
-  },
-  frameDescription: {
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  arrowContainer: {
-    marginLeft: spacing.s,
-  },
-  infoBox: {
-    margin: spacing.l,
-    padding: spacing.m,
-    borderRadius: 8,
-  },
-  infoContent: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-  },
-  infoIcon: {
-    marginRight: spacing.s,
-    marginTop: 2,
-  },
-  infoText: {
-    flex: 1,
-    fontSize: 14,
-    lineHeight: 20,
+    textAlign: 'center',
+    marginTop: spacing.s,
   },
 }); 

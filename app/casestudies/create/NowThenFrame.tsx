@@ -20,14 +20,11 @@ import i18n from '@/i18n/config';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 import { KeyboardToolbar, ToolbarAction } from '@/shared-components/navigation/KeyboardToolbar';
 import { ContextModal } from '@/shared-components/modals/ContextModal';
-import { FirstTimeInfoBox } from '@/shared-components/ui/FirstTimeInfoBox';
-import { QualityReminderBox } from '@/shared-components/ui/QualityReminderBox';
 import { InfoBox } from '@/shared-components/ui/InfoBox';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { useFirstTimeVisit } from '@/hooks/useFirstTimeVisit';
 
 // Minimum character counts for different fields
 const MIN_CHARS = {
@@ -44,7 +41,6 @@ const MIN_CHARS = {
 export default function NowThenFrameScreen() {
   const colors = useThemeColor();
   const router = useRouter();
-  const { isFirstVisit, isLoading, markAsVisited } = useFirstTimeVisit('nowThenFrame');
   const { t } = useTranslation();
   
   // Form fields
@@ -170,40 +166,29 @@ export default function NowThenFrameScreen() {
       accessibilityLabel: 'Pricing options'
     },
     {
+      id: 'preview',
+      icon: 'eye-outline',
+      label: 'Preview',
+      onPress: () => {
+        // TODO: Generate case study preview with AI
+        Alert.alert(
+          "Preview wird generiert",
+          "Die KI erstellt aus deinen Stichpunkten eine vollständige Fallstudie...",
+          [{ text: "OK" }]
+        );
+      },
+      disabled: !isFormValid,
+      accessibilityLabel: 'Fallstudie-Preview generieren'
+    },
+    {
       id: 'save',
-      icon: 'checkmark-circle-outline',
-      label: 'Save',
+      icon: 'bookmark-outline',
+      label: 'Speichern',
       onPress: handleSubmit,
       disabled: !isSaveEnabled,
-      accessibilityLabel: t('casestudy.toolbar.save')
+      accessibilityLabel: 'Stichpunkte speichern'
     }
   ];
-
-  // Create progress bar for text length
-  const renderCharacterProgress = (currentLength: number, minChars: number) => {
-    const progress = Math.min(currentLength / minChars, 1);
-    
-    return (
-      <View style={styles.progressContainer}>
-        <View style={styles.progressBarContainer}>
-          <View 
-            style={[
-              styles.progressBar, 
-              { 
-                width: `${progress * 100}%`,
-                backgroundColor: progress >= 1 ? colors.success : colors.primary 
-              }
-            ]} 
-          />
-        </View>
-        <View style={styles.progressTextContainer}>
-          <Text style={[styles.minCharsText, { color: colors.textTertiary }]}>
-            (Minimum {minChars} characters)
-          </Text>
-        </View>
-      </View>
-    );
-  };
 
   const renderInputField = (
     label: string,
@@ -211,11 +196,11 @@ export default function NowThenFrameScreen() {
     value: string,
     setValue: (text: string) => void,
     placeholder: string,
-    minChars: number,
-    isLarge: boolean = false
+    isLarge: boolean = false,
+    isSeparator: boolean = true
   ) => {
     return (
-      <View style={styles.fieldContainer}>
+      <View style={[styles.fieldContainer, isSeparator && styles.separator]}>
         <Text style={[styles.fieldLabel, { color: colors.textPrimary }]}>
           {label}
         </Text>
@@ -230,6 +215,7 @@ export default function NowThenFrameScreen() {
               { 
                 backgroundColor: colors.backgroundSecondary,
                 color: colors.textPrimary,
+                borderColor: colors.backgroundTertiary,
               }
             ]}
             value={value}
@@ -239,7 +225,6 @@ export default function NowThenFrameScreen() {
             multiline
             textAlignVertical="top"
           />
-          {renderCharacterProgress(value.length, minChars)}
         </View>
       </View>
     );
@@ -265,107 +250,105 @@ export default function NowThenFrameScreen() {
 
         {/* Content */}
         <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
-          {/* Introduction */}
-          <View style={styles.introContainer}>
-            <Text style={[styles.introText, { color: colors.textSecondary }]}>
-              Show a clear transformation with measurable results.
-            </Text>
-          </View>
-          
-          {/* Input hints */}
+          {/* Quality Reminder InfoBox */}
           <View style={styles.infoBoxContainer}>
-            {/* First visit InfoBox - only once */}
-            {!isLoading && isFirstVisit && (
-              <View style={styles.firstTimeInfoContainer}>
-                <FirstTimeInfoBox 
-                  text={t('ui.firstTimeInfo.inputFieldsStructure')}
-                  onUnderstood={markAsVisited}
-                  iconName="information-circle-outline"
+            <InfoBox
+              text="Stichpunkte reichen! Sammle die wichtigsten Fakten und Zahlen. Unsere KI erstellt daraus eine professionelle Fallstudie."
+              iconName="information-circle-outline"
+              iconColor={colors.primary}
+              backgroundColor={`${colors.primary}10`}
+              textColor={colors.textSecondary}
+            />
+          </View>
+
+          {/* All Input Fields in One Card */}
+          <View style={[styles.inputCard, { backgroundColor: colors.backgroundSecondary, borderColor: colors.backgroundTertiary }]}>
+            {/* Headline */}
+            {renderInputField(
+              "Headline",
+              "Kurzer, ergebnisorientierter Titel",
+              headline,
+              setHeadline,
+              "z.B. Holdingstruktur spart 84.000 € jährlich"
+            )}
+
+            {/* Separator */}
+            <View style={[styles.separator, { backgroundColor: colors.backgroundTertiary }]} />
+
+            {/* Initial Situation */}
+            {renderInputField(
+              "Ausgangssituation",
+              "Stichpunkte zur Problemstellung",
+              initialSituation,
+              setInitialSituation,
+              "• Problem XY\n• Kosten zu hoch\n• Ineffiziente Prozesse"
+            )}
+
+            {/* Separator */}
+            <View style={[styles.separator, { backgroundColor: colors.backgroundTertiary }]} />
+
+            {/* Implementation */}
+            {renderInputField(
+              "Umsetzung",
+              "Wichtigste Schritte und Maßnahmen",
+              implementation,
+              setImplementation,
+              "• Schritt 1: ...\n• Herausforderung: ...\n• Lösung: ..."
+            )}
+
+            {/* Separator */}
+            <View style={[styles.separator, { backgroundColor: colors.backgroundTertiary }]} />
+
+            {/* Results */}
+            {renderInputField(
+              "Ergebnis",
+              "Konkrete Zahlen und Erfolge",
+              results,
+              setResults,
+              "• 84.000 € Ersparnis\n• 30% weniger Aufwand\n• Prozess optimiert"
+            )}
+
+            {/* Separator */}
+            <View style={[styles.separator, { backgroundColor: colors.backgroundTertiary }]} />
+
+            {/* ROI Field */}
+            <View style={styles.fieldContainer}>
+              <Text style={[styles.fieldLabel, { color: colors.textPrimary }]}>
+                Return on Investment (ROI)
+                <Text style={[styles.optionalText, { color: colors.textTertiary }]}> (Optional)</Text>
+              </Text>
+              <Text style={[styles.fieldDescription, { color: colors.textSecondary }]}>
+                Finanzielle Kennzahlen und ROI-Daten
+              </Text>
+              
+              {/* InfoBox with conversion tip */}
+              <View style={styles.roiInfoContainer}>
+                <InfoBox
+                  text="Fallstudien mit klarem ROI konvertieren ca. 12x besser"
+                  iconName="trending-up-outline"
+                  iconColor={colors.primary}
+                  backgroundColor={`${colors.primary}15`}
+                  textColor={colors.textSecondary}
                 />
               </View>
-            )}
-            
-            {/* Quality reminder - always visible */}
-            <QualityReminderBox />
-          </View>
-
-          {/* Input fields with consistent style */}
-          {renderInputField(
-            "Headline",
-            "Result-oriented headline for your case study",
-            headline,
-            setHeadline,
-            "e.g. Holding structure saves 84,000 € annually",
-            MIN_CHARS.headline
-          )}
-
-          {renderInputField(
-            "Initial Situation",
-            "What was the problem or state before?",
-            initialSituation,
-            setInitialSituation,
-            "Describe the initial situation in detail...",
-            MIN_CHARS.initialSituation,
-            true
-          )}
-
-          {renderInputField(
-            "Implementation",
-            "What was done? Difficulties and hindrances also belong here.",
-            implementation,
-            setImplementation,
-            "Describe the implementation in detail...",
-            MIN_CHARS.implementation,
-            true
-          )}
-
-          {renderInputField(
-            "Result",
-            "What came out? Numbers, effect, change",
-            results,
-            setResults,
-            "Describe the results achieved...",
-            MIN_CHARS.results,
-            true
-          )}
-
-          {/* ROI Field with InfoBox */}
-          <View style={styles.fieldContainer}>
-            <Text style={[styles.fieldLabel, { color: colors.textPrimary }]}>
-              Return on Investment (ROI)
-              <Text style={[styles.optionalText, { color: colors.textTertiary }]}> (Optional)</Text>
-            </Text>
-            <Text style={[styles.fieldDescription, { color: colors.textSecondary }]}>
-              Clear financial benefits and return on investment
-            </Text>
-            
-            {/* InfoBox with conversion tip */}
-            <View style={styles.roiInfoContainer}>
-              <InfoBox
-                text="Case studies with clear ROI convert approx. 12x better than other case studies"
-                iconName="trending-up-outline"
-                iconColor={colors.primary}
-                backgroundColor={`${colors.primary}15`}
-                textColor={colors.textSecondary}
-              />
-            </View>
-            
-            <View style={styles.inputWrapper}>
-              <TextInput
-                style={[
-                  styles.textInput,
-                  { 
-                    backgroundColor: colors.backgroundSecondary,
-                    color: colors.textPrimary,
-                  }
-                ]}
-                value={roi}
-                onChangeText={setRoi}
-                placeholder="e.g. 300% ROI within 18 months, €240,000 saved annually..."
-                placeholderTextColor={colors.textTertiary}
-                multiline
-                textAlignVertical="top"
-              />
+              
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  style={[
+                    styles.textInputInCard,
+                    { 
+                      backgroundColor: colors.backgroundPrimary,
+                      color: colors.textPrimary,
+                    }
+                  ]}
+                  value={roi}
+                  onChangeText={setRoi}
+                  placeholder="• 300% ROI in 18 Monaten\n• 240.000 € jährliche Ersparnis\n• Break-even nach 6 Monaten"
+                  placeholderTextColor={colors.textTertiary}
+                  multiline
+                  textAlignVertical="top"
+                />
+              </View>
             </View>
           </View>
         </ScrollView>
@@ -426,18 +409,8 @@ const styles = StyleSheet.create({
     padding: spacing.m,
     paddingBottom: spacing.xxl,
   },
-  introContainer: {
-    marginBottom: spacing.m,
-  },
-  introText: {
-    fontSize: typography.fontSize.m,
-    lineHeight: 22,
-  },
-  infoBoxContainer: {
-    marginBottom: spacing.l,
-  },
   fieldContainer: {
-    marginBottom: spacing.xl,
+    marginBottom: 0,
   },
   fieldLabel: {
     fontSize: typography.fontSize.m,
@@ -452,20 +425,18 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   textInput: {
-    borderWidth: 0,
+    borderWidth: 1,
     borderRadius: ui.borderRadius.s,
     paddingTop: spacing.m,
     paddingLeft: spacing.m,
     paddingRight: spacing.m,
-    paddingBottom: 20,
+    paddingBottom: spacing.m,
     fontSize: typography.fontSize.m,
-    minHeight: 40,
+    minHeight: 80,
     marginBottom: 0,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
   },
   textInputLarge: {
-    minHeight: 60,
+    minHeight: 120,
   },
   progressContainer: {
     marginTop: 0,
@@ -494,14 +465,35 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
     paddingHorizontal: spacing.m,
   },
-  firstTimeInfoContainer: {
-    marginBottom: spacing.m,
-  },
   roiInfoContainer: {
     marginBottom: spacing.m,
   },
   optionalText: {
     fontSize: typography.fontSize.xs,
     fontWeight: typography.fontWeight.regular as any,
+  },
+  infoBoxContainer: {
+    marginBottom: spacing.xl,
+  },
+  inputCard: {
+    borderWidth: 1,
+    borderRadius: ui.borderRadius.m,
+    padding: spacing.l,
+    marginBottom: spacing.xl,
+  },
+  separator: {
+    height: 1,
+    marginVertical: spacing.l,
+  },
+  textInputInCard: {
+    borderWidth: 0,
+    borderRadius: ui.borderRadius.s,
+    paddingTop: spacing.m,
+    paddingLeft: spacing.m,
+    paddingRight: spacing.m,
+    paddingBottom: spacing.m,
+    fontSize: typography.fontSize.m,
+    minHeight: 80,
+    marginBottom: 0,
   },
 }); 
