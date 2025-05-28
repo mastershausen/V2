@@ -100,7 +100,8 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
 
   const handleNext = () => {
     if (isValid) {
-      // Navigation zu Wizard8 (später implementieren)
+      // Navigation zu Wizard8
+      router.push('/wizard8');
       console.log('Budget-Daten:', {
         hasFixedBudget,
         minBudget,
