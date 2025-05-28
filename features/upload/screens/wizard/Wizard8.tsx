@@ -49,10 +49,9 @@ export default function Wizard8({ onOpenSidebar }: Wizard8Props) {
   };
 
   const handleNext = () => {
-    // Da optional, immer valid - Navigation zur Completion Seite
+    // Navigation zum Splashscreen
+    router.push('/case-study-creation');
     console.log('Wizard abgeschlossen! Highlights:', highlights);
-    // Hier würde normalerweise zur Completion/Success Seite navigiert werden
-    // router.push('/wizard-complete');
   };
 
   // Da optional, ist immer valid
