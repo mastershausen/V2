@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
+import { themeColors } from '@/config/theme/colors';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { changeLanguage } from '@/i18n/config';
 
@@ -313,7 +314,7 @@ export default function ChatDetailScreen() {
             <View style={[
               styles.messageBubble,
               isUser 
-                ? [styles.userBubble, { backgroundColor: colors.primary }] 
+                ? [styles.userBubble, { backgroundColor: colors === themeColors.dark ? '#1C1C1E' : '#F2F2F7' }] 
                 : isVerificationNotification
                   ? [styles.verificationBubble, { backgroundColor: '#FFA500' }]
                   : [styles.botBubble, { backgroundColor: colors.divider + '30' }]

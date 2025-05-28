@@ -32,6 +32,7 @@ import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { themeColors } from '@/config/theme/colors';
 import { logger } from '@/utils/logger';
 import FallstudieDetail from '../components/FallstudieDetail';
 
@@ -498,9 +499,9 @@ export default function OliviaChatScreen() {
                           chat.messages[index + 1].date !== item.date || 
                           chat.messages[index + 1].isUser !== item.isUser;
     
-    // Consistent text color for all messages
-    const textColor = '#F1F5F9';
-    const timeColor = 'rgba(241, 245, 249, 0.7)';
+    // Dynamic text color based on theme
+    const textColor = colors.textPrimary;
+    const timeColor = colors.textSecondary;
 
     // If this is the last message from Olivia, show the GigCards
     if (item.id === '9' && !item.isUser) {
@@ -522,15 +523,19 @@ export default function OliviaChatScreen() {
         !isLastInGroup && (item.isUser ? styles.userMessageGrouped : styles.otherMessageGrouped)
       ]}>
         {item.isUser ? (
-          // User messages keep their bubble styling
+          // User messages with theme-based bubble styling
           <View style={[
             styles.messageBubble,
             styles.userBubble,
-            { backgroundColor: '#2C5063' }
+            { 
+              backgroundColor: colors === themeColors.dark ? '#1C1C1E' : '#F2F2F7'
+            }
           ]}>
             <Text style={[
               styles.messageText,
-              { color: '#F1F5F9' }
+              { 
+                color: colors.textPrimary
+              }
             ]}>
               {item.text}
             </Text>
@@ -555,11 +560,11 @@ export default function OliviaChatScreen() {
             )}
           </View>
         ) : (
-          // Olivia messages without bubble - just text
+          // Olivia messages without bubble - just text with dynamic color
           <View style={styles.oliviaMessageContainer}>
             <Text style={[
               styles.oliviaMessageText,
-              { color: '#F1F5F9' }
+              { color: textColor }
             ]}>
               {item.text}
             </Text>
@@ -586,7 +591,7 @@ export default function OliviaChatScreen() {
         )}
       </View>
     );
-  }, []);
+  }, [colors]);
 
   // Display message with case study results
   const renderMessageWithResults = (item: any, messageText: string) => {
@@ -595,7 +600,7 @@ export default function OliviaChatScreen() {
         {/* Olivia's message text without bubble */}
         <Text style={[
           styles.oliviaMessageText,
-          { color: '#F1F5F9', marginBottom: spacing.m }
+          { color: colors.textPrimary, marginBottom: spacing.m }
         ]}>
           {messageText}
         </Text>
@@ -605,7 +610,7 @@ export default function OliviaChatScreen() {
           {fallstudienErgebnisse.map((studie) => (
             <View key={studie.id} style={styles.fallstudieItem}>
               <View style={styles.fallstudieHeader}>
-                <Text style={styles.fallstudieTitle}>
+                <Text style={[styles.fallstudieTitle, { color: colors.textPrimary }]}>
                   Case Study {studie.id}: {studie.titel}
                 </Text>
                 <TouchableOpacity 
@@ -625,10 +630,10 @@ export default function OliviaChatScreen() {
                     setShowFallstudieDetail(true);
                   }}
                 >
-                  <Text style={styles.infoButtonText}>i</Text>
+                  <Text style={[styles.infoButtonText, { color: colors.textPrimary }]}>i</Text>
                 </TouchableOpacity>
               </View>
-              <Text style={styles.fallstudieErgebnis}>
+              <Text style={[styles.fallstudieErgebnis, { color: colors.textPrimary }]}>
                 {studie.kurzbeschreibung}
               </Text>
             </View>
@@ -637,7 +642,7 @@ export default function OliviaChatScreen() {
         
         {/* Rating buttons */}
         <View style={styles.ratingContainer}>
-          <Text style={styles.ratingLabel}>Was this helpful?</Text>
+          <Text style={[styles.ratingLabel, { color: colors.textSecondary }]}>Was this helpful?</Text>
           <View style={styles.ratingButtons}>
             <TouchableOpacity
               style={[
@@ -649,7 +654,7 @@ export default function OliviaChatScreen() {
               <MaterialCommunityIcons 
                 name={messageRating === 'up' ? "thumb-up" : "thumb-up-outline"} 
                 size={20} 
-                color={messageRating === 'up' ? '#1E6B55' : 'rgba(241, 245, 249, 0.7)'} 
+                color={messageRating === 'up' ? '#1E6B55' : colors.textSecondary} 
               />
             </TouchableOpacity>
             <TouchableOpacity
@@ -662,7 +667,7 @@ export default function OliviaChatScreen() {
               <MaterialCommunityIcons 
                 name={messageRating === 'down' ? "thumb-down" : "thumb-down-outline"} 
                 size={20} 
-                color={messageRating === 'down' ? '#E53935' : 'rgba(241, 245, 249, 0.7)'} 
+                color={messageRating === 'down' ? '#E53935' : colors.textSecondary} 
               />
             </TouchableOpacity>
           </View>
@@ -728,10 +733,10 @@ export default function OliviaChatScreen() {
               style={styles.solvboxLogo}
             />
             <View style={styles.solvboxTextContainer}>
-              <Text style={[styles.solvboxHeaderSubtitle, { color: '#F1F5F9' }]}>
+              <Text style={[styles.solvboxHeaderSubtitle, { color: colors.textPrimary }]}>
                 I'm Olivia and my job is to discover new opportunities for you to increase your liquidity. If you have questions or unresolved problems in your company, I'm always here for you and I'll find the best solution within a few seconds.
               </Text>
-              <Text style={[styles.solvboxHeaderSignature, { color: '#F1F5F9' }]}>
+              <Text style={[styles.solvboxHeaderSignature, { color: colors.textPrimary }]}>
                 Looking forward to a good collaboration!
               </Text>
               <View style={[styles.solvboxHeaderDivider, { backgroundColor: '#1E6B55' }]} />
@@ -876,6 +881,27 @@ export default function OliviaChatScreen() {
     console.log('Message rated:', rating);
   };
 
+  // Dynamischer Gradient basierend auf Theme
+  const getBackgroundGradient = () => {
+    const petrolColor = '#1E6B55'; // Markenfarbe Petrol bleibt konstant
+    
+    if (colors === themeColors.dark) {
+      // Dark Mode: Petrol zu Schwarz
+      return {
+        colors: [petrolColor, '#000000'] as const,
+        locations: [0, 1.0] as const,
+      };
+    } else {
+      // Light Mode: Petrol zu Weiß
+      return {
+        colors: [petrolColor, '#FFFFFF'] as const,
+        locations: [0, 1.0] as const,
+      };
+    }
+  };
+
+  const backgroundGradient = getBackgroundGradient();
+
   return (
     <SidebarContainer
       sidebarVisible={sidebarVisible}
@@ -884,10 +910,10 @@ export default function OliviaChatScreen() {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         
-        {/* Futuristischer Gradient-Hintergrund */}
+        {/* Clean Petrol-zu-Schwarz/Weiß Gradient-Hintergrund */}
         <LinearGradient
-          colors={['#1E5B4E', '#1E4B5B', '#1E3B6B', '#0A1828']}
-          locations={[0, 0.3, 0.6, 1.0]}
+          colors={backgroundGradient.colors}
+          locations={backgroundGradient.locations}
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
           style={styles.backgroundGradient}
@@ -1020,8 +1046,8 @@ export default function OliviaChatScreen() {
           >
             {/* Same gradient background as main screen */}
             <LinearGradient
-              colors={['#1E5B4E', '#1E4B5B', '#1E3B6B', '#0A1828']}
-              locations={[0, 0.3, 0.6, 1.0]}
+              colors={backgroundGradient.colors}
+              locations={backgroundGradient.locations}
               start={{ x: 0, y: 0 }}
               end={{ x: 0, y: 1 }}
               style={styles.popupBackgroundGradient}
@@ -1029,14 +1055,14 @@ export default function OliviaChatScreen() {
             
             <View style={styles.preferencesPopup}>
               <View style={styles.popupHeader}>
-                <Text style={styles.popupTitle}>
+                <Text style={[styles.popupTitle, { color: colors.textPrimary }]}>
                   Personal Preferences
                 </Text>
                 <TouchableOpacity 
                   onPress={() => setShowPreferencesPopup(false)}
                   style={styles.popupCloseButton}
                 >
-                  <Ionicons name="close" size={24} color="#F1F5F9" />
+                  <Ionicons name="close" size={24} color={colors.textPrimary} />
                 </TouchableOpacity>
               </View>
               
@@ -1045,14 +1071,14 @@ export default function OliviaChatScreen() {
                   style={[
                     styles.popupInput,
                     {
-                      color: isPrefilledText ? 'rgba(241, 245, 249, 0.5)' : '#F1F5F9',
+                      color: isPrefilledText ? colors.textSecondary : colors.textPrimary,
                       fontSize: isPrefilledText ? 14 : 16,
                       fontStyle: isPrefilledText ? 'italic' : 'normal',
                     }
                   ]}
                   ref={preferencesInputRef}
                   placeholder="Here you can tell me everything I should consider for future search suggestions..."
-                  placeholderTextColor="rgba(241, 245, 249, 0.4)"
+                  placeholderTextColor={colors.textTertiary}
                   value={userPreferences}
                   onChangeText={handlePreferencesTextChange}
                   multiline={true}
@@ -1104,12 +1130,10 @@ const styles = StyleSheet.create({
   fallstudieTitle: {
     fontWeight: '600',
     fontSize: 14,
-    color: '#F1F5F9',
     flex: 1,
   },
   fallstudieErgebnis: {
     fontSize: 13,
-    color: '#F1F5F9',
     opacity: 0.9,
   },
   infoButton: {
@@ -1122,7 +1146,6 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   infoButtonText: {
-    color: '#F1F5F9',
     fontSize: 12,
     fontWeight: 'bold',
   },
@@ -1564,7 +1587,6 @@ const styles = StyleSheet.create({
   popupTitle: {
     fontSize: typography.fontSize.l,
     fontWeight: '600',
-    color: '#F1F5F9',
   },
   popupCloseButton: {
     padding: spacing.xs,
@@ -1633,7 +1655,6 @@ const styles = StyleSheet.create({
   ratingLabel: {
     fontSize: typography.fontSize.s,
     fontWeight: '600',
-    color: 'rgba(241, 245, 249, 0.8)',
     marginRight: spacing.s,
   },
   ratingButtons: {
