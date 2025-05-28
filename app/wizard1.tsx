@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   View, 
   StyleSheet, 
@@ -6,13 +6,12 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView
+  ScrollView,
+  Keyboard,
+  Dimensions
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
@@ -22,6 +21,21 @@ export default function Wizard1Page() {
   const colors = useThemeColor();
   const router = useRouter();
   const [answer, setAnswer] = useState('');
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+      setKeyboardHeight(e.endCoordinates.height);
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardHeight(0);
+    });
+
+    return () => {
+      keyboardDidShowListener?.remove();
+      keyboardDidHideListener?.remove();
+    };
+  }, []);
 
   const handleBack = () => {
     router.back();
@@ -29,9 +43,7 @@ export default function Wizard1Page() {
 
   const handleNext = () => {
     if (answer.trim()) {
-      // Hier würde die Antwort gespeichert und zu Wizard2 navigiert werden
       console.log('Antwort:', answer);
-      // router.push('/wizard2'); // Später wenn Wizard2 existiert
     }
   };
 
@@ -40,104 +52,105 @@ export default function Wizard1Page() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="Neue Fallstudie"
+        title="1 von 8 Fragen"
         onBackPress={handleBack}
         showBackButton={true}
       />
       
-      <KeyboardAvoidingView 
-        style={styles.keyboardView}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+      <ScrollView 
+        style={styles.scrollView} 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[
+          styles.scrollContent,
+          { paddingBottom: keyboardHeight > 0 ? 60 : spacing.l }
+        ]}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="interactive"
       >
-        <ScrollView 
-          style={styles.scrollView} 
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
-        >
-          {/* Progress Bar */}
-          <View style={styles.progressContainer}>
-            <View style={[styles.progressBackground, { backgroundColor: colors.inputBorder }]}>
-              <View style={[styles.progressFill, { backgroundColor: colors.primary, width: '12.5%' }]} />
-            </View>
-            <Text style={[styles.progressText, { color: colors.textSecondary }]}>
-              1 von 8 Fragen
-            </Text>
+        {/* Progress Bar */}
+        <View style={styles.progressContainer}>
+          <View style={[styles.progressBackground, { backgroundColor: colors.inputBorder }]}>
+            <View style={[styles.progressFill, { backgroundColor: colors.primary, width: '12.5%' }]} />
           </View>
+        </View>
 
-          {/* Question Section */}
-          <View style={styles.questionContainer}>
-            <Text style={[styles.questionTitle, { color: colors.textPrimary }]}>
-              Worum geht es in deiner Fallstudie?
-            </Text>
-            <Text style={[styles.questionSubtitle, { color: colors.textSecondary }]}>
-              Beschreibe kurz das Hauptthema oder Problem, das du gelöst hast.
-            </Text>
-          </View>
+        {/* Question Section */}
+        <View style={styles.questionContainer}>
+          <Text style={[styles.questionTitle, { color: colors.textPrimary }]}>
+            Worum geht es in deiner Fallstudie?
+          </Text>
+          <Text style={[styles.questionSubtitle, { color: colors.textSecondary }]}>
+            Beschreibe kurz das Hauptthema oder Problem, das du gelöst hast.
+          </Text>
+        </View>
 
-          {/* Input Section */}
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={[
-                styles.textInput,
-                {
-                  backgroundColor: colors.backgroundSecondary,
-                  borderColor: answer.trim() ? colors.primary : colors.inputBorder,
-                  color: colors.textPrimary,
-                }
-              ]}
-              placeholder="z.B. Optimierung der Kundenakquise durch digitale Strategien..."
-              placeholderTextColor={colors.textTertiary}
-              value={answer}
-              onChangeText={setAnswer}
-              multiline={true}
-              numberOfLines={4}
-              textAlignVertical="top"
-              autoFocus={true}
-            />
-          </View>
-        </ScrollView>
-
-        {/* Bottom CTA */}
-        <View style={styles.bottomContainer}>
-          <TouchableOpacity
+        {/* Input Section */}
+        <View style={styles.inputContainer}>
+          <TextInput
             style={[
-              styles.nextButton,
+              styles.textInput,
               {
-                backgroundColor: isValid ? colors.primary : colors.inputBorder,
+                backgroundColor: colors.backgroundSecondary,
+                borderColor: answer.trim() ? colors.primary : colors.inputBorder,
+                color: colors.textPrimary,
               }
             ]}
-            onPress={handleNext}
-            disabled={!isValid}
-            activeOpacity={0.8}
-          >
-            <Text style={[
-              styles.nextButtonText,
-              {
-                color: isValid ? 'white' : colors.textTertiary,
-              }
-            ]}>
-              Weiter
-            </Text>
-            <Ionicons 
-              name="arrow-forward" 
-              size={20} 
-              color={isValid ? 'white' : colors.textTertiary}
-              style={styles.nextIcon}
-            />
-          </TouchableOpacity>
+            placeholder="z.B. Optimierung der Kundenakquise durch digitale Strategien..."
+            placeholderTextColor={colors.textTertiary}
+            value={answer}
+            onChangeText={setAnswer}
+            multiline={true}
+            numberOfLines={4}
+            textAlignVertical="top"
+            autoFocus={true}
+          />
         </View>
-      </KeyboardAvoidingView>
+      </ScrollView>
+
+      {/* Keyboard Toolbar */}
+      <View 
+        style={[
+          styles.keyboardToolbar,
+          { 
+            backgroundColor: colors.backgroundPrimary,
+            bottom: keyboardHeight,
+            borderTopColor: colors.inputBorder,
+          }
+        ]}
+      >
+        <TouchableOpacity
+          style={[
+            styles.nextButton,
+            {
+              backgroundColor: isValid ? colors.primary : colors.inputBorder,
+            }
+          ]}
+          onPress={handleNext}
+          disabled={!isValid}
+          activeOpacity={0.8}
+        >
+          <Text style={[
+            styles.nextButtonText,
+            {
+              color: isValid ? 'white' : colors.textTertiary,
+            }
+          ]}>
+            Weiter
+          </Text>
+          <Ionicons 
+            name="arrow-forward" 
+            size={20} 
+            color={isValid ? 'white' : colors.textTertiary}
+            style={styles.nextIcon}
+          />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  keyboardView: {
     flex: 1,
   },
   scrollView: {
@@ -147,7 +160,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: spacing.l,
     paddingTop: spacing.l,
-    paddingBottom: spacing.xl,
   },
   progressContainer: {
     paddingBottom: spacing.l,
@@ -160,10 +172,6 @@ const styles = StyleSheet.create({
   progressFill: {
     height: '100%',
     borderRadius: 2,
-  },
-  progressText: {
-    fontSize: 14,
-    textAlign: 'center',
   },
   questionContainer: {
     paddingBottom: spacing.l,
@@ -189,11 +197,6 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     minHeight: 120,
   },
-  bottomContainer: {
-    paddingHorizontal: spacing.l,
-    paddingBottom: spacing.s,
-    paddingTop: spacing.s,
-  },
   nextButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -209,5 +212,13 @@ const styles = StyleSheet.create({
   },
   nextIcon: {
     marginLeft: spacing.xs,
+  },
+  keyboardToolbar: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    paddingHorizontal: spacing.l,
+    paddingVertical: spacing.s,
+    borderTopWidth: 1,
   },
 }); 
