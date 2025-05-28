@@ -1,11 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { 
   View, 
   StyleSheet, 
+  TouchableOpacity, 
   SafeAreaView,
-  TouchableOpacity,
-  Animated,
-  Text
+  Animated
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,7 +12,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
-import { spacing } from '@/config/theme/spacing';
 
 interface UploadScreenProps {
   onOpenSidebar?: () => void;
@@ -22,34 +20,11 @@ interface UploadScreenProps {
 export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
   const colors = useThemeColor();
   const router = useRouter();
-  
-  // Animationen
-  const pulseAnim = useRef(new Animated.Value(1)).current;
-  const scaleAnim = useRef(new Animated.Value(1)).current;
 
-  useEffect(() => {
-    // Subtile Pulsation
-    const pulse = Animated.loop(
-      Animated.sequence([
-        Animated.timing(pulseAnim, {
-          toValue: 1.05,
-          duration: 2000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(pulseAnim, {
-          toValue: 1,
-          duration: 2000,
-          useNativeDriver: true,
-        }),
-      ])
-    );
-
-    pulse.start();
-
-    return () => {
-      pulse.stop();
-    };
-  }, []);
+  const handleCreateCaseStudy = () => {
+    // Navigation zu Wizard1
+    router.push('/wizard1');
+  };
 
   const handleBackPress = () => {
     if (onOpenSidebar) {
@@ -57,27 +32,6 @@ export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
     } else {
       router.push('/');
     }
-  };
-
-  const handleCreateCaseStudy = () => {
-    // Hier wird später der Wizard gestartet
-    console.log('🚀 Case Study Wizard starten');
-  };
-
-  const handlePressIn = () => {
-    Animated.spring(scaleAnim, {
-      toValue: 0.95,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const handlePressOut = () => {
-    Animated.spring(scaleAnim, {
-      toValue: 1,
-      tension: 100,
-      friction: 3,
-      useNativeDriver: true,
-    }).start();
   };
 
   return (
@@ -89,52 +43,30 @@ export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
         showBackButton={true}
       />
       
-      {/* Content */}
+      {/* Main Content */}
       <View style={styles.content}>
-        {/* 3D CTA Button */}
         <View style={styles.ctaContainer}>
-          {/* Main Button */}
-          <Animated.View
-            style={[
-              styles.buttonContainer,
-              {
-                transform: [
-                  { scale: Animated.multiply(scaleAnim, pulseAnim) }
-                ],
-              },
-            ]}
-          >
+          <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.ctaButton}
               onPress={handleCreateCaseStudy}
-              onPressIn={handlePressIn}
-              onPressOut={handlePressOut}
-              activeOpacity={1}
+              activeOpacity={0.8}
             >
               <LinearGradient
                 colors={['#2A8A6B', '#1E6B55', '#164A42']}
+                style={styles.gradientButton}
                 start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={styles.buttonGradient}
+                end={{ x: 0, y: 1 }}
               >
-                {/* Inner Highlight */}
-                <View style={styles.innerHighlight} />
-                
-                {/* Plus Icon */}
                 <Ionicons 
                   name="add" 
                   size={48} 
                   color="white" 
-                  style={styles.plusIcon}
+                  style={styles.iconShadow}
                 />
               </LinearGradient>
             </TouchableOpacity>
-          </Animated.View>
-          
-          {/* Subtitle */}
-          <Text style={[styles.ctaText, { color: colors.textSecondary }]}>
-            Neue Case Study erstellen
-          </Text>
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -161,43 +93,29 @@ const styles = StyleSheet.create({
     height: 120,
     borderRadius: 60,
     overflow: 'hidden',
-    marginBottom: spacing.l,
-    // iOS Shadow
-    shadowColor: '#1E6B55',
+    // Echter 3D-Schatten
+    shadowColor: '#164A42',
     shadowOffset: {
       width: 0,
-      height: 8,
+      height: 6,
     },
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
     // Android Shadow
-    elevation: 12,
+    elevation: 15,
+    // Transform für 3D-Effekt
+    transform: [{ translateY: -2 }],
   },
-  buttonGradient: {
+  gradientButton: {
     width: '100%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative',
+    borderRadius: 60,
   },
-  innerHighlight: {
-    position: 'absolute',
-    top: 8,
-    left: 8,
-    right: 8,
-    height: 25,
-    borderRadius: 50,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-  },
-  plusIcon: {
+  iconShadow: {
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 4,
-  },
-  ctaText: {
-    fontSize: 18,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginTop: spacing.s,
   },
 }); 

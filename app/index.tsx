@@ -21,8 +21,8 @@ export default function Index() {
     
     // Direkte Navigation zu Olivia Chat
     const timer = setTimeout(() => {
-      router.replace('/chats/olivia');
-    }, 100);
+          router.replace('/chats/olivia');
+        }, 100);
     
     return () => clearTimeout(timer);
   }, []);
