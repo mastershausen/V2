@@ -658,9 +658,8 @@ export default function ExploreScreen(): React.ReactElement {
         iconLibrary="material-community"
         iconPosition="left"
         useGradient={true}
-        gradientColors={[colors.primary, '#165A48']}
+        gradientColors={['#1E6B55', '#165A48']}
         textColor="#FFFFFF"
-        style={{ borderTopWidth: 0 }}
       />
     </View>
   );
@@ -696,11 +695,8 @@ const styles = StyleSheet.create({
   preButtonTextSection: {
     paddingHorizontal: spacing.m,
     paddingTop: spacing.m,
-    paddingBottom: 0,
-    marginBottom: -spacing.xs,
+    paddingBottom: spacing.s,
     alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
   },
   preButtonText: {
     fontSize: 14,

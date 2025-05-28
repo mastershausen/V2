@@ -67,15 +67,18 @@ export function FooterActionButton({
   buttonStyle,
   textStyle,
   useGradient = false,
-  gradientColors = ['#00A041', '#008F39'],
+  gradientColors = ['#1E6B55', '#165A48'],
 }: FooterActionButtonProps) {
   const colors = useThemeColor();
   const insets = useSafeAreaInsets();
   
-  // Container Style
+  // Container Style mit verbessertem Design
   const containerStyle = [
     styles.container, 
-    { borderTopColor: colors.divider },
+    { 
+      paddingBottom: insets.bottom + spacing.m,
+      backgroundColor: colors.backgroundPrimary,
+    },
     style
   ];
 
@@ -96,10 +99,9 @@ export function FooterActionButton({
           style={[
             styles.button,
             !useGradient && { 
-              backgroundColor: backgroundColor || colors.ui.buttonBackground,
-              opacity: disabled ? ui.opacity.disabled : ui.opacity.active,
+              backgroundColor: backgroundColor || '#1E6B55',
+              opacity: disabled ? 0.5 : 1,
             },
-            { borderRadius: ui.borderRadius.m },
             buttonStyle
           ]}
           onPress={onPress}
@@ -108,57 +110,59 @@ export function FooterActionButton({
           accessibilityRole="button"
           accessibilityLabel={label}
           accessibilityState={{ disabled }}
+          activeOpacity={0.8}
         >
           {useGradient ? (
             <LinearGradient
               colors={gradientColors}
               start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
+              end={{ x: 1, y: 0 }}
               style={[
                 styles.gradientButton,
                 { 
-                  opacity: disabled ? ui.opacity.disabled : ui.opacity.active,
-                  borderRadius: ui.borderRadius.m,
+                  opacity: disabled ? 0.5 : 1,
                 }
               ]}
             >
-              {iconPosition === 'left' && (
-                <MaterialCommunityIcons 
-                  name={icon as MaterialCommunityIconsName} 
-                  size={ui.icon.medium} 
-                  color={textColor || colors.ui.buttonText} 
-                  style={{ marginRight: spacing.xs }} 
-                />
-              )}
-              <Text style={[
-                styles.buttonText, 
-                { color: textColor || colors.ui.buttonText },
-                textStyle
-              ]}>
-                {label}
-              </Text>
-              {iconPosition === 'right' && (
-                <MaterialCommunityIcons 
-                  name={icon as MaterialCommunityIconsName} 
-                  size={ui.icon.medium} 
-                  color={textColor || colors.ui.buttonText} 
-                  style={{ marginLeft: spacing.xs }} 
-                />
-              )}
+              <View style={styles.buttonContent}>
+                {iconPosition === 'left' && (
+                  <MaterialCommunityIcons 
+                    name={icon as MaterialCommunityIconsName} 
+                    size={20} 
+                    color={textColor || '#FFFFFF'} 
+                    style={styles.iconLeft} 
+                  />
+                )}
+                <Text style={[
+                  styles.buttonText, 
+                  { color: textColor || '#FFFFFF' },
+                  textStyle
+                ]}>
+                  {label}
+                </Text>
+                {iconPosition === 'right' && (
+                  <MaterialCommunityIcons 
+                    name={icon as MaterialCommunityIconsName} 
+                    size={20} 
+                    color={textColor || '#FFFFFF'} 
+                    style={styles.iconRight} 
+                  />
+                )}
+              </View>
             </LinearGradient>
           ) : (
-            <>
+            <View style={styles.buttonContent}>
               {iconPosition === 'left' && (
                 <MaterialCommunityIcons 
                   name={icon as MaterialCommunityIconsName} 
-                  size={ui.icon.medium} 
-                  color={textColor || colors.ui.buttonText} 
-                  style={{ marginRight: spacing.xs }} 
+                  size={20} 
+                  color={textColor || '#FFFFFF'} 
+                  style={styles.iconLeft} 
                 />
               )}
               <Text style={[
                 styles.buttonText, 
-                { color: textColor || colors.ui.buttonText },
+                { color: textColor || '#FFFFFF' },
                 textStyle
               ]}>
                 {label}
@@ -166,12 +170,12 @@ export function FooterActionButton({
               {iconPosition === 'right' && (
                 <MaterialCommunityIcons 
                   name={icon as MaterialCommunityIconsName} 
-                  size={ui.icon.medium} 
-                  color={textColor || colors.ui.buttonText} 
-                  style={{ marginLeft: spacing.xs }} 
+                  size={20} 
+                  color={textColor || '#FFFFFF'} 
+                  style={styles.iconRight} 
                 />
               )}
-            </>
+            </View>
           )}
         </TouchableOpacity>
       </View>
@@ -181,89 +185,134 @@ export function FooterActionButton({
   // Für Ionicons und Standard-Buttons verwenden wir GradientButton
   return (
     <View style={containerStyle} accessible={true} accessibilityRole="none">
-      {useGradient ? (
-        <GradientButton
-          label={label}
-          icon={getIconName()}
-          iconSize={ui.icon.medium}
-          gradientColors={gradientColors as readonly [string, string]}
-          onPress={onPress}
-          disabled={disabled}
-          containerStyle={buttonStyle as ViewStyle}
-          textStyle={{ 
-            color: textColor || colors.ui.buttonText,
-            ...(textStyle as object)
-          }}
-          gradientStyle={styles.gradientButton}
-        />
-      ) : (
-        <TouchableOpacity 
-          style={[
-            styles.button,
-            { 
-              backgroundColor: backgroundColor || colors.ui.buttonBackground,
-              opacity: disabled ? ui.opacity.disabled : ui.opacity.active,
-              borderRadius: ui.borderRadius.m,
-            },
-            buttonStyle
-          ]}
-          onPress={onPress}
-          disabled={disabled}
-          accessible={true}
-          accessibilityRole="button"
-          accessibilityLabel={label}
-          accessibilityState={{ disabled }}
-        >
-          {iconPosition === 'left' && icon && (
-            <Ionicons 
-              name={icon as IoniconsName} 
-              size={ui.icon.medium} 
-              color={textColor || colors.ui.buttonText} 
-              style={{ marginRight: spacing.xs }} 
-            />
-          )}
-          <Text style={[
-            styles.buttonText, 
-            { color: textColor || colors.ui.buttonText },
-            textStyle
-          ]}>
-            {label}
-          </Text>
-          {iconPosition === 'right' && icon && (
-            <Ionicons 
-              name={icon as IoniconsName} 
-              size={ui.icon.medium} 
-              color={textColor || colors.ui.buttonText} 
-              style={{ marginLeft: spacing.xs }} 
-            />
-          )}
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity 
+        style={[
+          styles.button,
+          !useGradient && { 
+            backgroundColor: backgroundColor || '#1E6B55',
+            opacity: disabled ? 0.5 : 1,
+          },
+          buttonStyle
+        ]}
+        onPress={onPress}
+        disabled={disabled}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel={label}
+        accessibilityState={{ disabled }}
+        activeOpacity={0.8}
+      >
+        {useGradient ? (
+          <LinearGradient
+            colors={gradientColors}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={[
+              styles.gradientButton,
+              { 
+                opacity: disabled ? 0.5 : 1,
+              }
+            ]}
+          >
+            <View style={styles.buttonContent}>
+              {iconPosition === 'left' && icon && (
+                <Ionicons 
+                  name={icon as IoniconsName} 
+                  size={20} 
+                  color={textColor || '#FFFFFF'} 
+                  style={styles.iconLeft} 
+                />
+              )}
+              <Text style={[
+                styles.buttonText, 
+                { color: textColor || '#FFFFFF' },
+                textStyle
+              ]}>
+                {label}
+              </Text>
+              {iconPosition === 'right' && icon && (
+                <Ionicons 
+                  name={icon as IoniconsName} 
+                  size={20} 
+                  color={textColor || '#FFFFFF'} 
+                  style={styles.iconRight} 
+                />
+              )}
+            </View>
+          </LinearGradient>
+        ) : (
+          <View style={styles.buttonContent}>
+            {iconPosition === 'left' && icon && (
+              <Ionicons 
+                name={icon as IoniconsName} 
+                size={20} 
+                color={textColor || '#FFFFFF'} 
+                style={styles.iconLeft} 
+              />
+            )}
+            <Text style={[
+              styles.buttonText, 
+              { color: textColor || '#FFFFFF' },
+              textStyle
+            ]}>
+              {label}
+            </Text>
+            {iconPosition === 'right' && icon && (
+              <Ionicons 
+                name={icon as IoniconsName} 
+                size={20} 
+                color={textColor || '#FFFFFF'} 
+                style={styles.iconRight} 
+              />
+            )}
+          </View>
+        )}
+      </TouchableOpacity>
     </View>
   );
 }
 
 // Konstanten für Styles
-const BUTTON_HEIGHT = 50;
+const BUTTON_HEIGHT = 56;
 
 const styles = StyleSheet.create({
   container: {
-    padding: spacing.m,
-    borderTopWidth: ui.border.normal,
-    backgroundColor: 'transparent',
+    paddingHorizontal: spacing.m,
+    paddingTop: spacing.m,
   },
   button: {
     height: BUTTON_HEIGHT,
+    borderRadius: 16,
+    shadowColor: '#1E6B55',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  buttonContent: {
+    flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row',
-    ...ui.shadow.light,
   },
   buttonText: {
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.bold as TextStyle['fontWeight'],
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: 0.5,
   },
   gradientButton: {
     height: BUTTON_HEIGHT,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  iconLeft: {
+    marginRight: spacing.s,
+  },
+  iconRight: {
+    marginLeft: spacing.s,
   },
 }); 

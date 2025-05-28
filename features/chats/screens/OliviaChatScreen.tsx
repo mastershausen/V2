@@ -884,21 +884,19 @@ export default function OliviaChatScreen() {
     const petrolColor = '#1E6B55'; // Markenfarbe Petrol bleibt konstant
     
     if (colors === themeColors.dark) {
-      // Dark Mode: Petrol zu Schwarz
+      // Dark Mode: Petrol zu backgroundPrimary
       return {
-        colors: [petrolColor, '#000000'] as const,
+        colors: [petrolColor, colors.backgroundPrimary] as const,
         locations: [0, 1.0] as const,
       };
     } else {
-      // Light Mode: Petrol zu Weiß
+      // Light Mode: Petrol zu explizit #FFFFFF
       return {
         colors: [petrolColor, '#FFFFFF'] as const,
         locations: [0, 1.0] as const,
       };
     }
   };
-
-  const backgroundGradient = getBackgroundGradient();
 
   return (
     <SidebarContainer
@@ -908,10 +906,10 @@ export default function OliviaChatScreen() {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         
-        {/* Clean Petrol-zu-Schwarz/Weiß Gradient-Hintergrund */}
+        {/* Petrol zu Weiß Gradient-Hintergrund */}
         <LinearGradient
-          colors={backgroundGradient.colors}
-          locations={backgroundGradient.locations}
+          colors={getBackgroundGradient().colors}
+          locations={getBackgroundGradient().locations}
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
           style={styles.backgroundGradient}
@@ -1044,8 +1042,8 @@ export default function OliviaChatScreen() {
           >
             {/* Same gradient background as main screen */}
             <LinearGradient
-              colors={backgroundGradient.colors}
-              locations={backgroundGradient.locations}
+              colors={getBackgroundGradient().colors}
+              locations={getBackgroundGradient().locations}
               start={{ x: 0, y: 0 }}
               end={{ x: 0, y: 1 }}
               style={styles.popupBackgroundGradient}
@@ -1158,13 +1156,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     color: '#1E6B55',
-  },
-  backgroundGradient: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: '45%', // Nur bis 45% der Bildschirmhöhe - noch höher
   },
   safeArea: {
     flex: 1,
@@ -1690,5 +1681,17 @@ const styles = StyleSheet.create({
   caseStudyContainer: {
     marginBottom: spacing.m,
     width: '100%',
+  },
+  backgroundGradient: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: '45%',
+  },
+  brandText: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#1E6B55',
   },
 }); 
