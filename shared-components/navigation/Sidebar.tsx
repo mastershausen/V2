@@ -10,7 +10,7 @@ import {
   Animated,
   Dimensions,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
@@ -151,19 +151,19 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
       ]}
     >
       <SafeAreaView style={styles.safeArea}>
-        {/* Header mit Suchleiste */}
+        {/* Header mit Solvbox Branding */}
         <View style={[styles.header, { borderBottomColor: colors.divider }]}>
-          <View style={[styles.searchContainer, { backgroundColor: colors.backgroundSecondary }]}>
-            <Ionicons name="search" size={20} color={colors.textSecondary} />
-            <TextInput
-              style={[styles.searchInput, { color: colors.textPrimary }]}
-              placeholder="Suche"
-              placeholderTextColor={colors.textSecondary}
+          <View style={styles.brandContainer}>
+            <MaterialCommunityIcons 
+              name="semantic-web" 
+              size={32} 
+              color={colors.textPrimary} 
+              style={styles.brandIcon}
             />
+            <Text style={[styles.brandText, { color: colors.textPrimary }]}>
+              Solvbox
+            </Text>
           </View>
-          <TouchableOpacity style={styles.editButton} onPress={() => handleNavigation('/upload')}>
-            <Ionicons name="create-outline" size={24} color={colors.textSecondary} />
-          </TouchableOpacity>
         </View>
 
         {/* Menu Content */}
@@ -212,21 +212,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     gap: spacing.s,
   },
-  searchContainer: {
-    flex: 1,
+  brandContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: spacing.m,
-    paddingVertical: spacing.s,
-    borderRadius: 8,
     gap: spacing.s,
   },
-  searchInput: {
-    flex: 1,
-    fontSize: 16,
+  brandIcon: {
+    width: 32,
   },
-  editButton: {
-    padding: spacing.s,
+  brandText: {
+    fontSize: 20,
+    fontWeight: '600',
   },
   content: {
     flex: 1,
