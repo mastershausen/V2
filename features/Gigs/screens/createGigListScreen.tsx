@@ -133,7 +133,7 @@ export default function CreateGigListScreen() {
       <HeaderNavigation 
         title="Neues Gig" 
         rightContent={renderErstellenButton()}
-        onBackPress={() => router.push('/settings')}
+        onBackPress={() => router.push('/(tabs)/profile')}
       />
       
       <KeyboardAvoidingView

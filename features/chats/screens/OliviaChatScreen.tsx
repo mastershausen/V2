@@ -464,7 +464,7 @@ export default function OliviaChatScreen() {
 
   // Navigate to Explore tab
   const handleExplore = useCallback(() => {
-    router.push('/explore');
+    router.push('/(tabs)/explore');
   }, []);
 
   // Navigate to Upload screen

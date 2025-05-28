@@ -337,7 +337,7 @@ export default function EditProfileScreen() {
       <HeaderNavigation 
         title={`${formData.firstName || ''} ${formData.lastName || ''} | ${t('profile.editProfile')}`.trim()}
         rightContent={<SaveButton onPress={saveProfile} hasChanges={hasChanges} />}
-        onBackPress={() => router.push(Routes.MAIN.SETTINGS)}
+        onBackPress={() => router.push(Routes.TABS.PROFILE)}
       />
       
       <KeyboardAvoidingView 

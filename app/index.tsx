@@ -1,81 +1,37 @@
 /**
  * @file app/index.tsx
- * @description Vereinfachte Startseite, die direkt zur App navigiert (Auth-Flow deaktiviert)
+ * @description Vereinfachte Startseite für Development Client
  */
 
 import { router } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, ActivityIndicator, Alert } from 'react-native';
+import { useEffect } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { logger } from '@/utils/logger';
 
 /**
- *
+ * Vereinfachte Index-Komponente
  */
 export default function Index() {
   const colors = useThemeColor();
-  const [isNavigating, setIsNavigating] = useState(false);
 
-  // Verbesserte Verzögerung und direktes Weiterleiten zur Haupt-App (Auth übersprungen)
   useEffect(() => {
-    logger.info('Startbildschirm wird angezeigt - warte vor Navigation zur App...');
+    logger.info('Index-Screen geladen - navigiere direkt zu Olivia');
     
-    // DEBUG: Zeige Hinweis, dass wir den Startbildschirm sehen
-    if (__DEV__) {
-      Alert.alert('Debug', 'Startbildschirm wird angezeigt. Wir navigieren in Kürze zur Haupt-App.');
-    }
-    
+    // Direkte Navigation zu Olivia Chat
     const timer = setTimeout(() => {
-      try {
-        logger.info('Navigiere direkt zur App...');
-        setIsNavigating(true);
-        
-        // Versuche mit einer kurzen Verzögerung, um sicherzustellen,
-        // dass alle Zustandsänderungen durchgeführt wurden
-        setTimeout(() => {
-          // Zurück zur funktionierenden Olivia-Seite navigieren
-          router.replace('/chats/olivia');
-          
-          // DEBUG: Zeige Hinweis nach der Navigation
-          if (__DEV__) {
-            setTimeout(() => {
-              Alert.alert('Debug', 'Navigation zur Olivia wurde ausgelöst. Sind wir angekommen?');
-            }, 500);
-          }
-        }, 100);
-      } catch (error) {
-        const errorMsg = error instanceof Error ? error.message : String(error);
-        logger.error('Fehler bei der Navigation zur App:', errorMsg);
-        
-        // DEBUG: Zeige Fehler an
-        if (__DEV__) {
-          Alert.alert('Navigationsfehler', `Fehler beim Navigieren zur App: ${errorMsg}`);
-        }
-      }
-    }, 1500); // Kürzere Verzögerung für schnelleres Testen
+      router.replace('/chats/olivia');
+    }, 100);
     
-    return () => {
-      clearTimeout(timer);
-      logger.info('Startbildschirm-Timer bereinigt');
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <View style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <Text style={[styles.text, { color: colors.textPrimary }]}>
-        Solvbox wird geladen...
+        Solvbox lädt...
       </Text>
-      <ActivityIndicator 
-        size="large" 
-        color={colors.primary} 
-        style={styles.loader} 
-      />
-      {isNavigating && (
-        <Text style={[styles.subtext, { color: colors.textSecondary }]}>
-          App wird gestartet...
-        </Text>
-      )}
     </View>
   );
 }
@@ -88,14 +44,5 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    marginBottom: 20,
   },
-  subtext: {
-    fontSize: 14,
-    marginTop: 20,
-    opacity: 0.7,
-  },
-  loader: {
-    marginVertical: 20,
-  }
 }); 
