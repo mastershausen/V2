@@ -113,14 +113,6 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   styles.titleLabel,
                   fallstudie.isVerified && styles.verifiedTitleLabel
                 ]}>{t('casestudy.header.title')}</Text>
-                {fallstudie.isVerified && (
-                  <VerifyBadge 
-                    text={t('verification.badge.verified')}
-                    iconName="checkmark-circle"
-                    iconSize={12}
-                    style={styles.verifiedBadgeContainer}
-                  />
-                )}
               </View>
               <Text style={[
                 styles.title,
@@ -303,7 +295,6 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   <TouchableOpacity
                     style={[
                       styles.primaryButton,
-                      styles.verifyButton,
                       { flex: 1 }
                     ]}
                     onPress={() => {
@@ -345,7 +336,9 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                       ? 'success'
                       : 'primary'
                   }
-                  icon={fallstudie.needsVerification || fallstudie.id === '3' ? 'checkmark-circle-outline' : undefined}
+                  icon={fallstudie.needsVerification || fallstudie.id === '3' 
+                    ? 'checkmark-circle-outline' 
+                    : 'checkmark-circle-outline'}
                   iconSize={17}
                   containerStyle={
                     (fallstudie.needsVerification || fallstudie.id === '3') 
@@ -459,7 +452,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingHorizontal: 24,
     paddingBottom: 16,
-    backgroundColor: '#1E4B5B',
+    backgroundColor: '#1E6B55',
   },
   titleContainer: {
     flex: 1,
@@ -657,7 +650,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   verifiedHeader: {
-    backgroundColor: '#00A041',
+    backgroundColor: '#1E6B55',
   },
   verifiedTitleLabel: {
     color: 'rgba(255, 255, 255, 0.7)',
