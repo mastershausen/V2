@@ -33,7 +33,7 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
   const [maxBudget, setMaxBudget] = useState('');
   const [hasFixedBudget, setHasFixedBudget] = useState(true);
   const [budgetDescription, setBudgetDescription] = useState('');
-  const [isPublic, setIsPublic] = useState(true);
+  const [visibility, setVisibility] = useState<'public' | 'private' | null>(null);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [showInfoBox, setShowInfoBox] = useState(true);
   const [showTemporaryInfo, setShowTemporaryInfo] = useState(false);
@@ -106,15 +106,15 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
         minBudget,
         maxBudget,
         budgetDescription,
-        isPublic
+        visibility
       });
     }
   };
 
-  // Validierung: Entweder Min/Max Budget ODER Budgetbeschreibung muss ausgefüllt sein
-  const isValid = hasFixedBudget 
+  // Validierung: Budget UND Sichtbarkeit muss ausgewählt sein
+  const isValid = (hasFixedBudget 
     ? (minBudget.trim().length > 0 && maxBudget.trim().length > 0)
-    : budgetDescription.trim().length > 0;
+    : budgetDescription.trim().length > 0) && visibility !== null;
 
   const toggleFixedBudget = () => {
     setHasFixedBudget(!hasFixedBudget);
@@ -314,45 +314,77 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
         {/* Sichtbarkeits-Auswahl */}
         <View style={styles.visibilitySection}>
           
-          <View style={styles.toggleContainer}>
+          <View style={styles.visibilityContainer}>
             <TouchableOpacity 
               style={[
-                styles.toggleOption, 
-                isPublic && styles.toggleOptionActive,
+                styles.visibilityCard, 
+                visibility === 'public' && styles.visibilityCardSelected,
                 { 
-                  backgroundColor: isPublic ? colors.primary : colors.backgroundSecondary,
-                  borderColor: colors.inputBorder 
+                  backgroundColor: visibility === 'public' ? colors.primary : colors.backgroundSecondary,
+                  borderColor: visibility === 'public' ? colors.primary : colors.inputBorder,
+                  shadowColor: colors.primary,
+                  shadowOpacity: visibility === 'public' ? 0.2 : 0.1,
                 }
               ]}
-              onPress={() => setIsPublic(true)}
-              activeOpacity={0.7}
+              onPress={() => setVisibility('public')}
+              activeOpacity={0.8}
             >
-              <Text style={[
-                styles.toggleText, 
-                { color: isPublic ? 'white' : colors.textPrimary }
-              ]}>
-                Öffentlich anzeigen
-              </Text>
+              <Ionicons 
+                name="globe-outline" 
+                size={20} 
+                color={visibility === 'public' ? 'white' : colors.primary} 
+                style={styles.visibilityIcon}
+              />
+              <View style={styles.visibilityTextContainer}>
+                <Text style={[
+                  styles.visibilityTitle, 
+                  { color: visibility === 'public' ? 'white' : colors.textPrimary }
+                ]}>
+                  Öffentlich sichtbar
+                </Text>
+                <Text style={[
+                  styles.visibilitySubtitle, 
+                  { color: visibility === 'public' ? 'rgba(255,255,255,0.8)' : colors.textSecondary }
+                ]}>
+                  Für alle Nutzer sichtbar
+                </Text>
+              </View>
             </TouchableOpacity>
             
             <TouchableOpacity 
               style={[
-                styles.toggleOption, 
-                !isPublic && styles.toggleOptionActive,
+                styles.visibilityCard, 
+                visibility === 'private' && styles.visibilityCardSelected,
                 { 
-                  backgroundColor: !isPublic ? colors.primary : colors.backgroundSecondary,
-                  borderColor: colors.inputBorder 
+                  backgroundColor: visibility === 'private' ? colors.primary : colors.backgroundSecondary,
+                  borderColor: visibility === 'private' ? colors.primary : colors.inputBorder,
+                  shadowColor: colors.primary,
+                  shadowOpacity: visibility === 'private' ? 0.2 : 0.1,
                 }
               ]}
-              onPress={() => setIsPublic(false)}
-              activeOpacity={0.7}
+              onPress={() => setVisibility('private')}
+              activeOpacity={0.8}
             >
-              <Text style={[
-                styles.toggleText, 
-                { color: !isPublic ? 'white' : colors.textPrimary }
-              ]}>
-                Nur für Olivia (intern)
-              </Text>
+              <Ionicons 
+                name="lock-closed-outline" 
+                size={20} 
+                color={visibility === 'private' ? 'white' : colors.primary} 
+                style={styles.visibilityIcon}
+              />
+              <View style={styles.visibilityTextContainer}>
+                <Text style={[
+                  styles.visibilityTitle, 
+                  { color: visibility === 'private' ? 'white' : colors.textPrimary }
+                ]}>
+                  Nur intern sichtbar
+                </Text>
+                <Text style={[
+                  styles.visibilitySubtitle, 
+                  { color: visibility === 'private' ? 'rgba(255,255,255,0.8)' : colors.textSecondary }
+                ]}>
+                  Nur für Olivia verfügbar
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
         </View>
@@ -500,24 +532,42 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: spacing.m,
   },
-  toggleContainer: {
+  visibilityContainer: {
     flexDirection: 'row',
     gap: spacing.s,
   },
-  toggleOption: {
+  visibilityCard: {
     flex: 1,
     paddingVertical: spacing.m,
     paddingHorizontal: spacing.s,
-    borderRadius: 8,
-    borderWidth: 1,
+    borderRadius: 10,
+    borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 75,
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  visibilityCardSelected: {
+    transform: [{ translateY: -1 }],
+  },
+  visibilityIcon: {
+    marginBottom: spacing.xs,
+  },
+  visibilityTextContainer: {
     alignItems: 'center',
   },
-  toggleOptionActive: {
-    // Styling wird via backgroundColor gemacht
-  },
-  toggleText: {
+  visibilityTitle: {
     fontSize: 14,
     fontWeight: '600',
     textAlign: 'center',
+    marginBottom: spacing.xs / 2,
+  },
+  visibilitySubtitle: {
+    fontSize: 11,
+    fontWeight: '400',
+    textAlign: 'center',
+    lineHeight: 14,
   },
 }); 
