@@ -26,7 +26,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GradientButton } from '@/shared-components/button';
-import Sidebar from '@/shared-components/navigation/Sidebar';
+import SidebarContainer from '@/shared-components/navigation/SidebarContainer';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -890,207 +890,206 @@ export default function OliviaChatScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle="light-content" />
-      
-      {/* Futuristischer Gradient-Hintergrund */}
-      <LinearGradient
-        colors={['#1E5B4E', '#1E4B5B', '#1E3B6B', '#0A1828']}
-        locations={[0, 0.3, 0.6, 1.0]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        style={styles.backgroundGradient}
-      />
-      
-      {/* Header */}
-      <SafeAreaView style={styles.safeArea}>
-        <View style={[styles.header]}>
-          <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-            <Ionicons name="chevron-back" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.headerTitleContainer} onPress={handleOpenPreferences}>
-            <View style={styles.chatAvatarContainer}>
-              <MaterialCommunityIcons 
-                name="semantic-web" 
-                size={36} 
-                color="#FFFFFF" 
-                style={styles.chatAvatar}
-              />
-            </View>
-            <View>
-              <Text style={[styles.headerTitle, { color: '#FFFFFF' }]}>
-                Olivia
-              </Text>
-              <Text style={[styles.headerSubtitle, { color: 'rgba(255, 255, 255, 0.8)' }]}>
-                Online
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuButton} onPress={handleSaveNavigation}>
-            <Ionicons name="bookmark" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.menuButton, styles.searchButton]} onPress={handleUploadNavigation}>
-            <Ionicons name="add-circle" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.menuButton, styles.searchButton]} onPress={handleExplore}>
-            <Ionicons name="search" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
-        </View>
+    <SidebarContainer
+      sidebarVisible={sidebarVisible}
+      onCloseSidebar={() => setSidebarVisible(false)}
+    >
+      <View style={styles.container}>
+        <StatusBar barStyle="light-content" />
         
-        {/* Chat messages */}
-        <FlatList
-          ref={flatListRef}
-          data={[]} // Empty data since we use a custom renderer
-          renderItem={() => null}
-          ListHeaderComponent={renderHeaderAndMessages()}
-          ListFooterComponent={renderTypingIndicator()}
-          style={styles.chatList}
-          contentContainerStyle={styles.chatContent}
-          keyboardShouldPersistTaps="handled"
+        {/* Futuristischer Gradient-Hintergrund */}
+        <LinearGradient
+          colors={['#1E5B4E', '#1E4B5B', '#1E3B6B', '#0A1828']}
+          locations={[0, 0.3, 0.6, 1.0]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={styles.backgroundGradient}
         />
         
-      </SafeAreaView>
-      
-      {/* Input area outside SafeAreaView */}
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? -35 : 0}
-        style={styles.keyboardView}
-      >
-        {renderAttachmentPreview()}
-        {renderRecordingView()}
-        
-        {!isRecording && (
-          <View style={[
-            styles.inputContainer,
-            {
-              paddingBottom: keyboardVisible ? 0 : 8 + insets.bottom,
-            }
-          ]}>
-            <TouchableOpacity 
-              style={styles.attachButton} 
-              onPress={() => setShowAttachmentMenu(true)}
-            >
-              <Ionicons name="add-outline" size={20} color="rgba(255, 255, 255, 0.9)" />
+        {/* Header */}
+        <SafeAreaView style={styles.safeArea}>
+          <View style={[styles.header]}>
+            <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
+              <Ionicons name="chevron-back" size={24} color="#FFFFFF" />
             </TouchableOpacity>
-            
-            <View style={styles.inputFieldContainer}>
-              <TextInput
-                style={styles.input}
-                placeholder="Message to Olivia..."
-                placeholderTextColor="rgba(255, 255, 255, 0.7)"
-                value={message}
-                onChangeText={setMessage}
-                multiline={false}
-                keyboardAppearance="dark"
-                ref={preferencesInputRef}
-              />
-            </View>
-            
-            {message.trim() || attachedImage || attachedLink ? (
-              <TouchableOpacity 
-                style={styles.sendButton} 
-                onPress={handleSendMessage}
-              >
-                <Ionicons name="send" size={16} color="#FFFFFF" />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity 
-                style={styles.voiceButton} 
-                onPress={handleVoiceInput}
-              >
-                <Ionicons name="mic" size={16} color="#FFFFFF" />
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity style={styles.headerTitleContainer} onPress={handleOpenPreferences}>
+              <View style={styles.chatAvatarContainer}>
+                <MaterialCommunityIcons 
+                  name="semantic-web" 
+                  size={36} 
+                  color="#FFFFFF" 
+                  style={styles.chatAvatar}
+                />
+              </View>
+              <View>
+                <Text style={[styles.headerTitle, { color: '#FFFFFF' }]}>
+                  Olivia
+                </Text>
+                <Text style={[styles.headerSubtitle, { color: 'rgba(255, 255, 255, 0.8)' }]}>
+                  Online
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuButton} onPress={handleSaveNavigation}>
+              <Ionicons name="bookmark" size={24} color="#FFFFFF" />
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.menuButton, styles.searchButton]} onPress={handleUploadNavigation}>
+              <Ionicons name="add-circle" size={24} color="#FFFFFF" />
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.menuButton, styles.searchButton]} onPress={handleExplore}>
+              <Ionicons name="search" size={24} color="#FFFFFF" />
+            </TouchableOpacity>
           </View>
-        )}
-      </KeyboardAvoidingView>
-      
-      {/* Attachment menu modal */}
-      {renderAttachmentMenu()}
-      
-      {/* Case study detail modal */}
-      <FallstudieDetail 
-        visible={showFallstudieDetail}
-        onClose={() => setShowFallstudieDetail(false)}
-        fallstudie={selectedFallstudie}
-      />
-
-      {/* User Preferences Popup */}
-      <Modal
-        visible={showPreferencesPopup}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={() => setShowPreferencesPopup(false)}
-      >
-        <KeyboardAvoidingView
-          style={styles.popupOverlay}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
-          {/* Same gradient background as main screen */}
-          <LinearGradient
-            colors={['#1E5B4E', '#1E4B5B', '#1E3B6B', '#0A1828']}
-            locations={[0, 0.3, 0.6, 1.0]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            style={styles.popupBackgroundGradient}
+          
+          {/* Chat messages */}
+          <FlatList
+            ref={flatListRef}
+            data={[]} // Empty data since we use a custom renderer
+            renderItem={() => null}
+            ListHeaderComponent={renderHeaderAndMessages()}
+            ListFooterComponent={renderTypingIndicator()}
+            style={styles.chatList}
+            contentContainerStyle={styles.chatContent}
+            keyboardShouldPersistTaps="handled"
           />
           
-          <View style={styles.preferencesPopup}>
-            <View style={styles.popupHeader}>
-              <Text style={styles.popupTitle}>
-                Personal Preferences
-              </Text>
+        </SafeAreaView>
+        
+        {/* Input area outside SafeAreaView */}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? -35 : 0}
+          style={styles.keyboardView}
+        >
+          {renderAttachmentPreview()}
+          {renderRecordingView()}
+          
+          {!isRecording && (
+            <View style={[
+              styles.inputContainer,
+              {
+                paddingBottom: keyboardVisible ? 0 : 8 + insets.bottom,
+              }
+            ]}>
               <TouchableOpacity 
-                onPress={() => setShowPreferencesPopup(false)}
-                style={styles.popupCloseButton}
+                style={styles.attachButton} 
+                onPress={() => setShowAttachmentMenu(true)}
               >
-                <Ionicons name="close" size={24} color="#F1F5F9" />
+                <Ionicons name="add-outline" size={20} color="rgba(255, 255, 255, 0.9)" />
               </TouchableOpacity>
+              
+              <View style={styles.inputFieldContainer}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Message to Olivia..."
+                  placeholderTextColor="rgba(255, 255, 255, 0.7)"
+                  value={message}
+                  onChangeText={setMessage}
+                  multiline={false}
+                  keyboardAppearance="dark"
+                  ref={preferencesInputRef}
+                />
+              </View>
+              
+              {message.trim() || attachedImage || attachedLink ? (
+                <TouchableOpacity 
+                  style={styles.sendButton} 
+                  onPress={handleSendMessage}
+                >
+                  <Ionicons name="send" size={16} color="#FFFFFF" />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity 
+                  style={styles.voiceButton} 
+                  onPress={handleVoiceInput}
+                >
+                  <Ionicons name="mic" size={16} color="#FFFFFF" />
+                </TouchableOpacity>
+              )}
             </View>
-            
-            <View style={styles.popupContent}>
-              <TextInput
-                style={[
-                  styles.popupInput,
-                  {
-                    color: isPrefilledText ? 'rgba(241, 245, 249, 0.5)' : '#F1F5F9',
-                    fontSize: isPrefilledText ? 14 : 16,
-                    fontStyle: isPrefilledText ? 'italic' : 'normal',
-                  }
-                ]}
-                ref={preferencesInputRef}
-                placeholder="Here you can tell me everything I should consider for future search suggestions..."
-                placeholderTextColor="rgba(241, 245, 249, 0.4)"
-                value={userPreferences}
-                onChangeText={handlePreferencesTextChange}
-                multiline={true}
-                numberOfLines={8}
-                textAlignVertical="top"
-                keyboardAppearance="dark"
-              />
-            </View>
-            
-            <View style={styles.popupActions}>
-              <GradientButton
-                label="Save Preferences"
-                variant="primary"
-                icon="checkmark-circle-outline"
-                iconSize={20}
-                onPress={handleSavePreferences}
-                containerStyle={styles.saveButtonContainer}
-              />
-            </View>
-          </View>
+          )}
         </KeyboardAvoidingView>
-      </Modal>
+        
+        {/* Attachment menu modal */}
+        {renderAttachmentMenu()}
+        
+        {/* Case study detail modal */}
+        <FallstudieDetail 
+          visible={showFallstudieDetail}
+          onClose={() => setShowFallstudieDetail(false)}
+          fallstudie={selectedFallstudie}
+        />
 
-      {/* Sidebar */}
-      <Sidebar
-        isVisible={sidebarVisible}
-        onClose={() => setSidebarVisible(false)}
-      />
-    </View>
+        {/* User Preferences Popup */}
+        <Modal
+          visible={showPreferencesPopup}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={() => setShowPreferencesPopup(false)}
+        >
+          <KeyboardAvoidingView
+            style={styles.popupOverlay}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          >
+            {/* Same gradient background as main screen */}
+            <LinearGradient
+              colors={['#1E5B4E', '#1E4B5B', '#1E3B6B', '#0A1828']}
+              locations={[0, 0.3, 0.6, 1.0]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+              style={styles.popupBackgroundGradient}
+            />
+            
+            <View style={styles.preferencesPopup}>
+              <View style={styles.popupHeader}>
+                <Text style={styles.popupTitle}>
+                  Personal Preferences
+                </Text>
+                <TouchableOpacity 
+                  onPress={() => setShowPreferencesPopup(false)}
+                  style={styles.popupCloseButton}
+                >
+                  <Ionicons name="close" size={24} color="#F1F5F9" />
+                </TouchableOpacity>
+              </View>
+              
+              <View style={styles.popupContent}>
+                <TextInput
+                  style={[
+                    styles.popupInput,
+                    {
+                      color: isPrefilledText ? 'rgba(241, 245, 249, 0.5)' : '#F1F5F9',
+                      fontSize: isPrefilledText ? 14 : 16,
+                      fontStyle: isPrefilledText ? 'italic' : 'normal',
+                    }
+                  ]}
+                  ref={preferencesInputRef}
+                  placeholder="Here you can tell me everything I should consider for future search suggestions..."
+                  placeholderTextColor="rgba(241, 245, 249, 0.4)"
+                  value={userPreferences}
+                  onChangeText={handlePreferencesTextChange}
+                  multiline={true}
+                  numberOfLines={8}
+                  textAlignVertical="top"
+                  keyboardAppearance="dark"
+                />
+              </View>
+              
+              <View style={styles.popupActions}>
+                <GradientButton
+                  label="Save Preferences"
+                  variant="primary"
+                  icon="checkmark-circle-outline"
+                  iconSize={20}
+                  onPress={handleSavePreferences}
+                  containerStyle={styles.saveButtonContainer}
+                />
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+        </Modal>
+      </View>
+    </SidebarContainer>
   );
 }
 

@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Modal,
   SafeAreaView,
   ScrollView,
   TextInput,
@@ -19,7 +18,7 @@ import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 
 const { width } = Dimensions.get('window');
-const SIDEBAR_WIDTH = width * 0.85;
+const SIDEBAR_WIDTH = width * 0.75;
 
 interface SidebarProps {
   isVisible: boolean;
@@ -142,80 +141,61 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
   );
 
   return (
-    <Modal
-      visible={isVisible}
-      transparent
-      animationType="none"
-      onRequestClose={onClose}
+    <Animated.View
+      style={[
+        styles.sidebar,
+        {
+          backgroundColor: colors.backgroundPrimary,
+          transform: [{ translateX: slideAnim }],
+        },
+      ]}
     >
-      <View style={styles.overlay}>
-        <TouchableOpacity 
-          style={styles.backdrop} 
-          activeOpacity={1} 
-          onPress={onClose}
-        />
-        
-        <Animated.View
-          style={[
-            styles.sidebar,
-            {
-              backgroundColor: colors.backgroundPrimary,
-              transform: [{ translateX: slideAnim }],
-            },
-          ]}
-        >
-          <SafeAreaView style={styles.safeArea}>
-            {/* Header mit Suchleiste */}
-            <View style={[styles.header, { borderBottomColor: colors.divider }]}>
-              <View style={[styles.searchContainer, { backgroundColor: colors.backgroundSecondary }]}>
-                <Ionicons name="search" size={20} color={colors.textSecondary} />
-                <TextInput
-                  style={[styles.searchInput, { color: colors.textPrimary }]}
-                  placeholder="Suche"
-                  placeholderTextColor={colors.textSecondary}
-                />
-              </View>
-              <TouchableOpacity style={styles.editButton} onPress={() => handleNavigation('/upload')}>
-                <Ionicons name="create-outline" size={24} color={colors.textSecondary} />
-              </TouchableOpacity>
-            </View>
+      <SafeAreaView style={styles.safeArea}>
+        {/* Header mit Suchleiste */}
+        <View style={[styles.header, { borderBottomColor: colors.divider }]}>
+          <View style={[styles.searchContainer, { backgroundColor: colors.backgroundSecondary }]}>
+            <Ionicons name="search" size={20} color={colors.textSecondary} />
+            <TextInput
+              style={[styles.searchInput, { color: colors.textPrimary }]}
+              placeholder="Suche"
+              placeholderTextColor={colors.textSecondary}
+            />
+          </View>
+          <TouchableOpacity style={styles.editButton} onPress={() => handleNavigation('/upload')}>
+            <Ionicons name="create-outline" size={24} color={colors.textSecondary} />
+          </TouchableOpacity>
+        </View>
 
-            {/* Menu Content */}
-            <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-              {menuSections.map(renderSection)}
-            </ScrollView>
+        {/* Menu Content */}
+        <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+          {menuSections.map(renderSection)}
+        </ScrollView>
 
-            {/* Footer */}
-            <View style={[styles.footer, { borderTopColor: colors.divider }]}>
-              <TouchableOpacity style={styles.userProfile}>
-                <View style={[styles.avatar, { backgroundColor: colors.primary }]}>
-                  <Text style={styles.avatarText}>SS</Text>
-                </View>
-                <Text style={[styles.userName, { color: colors.textPrimary }]}>
-                  Sascha Schneiders
-                </Text>
-                <Ionicons name="ellipsis-horizontal" size={20} color={colors.textSecondary} />
-              </TouchableOpacity>
+        {/* Footer */}
+        <View style={[styles.footer, { borderTopColor: colors.divider }]}>
+          <TouchableOpacity style={styles.userProfile}>
+            <View style={[styles.avatar, { backgroundColor: colors.primary }]}>
+              <Text style={styles.avatarText}>SS</Text>
             </View>
-          </SafeAreaView>
-        </Animated.View>
-      </View>
-    </Modal>
+            <Text style={[styles.userName, { color: colors.textPrimary }]}>
+              Sascha Schneiders
+            </Text>
+            <Ionicons name="ellipsis-horizontal" size={20} color={colors.textSecondary} />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  backdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
   sidebar: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
     width: SIDEBAR_WIDTH,
-    height: '100%',
+    zIndex: 1000,
     elevation: 10,
     shadowColor: '#000',
     shadowOffset: { width: 2, height: 0 },
