@@ -13,6 +13,12 @@ import OliviaChatScreen from '@/features/chats/screens/OliviaChatScreen';
 export default function OliviaRoute() {
   return (
     <>
+      <Stack.Screen
+        options={{
+          headerShown: false,
+          gestureEnabled: false
+        }}
+      />
       <StatusBar style="dark" />
       <OliviaChatScreen />
     </>

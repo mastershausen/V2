@@ -17,7 +17,8 @@ import {
   Modal,
   ScrollView,
   Linking,
-  Alert
+  Alert,
+  Dimensions
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -25,6 +26,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GradientButton } from '@/shared-components/button';
+import Sidebar from '@/shared-components/navigation/Sidebar';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -68,6 +70,8 @@ export default function OliviaChatScreen() {
   const typingDots = useRef(new Animated.Value(0)).current;
   const recordingAnimation = useRef(new Animated.Value(1)).current;
   const insets = useSafeAreaInsets();
+  const scrollViewRef = useRef<ScrollView>(null);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
 
   // Mock-Daten für den Olivia-Chat
   const [chat, setChat] = useState({
@@ -453,16 +457,15 @@ export default function OliviaChatScreen() {
     }, 1500);
   }, [message, attachedImage, attachedLink]);
 
-  // Back navigation
+  // Back navigation - öffnet jetzt die Sidebar
   const handleGoBack = useCallback(() => {
-    // Navigate to ChatTab instead of back
-    router.navigate('/(tabs)/chats');
-  }, [router]);
+    setSidebarVisible(true);
+  }, []);
 
   // Navigate to Explore tab
-  const handleExploreNavigation = () => {
-    router.back();
-  };
+  const handleExplore = useCallback(() => {
+    router.push('/(tabs)/explore');
+  }, []);
 
   // Navigate to Upload screen
   const handleUploadNavigation = useCallback(() => {
@@ -929,7 +932,7 @@ export default function OliviaChatScreen() {
           <TouchableOpacity style={[styles.menuButton, styles.searchButton]} onPress={handleUploadNavigation}>
             <Ionicons name="add-circle" size={24} color="#FFFFFF" />
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.menuButton, styles.searchButton]} onPress={handleExploreNavigation}>
+          <TouchableOpacity style={[styles.menuButton, styles.searchButton]} onPress={handleExplore}>
             <Ionicons name="search" size={24} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
@@ -1081,6 +1084,12 @@ export default function OliviaChatScreen() {
           </View>
         </KeyboardAvoidingView>
       </Modal>
+
+      {/* Sidebar */}
+      <Sidebar
+        isVisible={sidebarVisible}
+        onClose={() => setSidebarVisible(false)}
+      />
     </View>
   );
 }

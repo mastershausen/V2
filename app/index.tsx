@@ -34,7 +34,7 @@ export default function Index() {
         // Versuche mit einer kurzen Verzögerung, um sicherzustellen,
         // dass alle Zustandsänderungen durchgeführt wurden
         setTimeout(() => {
-          // Direkt zur Olivia-Seite navigieren
+          // Zurück zur funktionierenden Olivia-Seite navigieren
           router.replace('/chats/olivia');
           
           // DEBUG: Zeige Hinweis nach der Navigation

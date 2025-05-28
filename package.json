@@ -39,7 +39,7 @@
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/netinfo": "^11.4.1",
     "@react-native-community/slider": "^4.5.5",
-    "@react-native-picker/picker": "^2.11.0",
+    "@react-native-picker/picker": "2.9.0",
     "@react-navigation/native": "^7.0.14",
     "@react-navigation/native-stack": "^7.2.0",
     "@supabase/supabase-js": "^2.49.4",
@@ -52,6 +52,7 @@
     "expo-blur": "~14.0.3",
     "expo-constants": "~17.0.8",
     "expo-doctor": "^1.13.2",
+    "expo-document-picker": "~13.0.3",
     "expo-font": "~13.0.4",
     "expo-image-picker": "~16.0.6",
     "expo-linear-gradient": "~14.0.2",
@@ -63,15 +64,13 @@
     "react": "18.3.1",
     "react-i18next": "^15.4.1",
     "react-native": "0.76.9",
-    "react-native-reanimated": "~3.16.1",
     "react-native-safe-area-context": "4.12.0",
     "react-native-screens": "~4.4.0",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
     "zod": "^3.24.4",
-    "zustand": "^5.0.3",
-    "expo-document-picker": "~13.0.3"
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

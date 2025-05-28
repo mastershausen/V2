@@ -120,7 +120,7 @@ export default function RootLayout() {
     setAppReady(true);
   };
   
-  // Vereinfachtes Layout mit den erforderlichen Providern
+  // Einfaches Layout OHNE GestureHandler
   return (
     <ThemeProvider>
       <AuthProvider>
