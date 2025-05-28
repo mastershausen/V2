@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Keyboard,
-  Dimensions
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -17,7 +16,11 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 import { spacing } from '@/config/theme/spacing';
 
-export default function Wizard1Page() {
+interface Wizard3Props {
+  onOpenSidebar?: () => void;
+}
+
+export default function Wizard3({ onOpenSidebar }: Wizard3Props) {
   const colors = useThemeColor();
   const router = useRouter();
   const [answer, setAnswer] = useState('');
@@ -43,7 +46,8 @@ export default function Wizard1Page() {
 
   const handleNext = () => {
     if (answer.trim()) {
-      router.push('/wizard2');
+      // Navigation zu Wizard4 (später implementieren)
+      console.log('Antwort Frage 3:', answer);
     }
   };
 
@@ -52,7 +56,7 @@ export default function Wizard1Page() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="1 von 8 Fragen"
+        title="3 von 8 Fragen"
         onBackPress={handleBack}
         showBackButton={true}
       />
@@ -70,17 +74,17 @@ export default function Wizard1Page() {
         {/* Progress Bar */}
         <View style={styles.progressContainer}>
           <View style={[styles.progressBackground, { backgroundColor: colors.inputBorder }]}>
-            <View style={[styles.progressFill, { backgroundColor: colors.primary, width: '12.5%' }]} />
+            <View style={[styles.progressFill, { backgroundColor: colors.primary, width: '37.5%' }]} />
           </View>
         </View>
 
         {/* Question Section */}
         <View style={styles.questionContainer}>
           <Text style={[styles.questionTitle, { color: colors.textPrimary }]}>
-            Worum geht es in deiner Fallstudie?
+            Was war die Ausgangssituation, die Idee oder das konkrete Problem?
           </Text>
           <Text style={[styles.questionSubtitle, { color: colors.textSecondary }]}>
-            Beschreibe kurz das Hauptthema oder Problem, das du gelöst hast.
+            Beschreibe den Kontext und was zu deiner Lösung geführt hat.
           </Text>
         </View>
 
@@ -95,7 +99,7 @@ export default function Wizard1Page() {
                 color: colors.textPrimary,
               }
             ]}
-            placeholder="z.B. Optimierung der Kundenakquise durch digitale Strategien..."
+            placeholder="z.B. Unser Unternehmen hatte Schwierigkeiten bei der Kundengewinnung..."
             placeholderTextColor={colors.textTertiary}
             value={answer}
             onChangeText={setAnswer}
