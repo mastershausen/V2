@@ -291,19 +291,21 @@ export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
                     )}
                     
                     <View style={styles.packageHeader}>
-                      <Text style={[styles.packageSize, { color: colors.textPrimary }]}>
-                        {pkg.size} {t('upload.pricing.caseStudies')}
-                      </Text>
-                      <View style={styles.priceContainer}>
-                        <Text style={[styles.normalPrice, { color: colors.textTertiary }]}>
-                          {pkg.normalPrice.toFixed(2)}€
+                      <View style={styles.packageTitleRow}>
+                        <Text style={[styles.packageSize, { color: colors.textPrimary }]}>
+                          {pkg.size} {t('upload.pricing.caseStudies')}
                         </Text>
-                        <Text style={[styles.premiumPrice, { color: colors.primary }]}>
-                          {pkg.premiumPrice.toFixed(2)}€
-                        </Text>
-                        <Text style={[styles.perMonthText, { color: colors.textSecondary }]}>
-                          /{t('upload.pricing.perMonth')}
-                        </Text>
+                        <View style={styles.priceContainer}>
+                          <Text style={[styles.normalPrice, { color: colors.textTertiary }]}>
+                            {pkg.normalPrice.toFixed(2)}€
+                          </Text>
+                          <Text style={[styles.premiumPrice, { color: colors.primary }]}>
+                            {pkg.premiumPrice.toFixed(2)}€
+                          </Text>
+                          <Text style={[styles.perMonthText, { color: colors.textSecondary }]}>
+                            /{t('upload.pricing.perMonth')}
+                          </Text>
+                        </View>
                       </View>
                     </View>
                     
@@ -556,9 +558,9 @@ const styles = StyleSheet.create({
     marginLeft: spacing.xs,
   },
   pricingPackage: {
-    padding: spacing.l,
+    padding: spacing.m,
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 8,
     position: 'relative',
     width: '100%',
   },
@@ -576,13 +578,15 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   packageHeader: {
+    marginBottom: spacing.s,
+  },
+  packageTitleRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: spacing.m,
+    alignItems: 'baseline',
   },
   packageSize: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
   },
   priceContainer: {
@@ -590,38 +594,39 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
   },
   normalPrice: {
-    fontSize: 14,
+    fontSize: 12,
     textDecorationLine: 'line-through',
     marginRight: spacing.xs,
   },
   premiumPrice: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
   },
+  perMonthText: {
+    fontSize: 10,
+    fontWeight: '500',
+    marginLeft: spacing.xs,
+  },
   buyButton: {
-    paddingVertical: spacing.m,
-    paddingHorizontal: spacing.l,
+    paddingVertical: spacing.s,
+    paddingHorizontal: spacing.m,
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 6,
     alignItems: 'center',
   },
   buyButtonText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
     textAlign: 'center',
-    marginBottom: spacing.xs,
+    marginBottom: spacing.xs/2,
   },
   buyButtonSubtext: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '600',
     textAlign: 'center',
   },
   packagesContainer: {
-    gap: spacing.l,
+    gap: spacing.s,
     width: '100%',
-  },
-  perMonthText: {
-    fontSize: 12,
-    marginLeft: spacing.xs,
   },
 }); 
