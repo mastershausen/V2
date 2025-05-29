@@ -691,7 +691,8 @@
       "premiumDiscount": "Premium: 50% discount on all packages",
       "popular": "Popular",
       "caseStudies": "case studies",
-      "perUpload": "per upload",
+      "perUpload": "per Case Study",
+      "perMonth": "month",
       "buyNow": "Buy now"
     }
   }

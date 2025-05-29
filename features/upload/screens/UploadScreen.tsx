@@ -301,12 +301,11 @@ export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
                         <Text style={[styles.premiumPrice, { color: colors.primary }]}>
                           {pkg.premiumPrice.toFixed(2)}€
                         </Text>
+                        <Text style={[styles.perMonthText, { color: colors.textSecondary }]}>
+                          /{t('upload.pricing.perMonth')}
+                        </Text>
                       </View>
                     </View>
-                    
-                    <Text style={[styles.pricePerUpload, { color: colors.textSecondary }]}>
-                      {pkg.pricePerUpload.toFixed(2)}€ {t('upload.pricing.perUpload')}
-                    </Text>
                     
                     <TouchableOpacity 
                       style={[
@@ -323,6 +322,12 @@ export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
                         { color: pkg.popular ? 'white' : colors.textPrimary }
                       ]}>
                         {t('upload.pricing.buyNow')}
+                      </Text>
+                      <Text style={[
+                        styles.buyButtonSubtext,
+                        { color: pkg.popular ? 'rgba(255,255,255,0.8)' : colors.textSecondary }
+                      ]}>
+                        {pkg.pricePerUpload.toFixed(2)}€ {t('upload.pricing.perUpload')}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -551,9 +556,9 @@ const styles = StyleSheet.create({
     marginLeft: spacing.xs,
   },
   pricingPackage: {
-    padding: spacing.m,
+    padding: spacing.l,
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 12,
     position: 'relative',
     width: '100%',
   },
@@ -574,7 +579,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: spacing.xs,
+    marginBottom: spacing.m,
   },
   packageSize: {
     fontSize: 16,
@@ -593,23 +598,30 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  pricePerUpload: {
-    fontSize: 12,
-    marginBottom: spacing.s,
-  },
   buyButton: {
-    padding: spacing.s,
+    paddingVertical: spacing.m,
+    paddingHorizontal: spacing.l,
     borderWidth: 1,
-    borderRadius: 6,
+    borderRadius: 8,
     alignItems: 'center',
   },
   buyButtonText: {
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: spacing.xs,
+  },
+  buyButtonSubtext: {
+    fontSize: 12,
     fontWeight: '600',
     textAlign: 'center',
   },
   packagesContainer: {
-    gap: spacing.m,
+    gap: spacing.l,
     width: '100%',
+  },
+  perMonthText: {
+    fontSize: 12,
+    marginLeft: spacing.xs,
   },
 }); 
