@@ -44,19 +44,17 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
   const INFO_ACKNOWLEDGED_KEY = 'wizard_budget_info_acknowledged';
 
   useEffect(() => {
-    // Prüfen, ob Info bereits bestätigt wurde
-    const checkInfoAcknowledged = async () => {
-      try {
-        const acknowledged = await AsyncStorage.getItem(INFO_ACKNOWLEDGED_KEY);
-        if (acknowledged === 'true') {
-          setShowInfoBox(false);
-        }
-      } catch (error) {
-        console.log('Fehler beim Laden der Info-Einstellung:', error);
-      }
-    };
-
-    checkInfoAcknowledged();
+    // Zu Demozwecken: Info-Box immer anzeigen
+    // const checkInfoAcknowledged = async () => {
+    //   try {
+    //     const acknowledged = await AsyncStorage.getItem(INFO_ACKNOWLEDGED_KEY);
+    //     setShowInfoBox(acknowledged !== 'true');
+    //   } catch (error) {
+    //     console.log('Fehler beim Laden der Info-Einstellung:', error);
+    //     setShowInfoBox(true); // Bei Fehler standardmäßig anzeigen
+    //   }
+    // };
+    // checkInfoAcknowledged();
 
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
       setKeyboardHeight(e.endCoordinates.height);
@@ -71,15 +69,9 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
     };
   }, []);
 
-  // Info dauerhaft bestätigen
-  const handleInfoAcknowledged = async () => {
-    try {
-      await AsyncStorage.setItem(INFO_ACKNOWLEDGED_KEY, 'true');
-      setShowInfoBox(false);
-    } catch (error) {
-      console.log('Fehler beim Speichern der Info-Einstellung:', error);
-      setShowInfoBox(false); // Trotzdem verstecken bei Fehler
-    }
+  // Info dauerhaft bestätigen (zu Demozwecken nur temporär ausblenden)
+  const handleInfoAcknowledged = () => {
+    setShowInfoBox(false);
   };
 
   // Info temporär anzeigen
@@ -174,8 +166,8 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
         {/* Permanente Info-Box - nur beim ersten Mal */}
         {showInfoBox && (
           <View style={[styles.infoBox, { 
-            backgroundColor: `${colors.primary}08`,
-            borderColor: `${colors.primary}20`
+            backgroundColor: `${colors.primary}15`,
+            borderColor: `${colors.primary}30`
           }]}>
             <Ionicons name="information-circle-outline" size={20} color={colors.primary} style={styles.infoIcon} />
             <View style={styles.infoContent}>
@@ -196,8 +188,8 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
         {/* Temporäre Info-Box - beim Tap auf Info-Icon */}
         {showTemporaryInfo && (
           <View style={[styles.temporaryInfoBox, { 
-            backgroundColor: `${colors.primary}08`,
-            borderColor: `${colors.primary}20`
+            backgroundColor: `${colors.primary}15`,
+            borderColor: `${colors.primary}30`
           }]}>
             <Ionicons name="information-circle-outline" size={18} color={colors.primary} style={styles.infoIcon} />
             <Text style={[styles.temporaryInfoText, { color: colors.textSecondary }]}>
@@ -416,7 +408,7 @@ const styles = StyleSheet.create({
     paddingTop: spacing.l,
   },
   questionContainer: {
-    paddingBottom: spacing.l,
+    paddingBottom: spacing.s,
   },
   headerInfoButton: {
     padding: spacing.xs,
@@ -430,7 +422,7 @@ const styles = StyleSheet.create({
     padding: spacing.m,
     borderRadius: 8,
     borderWidth: 1,
-    marginTop: spacing.s,
+    marginBottom: spacing.l,
   },
   infoContent: {
     flex: 1,
