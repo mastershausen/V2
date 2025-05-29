@@ -137,6 +137,27 @@ export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
           </View>
         </View>
 
+        {/* CTA Section - MOVED UP */}
+        <View style={styles.ctaSection}>
+          <TouchableOpacity
+            style={styles.ctaButton}
+            onPress={handleCreateCaseStudy}
+            activeOpacity={0.8}
+          >
+            <LinearGradient
+              colors={[colors.primary, '#15503F']}
+              style={styles.gradientButton}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+            >
+              <Ionicons name="add-circle-outline" size={24} color="white" style={styles.ctaIcon} />
+              <Text style={styles.ctaButtonText}>
+                {t('upload.cta.buttonText')}
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+
         {/* Benefits Section */}
         <View style={styles.benefitsSection}>
           <Text style={[styles.benefitsTitle, { color: colors.textPrimary }]}>
@@ -160,27 +181,6 @@ export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
               </View>
             ))}
           </View>
-        </View>
-
-        {/* CTA Section */}
-        <View style={styles.ctaSection}>
-          <TouchableOpacity
-            style={styles.ctaButton}
-            onPress={handleCreateCaseStudy}
-            activeOpacity={0.8}
-          >
-            <LinearGradient
-              colors={[colors.primary, '#15503F']}
-              style={styles.gradientButton}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-            >
-              <Ionicons name="add-circle-outline" size={24} color="white" style={styles.ctaIcon} />
-              <Text style={styles.ctaButtonText}>
-                {t('upload.cta.buttonText')}
-              </Text>
-            </LinearGradient>
-          </TouchableOpacity>
         </View>
 
         {/* Pricing Teaser */}
