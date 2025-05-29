@@ -943,10 +943,10 @@ export default function OliviaChatScreen() {
               </View>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.menuButton, styles.searchButton]} onPress={handleUploadNavigation}>
-              <Ionicons name="add-circle" size={24} color="#FFFFFF" />
+              <Ionicons name="add-circle-outline" size={24} color="#FFFFFF" />
             </TouchableOpacity>
             <TouchableOpacity style={[styles.menuButton, styles.searchButton]} onPress={handleExplore}>
-              <Ionicons name="search" size={24} color="#FFFFFF" />
+              <Ionicons name="search-outline" size={24} color="#FFFFFF" />
             </TouchableOpacity>
           </View>
           
