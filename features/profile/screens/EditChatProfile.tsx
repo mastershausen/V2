@@ -32,6 +32,7 @@ export function EditChatProfile({ id, name = 'Max Weber' }: EditChatProfileProps
   const [website, setWebsite] = useState('www.example.com');
   const [phone, setPhone] = useState('+49 123 456789');
   const [topics, setTopics] = useState(['Tax Structure', 'Exit Planning', 'Digital Accounting']);
+  const [newTopicText, setNewTopicText] = useState('');
 
   // Mock profile image
   const profileImage = 'https://placehold.co/600x400/1E6B55/FFFFFF?text=' + encodeURIComponent(profileName.substring(0, 2));
@@ -64,23 +65,12 @@ export function EditChatProfile({ id, name = 'Max Weber' }: EditChatProfileProps
     );
   };
 
-  // Add topic
-  const handleAddTopic = () => {
-    Alert.alert(
-      'Add Topic',
-      'Enter a new topic:',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Add',
-          onPress: (text) => {
-            if (text && text.trim()) {
-              setTopics([...topics, text.trim()]);
-            }
-          }
-        }
-      ]
-    );
+  // Submit new topic
+  const handleSubmitTopic = () => {
+    if (newTopicText.trim()) {
+      setTopics([...topics, newTopicText.trim()]);
+      setNewTopicText('');
+    }
   };
 
   // Remove topic
@@ -219,11 +209,23 @@ export function EditChatProfile({ id, name = 'Max Weber' }: EditChatProfileProps
 
         {/* Topic Areas Card */}
         <View style={[styles.sectionCard, { backgroundColor: colors.backgroundSecondary }]}>
-          <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Topic Areas</Text>
-            <TouchableOpacity onPress={handleAddTopic} style={styles.addButton}>
-              <Ionicons name="add-circle-outline" size={22} color={colors.primary} />
-            </TouchableOpacity>
+          <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Topic Areas</Text>
+          
+          {/* Topic Input Field */}
+          <View style={[styles.topicInputContainer, { borderColor: colors.inputBorder }]}>
+            <TextInput
+              style={[styles.topicInput, { 
+                color: colors.textPrimary,
+                backgroundColor: colors.backgroundPrimary,
+                borderColor: colors.inputBorder
+              }]}
+              value={newTopicText}
+              onChangeText={setNewTopicText}
+              placeholder="Enter new topic and press Enter..."
+              placeholderTextColor={colors.textTertiary}
+              onSubmitEditing={handleSubmitTopic}
+              returnKeyType="done"
+            />
           </View>
           
           <View style={styles.topicsContainer}>
@@ -398,5 +400,16 @@ const styles = StyleSheet.create({
   saveButtonText: {
     fontSize: 16,
     fontWeight: '600',
+  },
+  topicInputContainer: {
+    marginBottom: spacing.s,
+  },
+  topicInput: {
+    fontSize: 14,
+    paddingVertical: spacing.xs,
+    paddingHorizontal: spacing.s,
+    borderWidth: 1,
+    borderRadius: ui.borderRadius.s,
+    minHeight: 36,
   },
 }); 
