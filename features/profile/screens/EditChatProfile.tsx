@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
 import { ProfileImage } from '@/shared-components/media/ProfileImage';
@@ -20,12 +21,12 @@ interface EditChatProfileProps {
  * 
  * Allows editing of chat profile information.
  */
-export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
+export function EditChatProfile({ id, name = 'Max Weber' }: EditChatProfileProps) {
   const colors = useThemeColor();
   const router = useRouter();
 
   // State for all editable fields
-  const [profileName, setProfileName] = useState(name || 'Thomas Müller');
+  const [profileName, setProfileName] = useState(name || 'Max Weber');
   const [specialization, setSpecialization] = useState('Specialized in corporate structure, digital financial planning and tax-optimized exit strategies.');
   const [email, setEmail] = useState('contact@example.com');
   const [website, setWebsite] = useState('www.example.com');
@@ -104,120 +105,124 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
         }
       />
 
-      {/* Profile image */}
-      <View style={styles.profileImageContainer}>
-        <TouchableOpacity onPress={handleChangeProfileImage}>
-          <ProfileImage
-            source={{ uri: profileImage }}
-            fallbackText={profileName}
-            size={90}
-            variant="circle"
-            borderWidth={2}
-          />
-          <View style={[styles.editImageOverlay, { backgroundColor: colors.primary }]}>
-            <Ionicons name="camera" size={18} color="white" />
+      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+        {/* Profile Header Card */}
+        <LinearGradient
+          colors={['rgba(30, 107, 85, 0.08)', 'rgba(30, 107, 85, 0.02)']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={styles.profileHeaderCard}
+        >
+          <TouchableOpacity onPress={handleChangeProfileImage} style={styles.profileImageContainer}>
+            <View style={[styles.profileIconContainer, { backgroundColor: colors.primary }]}>
+              <Ionicons name="person-outline" size={32} color="white" />
+            </View>
+            <View style={[styles.editImageOverlay, { backgroundColor: colors.primary }]}>
+              <Ionicons name="camera" size={14} color="white" />
+            </View>
+          </TouchableOpacity>
+
+          {/* Name Input */}
+          <View style={styles.nameInputContainer}>
+            <TextInput
+              style={[styles.nameInput, { 
+                color: colors.textPrimary,
+                borderBottomColor: colors.inputBorder,
+                fontSize: 20,
+                fontWeight: '600'
+              }]}
+              value={profileName}
+              onChangeText={setProfileName}
+              placeholder="Enter name"
+              placeholderTextColor={colors.textTertiary}
+            />
           </View>
-        </TouchableOpacity>
-      </View>
 
-      {/* Editable fields */}
-      <ScrollView style={styles.contentContainer}>
-        {/* Name */}
-        <View style={styles.inputGroup}>
-          <Text style={[styles.label, { color: colors.textSecondary }]}>Name</Text>
-          <TextInput
-            style={[styles.input, { 
-              backgroundColor: colors.backgroundSecondary,
-              borderColor: colors.divider,
-              color: colors.textPrimary
-            }]}
-            value={profileName}
-            onChangeText={setProfileName}
-            placeholder="Enter name"
-            placeholderTextColor={colors.textSecondary}
-          />
-        </View>
+          {/* Specialization Input */}
+          <View style={styles.specializationContainer}>
+            <TextInput
+              style={[styles.specializationInput, { 
+                color: colors.textSecondary,
+                borderColor: colors.inputBorder,
+                backgroundColor: colors.backgroundSecondary
+              }]}
+              value={specialization}
+              onChangeText={setSpecialization}
+              placeholder="Description of specialization"
+              placeholderTextColor={colors.textTertiary}
+              multiline
+              numberOfLines={3}
+              textAlignVertical="top"
+            />
+          </View>
+        </LinearGradient>
 
-        {/* Specialization */}
-        <View style={styles.inputGroup}>
-          <Text style={[styles.label, { color: colors.textSecondary }]}>Specialization</Text>
-          <TextInput
-            style={[styles.textArea, { 
-              backgroundColor: colors.backgroundSecondary,
-              borderColor: colors.divider,
-              color: colors.textPrimary
-            }]}
-            value={specialization}
-            onChangeText={setSpecialization}
-            placeholder="Description of specialization"
-            placeholderTextColor={colors.textSecondary}
-            multiline
-            numberOfLines={3}
-            textAlignVertical="top"
-          />
-        </View>
-
-        {/* Contact information */}
-        <View style={[styles.section, { borderTopColor: colors.divider }]}>
+        {/* Contact Information Card */}
+        <View style={[styles.sectionCard, { backgroundColor: colors.backgroundSecondary }]}>
           <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Contact Information</Text>
           
-          <View style={styles.inputGroup}>
-            <Text style={[styles.label, { color: colors.textSecondary }]}>Email</Text>
-            <TextInput
-              style={[styles.input, { 
-                backgroundColor: colors.backgroundSecondary,
-                borderColor: colors.divider,
-                color: colors.textPrimary
-              }]}
-              value={email}
-              onChangeText={setEmail}
-              placeholder="Email address"
-              placeholderTextColor={colors.textSecondary}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-          </View>
+          <View style={styles.contactGrid}>
+            <View style={styles.contactItem}>
+              <View style={[styles.contactIconContainer, { backgroundColor: `${colors.primary}15` }]}>
+                <Ionicons name="mail-outline" size={18} color={colors.primary} />
+              </View>
+              <TextInput
+                style={[styles.contactInput, { 
+                  color: colors.textPrimary,
+                  borderBottomColor: colors.inputBorder 
+                }]}
+                value={email}
+                onChangeText={setEmail}
+                placeholder="Email address"
+                placeholderTextColor={colors.textTertiary}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            </View>
 
-          <View style={styles.inputGroup}>
-            <Text style={[styles.label, { color: colors.textSecondary }]}>Website</Text>
-            <TextInput
-              style={[styles.input, { 
-                backgroundColor: colors.backgroundSecondary,
-                borderColor: colors.divider,
-                color: colors.textPrimary
-              }]}
-              value={website}
-              onChangeText={setWebsite}
-              placeholder="Website URL"
-              placeholderTextColor={colors.textSecondary}
-              keyboardType="url"
-              autoCapitalize="none"
-            />
-          </View>
+            <View style={styles.contactItem}>
+              <View style={[styles.contactIconContainer, { backgroundColor: `${colors.primary}15` }]}>
+                <Ionicons name="globe-outline" size={18} color={colors.primary} />
+              </View>
+              <TextInput
+                style={[styles.contactInput, { 
+                  color: colors.textPrimary,
+                  borderBottomColor: colors.inputBorder 
+                }]}
+                value={website}
+                onChangeText={setWebsite}
+                placeholder="Website URL"
+                placeholderTextColor={colors.textTertiary}
+                keyboardType="url"
+                autoCapitalize="none"
+              />
+            </View>
 
-          <View style={styles.inputGroup}>
-            <Text style={[styles.label, { color: colors.textSecondary }]}>Phone</Text>
-            <TextInput
-              style={[styles.input, { 
-                backgroundColor: colors.backgroundSecondary,
-                borderColor: colors.divider,
-                color: colors.textPrimary
-              }]}
-              value={phone}
-              onChangeText={setPhone}
-              placeholder="Phone number"
-              placeholderTextColor={colors.textSecondary}
-              keyboardType="phone-pad"
-            />
+            <View style={styles.contactItem}>
+              <View style={[styles.contactIconContainer, { backgroundColor: `${colors.primary}15` }]}>
+                <Ionicons name="call-outline" size={18} color={colors.primary} />
+              </View>
+              <TextInput
+                style={[styles.contactInput, { 
+                  color: colors.textPrimary,
+                  borderBottomColor: colors.inputBorder 
+                }]}
+                value={phone}
+                onChangeText={setPhone}
+                placeholder="Phone number"
+                placeholderTextColor={colors.textTertiary}
+                keyboardType="phone-pad"
+              />
+            </View>
           </View>
         </View>
 
-        {/* Topic areas */}
-        <View style={[styles.section, { borderTopColor: colors.divider }]}>
+        {/* Topic Areas Card */}
+        <View style={[styles.sectionCard, { backgroundColor: colors.backgroundSecondary }]}>
           <View style={styles.sectionHeader}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Topic Areas</Text>
             <TouchableOpacity onPress={handleAddTopic} style={styles.addButton}>
-              <Ionicons name="add-circle-outline" size={24} color={colors.primary} />
+              <Ionicons name="add-circle-outline" size={22} color={colors.primary} />
             </TouchableOpacity>
           </View>
           
@@ -225,7 +230,7 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
             {topics.map((topic, index) => (
               <View 
                 key={index} 
-                style={[styles.topicTag, { backgroundColor: colors.pastel.primary }]}
+                style={[styles.topicTag, { backgroundColor: `${colors.primary}15` }]}
               >
                 <Text style={[styles.topicText, { color: colors.primary }]}>
                   [{topic}]
@@ -234,15 +239,12 @@ export function EditChatProfile({ id, name = 'Chat' }: EditChatProfileProps) {
                   onPress={() => handleRemoveTopic(index)}
                   style={styles.removeTopicButton}
                 >
-                  <Ionicons name="close-circle" size={18} color={colors.primary} />
+                  <Ionicons name="close-circle" size={16} color={colors.primary} />
                 </TouchableOpacity>
               </View>
             ))}
           </View>
         </View>
-
-        {/* Spacing for better scrollability */}
-        <View style={styles.bottomSpacing} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -252,19 +254,43 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  profileImageContainer: {
+  scrollContainer: {
+    flex: 1,
+    paddingHorizontal: spacing.m,
+  },
+  profileHeaderCard: {
+    padding: spacing.m,
+    marginTop: spacing.s,
+    borderRadius: ui.borderRadius.m,
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  profileImageContainer: {
     position: 'relative',
+  },
+  profileIconContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   editImageOverlay: {
     position: 'absolute',
-    bottom: 5,
-    right: 5,
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    bottom: 2,
+    right: 2,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 2,
@@ -273,47 +299,74 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
-  contentContainer: {
-    flex: 1,
-    paddingHorizontal: spacing.m,
+  nameInputContainer: {
+    marginTop: spacing.m,
+    width: '100%',
   },
-  inputGroup: {
-    marginBottom: spacing.m,
+  nameInput: {
+    textAlign: 'center',
+    borderBottomWidth: 1,
+    paddingVertical: spacing.xs,
+    fontSize: 18,
+    fontWeight: '600',
   },
-  label: {
-    fontSize: typography.fontSize.s,
-    fontWeight: typography.fontWeight.medium as any,
-    marginBottom: spacing.xs,
+  specializationContainer: {
+    marginTop: spacing.s,
+    width: '100%',
   },
-  input: {
+  specializationInput: {
     borderWidth: 1,
-    borderRadius: ui.borderRadius.m,
-    paddingHorizontal: spacing.m,
-    paddingVertical: spacing.s,
-    fontSize: typography.fontSize.m,
+    borderRadius: ui.borderRadius.s,
+    paddingHorizontal: spacing.s,
+    paddingVertical: spacing.xs,
+    fontSize: 14,
+    lineHeight: 18,
+    minHeight: 60,
+    textAlign: 'center',
   },
-  textArea: {
-    borderWidth: 1,
+  sectionCard: {
+    padding: spacing.m,
+    marginTop: spacing.m,
     borderRadius: ui.borderRadius.m,
-    paddingHorizontal: spacing.m,
-    paddingVertical: spacing.s,
-    fontSize: typography.fontSize.m,
-    minHeight: 80,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
   },
-  section: {
-    paddingTop: spacing.l,
-    marginTop: spacing.l,
-    borderTopWidth: StyleSheet.hairlineWidth,
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: spacing.s,
   },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: spacing.m,
+    marginBottom: spacing.s,
   },
-  sectionTitle: {
-    fontSize: typography.fontSize.l,
-    fontWeight: typography.fontWeight.bold as any,
+  contactGrid: {
+    gap: spacing.s,
+  },
+  contactItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.xs,
+  },
+  contactIconContainer: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.s,
+  },
+  contactInput: {
+    flex: 1,
+    fontSize: 14,
+    borderBottomWidth: 1,
+    paddingVertical: spacing.xs,
+    paddingLeft: spacing.xs,
   },
   addButton: {
     padding: spacing.xs,
@@ -321,18 +374,18 @@ const styles = StyleSheet.create({
   topicsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    gap: spacing.xs,
   },
   topicTag: {
-    borderRadius: ui.borderRadius.m,
+    borderRadius: ui.borderRadius.s,
     paddingHorizontal: spacing.s,
     paddingVertical: spacing.xs,
-    marginRight: spacing.xs,
-    marginBottom: spacing.xs,
     flexDirection: 'row',
     alignItems: 'center',
   },
   topicText: {
-    fontSize: typography.fontSize.s,
+    fontSize: 12,
+    fontWeight: '500',
     marginRight: spacing.xs,
   },
   removeTopicButton: {
@@ -343,10 +396,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
   },
   saveButtonText: {
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.medium as any,
-  },
-  bottomSpacing: {
-    height: spacing.xl,
+    fontSize: 16,
+    fontWeight: '600',
   },
 }); 
