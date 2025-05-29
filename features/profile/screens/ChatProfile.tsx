@@ -35,11 +35,11 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
 
   // Mock data for the profile
   const profileData = {
-    name: name || 'Thomas Müller',
+    name: 'Max Weber',
     verified: true,
     status: 'Online',
     specialization: 'Expert in business setup, finance planning and smart tax strategies for growing companies. Helping clients save money and grow faster with proven methods.',
-    profileImage: 'https://placehold.co/600x400/1E6B55/FFFFFF?text=' + encodeURIComponent(name?.substring(0, 2) || 'TM'),
+    profileImage: 'https://placehold.co/600x400/1E6B55/FFFFFF?text=MW',
     activeSince: 'Sep 22, 2023',
     responseRate: '98%',
     lastCaseStudy: 'Holding structure saves €84,000 annually',
@@ -173,7 +173,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
 
             <View style={styles.metricItem}>
               <View style={[styles.metricIconContainer, { backgroundColor: `${colors.primary}15` }]}>
-                <Ionicons name="shield-checkmark" size={20} color={colors.primary} />
+                <Ionicons name="checkmark-circle" size={20} color={colors.primary} />
               </View>
               <View style={styles.metricContent}>
                 <Text style={[styles.metricValue, { color: colors.textPrimary }]}>
@@ -396,14 +396,14 @@ const styles = StyleSheet.create({
   nameText: {
     fontSize: typography.fontSize.xxl,
     fontWeight: typography.fontWeight.bold as any,
-    marginBottom: spacing.s,
+    marginBottom: 4,
     textAlign: 'center',
   },
   specializationText: {
     fontSize: typography.fontSize.m,
     lineHeight: 22,
     textAlign: 'center',
-    marginTop: spacing.s,
+    marginTop: 18,
     paddingHorizontal: spacing.s,
   },
   sectionCard: {
@@ -545,7 +545,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    marginVertical: spacing.s,
   },
   infoIcon: {
     padding: spacing.xs,

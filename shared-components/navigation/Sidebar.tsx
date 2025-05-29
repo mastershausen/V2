@@ -72,7 +72,7 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
         {
           id: 'explore',
           title: 'Explore',
-          icon: 'compass-outline',
+          icon: 'search-outline',
           route: '/explore',
         },
         {
@@ -84,7 +84,7 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
         {
           id: 'upload',
           title: 'Upload',
-          icon: 'cloud-upload-outline',
+          icon: 'add-circle-outline',
           route: '/upload',
         },
         {
@@ -116,7 +116,7 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
           size={20} 
           style={styles.menuIcon}
         />
-        <Text style={[styles.menuItemText, { color: colors.textPrimary }]}>
+        <Text style={[styles.menuItemText, { color: '#1E6B55' }]}>
           {item.title}
         </Text>
         {item.badge && (
@@ -171,14 +171,16 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
 
         {/* Footer */}
         <View style={styles.footer}>
-          <TouchableOpacity style={styles.userProfile}>
+          <TouchableOpacity 
+            style={styles.userProfile}
+            onPress={() => handleNavigation('/profile/chat-profile')}
+          >
             <View style={styles.avatar}>
-              <Text style={styles.avatarText}>SS</Text>
+              <Ionicons name="person-outline" size={20} color="#fff" />
             </View>
             <Text style={[styles.userName, { color: colors.textPrimary }]}>
-              Sascha Schneiders
+              Max Weber
             </Text>
-            <Ionicons name="ellipsis-horizontal" size={20} color="#1E6B55" />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
