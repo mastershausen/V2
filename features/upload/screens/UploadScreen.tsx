@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   View, 
   StyleSheet, 
@@ -30,6 +30,48 @@ export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
   const usedCaseStudies = 3;
   const totalCaseStudies = 10;
   const remainingCaseStudies = totalCaseStudies - usedCaseStudies;
+
+  // Dropdown State
+  const [isPricingDropdownOpen, setIsPricingDropdownOpen] = useState(false);
+
+  // Pricing Packages (Premium = 50% off)
+  const pricingPackages = [
+    {
+      size: '1',
+      normalPrice: 4.90,
+      premiumPrice: 2.45,
+      pricePerUpload: 2.45,
+      popular: false
+    },
+    {
+      size: '10',
+      normalPrice: 39.90,
+      premiumPrice: 19.95,
+      pricePerUpload: 1.99,
+      popular: true
+    },
+    {
+      size: '25',
+      normalPrice: 84.90,
+      premiumPrice: 42.45,
+      pricePerUpload: 1.70,
+      popular: false
+    },
+    {
+      size: '50',
+      normalPrice: 139.90,
+      premiumPrice: 69.95,
+      pricePerUpload: 1.40,
+      popular: false
+    },
+    {
+      size: '100',
+      normalPrice: 199.00,
+      premiumPrice: 99.45,
+      pricePerUpload: 0.99,
+      popular: false
+    }
+  ];
 
   const handleCreateCaseStudy = () => {
     // Navigation zu Wizard1
@@ -185,12 +227,107 @@ export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
 
         {/* Pricing Teaser */}
         <View style={styles.pricingTeaser}>
-          <Text style={[styles.pricingTitle, { color: colors.textSecondary }]}>
-            {t('upload.pricing.title')}
-          </Text>
-          <Text style={[styles.pricingSubtitle, { color: colors.textTertiary }]}>
-            {t('upload.pricing.subtitle')}
-          </Text>
+          <TouchableOpacity 
+            style={[
+              styles.pricingHeader, 
+              { 
+                backgroundColor: colors.backgroundSecondary,
+                borderColor: colors.inputBorder,
+                shadowColor: colors.primary 
+              }
+            ]}
+            onPress={() => setIsPricingDropdownOpen(!isPricingDropdownOpen)}
+            activeOpacity={0.7}
+          >
+            <View style={styles.pricingHeaderLeft}>
+              <Ionicons 
+                name="pricetags-outline" 
+                size={20} 
+                color={colors.primary} 
+                style={styles.pricingHeaderIcon}
+              />
+              <View style={styles.pricingTextContent}>
+                <Text style={[styles.pricingTitle, { color: colors.textPrimary }]}>
+                  {t('upload.pricing.title')}
+                </Text>
+                <Text style={[styles.pricingSubtitle, { color: colors.textSecondary }]}>
+                  {t('upload.pricing.subtitle')}
+                </Text>
+              </View>
+            </View>
+            <Ionicons 
+              name={isPricingDropdownOpen ? "chevron-up" : "chevron-down"} 
+              size={24} 
+              color={colors.primary} 
+              style={styles.chevronIcon}
+            />
+          </TouchableOpacity>
+
+          {isPricingDropdownOpen && (
+            <View style={[styles.pricingDropdown, { backgroundColor: colors.backgroundSecondary }]}>
+              <View style={[styles.premiumDiscountBanner, { backgroundColor: `${colors.primary}15` }]}>
+                <Ionicons name="pricetag" size={16} color={colors.primary} />
+                <Text style={[styles.discountText, { color: colors.primary }]}>
+                  {t('upload.pricing.premiumDiscount')}
+                </Text>
+              </View>
+
+              {pricingPackages.map((pkg, index) => (
+                <View 
+                  key={index} 
+                  style={[
+                    styles.pricingPackage,
+                    { 
+                      backgroundColor: pkg.popular ? `${colors.primary}08` : 'transparent',
+                      borderColor: pkg.popular ? colors.primary : colors.inputBorder 
+                    }
+                  ]}
+                >
+                  {pkg.popular && (
+                    <View style={[styles.popularBadge, { backgroundColor: colors.primary }]}>
+                      <Text style={styles.popularBadgeText}>{t('upload.pricing.popular')}</Text>
+                    </View>
+                  )}
+                  
+                  <View style={styles.packageHeader}>
+                    <Text style={[styles.packageSize, { color: colors.textPrimary }]}>
+                      {pkg.size} {t('upload.pricing.caseStudies')}
+                    </Text>
+                    <View style={styles.priceContainer}>
+                      <Text style={[styles.normalPrice, { color: colors.textTertiary }]}>
+                        {pkg.normalPrice.toFixed(2)}€
+                      </Text>
+                      <Text style={[styles.premiumPrice, { color: colors.primary }]}>
+                        {pkg.premiumPrice.toFixed(2)}€
+                      </Text>
+                    </View>
+                  </View>
+                  
+                  <Text style={[styles.pricePerUpload, { color: colors.textSecondary }]}>
+                    {pkg.pricePerUpload.toFixed(2)}€ {t('upload.pricing.perUpload')}
+                  </Text>
+                  
+                  <TouchableOpacity 
+                    style={[
+                      styles.buyButton,
+                      { 
+                        backgroundColor: pkg.popular ? colors.primary : colors.backgroundPrimary,
+                        borderColor: pkg.popular ? colors.primary : colors.inputBorder
+                      }
+                    ]}
+                    activeOpacity={0.8}
+                  >
+                    <Text style={[
+                      styles.buyButtonText,
+                      { color: pkg.popular ? 'white' : colors.textPrimary }
+                    ]}>
+                      {t('upload.pricing.buyNow')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -356,6 +493,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: spacing.l,
   },
+  pricingHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: spacing.m,
+    borderRadius: 8,
+    borderWidth: 1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    marginBottom: spacing.xs,
+  },
+  pricingHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  pricingHeaderIcon: {
+    marginRight: spacing.s,
+  },
+  pricingTextContent: {
+    flex: 1,
+  },
   pricingTitle: {
     fontSize: 14,
     fontWeight: '600',
@@ -363,6 +524,83 @@ const styles = StyleSheet.create({
   },
   pricingSubtitle: {
     fontSize: 12,
+    lineHeight: 16,
+  },
+  chevronIcon: {
+    marginLeft: spacing.s,
+  },
+  pricingDropdown: {
+    padding: spacing.m,
+    borderRadius: 8,
+  },
+  premiumDiscountBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: spacing.s,
+    borderRadius: 8,
+    marginBottom: spacing.m,
+  },
+  discountText: {
+    fontSize: 12,
+    fontWeight: '600',
+    marginLeft: spacing.xs,
+  },
+  pricingPackage: {
+    padding: spacing.m,
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: spacing.s,
+    position: 'relative',
+  },
+  popularBadge: {
+    position: 'absolute',
+    top: -8,
+    right: spacing.m,
+    paddingHorizontal: spacing.s,
+    paddingVertical: spacing.xs,
+    borderRadius: 4,
+  },
+  popularBadgeText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  packageHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.xs,
+  },
+  packageSize: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+  },
+  normalPrice: {
+    fontSize: 14,
+    textDecorationLine: 'line-through',
+    marginRight: spacing.xs,
+  },
+  premiumPrice: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  pricePerUpload: {
+    fontSize: 12,
+    marginBottom: spacing.s,
+  },
+  buyButton: {
+    padding: spacing.s,
+    borderWidth: 1,
+    borderRadius: 6,
+    alignItems: 'center',
+  },
+  buyButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
     textAlign: 'center',
   },
 }); 

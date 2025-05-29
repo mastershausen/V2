@@ -687,7 +687,12 @@
     },
     "pricing": {
       "title": "After the launch offer:",
-      "subtitle": "Additional quotas available (1/10/25/50/100 case studies)"
+      "subtitle": "Additional quotas available (1/10/25/50/100 case studies)",
+      "premiumDiscount": "Premium: 50% discount on all packages",
+      "popular": "Popular",
+      "caseStudies": "case studies",
+      "perUpload": "per upload",
+      "buyNow": "Buy now"
     }
   }
 } 

@@ -687,7 +687,12 @@
     },
     "pricing": {
       "title": "Nach dem Launch Angebot:",
-      "subtitle": "Zusätzliche Kontingente verfügbar (1/10/25/50/100 Fallstudien)"
+      "subtitle": "Zusätzliche Kontingente verfügbar (1/10/25/50/100 Fallstudien)",
+      "premiumDiscount": "Premium: 50% Rabatt auf alle Pakete",
+      "popular": "Beliebt",
+      "caseStudies": "Fallstudien",
+      "perUpload": "pro Upload",
+      "buyNow": "Jetzt kaufen"
     }
   }
 }
