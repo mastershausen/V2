@@ -379,6 +379,85 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                     </LinearGradient>
                   </TouchableOpacity>
                 </View>
+              ) : isEditable ? (
+                <View style={styles.buttonRow}>
+                  <TouchableOpacity
+                    style={[
+                      styles.primaryButton,
+                      { flex: 1, marginRight: 8 }
+                    ]}
+                    onPress={() => {
+                      // Reload - zurücksetzen auf ursprüngliche Werte
+                      setEditedTitel(fallstudie?.titel || '');
+                      setEditedContext(fallstudie?.context || '');
+                      setEditedAction(fallstudie?.action || '');
+                      setEditedResult(fallstudie?.result.text || '');
+                    }}
+                  >
+                    <LinearGradient
+                      colors={['#666666', '#555555']}
+                      style={styles.buttonGradient}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                    >
+                      <View style={styles.buttonContentContainer}>
+                        <Ionicons 
+                          name="refresh-outline" 
+                          size={17} 
+                          color="#FFFFFF"
+                          style={styles.buttonIcon}
+                        />
+                        <Text style={[
+                          styles.primaryButtonText,
+                          styles.verifyButtonText
+                        ]}>Reload</Text>
+                      </View>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity
+                    style={[
+                      styles.primaryButton,
+                      { flex: 1 }
+                    ]}
+                    onPress={() => {
+                      // Speichern der editierten Fallstudie
+                      const editedFallstudie = {
+                        ...fallstudie,
+                        titel: editedTitel,
+                        context: editedContext,
+                        action: editedAction,
+                        result: {
+                          ...fallstudie.result,
+                          text: editedResult
+                        }
+                      };
+                      console.log('Fallstudie gespeichert:', editedFallstudie);
+                      // Hier könnte eine Save-API-Call oder lokale Speicherung implementiert werden
+                      onClose();
+                    }}
+                  >
+                    <LinearGradient
+                      colors={['#1E6B55', '#15503F']}
+                      style={styles.buttonGradient}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                    >
+                      <View style={styles.buttonContentContainer}>
+                        <Ionicons 
+                          name="cloud-upload-outline" 
+                          size={17} 
+                          color="#FFFFFF"
+                          style={styles.buttonIcon}
+                        />
+                        <Text style={[
+                          styles.primaryButtonText,
+                          styles.verifyButtonText
+                        ]}>Upload</Text>
+                      </View>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
               ) : (
                 <GradientButton
                   label={fallstudie.needsVerification 
@@ -697,10 +776,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   },
+  buttonContentContainer: {
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 20,
+    width: '100%',
+  },
+  buttonIcon: {
+    position: 'absolute',
+    left: '50%',
+    marginLeft: -55,
+    marginTop: 1,
+  },
   primaryButtonText: {
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
+    textAlign: 'center',
   },
   verifyButtonText: {
     color: '#FFFFFF',
@@ -729,19 +822,6 @@ const styles = StyleSheet.create({
   },
   verifiedTitle: {
     color: '#FFFFFF',
-  },
-  buttonContentContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 20,
-  },
-  actionVerifyButton: {
-    backgroundColor: '#FFD700',
-  },
-  buttonIcon: {
-    marginRight: 8,
-    marginTop: 1,
   },
   fullWidthButton: {
     flex: 1,
