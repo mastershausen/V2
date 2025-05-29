@@ -6,7 +6,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
 
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
-import { ProfileImage } from '@/shared-components/media/ProfileImage';
 import { VerifyBadge } from '@/shared-components/badges';
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -108,162 +107,181 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
         }
       />
 
-      {/* Profile image (larger and prominently positioned) */}
-      <View style={styles.profileImageContainer}>
-        <ProfileImage
-          source={{ uri: profileData.profileImage }}
-          fallbackText={profileData.name}
-          size={90}
-          variant="circle"
-          borderWidth={2}
-        />
-      </View>
-
-      {/* Profile content */}
-      <ScrollView style={styles.contentContainer}>
-        {/* Name and job title */}
-        <View style={styles.nameContainer}>
-          <Text style={[styles.nameText, { color: colors.textPrimary }]}>
-            {profileData.name}
-          </Text>
-          
-          {/* Verified Badge with Info Icon */}
-          {profileData.verified && (
-            <View style={styles.verifyContainer}>
-              <View style={styles.badgeWrapper}>
-                <VerifyBadge text="Verify Account now" />
-              </View>
-              <TouchableOpacity 
-                style={styles.infoIcon}
-                onPress={() => setShowVerificationInfo(true)}
-              >
-                <Ionicons 
-                  name="information-circle" 
-                  size={20} 
-                  color="#FF9500" 
-                />
-              </TouchableOpacity>
+      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+        {/* Profile Header Card */}
+        <LinearGradient
+          colors={['rgba(30, 107, 85, 0.08)', 'rgba(30, 107, 85, 0.02)']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          style={styles.profileHeaderCard}
+        >
+          <View style={styles.profileImageContainer}>
+            <View style={[styles.profileIconContainer, { backgroundColor: colors.primary, borderColor: colors.primary }]}>
+              <Ionicons name="person-outline" size={40} color="white" />
             </View>
-          )}
-        </View>
+          </View>
 
-        {/* Specialization */}
-        <View style={styles.section}>
-          <Text style={[styles.specializationText, { color: colors.textPrimary }]}>
-            {profileData.specialization}
-          </Text>
-        </View>
+          <View style={styles.profileInfo}>
+            <Text style={[styles.nameText, { color: colors.textPrimary }]}>
+              {profileData.name}
+            </Text>
+            
+            {profileData.verified && (
+              <View style={styles.verifyContainer}>
+                <VerifyBadge text="Verify Account now" />
+                <TouchableOpacity 
+                  style={styles.infoIcon}
+                  onPress={() => setShowVerificationInfo(true)}
+                >
+                  <Ionicons name="information-circle" size={18} color="#FF9500" />
+                </TouchableOpacity>
+              </View>
+            )}
 
-        {/* Statistiken-Bereich mit einzelnen Karten */}
-        <View style={styles.statsContainer}>
-          {/* Upper metrics row als Karten */}
-          <View style={styles.statsCardContainer}>
-            {/* Uploaded Case Studies - Mit Klickfunktion */}
+            <Text style={[styles.specializationText, { color: colors.textSecondary }]}>
+              {profileData.specialization}
+            </Text>
+          </View>
+        </LinearGradient>
+
+        {/* Performance Metrics Card */}
+        <View style={[styles.sectionCard, { backgroundColor: colors.backgroundSecondary }]}>
+          <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Performance</Text>
+          
+          <View style={styles.metricsGrid}>
             <TouchableOpacity 
-              style={[styles.statsCard, styles.clickableStatsCard]}
+              style={[styles.metricItem]}
               onPress={handleShowCaseStudies}
-              accessibilityLabel={t('profile.stats.caseStudies')}
-              accessibilityRole="button"
               activeOpacity={0.7}
             >
-              <View style={styles.statsCardContent}>
-                <Text style={styles.statsCardValue}>{profileData.stats.caseStudiesCount}</Text>
-                <Text style={styles.statsCardLabel}>
+              <View style={[styles.metricIconContainer, { backgroundColor: `${colors.primary}15` }]}>
+                <Ionicons name="document-text" size={20} color={colors.primary} />
+              </View>
+              <View style={styles.metricContent}>
+                <Text style={[styles.metricValue, { color: colors.textPrimary }]}>
+                  {profileData.stats.caseStudiesCount}
+                </Text>
+                <Text style={[styles.metricLabel, { color: colors.textSecondary }]}>
                   {t('profile.stats.caseStudies')}
                 </Text>
               </View>
+              {/* Chevron Overlay */}
+              <View style={styles.chevronOverlay}>
+                <Ionicons name="chevron-forward" size={16} color={colors.primary} />
+              </View>
             </TouchableOpacity>
-            
-            {/* Verified Case Studies - Ohne Klickfunktion */}
-            <View style={styles.statsCard}>
-              <View style={styles.statsCardContent}>
-                <Text style={styles.statsCardValue}>{profileData.stats.verifiedCaseStudies}</Text>
-                <Text style={styles.statsCardLabel}>
+
+            <View style={styles.metricItem}>
+              <View style={[styles.metricIconContainer, { backgroundColor: `${colors.primary}15` }]}>
+                <Ionicons name="shield-checkmark" size={20} color={colors.primary} />
+              </View>
+              <View style={styles.metricContent}>
+                <Text style={[styles.metricValue, { color: colors.textPrimary }]}>
+                  {profileData.stats.verifiedCaseStudies}
+                </Text>
+                <Text style={[styles.metricLabel, { color: colors.textSecondary }]}>
                   {t('profile.stats.verified')}
                 </Text>
               </View>
             </View>
-            
-            {/* Received Requests */}
-            <View style={styles.statsCard}>
-              <View style={styles.statsCardContent}>
-                <Text style={styles.statsCardValue}>{profileData.stats.receivedRequests}</Text>
-                <Text style={styles.statsCardLabel}>
+
+            <View style={styles.metricItem}>
+              <View style={[styles.metricIconContainer, { backgroundColor: `${colors.primary}15` }]}>
+                <Ionicons name="mail" size={20} color={colors.primary} />
+              </View>
+              <View style={styles.metricContent}>
+                <Text style={[styles.metricValue, { color: colors.textPrimary }]}>
+                  {profileData.stats.receivedRequests}
+                </Text>
+                <Text style={[styles.metricLabel, { color: colors.textSecondary }]}>
                   {t('profile.stats.requests')}
                 </Text>
               </View>
             </View>
           </View>
+        </View>
+
+        {/* Communication Card */}
+        <View style={[styles.sectionCard, { backgroundColor: colors.backgroundSecondary }]}>
+          <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Communication</Text>
           
-          {/* Lower metrics row - verbesserte Lesbarkeit */}
-          <View style={styles.communicationMetricsContainer}>
-            <Text style={styles.communicationMetricsTitle}>Kommunikation</Text>
-            <View style={styles.communicationMetricsRow}>
-              {/* Response Rate */}
-              <View style={styles.communicationMetric}>
-                <Text style={styles.communicationMetricValue}>{profileData.stats.responseRatePercent}%</Text>
-                <Text style={styles.communicationMetricLabel}>
-                  {t('profile.stats.responseRate')}
-                </Text>
-              </View>
-              
-              {/* Average Response Time */}
-              <View style={styles.communicationMetric}>
-                <Text style={styles.communicationMetricValue}>{profileData.stats.avgResponseTime}</Text>
-                <Text style={styles.communicationMetricLabel}>
-                  {t('profile.stats.avgResponse')}
-                </Text>
-              </View>
-              
-              {/* Requests Sent */}
-              <View style={styles.communicationMetric}>
-                <Text style={styles.communicationMetricValue}>{profileData.stats.requestsSent}</Text>
-                <Text style={styles.communicationMetricLabel}>
-                  Requests Sent
-                </Text>
-              </View>
+          <View style={styles.communicationGrid}>
+            <View style={styles.commMetric}>
+              <Text style={[styles.commValue, { color: colors.primary }]}>
+                {profileData.stats.responseRatePercent}%
+              </Text>
+              <Text style={[styles.commLabel, { color: colors.textSecondary }]}>
+                {t('profile.stats.responseRate')}
+              </Text>
+            </View>
+            
+            <View style={styles.commMetric}>
+              <Text style={[styles.commValue, { color: colors.primary }]}>
+                {profileData.stats.avgResponseTime}
+              </Text>
+              <Text style={[styles.commLabel, { color: colors.textSecondary }]}>
+                {t('profile.stats.avgResponse')}
+              </Text>
+            </View>
+            
+            <View style={styles.commMetric}>
+              <Text style={[styles.commValue, { color: colors.primary }]}>
+                {profileData.stats.requestsSent}
+              </Text>
+              <Text style={[styles.commLabel, { color: colors.textSecondary }]}>
+                Requests Sent
+              </Text>
             </View>
           </View>
         </View>
 
-        {/* Contact */}
-        <View style={[styles.section, { borderBottomColor: colors.divider }]}>
+        {/* Contact Card */}
+        <View style={[styles.sectionCard, { backgroundColor: colors.backgroundSecondary }]}>
           <View style={styles.contactHeader}>
-            <Ionicons name="mail" size={20} color={colors.primary} style={styles.contactIcon} />
-            <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-              Contact:
-            </Text>
+            <View style={[styles.contactHeaderIconContainer, { backgroundColor: `${colors.primary}15` }]}>
+              <Ionicons name="call" size={18} color={colors.primary} />
+            </View>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Contact</Text>
           </View>
-          <TouchableOpacity onPress={handlePhoneCall} style={styles.contactLink}>
-            <Ionicons name="call-outline" size={18} color={colors.primary} style={styles.linkIcon} />
-            <Text style={[styles.contactText, { color: colors.primary }]}>
-              {profileData.contactInfo.phone}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleSendEmail} style={styles.contactLink}>
-            <Ionicons name="mail-outline" size={18} color={colors.primary} style={styles.linkIcon} />
-            <Text style={[styles.contactText, { color: colors.primary }]}>
-              {profileData.contactInfo.email}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleOpenWebsite} style={styles.contactLink}>
-            <Ionicons name="globe-outline" size={18} color={colors.primary} style={styles.linkIcon} />
-            <Text style={[styles.contactText, { color: colors.primary }]}>
-              {profileData.contactInfo.website}
-            </Text>
-          </TouchableOpacity>
+          
+          <View style={styles.contactGrid}>
+            <TouchableOpacity onPress={handlePhoneCall} style={styles.contactItem}>
+              <View style={[styles.contactIconContainer, { backgroundColor: '#EBF8FF' }]}>
+                <Ionicons name="call" size={16} color="#0066CC" />
+              </View>
+              <Text style={[styles.contactText, { color: '#0066CC' }]}>
+                {profileData.contactInfo.phone}
+              </Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity onPress={handleSendEmail} style={styles.contactItem}>
+              <View style={[styles.contactIconContainer, { backgroundColor: '#FFF4ED' }]}>
+                <Ionicons name="mail" size={16} color="#EA580C" />
+              </View>
+              <Text style={[styles.contactText, { color: '#EA580C' }]}>
+                {profileData.contactInfo.email}
+              </Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity onPress={handleOpenWebsite} style={styles.contactItem}>
+              <View style={[styles.contactIconContainer, { backgroundColor: '#F0FDF4' }]}>
+                <Ionicons name="globe" size={16} color="#16A34A" />
+              </View>
+              <Text style={[styles.contactText, { color: '#16A34A' }]}>
+                {profileData.contactInfo.website}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        {/* Topic areas */}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>
-            📊 Topic Areas:
-          </Text>
+        {/* Topics Card */}
+        <View style={[styles.sectionCard, { backgroundColor: colors.backgroundSecondary }]}>
+          <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>Expertise</Text>
           <View style={styles.topicsContainer}>
             {profileData.topics.map((topic, index) => (
               <View 
                 key={index} 
-                style={[styles.topicTag, { backgroundColor: colors.pastel.primary }]}
+                style={[styles.topicTag, { backgroundColor: `${colors.primary}12` }]}
               >
                 <Text style={[styles.topicText, { color: colors.primary }]}>
                   {topic}
@@ -330,7 +348,6 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
               style={styles.verifyButton}
               onPress={() => {
                 setShowVerificationInfo(false);
-                // Hier würde die Verifizierung gestartet werden
                 console.log('Verifizierung gestartet');
               }}
             >
@@ -355,136 +372,183 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  profileImageContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  contentContainer: {
+  scrollContainer: {
     flex: 1,
     paddingHorizontal: spacing.m,
   },
-  nameContainer: {
+  profileHeaderCard: {
+    padding: spacing.l,
+    borderRadius: ui.borderRadius.xl,
+    marginBottom: spacing.m,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  profileImageContainer: {
     alignItems: 'center',
-    marginBottom: spacing.s,
+    marginBottom: spacing.m,
+  },
+  profileInfo: {
+    alignItems: 'center',
   },
   nameText: {
-    fontSize: typography.fontSize.xl,
+    fontSize: typography.fontSize.xxl,
     fontWeight: typography.fontWeight.bold as any,
-    marginBottom: spacing.xs,
+    marginBottom: spacing.s,
     textAlign: 'center',
-  },
-  titleText: {
-    fontSize: typography.fontSize.m,
-    marginBottom: spacing.xs,
-    textAlign: 'center',
-  },
-  statusContainer: {
-    marginTop: spacing.xs,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  statusText: {
-    fontSize: typography.fontSize.s,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  onlineDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: '#34C759',
-    marginHorizontal: spacing.xs,
-  },
-  section: {
-    paddingVertical: spacing.m,
   },
   specializationText: {
     fontSize: typography.fontSize.m,
     lineHeight: 22,
     textAlign: 'center',
+    marginTop: spacing.s,
+    paddingHorizontal: spacing.m,
   },
-  caseStudiesButton: {
-    padding: spacing.m,
-    borderRadius: ui.borderRadius.m,
-    alignItems: 'center',
-    marginVertical: spacing.m,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  caseStudiesButtonText: {
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.medium as any,
-    marginLeft: spacing.xs,
-  },
-  statRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: spacing.s,
-  },
-  statIcon: {
-    marginRight: spacing.s,
-    width: 24,
+  sectionCard: {
+    padding: spacing.l,
+    borderRadius: ui.borderRadius.xl,
+    marginBottom: spacing.m,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 16,
+    elevation: 6,
   },
   sectionTitle: {
-    fontSize: typography.fontSize.m,
+    fontSize: typography.fontSize.xl,
+    fontWeight: typography.fontWeight.bold as any,
+    marginBottom: spacing.m,
+  },
+  metricsGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+  },
+  metricItem: {
+    alignItems: 'center',
+    flex: 1,
+    paddingHorizontal: spacing.s,
+  },
+  metricIconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: spacing.m,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  metricContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  metricValue: {
+    fontSize: typography.fontSize.xxl,
+    fontWeight: typography.fontWeight.bold as any,
+    textAlign: 'center',
     marginBottom: spacing.s,
+  },
+  metricLabel: {
+    fontSize: typography.fontSize.s,
+    textAlign: 'center',
+    fontWeight: typography.fontWeight.medium as any,
+    lineHeight: 16,
+    paddingHorizontal: spacing.xs,
+    minHeight: 32,
+    textAlignVertical: 'center',
+  },
+  communicationGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: 'rgba(30, 107, 85, 0.04)',
+    padding: spacing.m,
+    borderRadius: ui.borderRadius.l,
+  },
+  commMetric: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  commValue: {
+    fontSize: typography.fontSize.xl,
+    fontWeight: typography.fontWeight.bold as any,
+    marginBottom: spacing.s,
+    textAlign: 'center',
+  },
+  commLabel: {
+    fontSize: typography.fontSize.s,
+    textAlign: 'center',
+    fontWeight: typography.fontWeight.medium as any,
+    lineHeight: 16,
+    paddingHorizontal: spacing.xs,
   },
   contactHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: spacing.s,
+    marginBottom: spacing.m,
   },
-  contactIcon: {
-    marginRight: spacing.xs,
+  contactHeaderIconContainer: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: spacing.s,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  contactLink: {
+  contactGrid: {
+    gap: spacing.m,
+  },
+  contactItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: spacing.s,
-    paddingVertical: spacing.xs,
+    paddingVertical: spacing.m,
+    paddingHorizontal: spacing.m,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: ui.borderRadius.l,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
-  linkIcon: {
-    marginRight: spacing.s,
-    width: 24,
-  },
-  infoText: {
-    fontSize: typography.fontSize.m,
-    marginBottom: spacing.s,
+  contactIconContainer: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: spacing.m,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 2,
+    elevation: 1,
   },
   contactText: {
     fontSize: typography.fontSize.m,
+    fontWeight: typography.fontWeight.medium as any,
     textDecorationLine: 'underline',
-  },
-  topicsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: spacing.xs,
-  },
-  topicTag: {
-    borderRadius: ui.borderRadius.m,
-    paddingHorizontal: spacing.s,
-    paddingVertical: spacing.xs,
-    marginRight: spacing.xs,
-    marginBottom: spacing.xs,
-  },
-  topicText: {
-    fontSize: typography.fontSize.s,
-  },
-  editButton: {
-    padding: spacing.xs,
   },
   verifyContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-  },
-  badgeWrapper: {
-    alignItems: 'center',
+    marginVertical: spacing.s,
   },
   infoIcon: {
-    padding: spacing.xs,
+    padding: spacing.s,
     position: 'absolute',
     right: -spacing.xl,
   },
@@ -495,29 +559,34 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    padding: spacing.m,
-    paddingTop: spacing.l,
-    borderRadius: 20,
-    width: '80%',
+    padding: spacing.l,
+    paddingTop: spacing.xl,
+    borderRadius: ui.borderRadius.xl,
+    width: '85%',
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.25,
+    shadowRadius: 24,
+    elevation: 12,
   },
   modalHeader: {
     alignItems: 'center',
     marginBottom: spacing.m,
   },
   modalTitle: {
-    fontSize: typography.fontSize.m,
+    fontSize: typography.fontSize.xl,
     fontWeight: typography.fontWeight.bold as any,
     textAlign: 'center',
   },
   modalBody: {
     width: '100%',
-    marginBottom: spacing.m,
+    marginBottom: spacing.l,
   },
   modalSubtitle: {
     fontSize: typography.fontSize.m,
     fontWeight: typography.fontWeight.bold as any,
-    marginBottom: spacing.s,
+    marginBottom: spacing.m,
     textAlign: 'left',
   },
   benefitsList: {
@@ -526,126 +595,84 @@ const styles = StyleSheet.create({
   benefitItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: spacing.s,
+    marginBottom: spacing.m,
+    paddingVertical: spacing.s,
   },
   benefitIcon: {
-    marginRight: spacing.s,
+    marginRight: spacing.m,
   },
   benefitText: {
     fontSize: typography.fontSize.m,
     flex: 1,
+    lineHeight: 20,
   },
   verifyButton: {
-    borderRadius: ui.borderRadius.m,
+    borderRadius: ui.borderRadius.l,
     width: '100%',
     shadowColor: '#008F39',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 6,
     },
     shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 6,
+    shadowRadius: 8,
+    elevation: 8,
   },
   verifyButtonText: {
-    fontSize: typography.fontSize.s,
-    fontWeight: typography.fontWeight.semiBold as any,
+    fontSize: typography.fontSize.m,
+    fontWeight: typography.fontWeight.bold as any,
     color: 'white',
   },
   buttonIcon: {
     marginRight: spacing.s,
   },
-  statsContainer: {
-    paddingVertical: spacing.m,
-    marginHorizontal: spacing.s,
-  },
-  statsCardContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: spacing.l,
-  },
-  statsCard: {
-    alignItems: 'center',
-    flex: 1,
-    paddingHorizontal: spacing.xs,
-    paddingVertical: spacing.m,
-    borderRadius: ui.borderRadius.xl,
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    marginHorizontal: spacing.xs,
-    borderWidth: ui.border.thin,
-    borderColor: 'rgba(0,0,0,0.12)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.15,
-    shadowRadius: 5,
-    elevation: 4,
-    transform: [{ translateY: -3 }],
-    aspectRatio: 1.2,
-  },
-  statsCardContent: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    flex: 1,
-  },
-  statsCardValue: {
-    fontSize: typography.fontSize.xxl,
-    fontWeight: typography.fontWeight.bold as any,
-    marginBottom: spacing.s,
-    textAlign: 'center',
-    color: '#1E6B55',
-  },
-  statsCardLabel: {
-    fontSize: typography.fontSize.s,
-    textAlign: 'center',
-    fontWeight: typography.fontWeight.medium as any,
-    paddingHorizontal: spacing.xs,
-    color: '#666666',
-  },
-  communicationMetricsContainer: {
-    backgroundColor: '#F5F5F5',
-    padding: spacing.m,
-    borderRadius: ui.borderRadius.l,
-    marginBottom: spacing.m,
-  },
-  communicationMetricsTitle: {
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.semiBold as any,
-    marginBottom: spacing.m,
-    color: '#333333',
-  },
-  communicationMetricsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  communicationMetric: {
-    alignItems: 'center',
-    flex: 1,
-  },
-  communicationMetricValue: {
-    fontSize: typography.fontSize.l,
-    fontWeight: typography.fontWeight.bold as any,
-    marginBottom: spacing.xs,
-    textAlign: 'center',
-    color: '#333333',
-  },
-  communicationMetricLabel: {
-    fontSize: typography.fontSize.s,
-    textAlign: 'center',
-    marginTop: spacing.xxs,
-    paddingHorizontal: spacing.xs,
-    color: '#666666',
-  },
   verifyButtonGradient: {
+    paddingHorizontal: spacing.l,
+    paddingVertical: spacing.m,
+    borderRadius: ui.borderRadius.l,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  chevronOverlay: {
+    position: 'absolute',
+    left: '50%',
+    top: 69,
+    marginLeft: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 20,
+  },
+  topicsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.s,
+  },
+  topicTag: {
+    borderRadius: ui.borderRadius.xl,
     paddingHorizontal: spacing.m,
     paddingVertical: spacing.s,
-    borderRadius: ui.borderRadius.m,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
   },
-  clickableStatsCard: {
-    backgroundColor: '#E0F7E9',
+  topicText: {
+    fontSize: typography.fontSize.s,
+    fontWeight: typography.fontWeight.medium as any,
+  },
+  editButton: {
+    padding: spacing.s,
+    borderRadius: ui.borderRadius.m,
+    backgroundColor: 'rgba(30, 107, 85, 0.08)',
+  },
+  profileIconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
