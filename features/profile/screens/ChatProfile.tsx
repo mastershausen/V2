@@ -669,8 +669,6 @@ const styles = StyleSheet.create({
   },
   editButton: {
     padding: spacing.s,
-    borderRadius: ui.borderRadius.m,
-    backgroundColor: 'rgba(30, 107, 85, 0.08)',
   },
   profileIconContainer: {
     width: 80,
