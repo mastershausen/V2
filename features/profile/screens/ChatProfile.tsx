@@ -38,7 +38,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
     name: name || 'Thomas Müller',
     verified: true,
     status: 'Online',
-    specialization: 'Specialized in corporate structure, digital financial planning and tax-optimized exit strategies.',
+    specialization: 'Expert in business setup, finance planning and smart tax strategies for growing companies. Helping clients save money and grow faster with proven methods.',
     profileImage: 'https://placehold.co/600x400/1E6B55/FFFFFF?text=' + encodeURIComponent(name?.substring(0, 2) || 'TM'),
     activeSince: 'Sep 22, 2023',
     responseRate: '98%',
@@ -133,7 +133,7 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
                   style={styles.infoIcon}
                   onPress={() => setShowVerificationInfo(true)}
                 >
-                  <Ionicons name="information-circle" size={18} color="#FF9500" />
+                  <Ionicons name="information-circle" size={22} color="#FF9500" style={styles.infoIconStyle} />
                 </TouchableOpacity>
               </View>
             )}
@@ -246,28 +246,28 @@ export function ChatProfile({ id, name = 'Chat' }: ChatProfileProps) {
           
           <View style={styles.contactGrid}>
             <TouchableOpacity onPress={handlePhoneCall} style={styles.contactItem}>
-              <View style={[styles.contactIconContainer, { backgroundColor: '#EBF8FF' }]}>
-                <Ionicons name="call" size={16} color="#0066CC" />
+              <View style={[styles.contactIconContainer, { backgroundColor: `${colors.primary}15` }]}>
+                <Ionicons name="call" size={16} color={colors.primary} />
               </View>
-              <Text style={[styles.contactText, { color: '#0066CC' }]}>
+              <Text style={[styles.contactText, { color: colors.primary }]}>
                 {profileData.contactInfo.phone}
               </Text>
             </TouchableOpacity>
             
             <TouchableOpacity onPress={handleSendEmail} style={styles.contactItem}>
-              <View style={[styles.contactIconContainer, { backgroundColor: '#FFF4ED' }]}>
-                <Ionicons name="mail" size={16} color="#EA580C" />
+              <View style={[styles.contactIconContainer, { backgroundColor: `${colors.primary}15` }]}>
+                <Ionicons name="mail" size={16} color={colors.primary} />
               </View>
-              <Text style={[styles.contactText, { color: '#EA580C' }]}>
+              <Text style={[styles.contactText, { color: colors.primary }]}>
                 {profileData.contactInfo.email}
               </Text>
             </TouchableOpacity>
             
             <TouchableOpacity onPress={handleOpenWebsite} style={styles.contactItem}>
-              <View style={[styles.contactIconContainer, { backgroundColor: '#F0FDF4' }]}>
-                <Ionicons name="globe" size={16} color="#16A34A" />
+              <View style={[styles.contactIconContainer, { backgroundColor: `${colors.primary}15` }]}>
+                <Ionicons name="globe" size={16} color={colors.primary} />
               </View>
-              <Text style={[styles.contactText, { color: '#16A34A' }]}>
+              <Text style={[styles.contactText, { color: colors.primary }]}>
                 {profileData.contactInfo.website}
               </Text>
             </TouchableOpacity>
@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     textAlign: 'center',
     marginTop: spacing.s,
-    paddingHorizontal: spacing.m,
+    paddingHorizontal: spacing.s,
   },
   sectionCard: {
     padding: spacing.l,
@@ -507,31 +507,31 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   contactGrid: {
-    gap: spacing.m,
+    gap: spacing.s,
   },
   contactItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: spacing.m,
-    paddingHorizontal: spacing.m,
+    paddingVertical: spacing.s,
+    paddingHorizontal: spacing.s,
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    borderRadius: ui.borderRadius.l,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  contactIconContainer: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: spacing.m,
+    borderRadius: ui.borderRadius.m,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.08,
+    shadowOpacity: 0.03,
+    shadowRadius: 4,
+    elevation: 1,
+  },
+  contactIconContainer: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: spacing.s,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 1,
   },
@@ -548,9 +548,14 @@ const styles = StyleSheet.create({
     marginVertical: spacing.s,
   },
   infoIcon: {
-    padding: spacing.s,
+    padding: spacing.xs,
     position: 'absolute',
     right: -spacing.xl,
+  },
+  infoIconStyle: {
+    textShadowColor: 'rgba(255, 149, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
   modalOverlay: {
     flex: 1,
