@@ -647,5 +647,47 @@
         "successRate": "94% Projekterfolg"
       }
     }
+  },
+  "upload": {
+    "header": {
+      "title": "Fallstudien erstellen",
+      "premiumBadge": "Premium"
+    },
+    "hero": {
+      "title": "Verwandle deine Erfolge in kontinuierliche Leads",
+      "subtitle": "Eine starke Fallstudie bringt dir jahrelange Sichtbarkeit und qualifizierte Anfragen – ohne aktiven Vertrieb."
+    },
+    "quota": {
+      "title": "Dein Kontingent",
+      "launchOffer": "Launch Angebot",
+      "used": "verwendet",
+      "remaining": "Fallstudien verbleibend"
+    },
+    "benefits": {
+      "title": "Warum Fallstudien erstellen?",
+      "qualifiedLeads": {
+        "title": "Qualifizierte Anfragen",
+        "description": "Automatisch passende Interessenten, die bereits von deiner Expertise überzeugt sind."
+      },
+      "provenExpertise": {
+        "title": "Bewiesene Expertise",
+        "description": "Zeige deine Erfolge mit konkreten Zahlen und messbaren Ergebnissen."
+      },
+      "passiveLeads": {
+        "title": "Passive Lead-Generierung",
+        "description": "Deine Fallstudien arbeiten 24/7 für dich und generieren kontinuierlich neue Leads."
+      },
+      "aiMatching": {
+        "title": "Olivia-AI Matching",
+        "description": "Intelligente Kundenverbindung basierend auf deinen nachgewiesenen Erfolgen."
+      }
+    },
+    "cta": {
+      "buttonText": "Jetzt Fallstudie erstellen"
+    },
+    "pricing": {
+      "title": "Nach dem Launch Angebot:",
+      "subtitle": "Zusätzliche Kontingente verfügbar (1/10/25/50/100 Fallstudien)"
+    }
   }
 }

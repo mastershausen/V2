@@ -647,5 +647,47 @@
         "successRate": "94% project success"
       }
     }
+  },
+  "upload": {
+    "header": {
+      "title": "Create Case Studies",
+      "premiumBadge": "Premium"
+    },
+    "hero": {
+      "title": "Transform your successes into continuous leads",
+      "subtitle": "A strong case study brings you years of visibility and qualified inquiries – without active sales efforts."
+    },
+    "quota": {
+      "title": "Your Quota",
+      "launchOffer": "Launch Offer",
+      "used": "used",
+      "remaining": "case studies remaining"
+    },
+    "benefits": {
+      "title": "Why create case studies?",
+      "qualifiedLeads": {
+        "title": "Qualified Inquiries",
+        "description": "Automatically matching prospects who are already convinced of your expertise."
+      },
+      "provenExpertise": {
+        "title": "Proven Expertise",
+        "description": "Show your successes with concrete numbers and measurable results."
+      },
+      "passiveLeads": {
+        "title": "Passive Lead Generation",
+        "description": "Your case studies work 24/7 for you and continuously generate new leads."
+      },
+      "aiMatching": {
+        "title": "Olivia-AI Matching",
+        "description": "Intelligent customer connection based on your proven successes."
+      }
+    },
+    "cta": {
+      "buttonText": "Create Case Study Now"
+    },
+    "pricing": {
+      "title": "After the launch offer:",
+      "subtitle": "Additional quotas available (1/10/25/50/100 case studies)"
+    }
   }
 } 
