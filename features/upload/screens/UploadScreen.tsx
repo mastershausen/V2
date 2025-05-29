@@ -272,60 +272,62 @@ export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
                 </Text>
               </View>
 
-              {pricingPackages.map((pkg, index) => (
-                <View 
-                  key={index} 
-                  style={[
-                    styles.pricingPackage,
-                    { 
-                      backgroundColor: pkg.popular ? `${colors.primary}08` : 'transparent',
-                      borderColor: pkg.popular ? colors.primary : colors.inputBorder 
-                    }
-                  ]}
-                >
-                  {pkg.popular && (
-                    <View style={[styles.popularBadge, { backgroundColor: colors.primary }]}>
-                      <Text style={styles.popularBadgeText}>{t('upload.pricing.popular')}</Text>
-                    </View>
-                  )}
-                  
-                  <View style={styles.packageHeader}>
-                    <Text style={[styles.packageSize, { color: colors.textPrimary }]}>
-                      {pkg.size} {t('upload.pricing.caseStudies')}
-                    </Text>
-                    <View style={styles.priceContainer}>
-                      <Text style={[styles.normalPrice, { color: colors.textTertiary }]}>
-                        {pkg.normalPrice.toFixed(2)}€
-                      </Text>
-                      <Text style={[styles.premiumPrice, { color: colors.primary }]}>
-                        {pkg.premiumPrice.toFixed(2)}€
-                      </Text>
-                    </View>
-                  </View>
-                  
-                  <Text style={[styles.pricePerUpload, { color: colors.textSecondary }]}>
-                    {pkg.pricePerUpload.toFixed(2)}€ {t('upload.pricing.perUpload')}
-                  </Text>
-                  
-                  <TouchableOpacity 
+              <View style={styles.packagesContainer}>
+                {pricingPackages.map((pkg, index) => (
+                  <View 
+                    key={index} 
                     style={[
-                      styles.buyButton,
+                      styles.pricingPackage,
                       { 
-                        backgroundColor: pkg.popular ? colors.primary : colors.backgroundPrimary,
-                        borderColor: pkg.popular ? colors.primary : colors.inputBorder
+                        backgroundColor: pkg.popular ? `${colors.primary}08` : 'transparent',
+                        borderColor: pkg.popular ? colors.primary : colors.inputBorder 
                       }
                     ]}
-                    activeOpacity={0.8}
                   >
-                    <Text style={[
-                      styles.buyButtonText,
-                      { color: pkg.popular ? 'white' : colors.textPrimary }
-                    ]}>
-                      {t('upload.pricing.buyNow')}
+                    {pkg.popular && (
+                      <View style={[styles.popularBadge, { backgroundColor: colors.primary }]}>
+                        <Text style={styles.popularBadgeText}>{t('upload.pricing.popular')}</Text>
+                      </View>
+                    )}
+                    
+                    <View style={styles.packageHeader}>
+                      <Text style={[styles.packageSize, { color: colors.textPrimary }]}>
+                        {pkg.size} {t('upload.pricing.caseStudies')}
+                      </Text>
+                      <View style={styles.priceContainer}>
+                        <Text style={[styles.normalPrice, { color: colors.textTertiary }]}>
+                          {pkg.normalPrice.toFixed(2)}€
+                        </Text>
+                        <Text style={[styles.premiumPrice, { color: colors.primary }]}>
+                          {pkg.premiumPrice.toFixed(2)}€
+                        </Text>
+                      </View>
+                    </View>
+                    
+                    <Text style={[styles.pricePerUpload, { color: colors.textSecondary }]}>
+                      {pkg.pricePerUpload.toFixed(2)}€ {t('upload.pricing.perUpload')}
                     </Text>
-                  </TouchableOpacity>
-                </View>
-              ))}
+                    
+                    <TouchableOpacity 
+                      style={[
+                        styles.buyButton,
+                        { 
+                          backgroundColor: pkg.popular ? colors.primary : colors.backgroundPrimary,
+                          borderColor: pkg.popular ? colors.primary : colors.inputBorder
+                        }
+                      ]}
+                      activeOpacity={0.8}
+                    >
+                      <Text style={[
+                        styles.buyButtonText,
+                        { color: pkg.popular ? 'white' : colors.textPrimary }
+                      ]}>
+                        {t('upload.pricing.buyNow')}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </View>
             </View>
           )}
         </View>
@@ -490,8 +492,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   pricingTeaser: {
-    alignItems: 'center',
-    paddingVertical: spacing.l,
+    marginBottom: spacing.xl,
   },
   pricingHeader: {
     flexDirection: 'row',
@@ -532,6 +533,10 @@ const styles = StyleSheet.create({
   pricingDropdown: {
     padding: spacing.m,
     borderRadius: 8,
+    borderTopWidth: 0,
+    borderWidth: 1,
+    borderColor: 'transparent',
+    marginTop: -spacing.xs,
   },
   premiumDiscountBanner: {
     flexDirection: 'row',
@@ -549,8 +554,8 @@ const styles = StyleSheet.create({
     padding: spacing.m,
     borderWidth: 1,
     borderRadius: 8,
-    marginBottom: spacing.s,
     position: 'relative',
+    width: '100%',
   },
   popularBadge: {
     position: 'absolute',
@@ -602,5 +607,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     textAlign: 'center',
+  },
+  packagesContainer: {
+    gap: spacing.m,
+    width: '100%',
   },
 }); 
