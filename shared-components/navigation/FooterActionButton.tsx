@@ -125,29 +125,29 @@ export function FooterActionButton({
               ]}
             >
               <View style={styles.buttonContent}>
-                {iconPosition === 'left' && (
-                  <MaterialCommunityIcons 
-                    name={icon as MaterialCommunityIconsName} 
+              {iconPosition === 'left' && (
+                <MaterialCommunityIcons 
+                  name={icon as MaterialCommunityIconsName} 
                     size={20} 
                     color={textColor || '#FFFFFF'} 
                     style={styles.iconLeft} 
-                  />
-                )}
-                <Text style={[
-                  styles.buttonText, 
+                />
+              )}
+              <Text style={[
+                styles.buttonText, 
                   { color: textColor || '#FFFFFF' },
-                  textStyle
-                ]}>
-                  {label}
-                </Text>
-                {iconPosition === 'right' && (
-                  <MaterialCommunityIcons 
-                    name={icon as MaterialCommunityIconsName} 
+                textStyle
+              ]}>
+                {label}
+              </Text>
+              {iconPosition === 'right' && (
+                <MaterialCommunityIcons 
+                  name={icon as MaterialCommunityIconsName} 
                     size={20} 
                     color={textColor || '#FFFFFF'} 
                     style={styles.iconRight} 
-                  />
-                )}
+                />
+              )}
               </View>
             </LinearGradient>
           ) : (
@@ -185,21 +185,21 @@ export function FooterActionButton({
   // Für Ionicons und Standard-Buttons verwenden wir GradientButton
   return (
     <View style={containerStyle} accessible={true} accessibilityRole="none">
-      <TouchableOpacity 
-        style={[
-          styles.button,
+        <TouchableOpacity 
+          style={[
+            styles.button,
           !useGradient && { 
             backgroundColor: backgroundColor || '#1E6B55',
             opacity: disabled ? 0.5 : 1,
-          },
-          buttonStyle
-        ]}
-        onPress={onPress}
-        disabled={disabled}
-        accessible={true}
-        accessibilityRole="button"
-        accessibilityLabel={label}
-        accessibilityState={{ disabled }}
+            },
+            buttonStyle
+          ]}
+          onPress={onPress}
+          disabled={disabled}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel={label}
+          accessibilityState={{ disabled }}
         activeOpacity={0.8}
       >
         {useGradient ? (
@@ -242,32 +242,32 @@ export function FooterActionButton({
           </LinearGradient>
         ) : (
           <View style={styles.buttonContent}>
-            {iconPosition === 'left' && icon && (
-              <Ionicons 
-                name={icon as IoniconsName} 
+          {iconPosition === 'left' && icon && (
+            <Ionicons 
+              name={icon as IoniconsName} 
                 size={20} 
                 color={textColor || '#FFFFFF'} 
                 style={styles.iconLeft} 
-              />
-            )}
-            <Text style={[
-              styles.buttonText, 
+            />
+          )}
+          <Text style={[
+            styles.buttonText, 
               { color: textColor || '#FFFFFF' },
-              textStyle
-            ]}>
-              {label}
-            </Text>
-            {iconPosition === 'right' && icon && (
-              <Ionicons 
-                name={icon as IoniconsName} 
+            textStyle
+          ]}>
+            {label}
+          </Text>
+          {iconPosition === 'right' && icon && (
+            <Ionicons 
+              name={icon as IoniconsName} 
                 size={20} 
                 color={textColor || '#FFFFFF'} 
                 style={styles.iconRight} 
-              />
+            />
             )}
           </View>
-        )}
-      </TouchableOpacity>
+          )}
+        </TouchableOpacity>
     </View>
   );
 }

@@ -119,9 +119,14 @@ export default function UploadScreen({ onOpenSidebar }: UploadScreenProps) {
         onBackPress={handleBackPress}
         showBackButton={true}
         rightContent={
-          <View style={[styles.premiumBadge, { backgroundColor: colors.primary }]}>
+          <LinearGradient
+            colors={['#374151', '#6B7280']}
+            style={styles.premiumBadge}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+          >
             <Text style={styles.premiumBadgeText}>{t('upload.header.premiumBadge')}</Text>
-          </View>
+          </LinearGradient>
         }
       />
       
