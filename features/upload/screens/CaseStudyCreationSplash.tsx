@@ -7,44 +7,46 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import FallstudieDetail from '@/features/chats/components/FallstudieDetail';
 
-// Mock KI-generierte Fallstudie für Demo
-const mockKIFallstudie = {
-  id: 'ki-generated-1',
-  titel: 'Digitale Transformation im E-Commerce',
-  kurzbeschreibung: 'KI-optimierte Lösung zur Steigerung der Conversion Rate durch personalisierte Produktempfehlungen und automatisierte Kundenanalyse.',
-  context: 'Ein mittelständisches E-Commerce-Unternehmen im Bereich Mode und Lifestyle kämpfte mit sinkenden Conversion Rates und hohen Warenkorbabbrüchen. Trotz steigendem Website-Traffic konnten die Umsätze nicht proportional gesteigert werden. Das bestehende Empfehlungssystem war veraltet und konnte individuelle Kundenpräferenzen nicht effektiv erfassen.',
-  action: 'Implementierung einer KI-basierten Recommendation Engine mit Machine Learning Algorithmen zur Echtzeitanalyse des Nutzerverhaltens. Integration eines personalisierten Dashboard-Systems für Kunden sowie automatisierte E-Mail-Marketing-Kampagnen basierend auf individuellen Kaufmustern und Browsing-Verhalten.',
-  result: {
-    text: 'Die Implementierung führte zu messbaren Erfolgen innerhalb der ersten 6 Monate nach dem Go-Live.',
-    bulletpoints: [
-      '43% Steigerung der Conversion Rate',
-      '67% Reduktion der Warenkorbabbrüche', 
-      '28% Erhöhung des durchschnittlichen Warenkorbwerts',
-      '156% ROI innerhalb des ersten Jahres',
-      '89% Kundenzufriedenheit bei personalisierten Empfehlungen'
-    ]
-  },
-  anbieter: {
-    name: 'TechSolutions GmbH',
-    erfahrung: '8+ Jahre E-Commerce Expertise',
-    erfolgsrate: '94% Projekterfolg',
-    kontakt: {
-      email: 'kontakt@techsolutions.de',
-      telefon: '+49 30 12345678'
-    }
-  },
-  isVerified: true
-};
-
 export default function CaseStudyCreationSplash() {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   const pulseAnim = useRef(new Animated.Value(1)).current;
   const [showFallstudieDetail, setShowFallstudieDetail] = useState(false);
+
+  // Mock KI-generierte Fallstudie für Demo - jetzt i18n-kompatibel
+  const mockKIFallstudie = {
+    id: 'ki-generated-1',
+    titel: t('caseStudyCreation.mockCase.title'),
+    kurzbeschreibung: t('caseStudyCreation.mockCase.shortDescription'),
+    context: t('caseStudyCreation.mockCase.context'),
+    action: t('caseStudyCreation.mockCase.action'),
+    result: {
+      text: t('caseStudyCreation.mockCase.result.text'),
+      bulletpoints: [
+        t('caseStudyCreation.mockCase.result.bulletpoint1'),
+        t('caseStudyCreation.mockCase.result.bulletpoint2'),
+        t('caseStudyCreation.mockCase.result.bulletpoint3'),
+        t('caseStudyCreation.mockCase.result.bulletpoint4'),
+        t('caseStudyCreation.mockCase.result.bulletpoint5')
+      ]
+    },
+    anbieter: {
+      name: t('caseStudyCreation.mockCase.provider.name'),
+      erfahrung: t('caseStudyCreation.mockCase.provider.experience'),
+      erfolgsrate: t('caseStudyCreation.mockCase.provider.successRate'),
+      kontakt: {
+        email: 'kontakt@techsolutions.de',
+        telefon: '+49 30 12345678'
+      }
+    },
+    isVerified: true
+  };
 
   useEffect(() => {
     // Pulsierende Animation starten

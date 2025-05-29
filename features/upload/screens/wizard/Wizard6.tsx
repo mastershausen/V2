@@ -7,6 +7,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
@@ -25,6 +26,7 @@ interface Wizard6Props {
 export default function Wizard6({ onOpenSidebar }: Wizard6Props) {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   const [answer, setAnswer] = useState('');
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -58,7 +60,7 @@ export default function Wizard6({ onOpenSidebar }: Wizard6Props) {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="6 von 8 Fragen"
+        title={t('wizard6.headerTitle')}
         onBackPress={handleBack}
         showBackButton={true}
       />
@@ -78,16 +80,16 @@ export default function Wizard6({ onOpenSidebar }: Wizard6Props) {
 
         {/* Question Section */}
         <WizardQuestionContainer
-          title="Was waren die konkreten Ergebnisse – in Wirkung und Zahlen?"
-          subtitle="💡 Tipp: Je mehr harte Fakten (Zahlen, Daten, Fakten), desto besser dein Matching."
+          title={t('wizard6.questionTitle')}
+          subtitle={t('wizard6.questionSubtitle')}
         />
 
         {/* Input Section */}
         <WizardTextInput
           value={answer}
           onChangeText={setAnswer}
-          placeholder="z.B. 40% mehr Leads, 25% Kostensenkung, ROI von 300%, 95% Kundenzufriedenheit, 6 Wochen früher fertig..."
-          numberOfLines={5}
+          placeholder={t('wizard6.placeholder')}
+          numberOfLines={4}
           autoFocus={true}
         />
       </ScrollView>

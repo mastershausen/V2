@@ -564,5 +564,88 @@
   "date": {
     "today": "Heute",
     "yesterday": "Gestern"
+  },
+  "wizard1": {
+    "headerTitle": "1 von 8 Fragen",
+    "questionTitle": "Worum geht es in deiner Fallstudie?",
+    "questionSubtitle": "Beschreibe kurz das Hauptthema oder Problem, das du gelöst hast.",
+    "placeholder": "z.B. Optimierung der Kundenakquise durch digitale Strategien...",
+    "nextButtonText": "Weiter"
+  },
+  "wizard2": {
+    "headerTitle": "2 von 8 Fragen",
+    "questionTitle": "Für wen ist diese Fallstudie besonders relevant?",
+    "questionSubtitle": "Beschreibe deine Zielgruppe oder wer von deiner Lösung profitieren könnte.",
+    "placeholder": "z.B. Kleine und mittlere Unternehmen im B2B-Bereich, Marketing-Manager...",
+    "nextButtonText": "Weiter"
+  },
+  "wizard3": {
+    "headerTitle": "3 von 8 Fragen",
+    "questionTitle": "Was war die Ausgangssituation, die Idee oder das konkrete Problem?",
+    "questionSubtitle": "Beschreibe den Kontext und was zu deiner Lösung geführt hat.",
+    "placeholder": "z.B. Unser Unternehmen hatte Schwierigkeiten bei der Kundengewinnung..."
+  },
+  "wizard4": {
+    "headerTitle": "4 von 8 Fragen",
+    "questionTitle": "Was war das Ziel, das du erreichen wolltest?",
+    "questionSubtitle": "Beschreibe das gewünschte Ergebnis oder den Erfolg, den du angestrebt hast.",
+    "placeholder": "z.B. Steigerung der Leads um 40%, Kostensenkung um 25%, Verbesserung der Kundenzufriedenheit..."
+  },
+  "wizard5": {
+    "headerTitle": "5 von 8 Fragen",
+    "questionTitle": "Was wurde umgesetzt? (konkret & mit relevanten Maßnahmen)",
+    "questionSubtitle": "Beschreibe die konkreten Schritte und Maßnahmen. Unkonventionelle oder kreative Ansätze gern nennen.",
+    "placeholder": "z.B. Implementierung einer KI-basierten Leadqualifizierung, Guerilla-Marketing-Kampagne, Umstellung auf agile Arbeitsweise..."
+  },
+  "wizard6": {
+    "headerTitle": "6 von 8 Fragen",
+    "questionTitle": "Was waren die konkreten Ergebnisse – in Wirkung und Zahlen?",
+    "questionSubtitle": "💡 Tipp: Je mehr harte Fakten (Zahlen, Daten, Fakten), desto besser dein Matching.",
+    "placeholder": "z.B. 40% mehr Leads, 25% Kostensenkung, ROI von 300%, 95% Kundenzufriedenheit, 6 Wochen früher fertig..."
+  },
+  "wizard7": {
+    "headerTitle": "7 von 8 Fragen",
+    "questionTitle": "Welches Budgetvolumen hatte dieses Projekt?",
+    "infoText": "Mit klaren Budgetangaben bekommst du deutlich bessere Leads! Olivia bevorzugt im Zweifelsfall Fallstudien mit transparenten Budget-Infos. Du kannst selbst entscheiden, ob dein Budget öffentlich oder nur intern sichtbar ist.",
+    "understoodButton": "Verstanden",
+    "minBudgetLabel": "Min. Budget (€) *",
+    "minBudgetPlaceholder": "z.B. 5.000",
+    "maxBudgetLabel": "Max. Budget (€) *",
+    "maxBudgetPlaceholder": "z.B. 25.000",
+    "financingModelLabel": "Finanzierungsmodell / Erläuterung *",
+    "financingModelPlaceholder": "z.B. Performance-basierte Vergütung, Equity-Deal, Pauschalpreis nach Meilenstein...",
+    "noFixedBudgetLabel": "Kein fixer Budgetrahmen",
+    "publicVisibilityTitle": "Teil der Fallstudie",
+    "publicVisibilitySubtitle": "Für alle Nutzer sichtbar",
+    "privateVisibilityTitle": "Nur intern sichtbar",
+    "privateVisibilitySubtitle": "Nur für Olivia verfügbar"
+  },
+  "wizard8": {
+    "headerTitle": "8 von 8 Fragen",
+    "questionTitle": "Gibt es noch etwas, das du hervorheben möchtest?",
+    "questionSubtitle": "Optional - Auszeichnungen, Partner, Testimonials, besondere Insights oder andere Highlights, die noch nicht erwähnt wurden. Je mehr Details, desto aussagekräftiger wird deine Fallstudie!",
+    "placeholder": "z.B. Auszeichnung als 'Innovativste Lösung 2023', Partnerschaft mit Google, 98% Kundenzufriedenheit...",
+    "nextButtonText": "Fallstudie erstellen"
+  },
+  "caseStudyCreation": {
+    "mockCase": {
+      "title": "Digitale Transformation im E-Commerce",
+      "shortDescription": "KI-optimierte Lösung zur Steigerung der Conversion Rate durch personalisierte Produktempfehlungen und automatisierte Kundenanalyse.",
+      "context": "Ein mittelständisches E-Commerce-Unternehmen im Bereich Mode und Lifestyle kämpfte mit sinkenden Conversion Rates und hohen Warenkorbabbrüchen. Trotz steigendem Website-Traffic konnten die Umsätze nicht proportional gesteigert werden. Das bestehende Empfehlungssystem war veraltet und konnte individuelle Kundenpräferenzen nicht effektiv erfassen.",
+      "action": "Implementierung einer KI-basierten Recommendation Engine mit Machine Learning Algorithmen zur Echtzeitanalyse des Nutzerverhaltens. Integration eines personalisierten Dashboard-Systems für Kunden sowie automatisierte E-Mail-Marketing-Kampagnen basierend auf individuellen Kaufmustern und Browsing-Verhalten.",
+      "result": {
+        "text": "Die Implementierung führte zu messbaren Erfolgen innerhalb der ersten 6 Monate nach dem Go-Live.",
+        "bulletpoint1": "43% Steigerung der Conversion Rate",
+        "bulletpoint2": "67% Reduktion der Warenkorbabbrüche",
+        "bulletpoint3": "28% Erhöhung des durchschnittlichen Warenkorbwerts",
+        "bulletpoint4": "156% ROI innerhalb des ersten Jahres",
+        "bulletpoint5": "89% Kundenzufriedenheit bei personalisierten Empfehlungen"
+      },
+      "provider": {
+        "name": "TechSolutions GmbH",
+        "experience": "8+ Jahre E-Commerce Expertise",
+        "successRate": "94% Projekterfolg"
+      }
+    }
   }
 }

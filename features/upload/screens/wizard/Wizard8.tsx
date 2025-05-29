@@ -8,6 +8,7 @@ import {
   Text,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
@@ -27,6 +28,7 @@ interface Wizard8Props {
 export default function Wizard8({ onOpenSidebar }: Wizard8Props) {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   const [highlights, setHighlights] = useState('');
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -60,7 +62,7 @@ export default function Wizard8({ onOpenSidebar }: Wizard8Props) {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="8 von 8 Fragen"
+        title={t('wizard8.headerTitle')}
         onBackPress={handleBack}
         showBackButton={true}
       />
@@ -81,11 +83,11 @@ export default function Wizard8({ onOpenSidebar }: Wizard8Props) {
         {/* Question Section */}
         <View style={styles.questionContainer}>
           <WizardQuestionTitle>
-            Gibt es noch etwas, das du hervorheben möchtest?
+            {t('wizard8.questionTitle')}
           </WizardQuestionTitle>
           
           <WizardQuestionSubtitle>
-            Optional - Auszeichnungen, Partner, Testimonials, besondere Insights oder andere Highlights, die noch nicht erwähnt wurden. Je mehr Details, desto aussagekräftiger wird deine Fallstudie!
+            {t('wizard8.questionSubtitle')}
           </WizardQuestionSubtitle>
         </View>
 
@@ -93,7 +95,7 @@ export default function Wizard8({ onOpenSidebar }: Wizard8Props) {
         <WizardTextInput
           value={highlights}
           onChangeText={setHighlights}
-          placeholder="z.B. Auszeichnung als 'Innovativste Lösung 2023', Partnerschaft mit Google, 98% Kundenzufriedenheit..."
+          placeholder={t('wizard8.placeholder')}
           numberOfLines={4}
           autoFocus={true}
         />
@@ -104,7 +106,7 @@ export default function Wizard8({ onOpenSidebar }: Wizard8Props) {
         onPress={handleNext}
         isEnabled={isValid}
         keyboardHeight={keyboardHeight}
-        title="Fallstudie erstellen"
+        title={t('wizard8.nextButtonText')}
       />
     </SafeAreaView>
   );

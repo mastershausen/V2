@@ -7,6 +7,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
@@ -25,6 +26,7 @@ interface Wizard3Props {
 export default function Wizard3({ onOpenSidebar }: Wizard3Props) {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   const [answer, setAnswer] = useState('');
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -58,7 +60,7 @@ export default function Wizard3({ onOpenSidebar }: Wizard3Props) {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="3 von 8 Fragen"
+        title={t('wizard3.headerTitle')}
         onBackPress={handleBack}
         showBackButton={true}
       />
@@ -78,15 +80,15 @@ export default function Wizard3({ onOpenSidebar }: Wizard3Props) {
 
         {/* Question Section */}
         <WizardQuestionContainer
-          title="Was war die Ausgangssituation, die Idee oder das konkrete Problem?"
-          subtitle="Beschreibe den Kontext und was zu deiner Lösung geführt hat."
+          title={t('wizard3.questionTitle')}
+          subtitle={t('wizard3.questionSubtitle')}
         />
 
         {/* Input Section */}
         <WizardTextInput
           value={answer}
           onChangeText={setAnswer}
-          placeholder="z.B. Unser Unternehmen hatte Schwierigkeiten bei der Kundengewinnung..."
+          placeholder={t('wizard3.placeholder')}
           numberOfLines={4}
           autoFocus={true}
         />

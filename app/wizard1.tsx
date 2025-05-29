@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
@@ -20,6 +21,7 @@ import { spacing } from '@/config/theme/spacing';
 export default function Wizard1Page() {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   const [answer, setAnswer] = useState('');
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -52,7 +54,7 @@ export default function Wizard1Page() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="1 von 8 Fragen"
+        title={t('wizard1.headerTitle')}
         onBackPress={handleBack}
         showBackButton={true}
       />
@@ -77,10 +79,10 @@ export default function Wizard1Page() {
         {/* Question Section */}
         <View style={styles.questionContainer}>
           <Text style={[styles.questionTitle, { color: colors.textPrimary }]}>
-            Worum geht es in deiner Fallstudie?
+            {t('wizard1.questionTitle')}
           </Text>
           <Text style={[styles.questionSubtitle, { color: colors.textSecondary }]}>
-            Beschreibe kurz das Hauptthema oder Problem, das du gelöst hast.
+            {t('wizard1.questionSubtitle')}
           </Text>
         </View>
 
@@ -95,7 +97,7 @@ export default function Wizard1Page() {
                 color: colors.textPrimary,
               }
             ]}
-            placeholder="z.B. Optimierung der Kundenakquise durch digitale Strategien..."
+            placeholder={t('wizard1.placeholder')}
             placeholderTextColor={colors.textTertiary}
             value={answer}
             onChangeText={setAnswer}
@@ -135,7 +137,7 @@ export default function Wizard1Page() {
               color: isValid ? 'white' : colors.textTertiary,
             }
           ]}>
-            Weiter
+            {t('wizard1.nextButtonText')}
           </Text>
           <Ionicons 
             name="arrow-forward" 

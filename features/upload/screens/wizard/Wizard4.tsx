@@ -7,6 +7,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
@@ -25,6 +26,7 @@ interface Wizard4Props {
 export default function Wizard4({ onOpenSidebar }: Wizard4Props) {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   const [answer, setAnswer] = useState('');
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -58,7 +60,7 @@ export default function Wizard4({ onOpenSidebar }: Wizard4Props) {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="4 von 8 Fragen"
+        title={t('wizard4.headerTitle')}
         onBackPress={handleBack}
         showBackButton={true}
       />
@@ -78,15 +80,15 @@ export default function Wizard4({ onOpenSidebar }: Wizard4Props) {
 
         {/* Question Section */}
         <WizardQuestionContainer
-          title="Was war das Ziel, das du erreichen wolltest?"
-          subtitle="Beschreibe das gewünschte Ergebnis oder den Erfolg, den du angestrebt hast."
+          title={t('wizard4.questionTitle')}
+          subtitle={t('wizard4.questionSubtitle')}
         />
 
         {/* Input Section */}
         <WizardTextInput
           value={answer}
           onChangeText={setAnswer}
-          placeholder="z.B. Steigerung der Leads um 40%, Kostensenkung um 25%, Verbesserung der Kundenzufriedenheit..."
+          placeholder={t('wizard4.placeholder')}
           numberOfLines={4}
           autoFocus={true}
         />

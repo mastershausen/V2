@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
@@ -29,6 +30,7 @@ interface Wizard7Props {
 export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   const [minBudget, setMinBudget] = useState('');
   const [maxBudget, setMaxBudget] = useState('');
   const [hasFixedBudget, setHasFixedBudget] = useState(true);
@@ -131,7 +133,7 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="7 von 8 Fragen"
+        title={t('wizard7.headerTitle')}
         onBackPress={handleBack}
         showBackButton={true}
         rightContent={!showInfoBox ? (
@@ -165,7 +167,7 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
         {/* Question Section */}
         <View style={styles.questionContainer}>
           <WizardQuestionTitle>
-            Welches Budgetvolumen hatte dieses Projekt?
+            {t('wizard7.questionTitle')}
           </WizardQuestionTitle>
         </View>
 
@@ -178,14 +180,14 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
             <Ionicons name="information-circle-outline" size={20} color={colors.primary} style={styles.infoIcon} />
             <View style={styles.infoContent}>
               <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-                Mit klaren Budgetangaben bekommst du deutlich bessere Leads! Olivia bevorzugt im Zweifelsfall Fallstudien mit transparenten Budget-Infos. Du kannst selbst entscheiden, ob dein Budget öffentlich oder nur intern sichtbar ist.
+                {t('wizard7.infoText')}
               </Text>
               <TouchableOpacity 
                 onPress={handleInfoAcknowledged}
                 style={[styles.understoodButton, { backgroundColor: colors.primary }]}
                 activeOpacity={0.8}
               >
-                <Text style={styles.understoodButtonText}>Verstanden</Text>
+                <Text style={styles.understoodButtonText}>{t('wizard7.understoodButton')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -199,7 +201,7 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
           }]}>
             <Ionicons name="information-circle-outline" size={18} color={colors.primary} style={styles.infoIcon} />
             <Text style={[styles.temporaryInfoText, { color: colors.textSecondary }]}>
-              Mit klaren Budgetangaben bekommst du deutlich bessere Leads! Olivia bevorzugt im Zweifelsfall Fallstudien mit transparenten Budget-Infos. Du kannst selbst entscheiden, ob dein Budget öffentlich oder nur intern sichtbar ist.
+              {t('wizard7.infoText')}
             </Text>
             <TouchableOpacity 
               onPress={handleCloseTemporaryInfo}
@@ -220,7 +222,7 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
               <View style={styles.budgetRow}>
                 <View style={styles.budgetInputHalf}>
                   <Text style={[styles.inputLabel, { color: colors.textPrimary }]}>
-                    Min. Budget (€) *
+                    {t('wizard7.minBudgetLabel')}
                   </Text>
                   <TextInput
                     style={[
@@ -231,7 +233,7 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
                         color: colors.textPrimary,
                       }
                     ]}
-                    placeholder="z.B. 5.000"
+                    placeholder={t('wizard7.minBudgetPlaceholder')}
                     placeholderTextColor={colors.textTertiary}
                     value={minBudget}
                     onChangeText={setMinBudget}
@@ -242,7 +244,7 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
 
                 <View style={styles.budgetInputHalf}>
                   <Text style={[styles.inputLabel, { color: colors.textPrimary }]}>
-                    Max. Budget (€) *
+                    {t('wizard7.maxBudgetLabel')}
                   </Text>
                   <TextInput
                     style={[
@@ -253,7 +255,7 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
                         color: colors.textPrimary,
                       }
                     ]}
-                    placeholder="z.B. 25.000"
+                    placeholder={t('wizard7.maxBudgetPlaceholder')}
                     placeholderTextColor={colors.textTertiary}
                     value={maxBudget}
                     onChangeText={setMaxBudget}
@@ -266,7 +268,7 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
             // Freitextfeld für Finanzierungsmodell
             <View style={styles.descriptionContainer}>
               <Text style={[styles.inputLabel, { color: colors.textPrimary }]}>
-                Finanzierungsmodell / Erläuterung *
+                {t('wizard7.financingModelLabel')}
               </Text>
               <TextInput
                 style={[
@@ -277,7 +279,7 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
                     color: colors.textPrimary,
                   }
                 ]}
-                placeholder="z.B. Performance-basierte Vergütung, Equity-Deal, Pauschalpreis nach Meilenstein..."
+                placeholder={t('wizard7.financingModelPlaceholder')}
                 placeholderTextColor={colors.textTertiary}
                 value={budgetDescription}
                 onChangeText={setBudgetDescription}
@@ -307,7 +309,7 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
               )}
             </View>
             <Text style={[styles.checkboxLabel, { color: colors.textPrimary }]}>
-              Kein fixer Budgetrahmen
+              {t('wizard7.noFixedBudgetLabel')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -341,13 +343,13 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
                   styles.visibilityTitle, 
                   { color: visibility === 'public' ? 'white' : colors.textPrimary }
                 ]}>
-                  Öffentlich sichtbar
+                  {t('wizard7.publicVisibilityTitle')}
                 </Text>
                 <Text style={[
                   styles.visibilitySubtitle, 
                   { color: visibility === 'public' ? 'rgba(255,255,255,0.8)' : colors.textSecondary }
                 ]}>
-                  Für alle Nutzer sichtbar
+                  {t('wizard7.publicVisibilitySubtitle')}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -377,13 +379,13 @@ export default function Wizard7({ onOpenSidebar }: Wizard7Props) {
                   styles.visibilityTitle, 
                   { color: visibility === 'private' ? 'white' : colors.textPrimary }
                 ]}>
-                  Nur intern sichtbar
+                  {t('wizard7.privateVisibilityTitle')}
                 </Text>
                 <Text style={[
                   styles.visibilitySubtitle, 
                   { color: visibility === 'private' ? 'rgba(255,255,255,0.8)' : colors.textSecondary }
                 ]}>
-                  Nur für Olivia verfügbar
+                  {t('wizard7.privateVisibilitySubtitle')}
                 </Text>
               </View>
             </TouchableOpacity>

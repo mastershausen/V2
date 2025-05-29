@@ -564,5 +564,88 @@
     "toolbar": {
       "save": "Save case study"
     }
+  },
+  "wizard1": {
+    "headerTitle": "1 of 8 Questions",
+    "questionTitle": "What is your case study about?",
+    "questionSubtitle": "Briefly describe the main topic or problem you solved.",
+    "placeholder": "e.g. Optimizing customer acquisition through digital strategies...",
+    "nextButtonText": "Next"
+  },
+  "wizard2": {
+    "headerTitle": "2 of 8 Questions",
+    "questionTitle": "Who is this case study particularly relevant for?",
+    "questionSubtitle": "Describe your target audience or who could benefit from your solution.",
+    "placeholder": "e.g. Small and medium enterprises in B2B, marketing managers...",
+    "nextButtonText": "Next"
+  },
+  "wizard3": {
+    "headerTitle": "3 of 8 Questions",
+    "questionTitle": "What was the initial situation, idea or specific problem?",
+    "questionSubtitle": "Describe the context and what led to your solution.",
+    "placeholder": "e.g. Our company had difficulties with customer acquisition..."
+  },
+  "wizard4": {
+    "headerTitle": "4 of 8 Questions",
+    "questionTitle": "What was the goal you wanted to achieve?",
+    "questionSubtitle": "Describe the desired result or success you aimed for.",
+    "placeholder": "e.g. Increase leads by 40%, reduce costs by 25%, improve customer satisfaction..."
+  },
+  "wizard5": {
+    "headerTitle": "5 of 8 Questions",
+    "questionTitle": "What was implemented? (concrete & with relevant measures)",
+    "questionSubtitle": "Describe the concrete steps and measures. Feel free to mention unconventional or creative approaches.",
+    "placeholder": "e.g. Implementation of AI-based lead qualification, guerrilla marketing campaign, switch to agile working methods..."
+  },
+  "wizard6": {
+    "headerTitle": "6 of 8 Questions",
+    "questionTitle": "What were the concrete results – in impact and numbers?",
+    "questionSubtitle": "💡 Tip: The more hard facts (numbers, data, facts), the better your matching.",
+    "placeholder": "e.g. 40% more leads, 25% cost reduction, ROI of 300%, 95% customer satisfaction, finished 6 weeks earlier..."
+  },
+  "wizard7": {
+    "headerTitle": "7 of 8 Questions",
+    "questionTitle": "What budget volume did this project have?",
+    "infoText": "With clear budget information you get significantly better leads! Olivia prefers case studies with transparent budget information when in doubt. You can decide yourself whether your budget is publicly visible or only internally visible.",
+    "understoodButton": "Understood",
+    "minBudgetLabel": "Min. Budget (€) *",
+    "minBudgetPlaceholder": "e.g. 5,000",
+    "maxBudgetLabel": "Max. Budget (€) *",
+    "maxBudgetPlaceholder": "e.g. 25,000",
+    "financingModelLabel": "Financing Model / Explanation *",
+    "financingModelPlaceholder": "e.g. Performance-based compensation, equity deal, lump sum price after milestone...",
+    "noFixedBudgetLabel": "No fixed budget framework",
+    "publicVisibilityTitle": "Part of Case Study",
+    "publicVisibilitySubtitle": "Visible to all users",
+    "privateVisibilityTitle": "Only internally visible",
+    "privateVisibilitySubtitle": "Only available to Olivia"
+  },
+  "wizard8": {
+    "headerTitle": "8 of 8 Questions",
+    "questionTitle": "Is there anything else you would like to highlight?",
+    "questionSubtitle": "Optional - Awards, partners, testimonials, special insights or other highlights that haven't been mentioned yet. The more details, the more meaningful your case study becomes!",
+    "placeholder": "e.g. Award as 'Most Innovative Solution 2023', partnership with Google, 98% customer satisfaction...",
+    "nextButtonText": "Create Case Study"
+  },
+  "caseStudyCreation": {
+    "mockCase": {
+      "title": "Digital Transformation in E-Commerce",
+      "shortDescription": "AI-optimized solution to increase conversion rate through personalized product recommendations and automated customer analysis.",
+      "context": "A medium-sized e-commerce company in the fashion and lifestyle sector struggled with declining conversion rates and high shopping cart abandonment. Despite increasing website traffic, sales could not be increased proportionally. The existing recommendation system was outdated and could not effectively capture individual customer preferences.",
+      "action": "Implementation of an AI-based recommendation engine with machine learning algorithms for real-time analysis of user behavior. Integration of a personalized dashboard system for customers as well as automated email marketing campaigns based on individual purchasing patterns and browsing behavior.",
+      "result": {
+        "text": "The implementation led to measurable success within the first 6 months after go-live.",
+        "bulletpoint1": "43% increase in conversion rate",
+        "bulletpoint2": "67% reduction in shopping cart abandonment",
+        "bulletpoint3": "28% increase in average shopping cart value",
+        "bulletpoint4": "156% ROI within the first year",
+        "bulletpoint5": "89% customer satisfaction with personalized recommendations"
+      },
+      "provider": {
+        "name": "TechSolutions GmbH",
+        "experience": "8+ years of e-commerce expertise",
+        "successRate": "94% project success"
+      }
+    }
   }
 } 

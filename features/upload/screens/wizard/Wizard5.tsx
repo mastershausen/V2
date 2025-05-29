@@ -7,6 +7,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
@@ -25,6 +26,7 @@ interface Wizard5Props {
 export default function Wizard5({ onOpenSidebar }: Wizard5Props) {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   const [answer, setAnswer] = useState('');
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -58,7 +60,7 @@ export default function Wizard5({ onOpenSidebar }: Wizard5Props) {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="5 von 8 Fragen"
+        title={t('wizard5.headerTitle')}
         onBackPress={handleBack}
         showBackButton={true}
       />
@@ -78,16 +80,16 @@ export default function Wizard5({ onOpenSidebar }: Wizard5Props) {
 
         {/* Question Section */}
         <WizardQuestionContainer
-          title="Was wurde umgesetzt? (konkret & mit relevanten Maßnahmen)"
-          subtitle="Beschreibe die konkreten Schritte und Maßnahmen. Unkonventionelle oder kreative Ansätze gern nennen."
+          title={t('wizard5.questionTitle')}
+          subtitle={t('wizard5.questionSubtitle')}
         />
 
         {/* Input Section */}
         <WizardTextInput
           value={answer}
           onChangeText={setAnswer}
-          placeholder="z.B. Implementierung einer KI-basierten Leadqualifizierung, Guerilla-Marketing-Kampagne, Umstellung auf agile Arbeitsweise..."
-          numberOfLines={5}
+          placeholder={t('wizard5.placeholder')}
+          numberOfLines={4}
           autoFocus={true}
         />
       </ScrollView>

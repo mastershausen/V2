@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigation';
@@ -23,6 +24,7 @@ interface Wizard2Props {
 export default function Wizard2({ onOpenSidebar }: Wizard2Props) {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   const [answer, setAnswer] = useState('');
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -56,7 +58,7 @@ export default function Wizard2({ onOpenSidebar }: Wizard2Props) {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="2 von 8 Fragen"
+        title={t('wizard2.headerTitle')}
         onBackPress={handleBack}
         showBackButton={true}
       />
@@ -81,10 +83,10 @@ export default function Wizard2({ onOpenSidebar }: Wizard2Props) {
         {/* Question Section */}
         <View style={styles.questionContainer}>
           <Text style={[styles.questionTitle, { color: colors.textPrimary }]}>
-            Für wen ist diese Fallstudie besonders relevant?
+            {t('wizard2.questionTitle')}
           </Text>
           <Text style={[styles.questionSubtitle, { color: colors.textSecondary }]}>
-            Beschreibe deine Zielgruppe oder wer von deiner Lösung profitieren könnte.
+            {t('wizard2.questionSubtitle')}
           </Text>
         </View>
 
@@ -99,7 +101,7 @@ export default function Wizard2({ onOpenSidebar }: Wizard2Props) {
                 color: colors.textPrimary,
               }
             ]}
-            placeholder="z.B. Kleine und mittlere Unternehmen im B2B-Bereich, Marketing-Manager..."
+            placeholder={t('wizard2.placeholder')}
             placeholderTextColor={colors.textTertiary}
             value={answer}
             onChangeText={setAnswer}
@@ -139,7 +141,7 @@ export default function Wizard2({ onOpenSidebar }: Wizard2Props) {
               color: isValid ? 'white' : colors.textTertiary,
             }
           ]}>
-            Weiter
+            {t('wizard2.nextButtonText')}
           </Text>
           <Ionicons 
             name="arrow-forward" 
