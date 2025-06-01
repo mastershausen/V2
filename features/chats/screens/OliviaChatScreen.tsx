@@ -72,6 +72,8 @@ export default function OliviaChatScreen() {
   const preferencesInputRef = useRef<TextInput>(null);
   const typingDots = useRef(new Animated.Value(0)).current;
   const recordingAnimation = useRef(new Animated.Value(1)).current;
+  const overlayOpacity = useRef(new Animated.Value(0)).current;
+  const bottomSheetTranslateY = useRef(new Animated.Value(300)).current;
   const insets = useSafeAreaInsets();
   const scrollViewRef = useRef<ScrollView>(null);
   const [sidebarVisible, setSidebarVisible] = useState(false);
@@ -750,23 +752,74 @@ export default function OliviaChatScreen() {
     );
   }, [colors, renderGroupedMessages, chat.messages.length]);
 
+  // Animation für die Overlay-Abdunkelung und Bottom Sheet
+  useEffect(() => {
+    if (showAttachmentMenu) {
+      // Overlay faded gleichmäßig ein
+      Animated.timing(overlayOpacity, {
+        toValue: 1,
+        duration: 250,
+        useNativeDriver: true,
+      }).start();
+      
+      // Bottom Sheet rutscht von unten hoch
+      Animated.spring(bottomSheetTranslateY, {
+        toValue: 0,
+        tension: 65,
+        friction: 10,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      // Overlay faded gleichmäßig aus
+      Animated.timing(overlayOpacity, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+      
+      // Bottom Sheet rutscht nach unten weg
+      Animated.timing(bottomSheetTranslateY, {
+        toValue: 300,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [showAttachmentMenu, overlayOpacity, bottomSheetTranslateY]);
+
   // Render attachment menu
   const renderAttachmentMenu = () => (
     <Modal
       visible={showAttachmentMenu}
       transparent={true}
-      animationType="slide"
+      animationType="none"
       onRequestClose={() => setShowAttachmentMenu(false)}
     >
       <View style={styles.modalOverlay}>
-        <View style={[styles.attachmentMenuContainer, { 
-          backgroundColor: colors.backgroundPrimary,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: -2 },
-          shadowOpacity: 0.25,
-          shadowRadius: 10,
-          elevation: 10,
-        }]}>
+        {/* Animierter Scrim/Overlay für Abdunkelung - faded gleichmäßig ein */}
+        <Animated.View 
+          style={[
+            styles.modalScrim,
+            {
+              opacity: overlayOpacity,
+            }
+          ]}
+        />
+        
+        {/* Bottom Sheet mit eigener Animation */}
+        <Animated.View 
+          style={[
+            styles.attachmentMenuContainer, 
+            { 
+              backgroundColor: colors.backgroundPrimary,
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: -2 },
+              shadowOpacity: 0.25,
+              shadowRadius: 10,
+              elevation: 10,
+              transform: [{ translateY: bottomSheetTranslateY }],
+            }
+          ]}
+        >
           <TouchableOpacity style={styles.attachmentOption} onPress={handlePickImage}>
             <View style={[styles.attachmentIconContainer, { backgroundColor: '#1E6B55' }]}>
               <Ionicons name="image" size={24} color="#FFFFFF" />
@@ -793,7 +846,7 @@ export default function OliviaChatScreen() {
               Cancel
             </Text>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       </View>
     </Modal>
   );
@@ -1388,6 +1441,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     justifyContent: 'flex-end',
     paddingHorizontal: 0,
+  },
+  modalScrim: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.20)',
   },
   attachmentMenuContainer: {
     borderTopLeftRadius: 20,

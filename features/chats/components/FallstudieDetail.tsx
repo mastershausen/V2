@@ -579,7 +579,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(10, 24, 40, 0.85)',
+    backgroundColor: 'rgba(45, 45, 45, 0.85)',
   },
   contentOuterContainer: {
     width: windowWidth * 0.92,
