@@ -651,9 +651,9 @@
   "oliviaChat": {
     "serviceProviders": {
       "techstaff": {
-        "title": "Specialized Engineering Recruitment in Munich",
+        "title": "From 8 to 3 weeks: Munich Engineer Recruitment",
         "description": "Fast placement of qualified civil engineers for renovation projects through expert headhunting",
-        "compactSummary": "TechStaff München: Specialized engineer recruiting → 3 weeks to placement, €850 placement fee, 94% success rate",
+        "compactSummary": "Engineer hiring time slashed from 8 to 3 weeks for a major Munich developer. 94% success rate, 75% cost reduction - from €3,500 to €850 per placement.",
         "context": "A Munich-based property developer needed urgent civil engineers for multiple apartment building renovations. Traditional job postings yielded no suitable candidates within the required timeframe.",
         "action": "TechStaff München provided specialized headhunting services with pre-screened candidates from their network of 500+ civil engineers. Each candidate was evaluated for project fit, availability, and budget requirements.",
         "result": {
@@ -676,9 +676,9 @@
         }
       },
       "flexengineers": {
-        "title": "Temporary Engineering Services for Construction",
+        "title": "Express Placement: Engineer found in 5 days",
         "description": "All-inclusive engineer staffing for short-term building projects with on-site coordination",
-        "compactSummary": "FlexEngineers GmbH: Temporary staffing for construction → Engineer found in 5 days, €13,200/month all-inclusive, on-site service",
+        "compactSummary": "The impossible delivered - a senior engineer with 12+ years experience found in just 5 days. All-inclusive service at €13,200/month: no delays, no complications, just results.",
         "context": "A construction company needed experienced structural engineers for a 4-month loft conversion project. The budget was tight and they needed someone to start immediately with minimal onboarding.",
         "action": "FlexEngineers provided a senior civil engineer with 12+ years experience in structural work. The service included all administrative handling, insurance, and project management coordination.",
         "result": {
@@ -702,9 +702,9 @@
         }
       },
       "buildtalent": {
-        "title": "Freelancer Network for Building Engineering",
+        "title": "Scalable Engineering Solutions for Construction Projects",
         "description": "Digital platform connecting construction companies with vetted freelance structural engineers",
-        "compactSummary": "BuildTalent Platform: Freelancer network for construction → 150+ structural experts, €12,500/month average, 48h matching time, flexible scaling options",
+        "compactSummary": "150+ verified experts, perfect matches in 48 hours at €12,500/month average. 97% budget adherence, instant scaling - flexible engineering power on-demand.",
         "context": "A medium-sized construction firm needed flexible access to structural engineers for varying project demands. Traditional hiring was too slow and expensive for their dynamic workflow.",
         "action": "BuildTalent provided access to their network of 150+ pre-qualified structural engineers. The platform handled vetting, contract management, and performance tracking with AI-powered matching.",
         "result": {

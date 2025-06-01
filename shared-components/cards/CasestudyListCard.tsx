@@ -102,26 +102,17 @@ export function CasestudyListCard({
 
   // Kompakte Variante - nur Summary + Info Button
   if (variant === 'compact') {
-    const summaryText = compactSummary || `${description} → ${result}`;
-    const parts = summaryText.split('→');
+    const summaryText = compactSummary || description;
     
     return (
       <View style={[styles.container, styles.compactContainer, style]}>
         <View style={styles.compactHeader}>
           <Text style={[
-            styles.compactSummary, 
+            styles.compactFlowText, 
             { color: colors.textPrimary },
             descriptionStyle
           ]}>
-            {parts[0]}
-            {parts[1] && (
-              <>
-                <Text style={styles.compactArrow}>→ </Text>
-                <Text style={[styles.compactResults, { color: colors.textPrimary }]}>
-                  {parts[1].trim()}
-                </Text>
-              </>
-            )}
+            {summaryText}
           </Text>
           {onInfoPress && (
             <TouchableOpacity 
@@ -253,7 +244,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  compactSummary: {
+  compactFlowText: {
     fontSize: typography.fontSize.m,
     lineHeight: 22,
     flex: 1,
@@ -266,13 +257,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: spacing.s,
-  },
-  compactArrow: {
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.bold as any,
-  },
-  compactResults: {
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.semiBold as any,
   },
 }); 
