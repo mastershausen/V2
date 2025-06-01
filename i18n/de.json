@@ -695,5 +695,86 @@
       "perMonth": "Monat",
       "buyNow": "Jetzt kaufen"
     }
+  },
+  "oliviaChat": {
+    "serviceProviders": {
+      "techstaff": {
+        "title": "Spezialisierte Ingenieur-Vermittlung in München",
+        "description": "Schnelle Vermittlung qualifizierter Bauingenieure für Renovierungsprojekte durch Experten-Headhunting",
+        "compactSummary": "TechStaff München: Spezialisierte Ingenieur-Vermittlung → 3 Wochen bis Besetzung, €850 Vermittlungsgebühr, 94% Erfolgsquote",
+        "context": "Ein Münchner Immobilienentwickler benötigte dringend Bauingenieure für mehrere Apartmentgebäude-Renovierungen. Herkömmliche Stellenausschreibungen brachten keine geeigneten Kandidaten im gewünschten Zeitrahmen.",
+        "action": "TechStaff München stellte spezialisierte Headhunting-Dienste mit vorgeprüften Kandidaten aus ihrem Netzwerk von 500+ Bauingenieuren bereit. Jeder Kandidat wurde auf Projektpassung, Verfügbarkeit und Budget-Anforderungen bewertet.",
+        "result": {
+          "text": "Perfekte Ingenieur-Vermittlung innerhalb von 3 Wochen mit exzellenten Projektergebnissen:",
+          "bulletpoints": [
+            "Ingenieur-Vermittlung in 3 Wochen vs. 8 Wochen Branchendurchschnitt",
+            "Nur €850 Vermittlungsgebühr vs. €3.500 Branchenstandard",
+            "94% Erfolgsquote mit langfristigem Projektabschluss",
+            "Laufende Betreuung und Ersatzgarantie inklusive"
+          ]
+        },
+        "provider": {
+          "name": "TechStaff München",
+          "experience": "8 Jahre Spezialisierung auf technische Personalvermittlung",
+          "successRate": "94% erfolgreiche Vermittlungen",
+          "contact": {
+            "email": "info@techstaff-muenchen.de",
+            "phone": "+49 89 45678901"
+          }
+        }
+      },
+      "flexengineers": {
+        "title": "Zeitarbeit für Ingenieure im Bauwesen",
+        "description": "All-inclusive Ingenieur-Personal für kurzfristige Bauprojekte mit Vor-Ort-Koordination",
+        "compactSummary": "FlexEngineers GmbH: Zeitarbeit für Bauprojekte → Ingenieur in 5 Tagen gefunden, €13.200/Monat all-inclusive, vor Ort Service",
+        "context": "Ein Bauunternehmen benötigte erfahrene Statiker für ein 4-monatiges Loft-Umbauprojekt. Das Budget war knapp und sie brauchten jemanden, der sofort mit minimaler Einarbeitung starten konnte.",
+        "action": "FlexEngineers stellte einen Senior-Bauingenieur mit 12+ Jahren Erfahrung in Statik zur Verfügung. Der Service umfasste die komplette administrative Abwicklung, Versicherung und Projektmanagement-Koordination.",
+        "result": {
+          "text": "Sofortiger Ingenieur-Einsatz mit umfassender Projektunterstützung:",
+          "bulletpoints": [
+            "Ingenieur verfügbar in 5 Tagen vs. 4 Wochen typische Suchzeit",
+            "All-inclusive-Rate von €13.200/Monat inkl. Steuern und Versicherung",
+            "Vor-Ort-Projektmanager für nahtlose Integration",
+            "Flexibler Vertrag mit wöchentlicher Abrechnungsanpassung",
+            "Projekt 2 Wochen vor Zeitplan abgeschlossen"
+          ]
+        },
+        "provider": {
+          "name": "FlexEngineers GmbH",
+          "experience": "15 Jahre in technischer Zeitarbeit",
+          "successRate": "91% Kundenzufriedenheitsrate",
+          "contact": {
+            "email": "service@flexengineers.de",
+            "phone": "+49 89 87654321"
+          }
+        }
+      },
+      "buildtalent": {
+        "title": "Freelancer-Netzwerk für Bauingenieure",
+        "description": "Digitale Plattform zur Verbindung von Bauunternehmen mit geprüften freelance Statikern",
+        "compactSummary": "BuildTalent Platform: Freelancer-Netzwerk für Bau → 150+ Statik-Experten, €12.500/Monat durchschnittlich, 48h Matching-Zeit, flexible Skalierungsoptionen",
+        "context": "Ein mittelständisches Bauunternehmen benötigte flexiblen Zugang zu Statikern für variierende Projektanforderungen. Traditionelle Einstellungen waren zu langsam und teuer für ihren dynamischen Workflow.",
+        "action": "BuildTalent stellte Zugang zu ihrem Netzwerk von 150+ vorqualifizierten Statikern bereit. Die Plattform übernahm Prüfung, Vertragsmanagement und Leistungsverfolgung mit KI-gesteuertem Matching.",
+        "result": {
+          "text": "Schnelles Freelancer-Matching mit transparenter Preisgestaltung und Qualitätskontrolle:",
+          "bulletpoints": [
+            "Ingenieur-Matching in 48 Stunden vs. 3-4 Wochen traditionelle Suche",
+            "Durchschnittsrate €12.500/Monat mit transparenter Preisgestaltung",
+            "Qualitätsgarantie mit Leistungsverfolgungssystem",
+            "Flexibles Hoch-/Herunterskalieren je nach Projektbedarf",
+            "97% Budgettreue über alle Projekte hinweg"
+          ]
+        },
+        "provider": {
+          "name": "BuildTalent Platform",
+          "experience": "5 Jahre im Bau-Freelancer-Marktplatz",
+          "successRate": "97% Budgettreue-Rate",
+          "contact": {
+            "email": "hello@buildtalent.de",
+            "phone": "+49 172 9876543"
+          }
+        }
+      }
+    }
   }
 }

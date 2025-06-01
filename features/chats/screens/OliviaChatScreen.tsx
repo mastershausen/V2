@@ -29,6 +29,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GradientButton } from '@/shared-components/button';
 import SidebarContainer from '@/shared-components/navigation/SidebarContainer';
 import { CasestudyListCard } from '@/shared-components/cards';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -78,6 +79,7 @@ export default function OliviaChatScreen() {
   const insets = useSafeAreaInsets();
   const scrollViewRef = useRef<ScrollView>(null);
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const { t } = useTranslation();
 
   // Mock-Daten für den Olivia-Chat
   const [chat, setChat] = useState({
@@ -150,7 +152,7 @@ export default function OliviaChatScreen() {
     ]
   });
 
-  // Fallstudien-Daten für die Chat-Bubble
+  // Fallstudien-Daten für die Chat-Bubble aus i18n
   const fallstudienErgebnisse: Array<{
     id: string;
     titel: string;
@@ -175,78 +177,61 @@ export default function OliviaChatScreen() {
   }> = [
     {
       id: '1',
-      titel: 'Statik-Expertise for Multi-Family Homes',
-      kurzbeschreibung: 'Successful renovation of complex residential buildings with static challenges',
-      context: 'A listed multi-family house in Munich-Schwabing should be comprehensively renovated. The building structure had significant static defects, and the owner community was under time pressure and had to keep costs within the budget.',
-      action: 'Our team conducted a comprehensive analysis of the building structure, created a detailed renovation concept with BIM technology, and coordinated the work with local craftsmen. Through innovative solutions, we were able to resolve the static problems without affecting the historical structure.',
+      titel: t('oliviaChat.serviceProviders.techstaff.title'),
+      kurzbeschreibung: t('oliviaChat.serviceProviders.techstaff.description'),
+      context: t('oliviaChat.serviceProviders.techstaff.context'),
+      action: t('oliviaChat.serviceProviders.techstaff.action'),
       result: {
-        text: 'The project was completed on time and within the budget.',
-        bulletpoints: [
-          'Preservation of 90% of the historical building structure while modernizing',
-          'Cost savings of 18% compared to similar projects',
-          'Energy optimization with a 35% reduction in heating costs',
-          'Completion of the main work 2 weeks ahead of schedule'
-        ]
+        text: t('oliviaChat.serviceProviders.techstaff.result.text'),
+        bulletpoints: t('oliviaChat.serviceProviders.techstaff.result.bulletpoints', { returnObjects: true }) as string[]
       },
       anbieter: {
-        name: 'Baustatik München GmbH',
-        erfahrung: '15 years of specialization in building renovation',
-        erfolgsrate: '96% timely project completions',
+        name: t('oliviaChat.serviceProviders.techstaff.provider.name'),
+        erfahrung: t('oliviaChat.serviceProviders.techstaff.provider.experience'),
+        erfolgsrate: t('oliviaChat.serviceProviders.techstaff.provider.successRate'),
         kontakt: {
-          email: 'kontakt@baustatik-muenchen.de',
-          telefon: '+49 89 12345678'
+          email: t('oliviaChat.serviceProviders.techstaff.provider.contact.email'),
+          telefon: t('oliviaChat.serviceProviders.techstaff.provider.contact.phone')
         }
       }
     },
     {
       id: '2',
-      titel: 'Industrial Building-Use Transformation with High Requirements',
-      kurzbeschreibung: 'Transformation of an industrial building into modern lofts while preserving the historical facade',
-      context: 'An old industrial building from the 1920s in Munich should be converted into high-quality lofts. The building structure was partially worn out, the steel beams corroded, but the characteristic facade had to be preserved. The building owner had a very ambitious time window of only 14 months.',
-      action: 'We developed a two-stage renovation concept with focus on the static strengthening of the load-bearing structure while preserving the facade. Through the use of modern material bonding techniques, we were able to strengthen the existing structure without losing the industrial character. Parallel, tailor-made solutions were developed for sound and thermal insulation.',
+      titel: t('oliviaChat.serviceProviders.flexengineers.title'),
+      kurzbeschreibung: t('oliviaChat.serviceProviders.flexengineers.description'),
+      context: t('oliviaChat.serviceProviders.flexengineers.context'),
+      action: t('oliviaChat.serviceProviders.flexengineers.action'),
       result: {
-        text: 'The transformation was completed successfully with the following results:',
-        bulletpoints: [
-          'Complete preservation of the historical industrial facade',
-          'Creation of 24 individual loft apartments with modern standard',
-          'Underachievement of the time plan by 6 weeks',
-          'Budget adherence despite unforeseen challenges',
-          'Awarded the local architecture prize for successful transformation'
-        ]
+        text: t('oliviaChat.serviceProviders.flexengineers.result.text'),
+        bulletpoints: t('oliviaChat.serviceProviders.flexengineers.result.bulletpoints', { returnObjects: true }) as string[]
       },
       anbieter: {
-        name: 'Industriebau Umnutzung GmbH',
-        erfahrung: '20+ years of specialization in transformation projects',
-        erfolgsrate: '92% positive customer reviews',
+        name: t('oliviaChat.serviceProviders.flexengineers.provider.name'),
+        erfahrung: t('oliviaChat.serviceProviders.flexengineers.provider.experience'),
+        erfolgsrate: t('oliviaChat.serviceProviders.flexengineers.provider.successRate'),
         kontakt: {
-          email: 'info@industriebau-umnutzung.de',
-          telefon: '+49 89 98765432'
+          email: t('oliviaChat.serviceProviders.flexengineers.provider.contact.email'),
+          telefon: t('oliviaChat.serviceProviders.flexengineers.provider.contact.phone')
         }
       }
     },
     {
       id: '3',
-      titel: 'Cost-Effective Renovation of a Residential Complex',
-      kurzbeschreibung: 'Cost-oriented renovation of a 70s residential complex with new usage concept',
-      context: 'A residential complex from the 1970s with 42 residential units in Munich-Pasing had significant structural and static defects. The owner community had a limited budget and wanted a cost-effective renovation solution without affecting the living quality.',
-      action: 'Our team developed a tailored, cost-conscious renovation concept with focus on the static strengthening of the building. Through digital building inspection, we were able to identify and target weak points precisely and implement cost-efficient, but durable solutions.',
+      titel: t('oliviaChat.serviceProviders.buildtalent.title'),
+      kurzbeschreibung: t('oliviaChat.serviceProviders.buildtalent.description'),
+      context: t('oliviaChat.serviceProviders.buildtalent.context'),
+      action: t('oliviaChat.serviceProviders.buildtalent.action'),
       result: {
-        text: 'The renovation was completed successfully with outstanding results:',
-        bulletpoints: [
-          'Cost savings of 22% compared to similar renovation projects',
-          'Extension of the building life expectancy by at least 30 years',
-          'Energy efficiency increase by 48% with corresponding heating cost reduction',
-          'Minimal disturbance of the residents during the construction phase through efficient planning',
-          'Property value increase by an average of 31% after completion of the measures'
-        ]
+        text: t('oliviaChat.serviceProviders.buildtalent.result.text'),
+        bulletpoints: t('oliviaChat.serviceProviders.buildtalent.result.bulletpoints', { returnObjects: true }) as string[]
       },
       anbieter: {
-        name: 'Effiziente Bausanierung GmbH',
-        erfahrung: '12 years of specialization in cost-conscious renovations',
-        erfolgsrate: '97% budget adherence',
+        name: t('oliviaChat.serviceProviders.buildtalent.provider.name'),
+        erfahrung: t('oliviaChat.serviceProviders.buildtalent.provider.experience'),
+        erfolgsrate: t('oliviaChat.serviceProviders.buildtalent.provider.successRate'),
         kontakt: {
-          email: 'kontakt@effiziente-bausanierung.de',
-          telefon: '+49 172 3456789'
+          email: t('oliviaChat.serviceProviders.buildtalent.provider.contact.email'),
+          telefon: t('oliviaChat.serviceProviders.buildtalent.provider.contact.phone')
         }
       }
     },
@@ -618,10 +603,10 @@ export default function OliviaChatScreen() {
               result={studie.result.text}
               compactSummary={
                 studie.id === '1' 
-                  ? "BIM-Technologie + innovative Statik-Lösungen → 90% historische Struktur erhalten, 18% Kosteneinsparung, 2 Wochen vor Zeitplan"
+                  ? t('oliviaChat.serviceProviders.techstaff.compactSummary')
                   : studie.id === '2'
-                  ? "Industriebau-Transformation mit modernen Materialtechniken → 24 Loft-Apartments, 6 Wochen Zeitgewinn, Architekturpreis 2023"
-                  : "Digitale Bauinspektion + kosteneffiziente Lösungen → 22% Kosteneinsparung, 30 Jahre Lebensdauer, 48% Energieeffizienz-Steigerung"
+                  ? t('oliviaChat.serviceProviders.flexengineers.compactSummary')
+                  : t('oliviaChat.serviceProviders.buildtalent.compactSummary')
               }
               index={parseInt(studie.id)}
               onInfoPress={() => {

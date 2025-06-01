@@ -648,6 +648,87 @@
       }
     }
   },
+  "oliviaChat": {
+    "serviceProviders": {
+      "techstaff": {
+        "title": "Specialized Engineering Recruitment in Munich",
+        "description": "Fast placement of qualified civil engineers for renovation projects through expert headhunting",
+        "compactSummary": "TechStaff München: Specialized engineer recruiting → 3 weeks to placement, €850 placement fee, 94% success rate",
+        "context": "A Munich-based property developer needed urgent civil engineers for multiple apartment building renovations. Traditional job postings yielded no suitable candidates within the required timeframe.",
+        "action": "TechStaff München provided specialized headhunting services with pre-screened candidates from their network of 500+ civil engineers. Each candidate was evaluated for project fit, availability, and budget requirements.",
+        "result": {
+          "text": "Perfect engineer placement within 3 weeks with excellent project outcomes:",
+          "bulletpoints": [
+            "Engineer placement in 3 weeks vs. 8 weeks industry average",
+            "Only €850 placement fee vs. €3,500 industry standard",
+            "94% success rate with long-term project completion",
+            "Ongoing support and replacement guarantee included"
+          ]
+        },
+        "provider": {
+          "name": "TechStaff München",
+          "experience": "8 years specializing in technical recruitment",
+          "successRate": "94% successful placements",
+          "contact": {
+            "email": "info@techstaff-muenchen.de",
+            "phone": "+49 89 45678901"
+          }
+        }
+      },
+      "flexengineers": {
+        "title": "Temporary Engineering Services for Construction",
+        "description": "All-inclusive engineer staffing for short-term building projects with on-site coordination",
+        "compactSummary": "FlexEngineers GmbH: Temporary staffing for construction → Engineer found in 5 days, €13,200/month all-inclusive, on-site service",
+        "context": "A construction company needed experienced structural engineers for a 4-month loft conversion project. The budget was tight and they needed someone to start immediately with minimal onboarding.",
+        "action": "FlexEngineers provided a senior civil engineer with 12+ years experience in structural work. The service included all administrative handling, insurance, and project management coordination.",
+        "result": {
+          "text": "Immediate engineer deployment with comprehensive project support:",
+          "bulletpoints": [
+            "Engineer available in 5 days vs. 4 weeks typical search time",
+            "All-inclusive rate of €13,200/month including taxes and insurance",
+            "On-site project manager for seamless integration",
+            "Flexible contract with weekly billing adjustments",
+            "Project completed 2 weeks ahead of schedule"
+          ]
+        },
+        "provider": {
+          "name": "FlexEngineers GmbH",
+          "experience": "15 years in temporary technical staffing",
+          "successRate": "91% client satisfaction rate",
+          "contact": {
+            "email": "service@flexengineers.de",
+            "phone": "+49 89 87654321"
+          }
+        }
+      },
+      "buildtalent": {
+        "title": "Freelancer Network for Building Engineering",
+        "description": "Digital platform connecting construction companies with vetted freelance structural engineers",
+        "compactSummary": "BuildTalent Platform: Freelancer network for construction → 150+ structural experts, €12,500/month average, 48h matching time, flexible scaling options",
+        "context": "A medium-sized construction firm needed flexible access to structural engineers for varying project demands. Traditional hiring was too slow and expensive for their dynamic workflow.",
+        "action": "BuildTalent provided access to their network of 150+ pre-qualified structural engineers. The platform handled vetting, contract management, and performance tracking with AI-powered matching.",
+        "result": {
+          "text": "Rapid freelancer matching with transparent pricing and quality control:",
+          "bulletpoints": [
+            "Engineer matching in 48 hours vs. 3-4 weeks traditional search",
+            "Average rate €12,500/month with transparent pricing",
+            "Quality guarantee with performance tracking system",
+            "Flexible scaling up/down based on project needs",
+            "97% budget adherence across all projects"
+          ]
+        },
+        "provider": {
+          "name": "BuildTalent Platform",
+          "experience": "5 years in construction freelance marketplace",
+          "successRate": "97% budget adherence rate",
+          "contact": {
+            "email": "hello@buildtalent.de",
+            "phone": "+49 172 9876543"
+          }
+        }
+      }
+    }
+  },
   "upload": {
     "header": {
       "title": "Create Case Studies",
