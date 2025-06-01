@@ -190,7 +190,7 @@ export function CasestudyListCard({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: spacing.s,
+    marginBottom: spacing.m,
     backgroundColor: 'rgba(30, 107, 85, 0.02)',
     borderLeftWidth: 3,
     borderLeftColor: '#1E6B55',

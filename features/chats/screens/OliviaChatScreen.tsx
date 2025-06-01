@@ -1147,8 +1147,9 @@ const styles = StyleSheet.create({
   },
   fallstudienContainer: {
     width: '100%',
-    marginTop: 12,
-    marginBottom: 8,
+    marginTop: spacing.l,
+    marginBottom: spacing.m,
+    gap: spacing.s,
   },
   safeArea: {
     flex: 1,
