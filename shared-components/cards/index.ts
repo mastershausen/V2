@@ -1,2 +1,2 @@
 export * from './gig-card';
-export * from './casestudy-card'; 
+export { CasestudyListCard } from './CasestudyListCard'; 

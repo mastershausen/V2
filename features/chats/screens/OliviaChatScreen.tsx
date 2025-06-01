@@ -28,6 +28,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GradientButton } from '@/shared-components/button';
 import SidebarContainer from '@/shared-components/navigation/SidebarContainer';
+import { CasestudyListCard } from '@/shared-components/cards';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -609,35 +610,27 @@ export default function OliviaChatScreen() {
         {/* Case study results */}
         <View style={styles.fallstudienContainer}>
           {fallstudienErgebnisse.map((studie) => (
-            <View key={studie.id} style={styles.fallstudieItem}>
-              <View style={styles.fallstudieHeader}>
-                <Text style={[styles.fallstudieTitle, { color: colors.textPrimary }]}>
-                  Case Study {studie.id}: {studie.titel}
-                </Text>
-                <TouchableOpacity 
-                  style={styles.infoButton}
-                  onPress={() => {
-                    // Case Study 1 bekommt isVerified-Flag
-                    // Case Study 2 bekommt needsVerification-Flag
-                    let studieWithFlags = studie;
-                    
-                    if (studie.id === '1') {
-                      studieWithFlags = {...studie, isVerified: true};
-                    } else if (studie.id === '2') {
-                      studieWithFlags = {...studie, needsVerification: true};
-                    }
-                    
-                    setSelectedFallstudie(studieWithFlags);
-                    setShowFallstudieDetail(true);
-                  }}
-                >
-                  <Text style={[styles.infoButtonText, { color: colors.textPrimary }]}>i</Text>
-                </TouchableOpacity>
-              </View>
-              <Text style={[styles.fallstudieErgebnis, { color: colors.textPrimary }]}>
-                {studie.kurzbeschreibung}
-              </Text>
-            </View>
+            <CasestudyListCard
+              key={studie.id}
+              title={studie.titel}
+              description={studie.kurzbeschreibung}
+              result={studie.result.text}
+              index={parseInt(studie.id)}
+              onInfoPress={() => {
+                // Case Study 1 bekommt isVerified-Flag
+                // Case Study 2 bekommt needsVerification-Flag
+                let studieWithFlags = studie;
+                
+                if (studie.id === '1') {
+                  studieWithFlags = {...studie, isVerified: true};
+                } else if (studie.id === '2') {
+                  studieWithFlags = {...studie, needsVerification: true};
+                }
+                
+                setSelectedFallstudie(studieWithFlags);
+                setShowFallstudieDetail(true);
+              }}
+            />
           ))}
         </View>
         
@@ -1163,52 +1156,6 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 12,
     marginBottom: 8,
-  },
-  fallstudieItem: {
-    marginBottom: 12,
-    backgroundColor: 'rgba(30, 107, 85, 0.03)',
-    borderLeftWidth: 3,
-    borderLeftColor: '#1E6B55',
-    borderRadius: 8,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
-  },
-  fallstudieHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 6,
-  },
-  fallstudieTitle: {
-    fontWeight: '600',
-    fontSize: 15,
-    flex: 1,
-    color: '#1E6B55',
-  },
-  fallstudieErgebnis: {
-    fontSize: 14,
-    opacity: 0.8,
-    lineHeight: 20,
-  },
-  infoButton: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: 'rgba(30, 107, 85, 0.2)',
-    borderWidth: 1,
-    borderColor: '#1E6B55',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 8,
-  },
-  infoButtonText: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: '#1E6B55',
   },
   safeArea: {
     flex: 1,

@@ -21,6 +21,7 @@ import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
 import { ui } from '@/config/theme/ui';
 import { changeLanguage } from '@/i18n/config';
+import { CasestudyListCard } from '@/shared-components/cards';
 
 import FallstudieDetail from '@/features/chats/components/FallstudieDetail';
 
@@ -162,34 +163,15 @@ export function FallstudienListe({ visible, onClose, profileId, filterVerified =
     setShowFallstudieDetail(false);
   };
 
-  // Rendert eine einzelne Fallstudie in der Liste
+  // Rendert eine einzelne Fallstudie in der Liste mit CasestudyListCard
   const renderFallstudieItem = ({ item }: { item: any }) => (
-    <TouchableOpacity
-      style={[styles.fallstudieItem, { backgroundColor: colors.backgroundSecondary }]}
-      onPress={() => handleSelectFallstudie(item)}
-    >
-      <View style={styles.fallstudieContent}>
-        <View style={styles.fallstudieTitelContainer}>
-          <Text style={[styles.fallstudieTitel, { color: colors.textPrimary }]}>
-            {item.titel}
-          </Text>
-        </View>
-        <Text 
-          style={[styles.fallstudieKurzbeschreibung, { color: colors.textSecondary }]}
-          numberOfLines={2}
-        >
-          {item.kurzbeschreibung}
-        </Text>
-        <View style={styles.fallstudieErgebnisContainer}>
-          <Text style={[styles.fallstudieErgebnis, { color: colors.primary }]}>
-            {t('casestudy.list.result')}: {item.ergebnis}
-          </Text>
-        </View>
-      </View>
-      <View style={styles.fallstudieArrow}>
-        <Ionicons name="chevron-forward" size={24} color={colors.primary + '80'} />
-      </View>
-    </TouchableOpacity>
+    <CasestudyListCard
+      title={item.titel}
+      description={item.kurzbeschreibung}
+      result={item.result.text}
+      onInfoPress={() => handleSelectFallstudie(item)}
+      style={{ marginBottom: spacing.s }}
+    />
   );
 
   return (
@@ -216,16 +198,6 @@ export function FallstudienListe({ visible, onClose, profileId, filterVerified =
             <View style={styles.headerRight} />
           </View>
 
-          {/* Einleitung */}
-          <View style={styles.introContainer}>
-            <Text style={[styles.introText, { color: colors.textSecondary }]}>
-              {filterVerified 
-                ? t('casestudy.list.verifiedIntro')
-                : t('casestudy.list.intro')
-              }
-            </Text>
-          </View>
-
           {/* Liste der Fallstudien */}
           <FlatList
             data={displayedFallstudien}
@@ -233,9 +205,6 @@ export function FallstudienListe({ visible, onClose, profileId, filterVerified =
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.listContainer}
             showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => (
-              <View style={[styles.separator, { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.divider }]} />
-            )}
           />
         </SafeAreaView>
       </Modal>
@@ -277,70 +246,9 @@ const styles = StyleSheet.create({
   headerRight: {
     width: 40, // Gleiche Breite wie der Zurück-Button für eine ausgeglichene Anordnung
   },
-  introContainer: {
-    paddingHorizontal: spacing.m,
-    paddingBottom: spacing.m,
-    paddingTop: spacing.s,
-    backgroundColor: 'rgba(245,247,250,0.5)',
-  },
-  introText: {
-    fontSize: typography.fontSize.s,
-    lineHeight: 20,
-    textAlign: 'center',
-    fontStyle: 'italic',
-  },
   listContainer: {
     padding: spacing.m,
     paddingTop: spacing.l,
-  },
-  separator: {
-    height: spacing.m,
-    marginHorizontal: spacing.m,
-  },
-  fallstudieItem: {
-    borderRadius: ui.borderRadius.m,
-    padding: spacing.m,
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(0,0,0,0.05)',
-  },
-  fallstudieContent: {
-    flex: 1,
-  },
-  fallstudieTitelContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  fallstudieTitel: {
-    fontSize: typography.fontSize.m,
-    fontWeight: typography.fontWeight.bold as any,
-    marginBottom: spacing.xs,
-  },
-  fallstudieKurzbeschreibung: {
-    fontSize: typography.fontSize.s,
-    lineHeight: 20,
-    marginBottom: spacing.s,
-  },
-  fallstudieErgebnisContainer: {
-    marginBottom: spacing.xs,
-    backgroundColor: 'rgba(30, 107, 85, 0.1)',
-    borderRadius: ui.borderRadius.s,
-    paddingHorizontal: spacing.xs,
-    paddingVertical: 2,
-    alignSelf: 'flex-start',
-  },
-  fallstudieErgebnis: {
-    fontSize: typography.fontSize.s,
-    fontWeight: typography.fontWeight.semiBold as any,
-  },
-  fallstudieArrow: {
-    marginLeft: spacing.s,
   },
 });
 
