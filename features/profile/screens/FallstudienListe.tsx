@@ -191,8 +191,8 @@ export function FallstudienListe({ visible, onClose, profileId, filterVerified =
             </TouchableOpacity>
             <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
               {filterVerified 
-                ? t('profile.stats.verified') + ' ' + t('casestudy.list.title')
-                : t('casestudy.list.title')
+                ? `Max Weber's Verified ${t('casestudy.list.title')}`
+                : `Max Weber's ${t('casestudy.list.title')}`
               }
             </Text>
             <View style={styles.headerRight} />

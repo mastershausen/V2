@@ -612,9 +612,17 @@ export default function OliviaChatScreen() {
           {fallstudienErgebnisse.map((studie) => (
             <CasestudyListCard
               key={studie.id}
+              variant="compact"
               title={studie.titel}
               description={studie.kurzbeschreibung}
               result={studie.result.text}
+              compactSummary={
+                studie.id === '1' 
+                  ? "BIM-Technologie + innovative Statik-Lösungen → 90% historische Struktur erhalten, 18% Kosteneinsparung, 2 Wochen vor Zeitplan"
+                  : studie.id === '2'
+                  ? "Industriebau-Transformation mit modernen Materialtechniken → 24 Loft-Apartments, 6 Wochen Zeitgewinn, Architekturpreis 2023"
+                  : "Digitale Bauinspektion + kosteneffiziente Lösungen → 22% Kosteneinsparung, 30 Jahre Lebensdauer, 48% Energieeffizienz-Steigerung"
+              }
               index={parseInt(studie.id)}
               onInfoPress={() => {
                 // Case Study 1 bekommt isVerified-Flag

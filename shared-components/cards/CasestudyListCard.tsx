@@ -28,6 +28,16 @@ interface CasestudyListCardProps {
   resultPrefix?: string;
   
   /**
+   * Optional: Kompakter Summary-Text für compact-Variante
+   */
+  compactSummary?: string;
+  
+  /**
+   * Variante der Card (default: "default", compact: ultra-kompakte Version)
+   */
+  variant?: 'default' | 'compact';
+  
+  /**
    * Callback wenn Info-Button gedrückt wird
    */
   onInfoPress?: () => void;
@@ -74,6 +84,8 @@ export function CasestudyListCard({
   description,
   result,
   resultPrefix = 'Result:',
+  compactSummary,
+  variant = 'default',
   onInfoPress,
   index,
   indexPrefix = 'Case Study',
@@ -88,6 +100,48 @@ export function CasestudyListCard({
     ? `${indexPrefix} ${index}: ${title}`
     : title;
 
+  // Kompakte Variante - nur Summary + Info Button
+  if (variant === 'compact') {
+    const summaryText = compactSummary || `${description} → ${result}`;
+    const parts = summaryText.split('→');
+    
+    return (
+      <View style={[styles.container, styles.compactContainer, style]}>
+        <View style={styles.compactHeader}>
+          <Text style={[
+            styles.compactSummary, 
+            { color: colors.textPrimary },
+            descriptionStyle
+          ]}>
+            {parts[0]}
+            {parts[1] && (
+              <>
+                <Text style={styles.compactArrow}>→ </Text>
+                <Text style={[styles.compactResults, { color: colors.textPrimary }]}>
+                  {parts[1].trim()}
+                </Text>
+              </>
+            )}
+          </Text>
+          {onInfoPress && (
+            <TouchableOpacity 
+              style={[styles.infoButton, styles.compactInfoButton, { 
+                backgroundColor: `${colors.primary}33`,
+                borderColor: colors.primary 
+              }]}
+              onPress={onInfoPress}
+            >
+              <Text style={[styles.infoButtonText, { color: colors.primary }]}>
+                i
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+    );
+  }
+
+  // Standard Variante (bisheriges Verhalten)
   return (
     <View style={[styles.container, style]}>
       <View style={styles.header}>
@@ -188,6 +242,37 @@ const styles = StyleSheet.create({
   },
   result: {
     fontSize: typography.fontSize.s,
+    fontWeight: typography.fontWeight.semiBold as any,
+  },
+  compactContainer: {
+    padding: spacing.s,
+    marginBottom: spacing.xs,
+  },
+  compactHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  compactSummary: {
+    fontSize: typography.fontSize.m,
+    lineHeight: 22,
+    flex: 1,
+  },
+  compactInfoButton: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: spacing.s,
+  },
+  compactArrow: {
+    fontSize: typography.fontSize.m,
+    fontWeight: typography.fontWeight.bold as any,
+  },
+  compactResults: {
+    fontSize: typography.fontSize.m,
     fontWeight: typography.fontWeight.semiBold as any,
   },
 }); 
