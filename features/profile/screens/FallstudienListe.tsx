@@ -173,12 +173,6 @@ export function FallstudienListe({ visible, onClose, profileId, filterVerified =
           <Text style={[styles.fallstudieTitel, { color: colors.textPrimary }]}>
             {item.titel}
           </Text>
-          {isVerified(item.id) && (
-            <View style={styles.verifiedBadge}>
-              <Ionicons name="shield-checkmark" size={12} color="#00A041" />
-              <Text style={styles.verifiedText}>{t('verification.badge.verified')}</Text>
-            </View>
-          )}
         </View>
         <Text 
           style={[styles.fallstudieKurzbeschreibung, { color: colors.textSecondary }]}
@@ -191,9 +185,6 @@ export function FallstudienListe({ visible, onClose, profileId, filterVerified =
             {t('casestudy.list.result')}: {item.ergebnis}
           </Text>
         </View>
-        <Text style={[styles.fallstudieDatum, { color: colors.textTertiary }]}>
-          {item.datum}
-        </Text>
       </View>
       <View style={styles.fallstudieArrow}>
         <Ionicons name="chevron-forward" size={24} color={colors.primary + '80'} />
@@ -331,21 +322,6 @@ const styles = StyleSheet.create({
     fontWeight: typography.fontWeight.bold as any,
     marginBottom: spacing.xs,
   },
-  verifiedBadge: {
-    backgroundColor: 'rgba(0, 160, 65, 0.1)',
-    borderRadius: ui.borderRadius.s,
-    paddingHorizontal: spacing.xs,
-    paddingVertical: 2,
-    marginLeft: spacing.xs,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  verifiedText: {
-    fontSize: typography.fontSize.xs,
-    fontWeight: typography.fontWeight.semiBold as any,
-    color: '#00A041',
-    marginLeft: 2,
-  },
   fallstudieKurzbeschreibung: {
     fontSize: typography.fontSize.s,
     lineHeight: 20,
@@ -362,10 +338,6 @@ const styles = StyleSheet.create({
   fallstudieErgebnis: {
     fontSize: typography.fontSize.s,
     fontWeight: typography.fontWeight.semiBold as any,
-  },
-  fallstudieDatum: {
-    fontSize: typography.fontSize.xs,
-    fontStyle: 'italic',
   },
   fallstudieArrow: {
     marginLeft: spacing.s,
