@@ -191,14 +191,14 @@ export function CasestudyListCard({
 const styles = StyleSheet.create({
   container: {
     marginBottom: spacing.s,
-    backgroundColor: 'rgba(30, 107, 85, 0.03)',
+    backgroundColor: 'rgba(30, 107, 85, 0.02)',
     borderLeftWidth: 3,
     borderLeftColor: '#1E6B55',
-    borderRadius: ui.borderRadius.m,
+    borderRadius: 6,
     padding: spacing.m,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.04,
     shadowRadius: 2,
     elevation: 1,
   },
