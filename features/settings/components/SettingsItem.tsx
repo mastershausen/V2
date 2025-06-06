@@ -25,6 +25,7 @@ export interface SettingsItemProps {
   switchValue?: boolean;
   onSwitchChange?: (value: boolean) => void;
   testID?: string;
+  showBorder?: boolean;
 }
 
 /**
@@ -49,7 +50,8 @@ export function SettingsItem({
   isSwitch = false,
   switchValue = false,
   onSwitchChange,
-  testID
+  testID,
+  showBorder = true
 }: SettingsItemProps) {
   const colors = useThemeColor();
   
@@ -64,11 +66,11 @@ export function SettingsItem({
           <Ionicons 
             name={iconName as any} 
             size={22} 
-            color={colors.textSecondary} 
+            color="#1E6B55" 
             style={styles.icon}
           />
         )}
-        <Text style={[styles.label, { color: colors.textPrimary }]}>
+        <Text style={[styles.label, { color: "#1E6B55" }]}>
           {label}
         </Text>
       </View>
@@ -101,7 +103,7 @@ export function SettingsItem({
           <Ionicons 
             name={Platform.OS === 'ios' ? 'chevron-forward' : 'chevron-forward-outline'} 
             size={20} 
-            color={colors.textSecondary} 
+            color="#1E6B55" 
             style={styles.arrowIcon}
           />
         )}
@@ -113,7 +115,10 @@ export function SettingsItem({
     <TouchableOpacity 
       style={[
         styles.container, 
-        { borderBottomColor: colors.divider }
+        { 
+          borderBottomColor: colors.divider,
+          borderBottomWidth: showBorder ? 1 : 0
+        }
       ]} 
       onPress={onPress}
       activeOpacity={0.6}
@@ -125,7 +130,10 @@ export function SettingsItem({
     <View 
       style={[
         styles.container, 
-        { borderBottomColor: colors.divider }
+        { 
+          borderBottomColor: colors.divider,
+          borderBottomWidth: showBorder ? 1 : 0
+        }
       ]}
       testID={testID}
     >
@@ -140,8 +148,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: spacing.m,
-    paddingHorizontal: spacing.m,
-    borderBottomWidth: 1,
+    paddingHorizontal: spacing.s,
   },
   leftContainer: {
     flexDirection: 'row',

@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: spacing.m,
+    paddingHorizontal: spacing.s,
     marginBottom: spacing.xs,
   },
   icon: {

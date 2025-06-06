@@ -104,14 +104,19 @@ export default function SettingsScreen() {
             showArrow={true}
             onPress={() => handleNavigation('/settings/account')}
           />
-          <SettingsItem
-            label={t('settings.logout')}
-            icon="log-out-outline"
-            showArrow={false}
-            onPress={handleLogout}
-          />
         </SettingsSection>
       </ScrollView>
+      
+      {/* Logout Item at bottom */}
+      <View style={[styles.bottomContainer, { backgroundColor: colors.backgroundSecondary }]}>
+        <SettingsItem
+          label={t('settings.logout')}
+          icon="log-out-outline"
+          showArrow={false}
+          showBorder={false}
+          onPress={handleLogout}
+        />
+      </View>
     </SafeAreaView>
   );
 }
@@ -134,5 +139,11 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     paddingBottom: spacing.xxl,
     paddingHorizontal: spacing.m,
+  },
+  bottomContainer: {
+    borderRadius: 8,
+    marginHorizontal: spacing.m,
+    marginBottom: spacing.m,
+    overflow: 'hidden',
   },
 }); 
