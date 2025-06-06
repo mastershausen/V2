@@ -99,6 +99,12 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
           icon: 'bookmark-outline',
           route: '/saved',
         },
+        {
+          id: 'about',
+          title: 'About Solvbox',
+          icon: 'information-circle-outline',
+          route: '/about',
+        },
       ],
     },
   ];

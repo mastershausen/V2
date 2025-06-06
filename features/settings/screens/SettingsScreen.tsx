@@ -36,9 +36,9 @@ export default function SettingsScreen() {
   const handleLogout = () => {
     Alert.alert(
       t('settings.logout'),
-      'Do you really want to log out?',
+      t('settings.logoutConfirm'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('settings.cancel'), style: 'cancel' },
         { 
           text: t('settings.logout'), 
           style: 'destructive',
@@ -70,36 +70,32 @@ export default function SettingsScreen() {
         {/* General */}
         <SettingsSection title={t('settings.general')}>
           <SettingsItem
-            label="Appearance"
+            label={t('settings.appearance')}
             icon="color-palette-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/appearance')}
           />
           <SettingsItem
-            label="Language"
+            label={t('settings.language')}
             icon="language-outline"
-            value="English"
+            value={t('settings.currentLanguage')}
             showArrow={true}
             onPress={() => handleNavigation('/settings/language')}
           />
           <SettingsItem
-            label="Help & Support"
+            label={t('settings.helpSupport')}
             icon="help-circle-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/support')}
           />
           <SettingsItem
-            label="Feedback"
+            label={t('settings.feedback')}
             icon="chatbubble-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/feedback')}
           />
-        </SettingsSection>
-        
-        {/* Account */}
-        <SettingsSection title={t('settings.account')}>
           <SettingsItem
-            label="Account Settings"
+            label={t('settings.accountSettings')}
             icon="settings-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/account')}

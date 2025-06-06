@@ -117,12 +117,6 @@ export default function AccountSettingsScreen() {
             showArrow={true}
             onPress={() => handleNavigation('/settings/privacy')}
           />
-          <SettingsItem
-            label="About Solvbox"
-            icon="information-circle-outline"
-            showArrow={true}
-            onPress={() => handleNavigation('/settings/about')}
-          />
         </SettingsSection>
         
         {/* Account Management */}
