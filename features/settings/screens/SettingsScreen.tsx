@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { typography } from '@/config/theme/typography';
@@ -24,6 +25,7 @@ import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigatio
 export default function SettingsScreen() {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   
   // Handler for navigation to different screens
   const handleNavigation = (route: string) => {
@@ -33,12 +35,12 @@ export default function SettingsScreen() {
   // Logout Handler
   const handleLogout = () => {
     Alert.alert(
-      'Log out',
+      t('settings.logout'),
       'Do you really want to log out?',
       [
         { text: 'Cancel', style: 'cancel' },
         { 
-          text: 'Log out', 
+          text: t('settings.logout'), 
           style: 'destructive',
           onPress: () => {
             // Here the logout logic would come
@@ -53,8 +55,9 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="Settings"
-        showBackButton={false}
+        title={t('settings.title')}
+        showBackButton={true}
+        onBackPress={() => router.back()}
         titleStyle={styles.headerTitle}
         containerStyle={styles.headerContainer}
       />
@@ -65,7 +68,7 @@ export default function SettingsScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* General */}
-        <SettingsSection title="General">
+        <SettingsSection title={t('settings.general')}>
           <SettingsItem
             label="Appearance"
             icon="color-palette-outline"
@@ -78,18 +81,6 @@ export default function SettingsScreen() {
             value="English"
             showArrow={true}
             onPress={() => handleNavigation('/settings/language')}
-          />
-          <SettingsItem
-            label="Tutorial"
-            icon="play-circle-outline"
-            showArrow={true}
-            onPress={() => handleNavigation('/settings/tutorial')}
-          />
-          <SettingsItem
-            label="Saved / Favorites"
-            icon="bookmark-outline"
-            showArrow={true}
-            onPress={() => handleNavigation('/settings/saved')}
           />
           <SettingsItem
             label="Help & Support"
@@ -106,7 +97,7 @@ export default function SettingsScreen() {
         </SettingsSection>
         
         {/* Account */}
-        <SettingsSection title="Account">
+        <SettingsSection title={t('settings.account')}>
           <SettingsItem
             label="Account Settings"
             icon="settings-outline"
@@ -114,7 +105,7 @@ export default function SettingsScreen() {
             onPress={() => handleNavigation('/settings/account')}
           />
           <SettingsItem
-            label="Log out"
+            label={t('settings.logout')}
             icon="log-out-outline"
             showArrow={false}
             onPress={handleLogout}

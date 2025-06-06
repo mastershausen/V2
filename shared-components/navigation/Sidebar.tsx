@@ -88,6 +88,12 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
           route: '/upload',
         },
         {
+          id: 'tutorial',
+          title: 'Tutorial',
+          icon: 'play-circle-outline',
+          route: '/settings/tutorial',
+        },
+        {
           id: 'saved',
           title: 'Saved',
           icon: 'bookmark-outline',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ViewStyle, TextStyle } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ViewStyle, TextStyle, Platform } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { spacing } from '@/config/theme/spacing';
@@ -182,16 +182,26 @@ export function CasestudyListCard({
 const styles = StyleSheet.create({
   container: {
     marginBottom: spacing.m,
-    backgroundColor: 'rgba(30, 107, 85, 0.02)',
+    backgroundColor: '#FAFBFC',
     borderLeftWidth: 3,
     borderLeftColor: '#1E6B55',
     borderRadius: 6,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(0, 0, 0, 0.08)',
     padding: spacing.m,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 2,
-    elevation: 1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 3,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#1E6B55',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.02,
+        shadowRadius: 1,
+      },
+    }),
   },
   header: {
     flexDirection: 'row',
@@ -225,11 +235,16 @@ const styles = StyleSheet.create({
   },
   resultContainer: {
     marginTop: spacing.s,
-    backgroundColor: 'rgba(30, 107, 85, 0.1)',
+    backgroundColor: 'rgba(30, 107, 85, 0.08)',
     borderRadius: ui.borderRadius.s,
     paddingHorizontal: spacing.xs,
     paddingVertical: 2,
     alignSelf: 'flex-start',
+    shadowColor: '#1E6B55',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 1,
+    elevation: 1,
   },
   result: {
     fontSize: typography.fontSize.s,
