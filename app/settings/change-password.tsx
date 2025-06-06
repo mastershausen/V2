@@ -9,6 +9,7 @@ import {
   Alert
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { useThemeColor } from '@/hooks/useThemeColor';
@@ -21,38 +22,39 @@ import { GradientButton } from '@/shared-components/button/GradientButton';
 export default function ChangePasswordScreen() {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSaveChanges = () => {
     if (!currentPassword || !newPassword || !confirmPassword) {
-      Alert.alert('Error', 'Please fill in all fields');
+      Alert.alert(t('common.error'), t('settings.changePassword.errors.fillAllFields'));
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      Alert.alert('Error', 'New passwords do not match');
+      Alert.alert(t('common.error'), t('settings.changePassword.errors.passwordMismatch'));
       return;
     }
 
     if (newPassword.length < 8) {
-      Alert.alert('Error', 'Password must be at least 8 characters long');
+      Alert.alert(t('common.error'), t('settings.changePassword.errors.passwordTooShort'));
       return;
     }
 
     // Here you would typically call an API to update the password
     Alert.alert(
-      'Success', 
-      'Your password has been updated successfully',
-      [{ text: 'OK', onPress: () => router.back() }]
+      t('common.success'), 
+      t('settings.changePassword.success'),
+      [{ text: t('common.ok'), onPress: () => router.back() }]
     );
   };
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="Change Password"
+        title={t('settings.changePassword.title')}
         showBackButton={true}
         onBackPress={() => router.back()}
         titleStyle={styles.headerTitle}
@@ -67,7 +69,7 @@ export default function ChangePasswordScreen() {
         <View style={styles.formContainer}>
           <View style={styles.fieldContainer}>
             <Text style={[styles.label, { color: colors.textPrimary }]}>
-              Current Password
+              {t('settings.changePassword.currentPassword')}
             </Text>
             <TextInput
               style={[styles.input, { 
@@ -77,7 +79,7 @@ export default function ChangePasswordScreen() {
               }]}
               value={currentPassword}
               onChangeText={setCurrentPassword}
-              placeholder="Enter your current password"
+              placeholder={t('settings.changePassword.currentPasswordPlaceholder')}
               placeholderTextColor={colors.textSecondary}
               secureTextEntry
               autoComplete="current-password"
@@ -86,7 +88,7 @@ export default function ChangePasswordScreen() {
 
           <View style={styles.fieldContainer}>
             <Text style={[styles.label, { color: colors.textPrimary }]}>
-              New Password
+              {t('settings.changePassword.newPassword')}
             </Text>
             <TextInput
               style={[styles.input, { 
@@ -96,7 +98,7 @@ export default function ChangePasswordScreen() {
               }]}
               value={newPassword}
               onChangeText={setNewPassword}
-              placeholder="Enter new password"
+              placeholder={t('settings.changePassword.newPasswordPlaceholder')}
               placeholderTextColor={colors.textSecondary}
               secureTextEntry
               autoComplete="new-password"
@@ -105,7 +107,7 @@ export default function ChangePasswordScreen() {
 
           <View style={styles.fieldContainer}>
             <Text style={[styles.label, { color: colors.textPrimary }]}>
-              Confirm New Password
+              {t('settings.changePassword.confirmPassword')}
             </Text>
             <TextInput
               style={[styles.input, { 
@@ -115,7 +117,7 @@ export default function ChangePasswordScreen() {
               }]}
               value={confirmPassword}
               onChangeText={setConfirmPassword}
-              placeholder="Confirm new password"
+              placeholder={t('settings.changePassword.confirmPasswordPlaceholder')}
               placeholderTextColor={colors.textSecondary}
               secureTextEntry
               autoComplete="new-password"
@@ -124,24 +126,24 @@ export default function ChangePasswordScreen() {
 
           <View style={styles.requirementsContainer}>
             <Text style={[styles.requirementsTitle, { color: colors.textPrimary }]}>
-              Password Requirements:
+              {t('settings.changePassword.requirements')}
             </Text>
             <Text style={[styles.requirementText, { color: colors.textSecondary }]}>
-              • At least 8 characters long
+              {t('settings.changePassword.requirementLength')}
             </Text>
             <Text style={[styles.requirementText, { color: colors.textSecondary }]}>
-              • Include uppercase and lowercase letters
+              {t('settings.changePassword.requirementCase')}
             </Text>
             <Text style={[styles.requirementText, { color: colors.textSecondary }]}>
-              • Include at least one number
+              {t('settings.changePassword.requirementNumber')}
             </Text>
             <Text style={[styles.requirementText, { color: colors.textSecondary }]}>
-              • Include at least one special character
+              {t('settings.changePassword.requirementSpecial')}
             </Text>
           </View>
 
           <GradientButton
-            label="Update Password"
+            label={t('settings.changePassword.updatePassword')}
             onPress={handleSaveChanges}
             style={styles.saveButton}
           />

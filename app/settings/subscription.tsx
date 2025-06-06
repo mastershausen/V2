@@ -8,6 +8,7 @@ import {
   Alert
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { SettingsItem } from '@/features/settings/components/SettingsItem';
@@ -22,26 +23,27 @@ import { GradientButton } from '@/shared-components/button/GradientButton';
 export default function SubscriptionScreen() {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleUpgradePlan = () => {
-    Alert.alert('Upgrade Plan', 'Upgrade functionality coming soon!');
+    Alert.alert(t('settings.subscription.upgradeToPremium'), t('settings.subscription.alerts.upgradeComingSoon'));
   };
 
   const handleBillingHistory = () => {
-    Alert.alert('Billing History', 'Billing history coming soon!');
+    Alert.alert(t('settings.subscription.billingHistory'), t('settings.subscription.alerts.billingComingSoon'));
   };
 
   const handlePaymentMethod = () => {
-    Alert.alert('Payment Method', 'Payment method management coming soon!');
+    Alert.alert(t('settings.subscription.paymentMethod'), t('settings.subscription.alerts.paymentComingSoon'));
   };
 
   const handleCancelSubscription = () => {
     Alert.alert(
-      'Cancel Subscription',
-      'Are you sure you want to cancel your subscription?',
+      t('settings.subscription.cancelSubscription'),
+      t('settings.subscription.alerts.cancelConfirm'),
       [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Yes, Cancel', style: 'destructive' }
+        { text: t('common.cancel'), style: 'cancel' },
+        { text: t('common.yes'), style: 'destructive' }
       ]
     );
   };
@@ -49,7 +51,7 @@ export default function SubscriptionScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="Subscription & Payments"
+        title={t('settings.subscription.title')}
         showBackButton={true}
         onBackPress={() => router.back()}
         titleStyle={styles.headerTitle}
@@ -64,65 +66,65 @@ export default function SubscriptionScreen() {
         {/* Current Plan */}
         <View style={styles.currentPlanContainer}>
           <Text style={[styles.currentPlanTitle, { color: colors.textPrimary }]}>
-            Current Plan
+            {t('settings.subscription.currentPlan')}
           </Text>
           <View style={styles.planCard}>
             <Text style={[styles.planName, { color: '#1E6B55' }]}>
-              Free Plan
+              {t('settings.subscription.freePlan')}
             </Text>
             <Text style={[styles.planPrice, { color: colors.textPrimary }]}>
-              €0 / month
+              {t('settings.subscription.freePrice')}
             </Text>
             <Text style={[styles.planDescription, { color: colors.textSecondary }]}>
-              Access to basic features and case studies
+              {t('settings.subscription.freePlanDescription')}
             </Text>
           </View>
           
           <GradientButton
-            label="Upgrade to Premium"
+            label={t('settings.subscription.upgradeToPremium')}
             variant="success"
             onPress={handleUpgradePlan}
             style={styles.upgradeButton}
           />
         </View>
 
-        <SettingsSection title="Plan Features">
+        <SettingsSection title={t('settings.subscription.planFeatures')}>
           <SettingsItem
-            label="Case Studies"
-            value="Limited access"
+            label={t('settings.subscription.caseStudies')}
+            value={t('settings.subscription.limitedAccess')}
             icon="library"
           />
           <SettingsItem
-            label="Expert Consultations"
-            value="Not available"
+            label={t('settings.subscription.expertConsultations')}
+            value={t('settings.subscription.notAvailable')}
             icon="people"
           />
           <SettingsItem
-            label="Priority Support"
-            value="Not available"
+            label={t('settings.subscription.prioritySupport')}
+            value={t('settings.subscription.notAvailable')}
             icon="flash"
           />
         </SettingsSection>
 
-        <SettingsSection title="Billing & Payments">
+        <SettingsSection title={t('settings.subscription.billingPayments')}>
           <SettingsItem
-            label="Billing History"
+            label={t('settings.subscription.billingHistory')}
             icon="receipt"
             onPress={handleBillingHistory}
             showArrow={true}
           />
           <SettingsItem
-            label="Payment Method"
-            value="No payment method"
+            label={t('settings.subscription.paymentMethod')}
+            value={t('settings.subscription.noPaymentMethod')}
             icon="card"
             onPress={handlePaymentMethod}
             showArrow={true}
           />
         </SettingsSection>
 
-        <SettingsSection title="Subscription Management">
+        <SettingsSection title={t('settings.subscription.subscriptionManagement')}>
           <SettingsItem
-            label="Cancel Subscription"
+            label={t('settings.subscription.cancelSubscription')}
             icon="close-circle"
             onPress={handleCancelSubscription}
             showArrow={true}
@@ -131,8 +133,7 @@ export default function SubscriptionScreen() {
         
         <View style={styles.infoContainer}>
           <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-            Upgrade to Premium for unlimited access to expert insights, 
-            priority support, and exclusive business solutions.
+            {t('settings.subscription.upgradeInfo')}
           </Text>
         </View>
       </ScrollView>

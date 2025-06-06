@@ -76,14 +76,14 @@ export default function SettingsScreen() {
             onPress={() => handleNavigation('/settings/appearance')}
           />
           <SettingsItem
-            label={t('settings.language')}
+            label={t('settings.language.title')}
             icon="language-outline"
             value={t('settings.currentLanguage')}
             showArrow={true}
             onPress={() => handleNavigation('/settings/language')}
           />
           <SettingsItem
-            label={t('settings.helpSupport')}
+            label={t('settings.support.title')}
             icon="help-circle-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/support')}

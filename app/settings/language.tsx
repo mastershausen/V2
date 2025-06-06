@@ -33,7 +33,7 @@ export default function LanguageSettingsScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title={t('settings.language')}
+        title={t('settings.language.title')}
         showBackButton={true}
         onBackPress={() => router.back()}
         titleStyle={styles.headerTitle}
@@ -45,7 +45,7 @@ export default function LanguageSettingsScreen() {
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
       >
-        <SettingsSection title="Select Language">
+        <SettingsSection title={t('settings.language.selectLanguage')}>
           <SettingsItem
             label="English"
             icon={currentLang === 'en' ? 'radio-button-on' : 'radio-button-off'}
@@ -60,7 +60,7 @@ export default function LanguageSettingsScreen() {
         
         <View style={styles.infoContainer}>
           <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-            Changes will take effect immediately throughout the app.
+            {t('settings.language.changeInfo')}
           </Text>
         </View>
       </ScrollView>

@@ -9,6 +9,7 @@ import {
   Alert
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { useThemeColor } from '@/hooks/useThemeColor';
@@ -21,6 +22,7 @@ import { GradientButton } from '@/shared-components/button/GradientButton';
 export default function ChangeEmailScreen() {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   const [currentEmail, setCurrentEmail] = useState('max.weber@example.com');
   const [newEmail, setNewEmail] = useState('');
   const [confirmEmail, setConfirmEmail] = useState('');
@@ -28,27 +30,27 @@ export default function ChangeEmailScreen() {
 
   const handleSaveChanges = () => {
     if (!newEmail || !confirmEmail || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
+      Alert.alert(t('common.error'), t('settings.changeEmail.errors.fillAllFields'));
       return;
     }
 
     if (newEmail !== confirmEmail) {
-      Alert.alert('Error', 'Email addresses do not match');
+      Alert.alert(t('common.error'), t('settings.changeEmail.errors.emailMismatch'));
       return;
     }
 
     // Here you would typically call an API to update the email
     Alert.alert(
-      'Success', 
-      'Your email address has been updated successfully',
-      [{ text: 'OK', onPress: () => router.back() }]
+      t('common.success'), 
+      t('settings.changeEmail.success'),
+      [{ text: t('common.ok'), onPress: () => router.back() }]
     );
   };
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="Change Email"
+        title={t('settings.changeEmail.title')}
         showBackButton={true}
         onBackPress={() => router.back()}
         titleStyle={styles.headerTitle}
@@ -63,7 +65,7 @@ export default function ChangeEmailScreen() {
         <View style={styles.formContainer}>
           <View style={styles.fieldContainer}>
             <Text style={[styles.label, { color: colors.textPrimary }]}>
-              Current Email
+              {t('settings.changeEmail.currentEmail')}
             </Text>
             <Text style={[styles.currentEmail, { color: colors.textSecondary }]}>
               {currentEmail}
@@ -72,7 +74,7 @@ export default function ChangeEmailScreen() {
 
           <View style={styles.fieldContainer}>
             <Text style={[styles.label, { color: colors.textPrimary }]}>
-              New Email Address
+              {t('settings.changeEmail.newEmail')}
             </Text>
             <TextInput
               style={[styles.input, { 
@@ -82,7 +84,7 @@ export default function ChangeEmailScreen() {
               }]}
               value={newEmail}
               onChangeText={setNewEmail}
-              placeholder="Enter new email address"
+              placeholder={t('settings.changeEmail.newEmailPlaceholder')}
               placeholderTextColor={colors.textSecondary}
               keyboardType="email-address"
               autoCapitalize="none"
@@ -92,7 +94,7 @@ export default function ChangeEmailScreen() {
 
           <View style={styles.fieldContainer}>
             <Text style={[styles.label, { color: colors.textPrimary }]}>
-              Confirm Email Address
+              {t('settings.changeEmail.confirmEmail')}
             </Text>
             <TextInput
               style={[styles.input, { 
@@ -102,7 +104,7 @@ export default function ChangeEmailScreen() {
               }]}
               value={confirmEmail}
               onChangeText={setConfirmEmail}
-              placeholder="Confirm new email address"
+              placeholder={t('settings.changeEmail.confirmEmailPlaceholder')}
               placeholderTextColor={colors.textSecondary}
               keyboardType="email-address"
               autoCapitalize="none"
@@ -112,7 +114,7 @@ export default function ChangeEmailScreen() {
 
           <View style={styles.fieldContainer}>
             <Text style={[styles.label, { color: colors.textPrimary }]}>
-              Current Password
+              {t('settings.changeEmail.currentPassword')}
             </Text>
             <TextInput
               style={[styles.input, { 
@@ -122,7 +124,7 @@ export default function ChangeEmailScreen() {
               }]}
               value={password}
               onChangeText={setPassword}
-              placeholder="Enter your current password"
+              placeholder={t('settings.changeEmail.passwordPlaceholder')}
               placeholderTextColor={colors.textSecondary}
               secureTextEntry
               autoComplete="current-password"
@@ -131,12 +133,12 @@ export default function ChangeEmailScreen() {
 
           <View style={styles.infoContainer}>
             <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-              You will receive a verification email at your new address to confirm the change.
+              {t('settings.changeEmail.verificationInfo')}
             </Text>
           </View>
 
           <GradientButton
-            label="Save Changes"
+            label={t('settings.changeEmail.saveChanges')}
             onPress={handleSaveChanges}
             style={styles.saveButton}
           />

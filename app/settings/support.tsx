@@ -9,6 +9,7 @@ import {
   Alert
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { SettingsItem } from '@/features/settings/components/SettingsItem';
@@ -22,6 +23,7 @@ import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigatio
 export default function SupportSettingsScreen() {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleEmailSupport = () => {
     Linking.openURL('mailto:support@solvbox.com?subject=Support Request');
@@ -32,17 +34,15 @@ export default function SupportSettingsScreen() {
   };
 
   const handleChatSupport = () => {
-    Alert.alert('Live Chat', 'Live Chat feature coming soon!');
+    Alert.alert(t('settings.support.liveChat'), t('settings.support.chatComingSoon'));
   };
 
   const handleFAQ = () => {
-    // Could navigate to FAQ screen or open web FAQ
-    Alert.alert('FAQ', 'FAQ section coming soon!');
+    Alert.alert(t('settings.support.faq'), t('settings.support.faqComingSoon'));
   };
 
   const handleVideoTutorials = () => {
-    // Could navigate to tutorials or open video library
-    Alert.alert('Video Tutorials', 'Video tutorials coming soon!');
+    Alert.alert(t('settings.support.videoTutorials'), t('settings.support.tutorialsComingSoon'));
   };
 
   const handleContactUs = () => {
@@ -52,7 +52,7 @@ export default function SupportSettingsScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="Help & Support"
+        title={t('settings.support.title')}
         showBackButton={true}
         onBackPress={() => router.back()}
         titleStyle={styles.headerTitle}
@@ -64,23 +64,23 @@ export default function SupportSettingsScreen() {
         contentContainerStyle={styles.scrollViewContent}
         showsVerticalScrollIndicator={false}
       >
-        <SettingsSection title="Contact Support">
+        <SettingsSection title={t('settings.support.contactSupport')}>
           <SettingsItem
-            label="Email Support"
+            label={t('settings.support.emailSupport')}
             value="support@solvbox.com"
             icon="mail"
             onPress={handleEmailSupport}
             showArrow={true}
           />
           <SettingsItem
-            label="Phone Support"
+            label={t('settings.support.phoneSupport')}
             value="+49 123 456 7890"
             icon="call"
             onPress={handleCallSupport}
             showArrow={true}
           />
           <SettingsItem
-            label="Live Chat"
+            label={t('settings.support.liveChat')}
             value="Chat with our support team"
             icon="chatbubble"
             onPress={handleChatSupport}
@@ -88,23 +88,23 @@ export default function SupportSettingsScreen() {
           />
         </SettingsSection>
 
-        <SettingsSection title="Self-Help Resources">
+        <SettingsSection title={t('settings.support.selfHelpResources')}>
           <SettingsItem
-            label="FAQ"
+            label={t('settings.support.faq')}
             value="Frequently asked questions"
             icon="help-circle"
             onPress={handleFAQ}
             showArrow={true}
           />
           <SettingsItem
-            label="Video Tutorials"
+            label={t('settings.support.videoTutorials')}
             value="Learn how to use Solvbox"
             icon="play-circle"
             onPress={handleVideoTutorials}
             showArrow={true}
           />
           <SettingsItem
-            label="Contact Us"
+            label={t('settings.support.contactUs')}
             value="Visit our website"
             icon="globe"
             onPress={handleContactUs}
@@ -114,8 +114,7 @@ export default function SupportSettingsScreen() {
         
         <View style={styles.infoContainer}>
           <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-            Our support team is available Monday-Friday, 9 AM - 6 PM CET.
-            For urgent matters, please call our phone support.
+            {t('settings.support.availabilityInfo')}
           </Text>
         </View>
       </ScrollView>

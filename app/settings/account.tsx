@@ -6,6 +6,7 @@ import {
   Alert 
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { SettingsItem } from '@/features/settings/components/SettingsItem';
@@ -20,6 +21,7 @@ import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigatio
 export default function AccountSettingsScreen() {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
   
   // Handler for navigation to different screens
   const handleNavigation = (route: string) => {
@@ -29,19 +31,19 @@ export default function AccountSettingsScreen() {
   // Handler for critical account actions
   const handleDeleteAccount = () => {
     Alert.alert(
-      'Delete Account',
-      'Are you sure you want to permanently delete your account? All data including saved content will be irreversibly deleted.',
+      t('settings.deleteAccount'),
+      t('settings.deleteAccountDescription'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('common.cancel'), style: 'cancel' },
         { 
-          text: 'Delete', 
+          text: t('settings.deleteAccountConfirm'), 
           style: 'destructive',
           onPress: () => {
             // Here the account deletion via email confirmation would occur
             Alert.alert(
               'Confirmation Required',
               'We have sent you an email to confirm the account deletion. Please follow the instructions in the email.',
-              [{ text: 'OK' }]
+              [{ text: t('common.ok') }]
             );
           }
         }
@@ -65,21 +67,21 @@ export default function AccountSettingsScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* Account & Security */}
-        <SettingsSection title="Account & Security">
+        <SettingsSection title={t('settings.accountSecurity')}>
           <SettingsItem
-            label="Change Email"
+            label={t('settings.changeEmail.title')}
             icon="mail-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/change-email')}
           />
           <SettingsItem
-            label="Change Password"
+            label={t('settings.changePassword.title')}
             icon="lock-closed-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/change-password')}
           />
           <SettingsItem
-            label="Push Notifications"
+            label={t('settings.pushNotifications')}
             icon="notifications-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/notifications')}
@@ -87,11 +89,11 @@ export default function AccountSettingsScreen() {
         </SettingsSection>
         
         {/* Subscription & Payments */}
-        <SettingsSection title="Subscription & Payments">
+        <SettingsSection title={t('settings.subscription.title')}>
           <SettingsItem
-            label="My Subscription & Payments"
+            label={t('settings.subscription.title')}
             icon="card-outline"
-            value="Free Plan"
+            value={t('settings.subscription.freePlan')}
             showArrow={true}
             onPress={() => handleNavigation('/settings/subscription')}
           />
@@ -100,19 +102,19 @@ export default function AccountSettingsScreen() {
         {/* Legal */}
         <SettingsSection title="Legal">
           <SettingsItem
-            label="Imprint"
+            label={t('settings.imprint.title')}
             icon="document-text-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/imprint')}
           />
           <SettingsItem
-            label="Terms & Conditions"
+            label={t('settings.terms.title')}
             icon="clipboard-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/terms')}
           />
           <SettingsItem
-            label="Privacy Policy"
+            label={t('settings.privacy.title')}
             icon="shield-checkmark-outline"
             showArrow={true}
             onPress={() => handleNavigation('/settings/privacy')}
@@ -120,9 +122,9 @@ export default function AccountSettingsScreen() {
         </SettingsSection>
         
         {/* Account Management */}
-        <SettingsSection title="Account Management">
+        <SettingsSection title={t('settings.accountManagement')}>
           <SettingsItem
-            label="Delete Account"
+            label={t('settings.deleteAccount')}
             icon="trash-outline"
             showArrow={true}
             onPress={handleDeleteAccount}

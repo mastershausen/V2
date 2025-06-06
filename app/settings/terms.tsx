@@ -7,6 +7,7 @@ import {
   Text
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { useThemeColor } from '@/hooks/useThemeColor';
@@ -18,11 +19,12 @@ import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigatio
 export default function TermsScreen() {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="Terms & Conditions"
+        title={t('settings.terms.title')}
         showBackButton={true}
         onBackPress={() => router.back()}
         titleStyle={styles.headerTitle}
@@ -36,97 +38,69 @@ export default function TermsScreen() {
       >
         <View style={styles.content}>
           <Text style={[styles.lastUpdated, { color: colors.textSecondary }]}>
-            Last updated: December 2024
+            {t('settings.terms.lastUpdated')}
           </Text>
 
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              1. Acceptance of Terms
+              {t('settings.terms.acceptance')}
             </Text>
             <Text style={[styles.text, { color: colors.textSecondary }]}>
-              By accessing and using the Solvbox application, you accept and agree to be 
-              bound by the terms and provision of this agreement. If you do not agree 
-              to abide by the above, please do not use this service.
+              {t('settings.terms.acceptanceText')}
             </Text>
           </View>
 
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              2. Use License
+              {t('settings.terms.useLicense')}
             </Text>
             <Text style={[styles.text, { color: colors.textSecondary }]}>
-              Permission is granted to temporarily download one copy of Solvbox per device 
-              for personal, non-commercial transitory viewing only. This is the grant of a 
-              license, not a transfer of title, and under this license you may not:
-              {'\n\n'}
-              • modify or copy the materials
-              {'\n'}
-              • use the materials for any commercial purpose or for any public display
-              {'\n'}
-              • attempt to reverse engineer any software contained in Solvbox
-              {'\n'}
-              • remove any copyright or other proprietary notations from the materials
+              {t('settings.terms.useLicenseText')}
             </Text>
           </View>
 
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              3. Disclaimer
+              {t('settings.terms.disclaimer')}
             </Text>
             <Text style={[styles.text, { color: colors.textSecondary }]}>
-              The materials in Solvbox are provided on an 'as is' basis. Solvbox makes 
-              no warranties, expressed or implied, and hereby disclaims and negates all 
-              other warranties including without limitation, implied warranties or 
-              conditions of merchantability, fitness for a particular purpose, or 
-              non-infringement of intellectual property or other violation of rights.
+              {t('settings.terms.disclaimerText')}
             </Text>
           </View>
 
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              4. Limitations
+              {t('settings.terms.limitations')}
             </Text>
             <Text style={[styles.text, { color: colors.textSecondary }]}>
-              In no event shall Solvbox or its suppliers be liable for any damages 
-              (including, without limitation, damages for loss of data or profit, or 
-              due to business interruption) arising out of the use or inability to use 
-              the materials in Solvbox, even if Solvbox or a Solvbox authorized 
-              representative has been notified orally or in writing of the possibility 
-              of such damage.
+              {t('settings.terms.limitationsText')}
             </Text>
           </View>
 
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              5. Privacy Policy
+              {t('settings.terms.privacyPolicy')}
             </Text>
             <Text style={[styles.text, { color: colors.textSecondary }]}>
-              Your privacy is important to us. Please review our Privacy Policy, which 
-              also governs your use of the Service, to understand our practices.
+              {t('settings.terms.privacyPolicyText')}
             </Text>
           </View>
 
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              6. Modifications
+              {t('settings.terms.modifications')}
             </Text>
             <Text style={[styles.text, { color: colors.textSecondary }]}>
-              Solvbox may revise these terms of service at any time without notice. 
-              By using this application, you are agreeing to be bound by the then 
-              current version of these terms of service.
+              {t('settings.terms.modificationsText')}
             </Text>
           </View>
 
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              7. Contact Information
+              {t('settings.terms.contactInfo')}
             </Text>
             <Text style={[styles.text, { color: colors.textSecondary }]}>
-              If you have any questions about these Terms & Conditions, please contact us at:
-              {'\n\n'}
-              Email: legal@solvbox.com{'\n'}
-              Phone: +49 30 123 456 789{'\n'}
-              Address: Musterstraße 123, 10115 Berlin, Germany
+              {t('settings.terms.contactInfoText')}
             </Text>
           </View>
         </View>

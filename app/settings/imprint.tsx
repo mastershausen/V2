@@ -7,6 +7,7 @@ import {
   Text
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { spacing } from '@/config/theme/spacing';
 import { useThemeColor } from '@/hooks/useThemeColor';
@@ -18,11 +19,12 @@ import { HeaderNavigation } from '@/shared-components/navigation/HeaderNavigatio
 export default function ImprintScreen() {
   const colors = useThemeColor();
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.backgroundPrimary }]}>
       <HeaderNavigation 
-        title="Imprint"
+        title={t('settings.imprint.title')}
         showBackButton={true}
         onBackPress={() => router.back()}
         titleStyle={styles.headerTitle}
@@ -37,7 +39,7 @@ export default function ImprintScreen() {
         <View style={styles.content}>
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              Company Information
+              {t('settings.imprint.companyInfo')}
             </Text>
             <Text style={[styles.text, { color: colors.textSecondary }]}>
               Solvbox GmbH{'\n'}
@@ -49,7 +51,7 @@ export default function ImprintScreen() {
 
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              Contact
+              {t('settings.imprint.contact')}
             </Text>
             <Text style={[styles.text, { color: colors.textSecondary }]}>
               Phone: +49 30 123 456 789{'\n'}
@@ -60,10 +62,10 @@ export default function ImprintScreen() {
 
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              Legal Representatives
+              {t('settings.imprint.legalReps')}
             </Text>
             <Text style={[styles.text, { color: colors.textSecondary }]}>
-              Managing Directors:{'\n'}
+              {t('settings.imprint.managingDirectors')}{'\n'}
               Max Mustermann{'\n'}
               Anna Schmidt
             </Text>
@@ -71,21 +73,21 @@ export default function ImprintScreen() {
 
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              Registration
+              {t('settings.imprint.registration')}
             </Text>
             <Text style={[styles.text, { color: colors.textSecondary }]}>
-              Commercial Register: HRB 12345 B{'\n'}
-              Registration Court: Amtsgericht Berlin-Charlottenburg{'\n'}
-              VAT ID: DE123456789
+              {t('settings.imprint.commercialRegister')}{'\n'}
+              {t('settings.imprint.registrationCourt')}{'\n'}
+              {t('settings.imprint.vatId')}
             </Text>
           </View>
 
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              Responsible for Content
+              {t('settings.imprint.responsibleContent')}
             </Text>
             <Text style={[styles.text, { color: colors.textSecondary }]}>
-              According to § 55 Abs. 2 RStV:{'\n'}
+              {t('settings.imprint.responsibleAccording')}{'\n'}
               Max Mustermann{'\n'}
               Solvbox GmbH{'\n'}
               Musterstraße 123{'\n'}
@@ -95,16 +97,10 @@ export default function ImprintScreen() {
 
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
-              Disclaimer
+              {t('settings.imprint.disclaimer')}
             </Text>
             <Text style={[styles.text, { color: colors.textSecondary }]}>
-              The content of our pages has been created with the utmost care. 
-              However, we cannot guarantee the accuracy, completeness, or timeliness of the content.
-              {'\n\n'}
-              As a service provider, we are responsible for our own content on these pages 
-              according to general law pursuant to § 7 para. 1 TMG. However, pursuant to 
-              §§ 8 to 10 TMG, we are not under obligation to monitor transmitted or stored 
-              third-party information or to investigate circumstances indicating illegal activity.
+              {t('settings.imprint.disclaimerText')}
             </Text>
           </View>
         </View>
