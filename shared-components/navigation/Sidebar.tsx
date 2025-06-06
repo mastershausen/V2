@@ -99,12 +99,6 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
           icon: 'bookmark-outline',
           route: '/saved',
         },
-        {
-          id: 'settings',
-          title: 'Settings',
-          icon: 'settings-outline',
-          route: '/settings',
-        },
       ],
     },
   ];
@@ -187,6 +181,13 @@ export default function Sidebar({ isVisible, onClose }: SidebarProps) {
             <Text style={[styles.userName, { color: colors.textPrimary }]}>
               Max Weber
             </Text>
+            
+            <TouchableOpacity 
+              style={styles.settingsButton}
+              onPress={() => handleNavigation('/settings')}
+            >
+              <Ionicons name="ellipsis-horizontal" size={24} color="#1E6B55" />
+            </TouchableOpacity>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -304,5 +305,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 12,
     fontWeight: '600',
+  },
+  settingsButton: {
+    padding: spacing.s,
   },
 }); 
