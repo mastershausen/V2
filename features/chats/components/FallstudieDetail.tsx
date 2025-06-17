@@ -69,7 +69,16 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
     // Generiere einen zusammenhängenden Story-Text aus den bestehenden Daten
     if (!fallstudie) return '';
     
-    const storyText = `${fallstudie.context}\n\n${fallstudie.action}\n\n${fallstudie.result.text}`;
+    let storyText = `${fallstudie.context}\n\n${fallstudie.action}\n\n${fallstudie.result.text}`;
+    
+    // Füge Bullet Points hinzu, falls vorhanden
+    if (fallstudie.result.bulletpoints && fallstudie.result.bulletpoints.length > 0) {
+      storyText += '\n\nWichtigste Ergebnisse:\n';
+      fallstudie.result.bulletpoints.forEach((point, index) => {
+        storyText += `${index + 1}. ${point}\n`;
+      });
+    }
+    
     return storyText;
   });
 
@@ -112,7 +121,17 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
       storyParts.push(fallstudie.result.text);
     }
     
-    return storyParts.join('\n\n');
+    let storyText = storyParts.join('\n\n');
+    
+    // Füge Bullet Points hinzu, falls vorhanden
+    if (fallstudie.result?.bulletpoints && fallstudie.result.bulletpoints.length > 0) {
+      storyText += '\n\nWichtigste Ergebnisse:\n';
+      fallstudie.result.bulletpoints.forEach((point, index) => {
+        storyText += `${index + 1}. ${point}\n`;
+      });
+    }
+    
+    return storyText;
   };
 
   return (
@@ -209,7 +228,7 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                   style={[styles.storyText, styles.editableStoryText]}
                   value={editedStoryText}
                   onChangeText={setEditedStoryText}
-                  placeholder="Erzähle die Geschichte deiner Fallstudie... Beschreibe die Ausgangssituation, was unternommen wurde und welche Ergebnisse erzielt wurden."
+                  placeholder="Erzähle die Geschichte deiner Fallstudie... Beschreibe die Ausgangssituation, was unternommen wurde und welche Ergebnisse erzielt wurden.&#10;&#10;Du kannst auch Auflistungen verwenden:&#10;1. Erstes Ergebnis&#10;2. Zweites Ergebnis&#10;• Weitere Punkte"
                   placeholderTextColor="rgba(51, 51, 51, 0.5)"
                   multiline
                   textAlignVertical="top"
@@ -217,28 +236,10 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
               ) : (
                 <Text style={styles.storyText}>{generateStoryText(fallstudie)}</Text>
               )}
-              
-              {/* Bullet Points für Ergebnisse (falls vorhanden) */}
-              {fallstudie.result.bulletpoints && fallstudie.result.bulletpoints.length > 0 && (
-                <View style={styles.bulletpointContainer}>
-                  <Text style={styles.bulletpointHeader}>Wichtigste Ergebnisse:</Text>
-                  {fallstudie.result.bulletpoints.map((point, index) => (
-                    <View key={index} style={styles.bulletpointItem}>
-                      <LinearGradient
-                        colors={['#1E6B55', '#15503F']}
-                        style={styles.bulletGradient}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 1 }}
-                      />
-                      <Text style={styles.bulletpointText}>{point}</Text>
-                    </View>
-                  ))}
-                </View>
-              )}
             </View>
 
             {/* Anbieter/Vermittler Informationen */}
-            {fallstudie.anbieter && (
+            {fallstudie.anbieter && !isEditable && (
               <View style={styles.anbieterSection}>
                 <LinearGradient
                   colors={['rgba(30, 107, 85, 0.1)', 'rgba(30, 107, 85, 0.05)']}
@@ -281,6 +282,24 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                     )}
                   </View>
                 </LinearGradient>
+              </View>
+            )}
+
+            {/* Bullet Points für nicht-editierbare Fallstudien */}
+            {!isEditable && fallstudie.result.bulletpoints && fallstudie.result.bulletpoints.length > 0 && (
+              <View style={styles.bulletpointContainer}>
+                <Text style={styles.bulletpointHeader}>Wichtigste Ergebnisse:</Text>
+                {fallstudie.result.bulletpoints.map((point, index) => (
+                  <View key={index} style={styles.bulletpointItem}>
+                    <LinearGradient
+                      colors={['#1E6B55', '#15503F']}
+                      style={styles.bulletGradient}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                    />
+                    <Text style={styles.bulletpointText}>{point}</Text>
+                  </View>
+                ))}
               </View>
             )}
           </ScrollView>
