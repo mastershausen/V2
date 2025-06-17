@@ -111,12 +111,6 @@ export default function SupportSettingsScreen() {
             showArrow={true}
           />
         </SettingsSection>
-        
-        <View style={styles.infoContainer}>
-          <Text style={[styles.infoText, { color: colors.textSecondary }]}>
-            {t('settings.support.availabilityInfo')}
-          </Text>
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -140,14 +134,5 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     paddingBottom: spacing.xxl,
     paddingHorizontal: spacing.m,
-  },
-  infoContainer: {
-    marginTop: spacing.l,
-    paddingHorizontal: spacing.m,
-  },
-  infoText: {
-    fontSize: 14,
-    lineHeight: 20,
-    textAlign: 'center',
   },
 }); 

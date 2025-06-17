@@ -77,7 +77,6 @@
     "@expo/metro-config": "^0.19.0",
     "@react-native-community/cli-tools": "^18.0.0",
     "@types/react": "~18.3.12",
-    "@types/react-native": "^0.72.8",
     "@typescript-eslint/eslint-plugin": "^8.30.1",
     "@typescript-eslint/parser": "^8.30.1",
     "babel-plugin-module-resolver": "^5.0.2",
@@ -95,7 +94,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.3.0",
     "metro": "^0.81.0",
-    "metro-resolver": "^0.82.2",
+    "metro-resolver": "^0.81.5",
     "prettier": "^2.8.8",
     "ts-prune": "^0.10.3",
     "typescript": "^5.3.3"

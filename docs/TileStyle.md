@@ -1,188 +1,190 @@
-# TileCard.tsx - Comprehensive Documentation
+# TileCard Flutter Implementation Specification
 
-## Overview
-The `TileCard` is a responsive tile component for grid layouts in the Solvbox app. It provides a unified, visually appealing tile that is primarily used in the Explore screen.
+## Objective
+1:1 recreation of the React Native TileCard.tsx as Flutter Widget with **identical** appearance and behavior.
 
-## Design Philosophy
-- **Responsive Design**: Automatically adapts to different screen sizes
-- **Consistency**: Uniform appearance across the entire app
-- **Accessibility**: Full support for accessibility features
-- **Performance**: Optimized for large lists with many tiles
+## Widget Requirements
 
-## Props Interface
+### Required Properties
+- `int id` - Unique tile identification
+- `String title` - Text to display on tile
+- `Function(int) onPressed` - Callback when tile is tapped
+- `double? tileSpacing` - Spacing between tiles (optional, default: 16.0)
+- `int? tilesPerRow` - Number of tiles per row (optional, default: 3)
+- `double? horizontalPadding` - Horizontal screen padding (optional, default: 16.0)
 
-```typescript
-interface TileCardProps {
-  id: number;                           // Unique tile identification
-  title: string;                        // Text to display
-  onPress: (id: number) => void;        // Callback for tile tap
-  tileSpacing?: number;                 // Spacing between tiles (default: spacing.m)
-  tilesPerRow?: number;                 // Number of tiles per row (default: 3)
-  horizontalPadding?: number;           // Horizontal padding (default: tileSpacing)
-  style?: StyleProp<ViewStyle>;         // Additional container styles
-  contentStyle?: StyleProp<ViewStyle>;  // Additional content styles
-  textStyle?: StyleProp<TextStyle>;     // Additional text styles
-}
+### Optional Customization
+- Custom decoration override
+- Custom text styling override
+
+## Size Calculation Specification
+
+### Constants
+- **Default tile spacing**: 16.0 pixels
+- **Default tiles per row**: 3
+- **Default horizontal padding**: 16.0 pixels
+
+### Size Formula (CRITICAL - Must be exact)
+```
+screenWidth = MediaQuery screen width
+availableWidth = screenWidth - (2 × horizontalPadding)
+totalSpacingWidth = (tilesPerRow - 1) × tileSpacing
+tileWidth = (availableWidth - totalSpacingWidth) ÷ tilesPerRow
+finalTileWidth = floor(tileWidth)
 ```
 
-## Responsive Behavior
+**IMPORTANT**: Must use `floor()` function for final width calculation!
 
-### Size Calculation
-The TileCard calculates its size dynamically based on:
-- **Screen Width**: `Dimensions.get('window').width`
-- **Tiles Per Row**: Default 3, configurable
-- **Spacing**: Considers spacing between tiles
-- **Horizontal Padding**: Considers lateral spacing
+## Visual Specifications
 
-```typescript
-const availableWidth = screenWidth - (2 * HORIZONTAL_PADDING);
-const totalSpacingWidth = (tilesPerRow - 1) * TILE_SPACING;
-const tileWidth = Math.floor((availableWidth - totalSpacingWidth) / tilesPerRow);
+### Shape & Dimensions
+- **Aspect Ratio**: Perfect square (1:1)
+- **Width**: Calculated using size formula
+- **Height**: Identical to width
+
+### Border & Corners
+- **Border Radius**: 16.0 pixels (all corners)
+- **Border Width**: 0.8 pixels
+- **Border Color**: Black with 12% opacity (`rgba(0,0,0,0.12)`)
+
+### Shadow (EXACT values required)
+- **Shadow Color**: Black with 25% opacity
+- **Shadow Offset**: X: 0, Y: 6
+- **Shadow Blur Radius**: 8.0
+- **Shadow Spread**: 0
+
+### Float Effect
+- **Transform**: Translate Y by -5 pixels (upward float)
+
+### Background
+- **Light Theme**: White or light card color
+- **Dark Theme**: Dark card color (e.g., `#2C2C2E`)
+
+## Text Specifications
+
+### Font Size Calculation (CRITICAL)
+```
+baseFontSize = tileWidth × 0.12
+minFontSize = 12.0
+maxFontSize = 18.0
+finalFontSize = clamp(baseFontSize, minFontSize, maxFontSize)
 ```
 
-### Font Size Adaptation
-Font size is dynamically adapted to tile size:
-- **Base Calculation**: `tileWidth * 0.12`
-- **Minimum**: `typography.fontSize.xs`
-- **Maximum**: `typography.fontSize.l`
-- **Result**: Automatic scaling for optimal readability
+### Text Properties
+- **Alignment**: Center
+- **Maximum Lines**: 4
+- **Overflow**: Ellipsis
+- **Font Weight**: Medium (500)
+- **Color**: Theme-dependent text color
 
-### Padding Adaptation
-Content padding scales with tile size:
-- **Base Calculation**: `tileWidth * 0.08`
-- **Minimum**: `spacing.s`
-- **Result**: Proportionally adjusted internal spacing
+### Text Shadow
+- **Shadow Offset**: X: 0, Y: 1
+- **Shadow Blur**: 2.0
+- **Shadow Color**: Black with 10% opacity
 
-## Visual Design
-
-### Basic Shape
-- **Aspect Ratio**: 1:1 (perfect square)
-- **Border Radius**: `ui.borderRadius.xl` (rounded corners)
-- **Transform**: `translateY: -5` (subtle float effect)
-
-### Shadow & Elevation
-**Unified for iOS & Android:**
-```typescript
-shadowColor: '#000'
-shadowOffset: { width: 0, height: 6 }
-shadowOpacity: 0.25
-shadowRadius: 8
-elevation: 8  // Fallback for older Android versions
+### Padding Calculation
+```
+basePadding = tileWidth × 0.08
+minPadding = 8.0
+finalPadding = max(basePadding, minPadding)
 ```
 
-**Benefits of unified implementation:**
-- Identical appearance on both platforms
-- Easier maintenance and debugging
-- Consistent user experience
-- Less platform-specific code
+## Interaction Specifications
 
-### Colors & Contrasts
-- **Background**: `colors.backgroundSecondary` (theme-dependent)
-- **Border**: `rgba(0,0,0,0.12)` with 0.8px width
-- **Text**: `colors.textPrimary` (theme-dependent)
-- **Text Shadow**: Subtle shadow for better readability
+### Touch Handling
+- **Tap Area**: Entire tile surface
+- **Callback**: Execute `onPressed(id)` with tile ID
+- **Visual Feedback**: Standard platform touch feedback
 
-## Accessibility Features
+### Accessibility
+- **Role**: Button
+- **Label**: Use tile title text
+- **Screen Reader**: Fully accessible
 
-### Screen Reader Support
-- **AccessibilityRole**: "button" 
-- **AccessibilityLabel**: Uses the `title` prop
-- **Accessible**: `true` for full support
+## Grid Layout Requirements
 
-### Text Handling
-- **NumberOfLines**: Maximum 4 lines
-- **AdjustsFontSizeToFit**: `false` (manual control)
-- **TextAlign**: Centered for optimal readability
+### Layout Behavior
+- **Default**: 3 tiles per row
+- **Spacing**: Consistent spacing between tiles
+- **Responsive**: Adapts to screen width changes
+- **Wrapping**: Tiles wrap to new rows automatically
 
-## Usage & Integration
-
-### In TileGrid.tsx
-The TileCard is mainly used through the `TileGrid` component:
-- **3x3 Grid Layout**: Standard arrangement
-- **Error Boundaries**: Automatic error handling
-- **Empty States**: Graceful handling of empty states
-
-### Typical Usage
-```typescript
-<TileCard
-  id={tile.id}
-  title="...more net from gross"
-  onPress={handleTilePress}
-  tilesPerRow={3}
-  tileSpacing={spacing.m}
-  horizontalPadding={spacing.m}
-/>
-```
-
-## Performance Optimizations
-
-### Memory Management
-- **Memoization**: No automatic memoization (conscious decision)
-- **Re-render Control**: Props changes trigger recalculation only when needed
-- **Dimension Caching**: Screen width is retrieved fresh on each render
-
-### Rendering Optimization
-- **Flat Style Arrays**: Combined styles for better performance
-- **Conditional Styling**: Platform-specific shadow implementation
-- **Transform Optimization**: GPU-accelerated transforms through translateY
+### Padding & Margins
+- **Horizontal Screen Padding**: Applied to entire grid
+- **Tile Spacing**: Applied between individual tiles
+- **Vertical Spacing**: Same as horizontal tile spacing
 
 ## Theme Integration
 
-### Colors
-- Full integration with `useThemeColor()`
-- Automatic Dark/Light Mode support
-- Consistent color usage app-wide
+### Color Adaptation
+- **Background**: Must adapt to light/dark theme
+- **Text**: Must adapt to theme text colors
+- **Border**: Fixed opacity regardless of theme
 
-### Typography
-- Uses central typography configuration
-- Consistent font weights and sizes
-- Scalable font sizes
+### Theme Properties to Use
+- Card background color
+- Primary text color
+- Theme-aware contrast
 
-### Spacing & UI
-- Integration with central spacing configuration
-- Uses UI constants for border radius
-- Consistent spacing and proportions
+## Critical Measurements Checklist
 
-## Technical Details
+### ✅ MUST be exact:
+1. **Border Radius**: 16.0 pixels (not 15 or 17!)
+2. **Shadow Y-Offset**: 6 pixels
+3. **Shadow Blur**: 8.0 pixels
+4. **Shadow Opacity**: 25%
+5. **Float Transform**: -5 pixels Y
+6. **Font Size Formula**: tileWidth × 0.12
+7. **Padding Formula**: tileWidth × 0.08
+8. **Border Width**: 0.8 pixels
+9. **Border Opacity**: 12%
+10. **Size Calculation**: Must use floor() function
 
-### State Management
-- **Stateless Component**: No internal state variables
-- **Props-driven**: All properties controllable via props
-- **Callback Pattern**: onPress callback with id parameter
+## Performance Requirements
 
-### Platform Differences
-- **Cross-Platform Shadows**: Unified shadow implementation for both platforms
-- **Consistent Appearance**: Identical visual appearance on iOS and Android
-- **Simplified Maintenance**: Less platform-specific code through unified approach
+### Optimization Goals
+- **Smooth Scrolling**: Must handle 100+ tiles
+- **Memory Efficient**: No memory leaks in large lists
+- **Fast Rendering**: Minimal rebuild overhead
 
-### Error Handling
-- **Graceful Degradation**: Fallback values for all props
-- **Type Safety**: Full TypeScript integration
-- **Runtime Stability**: Robust calculations with Math.floor/Math.max/Math.min
+### Implementation Notes
+- Use stateless widget approach
+- Avoid unnecessary rebuilds
+- Optimize for grid layouts
 
-## Best Practices
+## Testing Validation
 
-### Do's
-✅ Use meaningful titles (not longer than 4 lines)
-✅ Ensure onPress handlers are defined
-✅ Use consistent tilesPerRow values within a grid
-✅ Use the component via TileGrid for optimal integration
+### Visual Verification
+- [ ] Tiles are perfectly square
+- [ ] Exactly 3 tiles per row on standard phones
+- [ ] Shadow visible and positioned correctly
+- [ ] Float effect creates subtle elevation
+- [ ] Text centered and properly sized
+- [ ] Border subtle but visible
 
-### Don'ts
-❌ Override the aspect ratio (breaks the design)
-❌ Use extremely long texts (performance impact)
-❌ Ignore accessibility labels
-❌ Mix different tileSpacing values in one grid
+### Functional Verification
+- [ ] Tap events fire with correct tile ID
+- [ ] Responsive behavior on screen rotation
+- [ ] Accessibility features work with screen readers
+- [ ] Theme switching updates colors correctly
 
-## Debugging & Troubleshooting
+### Cross-Platform Verification
+- [ ] Identical appearance on iOS and Android
+- [ ] Consistent shadow rendering
+- [ ] Same touch feedback behavior
 
-### Common Issues
-1. **Uneven tile sizes**: Check tileSpacing and horizontalPadding
-2. **Text overflow**: Use shorter titles or adjustsFontSizeToFit
-3. **Performance issues**: Check the number of tiles in large lists
-4. **Missing shadows**: Ensure overflow: 'visible' is set
+## Common Implementation Pitfalls
 
-### Development Tools
-- React DevTools for props inspection
-- Layout Inspector for size calculations
-- Performance Monitor for render times
+### ❌ Avoid These Mistakes:
+- Using different shadow values
+- Forgetting the floor() function in size calculation
+- Wrong aspect ratio (non-square tiles)
+- Incorrect font size scaling
+- Missing float transform effect
+- Wrong border radius values
+- Inconsistent spacing calculations
+
+### ⚠️ Platform Considerations:
+- Ensure shadows render identically on both platforms
+- Use theme-aware colors, not hardcoded values
+- Test on various screen sizes and orientations

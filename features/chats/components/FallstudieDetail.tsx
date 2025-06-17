@@ -64,9 +64,14 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
 
   // Bearbeitbare Felder für KI-generierte Fallstudie
   const [editedTitel, setEditedTitel] = useState(fallstudie?.titel || '');
-  const [editedContext, setEditedContext] = useState(fallstudie?.context || '');
-  const [editedAction, setEditedAction] = useState(fallstudie?.action || '');
-  const [editedResult, setEditedResult] = useState(fallstudie?.result.text || '');
+  const [editedKurzbeschreibung, setEditedKurzbeschreibung] = useState(fallstudie?.kurzbeschreibung || '');
+  const [editedStoryText, setEditedStoryText] = useState(() => {
+    // Generiere einen zusammenhängenden Story-Text aus den bestehenden Daten
+    if (!fallstudie) return '';
+    
+    const storyText = `${fallstudie.context}\n\n${fallstudie.action}\n\n${fallstudie.result.text}`;
+    return storyText;
+  });
 
   // Ist das die bearbeitbare KI-generierte Fallstudie?
   const isEditable = fallstudie?.id === 'ki-generated-1';
@@ -86,6 +91,28 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
     } else {
       setUsername(text);
     }
+  };
+
+  // Generiere einen fließenden Story-Text für nicht-editierbare Fallstudien
+  const generateStoryText = (fallstudie: any) => {
+    if (!fallstudie) return '';
+    
+    // Erstelle eine zusammenhängende Story aus Context, Action und Result
+    let storyParts = [];
+    
+    if (fallstudie.context) {
+      storyParts.push(fallstudie.context);
+    }
+    
+    if (fallstudie.action) {
+      storyParts.push(fallstudie.action);
+    }
+    
+    if (fallstudie.result?.text) {
+      storyParts.push(fallstudie.result.text);
+    }
+    
+    return storyParts.join('\n\n');
   };
 
   return (
@@ -160,144 +187,102 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
             {/* Kurzbeschreibung mit Akzentlinie */}
             <View style={styles.kurzbeschreibungContainer}>
               <View style={styles.accentLine} />
-              <Text style={styles.kurzbeschreibungText}>{fallstudie.kurzbeschreibung}</Text>
+              {isEditable ? (
+                <TextInput
+                  style={[styles.kurzbeschreibungText, styles.editableText]}
+                  value={editedKurzbeschreibung}
+                  onChangeText={setEditedKurzbeschreibung}
+                  placeholder="Kurzbeschreibung eingeben..."
+                  placeholderTextColor="rgba(51, 51, 51, 0.5)"
+                  multiline
+                  textAlignVertical="top"
+                />
+              ) : (
+                <Text style={styles.kurzbeschreibungText}>{fallstudie.kurzbeschreibung}</Text>
+              )}
             </View>
             
-            {/* STAR Sektionen */}
-            <View style={styles.starContainer}>
-              {/* Context */}
-              <View style={styles.section}>
-                <View style={styles.sectionHeader}>
-                  <View style={styles.iconContainer}>
-                    <Ionicons name="document-text-outline" size={20} color="#1E6B55" />
-                  </View>
-                  <Text style={styles.sectionTitle}>{t('casestudy.sections.context.title')}</Text>
-                </View>
-                {isEditable ? (
-                  <TextInput
-                    style={[styles.sectionText, styles.editableText]}
-                    value={editedContext}
-                    onChangeText={setEditedContext}
-                    placeholder="Context eingeben..."
-                    placeholderTextColor="rgba(51, 51, 51, 0.5)"
-                    multiline
-                  />
-                ) : (
-                  <Text style={styles.sectionText}>{fallstudie.context}</Text>
-                )}
-                <Text style={styles.sectionHint}>{t('casestudy.sections.context.subtitle')}</Text>
-              </View>
-
-              {/* Action */}
-              <View style={styles.section}>
-                <View style={styles.sectionHeader}>
-                  <View style={styles.iconContainer}>
-                    <Ionicons name="cog-outline" size={20} color="#1E6B55" />
-                  </View>
-                  <Text style={styles.sectionTitle}>{t('casestudy.sections.action.title')}</Text>
-                </View>
-                {isEditable ? (
-                  <TextInput
-                    style={[styles.sectionText, styles.editableText]}
-                    value={editedAction}
-                    onChangeText={setEditedAction}
-                    placeholder="Action eingeben..."
-                    placeholderTextColor="rgba(51, 51, 51, 0.5)"
-                    multiline
-                  />
-                ) : (
-                  <Text style={styles.sectionText}>{fallstudie.action}</Text>
-                )}
-                <Text style={styles.sectionHint}>{t('casestudy.sections.action.subtitle')}</Text>
-              </View>
-
-              {/* Result */}
-              <View style={styles.section}>
-                <View style={styles.sectionHeader}>
-                  <View style={styles.iconContainer}>
-                    <Ionicons name="trophy-outline" size={20} color="#1E6B55" />
-                  </View>
-                  <Text style={styles.sectionTitle}>{t('casestudy.sections.result.title')}</Text>
-                </View>
-                {isEditable ? (
-                  <TextInput
-                    style={[styles.sectionText, styles.editableText]}
-                    value={editedResult}
-                    onChangeText={setEditedResult}
-                    placeholder="Result eingeben..."
-                    placeholderTextColor="rgba(51, 51, 51, 0.5)"
-                    multiline
-                  />
-                ) : (
-                  <Text style={styles.sectionText}>{fallstudie.result.text}</Text>
-                )}
-                
-                {fallstudie.result.bulletpoints && fallstudie.result.bulletpoints.length > 0 && (
-                  <View style={styles.bulletpointContainer}>
-                    {fallstudie.result.bulletpoints.map((point, index) => (
-                      <View key={index} style={styles.bulletpointItem}>
-                        <LinearGradient
-                          colors={['#1E6B55', '#15503F']}
-                          style={styles.bulletGradient}
-                          start={{ x: 0, y: 0 }}
-                          end={{ x: 1, y: 1 }}
-                        />
-                        <Text style={styles.bulletpointText}>{point}</Text>
-                      </View>
-                    ))}
-                  </View>
-                )}
-                
-                <Text style={styles.sectionHint}>{t('casestudy.sections.result.subtitle')}</Text>
-              </View>
-
-              {/* Anbieter/Vermittler Informationen */}
-              {fallstudie.anbieter && (
-                <View style={styles.anbieterSection}>
-                  <LinearGradient
-                    colors={['rgba(30, 107, 85, 0.1)', 'rgba(30, 107, 85, 0.05)']}
-                    style={styles.anbieterGradient}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                  >
-                    <View style={styles.anbieterHeader}>
-                      <Ionicons name="business-outline" size={18} color="#1E6B55" />
-                      <Text style={styles.anbieterName}>{fallstudie.anbieter.name}</Text>
+            {/* Story-Text */}
+            <View style={styles.storyTextContainer}>
+              {isEditable ? (
+                <TextInput
+                  style={[styles.storyText, styles.editableStoryText]}
+                  value={editedStoryText}
+                  onChangeText={setEditedStoryText}
+                  placeholder="Erzähle die Geschichte deiner Fallstudie... Beschreibe die Ausgangssituation, was unternommen wurde und welche Ergebnisse erzielt wurden."
+                  placeholderTextColor="rgba(51, 51, 51, 0.5)"
+                  multiline
+                  textAlignVertical="top"
+                />
+              ) : (
+                <Text style={styles.storyText}>{generateStoryText(fallstudie)}</Text>
+              )}
+              
+              {/* Bullet Points für Ergebnisse (falls vorhanden) */}
+              {fallstudie.result.bulletpoints && fallstudie.result.bulletpoints.length > 0 && (
+                <View style={styles.bulletpointContainer}>
+                  <Text style={styles.bulletpointHeader}>Wichtigste Ergebnisse:</Text>
+                  {fallstudie.result.bulletpoints.map((point, index) => (
+                    <View key={index} style={styles.bulletpointItem}>
+                      <LinearGradient
+                        colors={['#1E6B55', '#15503F']}
+                        style={styles.bulletGradient}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                      />
+                      <Text style={styles.bulletpointText}>{point}</Text>
                     </View>
-                    
-                    <View style={styles.anbieterDetails}>
-                      {fallstudie.anbieter.erfahrung && (
-                        <View style={styles.anbieterItem}>
-                          <Ionicons name="time-outline" size={16} color="#1E6B55" style={styles.anbieterIcon} />
-                          <Text style={styles.anbieterText}>{fallstudie.anbieter.erfahrung}</Text>
-                        </View>
-                      )}
-                      
-                      {fallstudie.anbieter.erfolgsrate && (
-                        <View style={styles.anbieterItem}>
-                          <Ionicons name="trending-up-outline" size={16} color="#1E6B55" style={styles.anbieterIcon} />
-                          <Text style={styles.anbieterText}>{fallstudie.anbieter.erfolgsrate}</Text>
-                        </View>
-                      )}
-                      
-                      {fallstudie.anbieter.kontakt?.email && (
-                        <View style={styles.anbieterItem}>
-                          <Ionicons name="mail-outline" size={16} color="#1E6B55" style={styles.anbieterIcon} />
-                          <Text style={styles.anbieterText}>{fallstudie.anbieter.kontakt.email}</Text>
-                        </View>
-                      )}
-                      
-                      {fallstudie.anbieter.kontakt?.telefon && (
-                        <View style={styles.anbieterItem}>
-                          <Ionicons name="call-outline" size={16} color="#1E6B55" style={styles.anbieterIcon} />
-                          <Text style={styles.anbieterText}>{fallstudie.anbieter.kontakt.telefon}</Text>
-                        </View>
-                      )}
-                    </View>
-                  </LinearGradient>
+                  ))}
                 </View>
               )}
             </View>
+
+            {/* Anbieter/Vermittler Informationen */}
+            {fallstudie.anbieter && (
+              <View style={styles.anbieterSection}>
+                <LinearGradient
+                  colors={['rgba(30, 107, 85, 0.1)', 'rgba(30, 107, 85, 0.05)']}
+                  style={styles.anbieterGradient}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                >
+                  <View style={styles.anbieterHeader}>
+                    <Ionicons name="business-outline" size={18} color="#1E6B55" />
+                    <Text style={styles.anbieterName}>{fallstudie.anbieter.name}</Text>
+                  </View>
+                  
+                  <View style={styles.anbieterDetails}>
+                    {fallstudie.anbieter.erfahrung && (
+                      <View style={styles.anbieterItem}>
+                        <Ionicons name="time-outline" size={16} color="#1E6B55" style={styles.anbieterIcon} />
+                        <Text style={styles.anbieterText}>{fallstudie.anbieter.erfahrung}</Text>
+                      </View>
+                    )}
+                    
+                    {fallstudie.anbieter.erfolgsrate && (
+                      <View style={styles.anbieterItem}>
+                        <Ionicons name="trending-up-outline" size={16} color="#1E6B55" style={styles.anbieterIcon} />
+                        <Text style={styles.anbieterText}>{fallstudie.anbieter.erfolgsrate}</Text>
+                      </View>
+                    )}
+                    
+                    {fallstudie.anbieter.kontakt?.email && (
+                      <View style={styles.anbieterItem}>
+                        <Ionicons name="mail-outline" size={16} color="#1E6B55" style={styles.anbieterIcon} />
+                        <Text style={styles.anbieterText}>{fallstudie.anbieter.kontakt.email}</Text>
+                      </View>
+                    )}
+                    
+                    {fallstudie.anbieter.kontakt?.telefon && (
+                      <View style={styles.anbieterItem}>
+                        <Ionicons name="call-outline" size={16} color="#1E6B55" style={styles.anbieterIcon} />
+                        <Text style={styles.anbieterText}>{fallstudie.anbieter.kontakt.telefon}</Text>
+                      </View>
+                    )}
+                  </View>
+                </LinearGradient>
+              </View>
+            )}
           </ScrollView>
           
           {/* Footer mit Aktions-Button */}
@@ -389,9 +374,8 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                     onPress={() => {
                       // Reload - zurücksetzen auf ursprüngliche Werte
                       setEditedTitel(fallstudie?.titel || '');
-                      setEditedContext(fallstudie?.context || '');
-                      setEditedAction(fallstudie?.action || '');
-                      setEditedResult(fallstudie?.result.text || '');
+                      setEditedKurzbeschreibung(fallstudie?.kurzbeschreibung || '');
+                      setEditedStoryText(generateStoryText(fallstudie));
                     }}
                   >
                     <LinearGradient
@@ -425,11 +409,12 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                       const editedFallstudie = {
                         ...fallstudie,
                         titel: editedTitel,
-                        context: editedContext,
-                        action: editedAction,
+                        kurzbeschreibung: editedKurzbeschreibung,
+                        context: editedStoryText.split('\n\n')[0],
+                        action: editedStoryText.split('\n\n')[1],
                         result: {
                           ...fallstudie.result,
-                          text: editedResult
+                          text: editedStoryText.split('\n\n')[2]
                         }
                       };
                       console.log('Fallstudie gespeichert:', editedFallstudie);
@@ -489,11 +474,12 @@ const FallstudieDetail: React.FC<FallstudieDetailProps> = ({
                       const editedFallstudie = {
                         ...fallstudie,
                         titel: editedTitel,
-                        context: editedContext,
-                        action: editedAction,
+                        kurzbeschreibung: editedKurzbeschreibung,
+                        context: editedStoryText.split('\n\n')[0],
+                        action: editedStoryText.split('\n\n')[1],
                         result: {
                           ...fallstudie.result,
-                          text: editedResult
+                          text: editedStoryText.split('\n\n')[2]
                         }
                       };
                       console.log('Fallstudie gespeichert:', editedFallstudie);
@@ -659,93 +645,13 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: '500',
   },
-  starContainer: {
+  storyTextContainer: {
     padding: 24,
   },
-  section: {
-    marginBottom: 28,
-  },
-  sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  iconContainer: {
-    marginRight: 10,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#1E4B5B',
-  },
-  sectionText: {
+  storyText: {
     fontSize: 15,
     lineHeight: 22,
     color: '#333333',
-    marginBottom: 16,
-  },
-  sectionHint: {
-    fontSize: 12,
-    color: '#888888',
-    fontStyle: 'italic',
-  },
-  bulletpointContainer: {
-    marginVertical: 16,
-  },
-  bulletpointItem: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 12,
-  },
-  bulletGradient: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginTop: 7,
-    marginRight: 12,
-  },
-  bulletpointText: {
-    fontSize: 15,
-    color: '#333333',
-    lineHeight: 21,
-    flex: 1,
-  },
-  anbieterSection: {
-    marginTop: 16,
-    marginBottom: 8,
-  },
-  anbieterGradient: {
-    padding: 16,
-    borderRadius: 12,
-  },
-  anbieterHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-    paddingBottom: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(30, 107, 85, 0.1)',
-  },
-  anbieterName: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1E4B5B',
-    marginLeft: 8,
-  },
-  anbieterDetails: {
-    flexDirection: 'column',
-  },
-  anbieterItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  anbieterIcon: {
-    width: 20,
-  },
-  anbieterText: {
-    fontSize: 14,
-    color: '#555555',
   },
   footerBlur: {
     position: 'absolute',
@@ -927,6 +833,83 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(30, 107, 85, 0.2)',
     minHeight: 80,
+  },
+  editableStoryText: {
+    backgroundColor: 'rgba(51, 51, 51, 0.03)',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(30, 107, 85, 0.2)',
+    minHeight: 80,
+  },
+  bulletpointContainer: {
+    padding: 24,
+    paddingTop: 16,
+    paddingBottom: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, 0.05)',
+  },
+  bulletpointHeader: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333333',
+    marginBottom: 12,
+  },
+  bulletpointItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+  },
+  bulletGradient: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginTop: 7,
+    marginRight: 12,
+  },
+  bulletpointText: {
+    fontSize: 15,
+    lineHeight: 22,
+    color: '#333333',
+    flex: 1,
+  },
+  anbieterSection: {
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  anbieterGradient: {
+    padding: 16,
+    borderRadius: 12,
+  },
+  anbieterHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(30, 107, 85, 0.1)',
+  },
+  anbieterName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1E4B5B',
+    marginLeft: 8,
+  },
+  anbieterDetails: {
+    flexDirection: 'column',
+  },
+  anbieterItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  anbieterIcon: {
+    width: 20,
+  },
+  anbieterText: {
+    fontSize: 14,
+    color: '#555555',
   },
 });
 

@@ -245,18 +245,9 @@ export default function ChatsScreen() {
   // Renders the header component
   const renderHeader = () => (
     <View style={styles.headerContainer}>
-      <View style={styles.headerContent}>
-        <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => router.push('/')}
-          activeOpacity={0.7}
-        >
-          <Ionicons name="chevron-back" size={24} color={colors.textPrimary} />
-        </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
-          Chats
-        </Text>
-      </View>
+      <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
+        Chats
+      </Text>
     </View>
   );
 
@@ -356,14 +347,6 @@ const styles = StyleSheet.create({
   headerContainer: {
     paddingHorizontal: spacing.m,
     paddingVertical: spacing.m,
-  },
-  headerContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  backButton: {
-    padding: spacing.xs,
-    marginRight: spacing.s,
   },
   headerTitle: {
     fontSize: 28,

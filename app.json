@@ -33,66 +33,7 @@
         "projectId": "Frontend5"
       }
     },
-    "scheme": "com.anonymous.Frontend5",
-    "jsEngine": "hermes",
-    "fonts": [
-      {
-        "asset": "./assets/fonts/AntDesign.ttf"
-      },
-      {
-        "asset": "./assets/fonts/Entypo.ttf"
-      },
-      {
-        "asset": "./assets/fonts/EvilIcons.ttf"
-      },
-      {
-        "asset": "./assets/fonts/Feather.ttf"
-      },
-      {
-        "asset": "./assets/fonts/FontAwesome.ttf"
-      },
-      {
-        "asset": "./assets/fonts/FontAwesome5_Brands.ttf"
-      },
-      {
-        "asset": "./assets/fonts/FontAwesome5_Regular.ttf"
-      },
-      {
-        "asset": "./assets/fonts/FontAwesome5_Solid.ttf"
-      },
-      {
-        "asset": "./assets/fonts/FontAwesome6_Brands.ttf"
-      },
-      {
-        "asset": "./assets/fonts/FontAwesome6_Regular.ttf"
-      },
-      {
-        "asset": "./assets/fonts/FontAwesome6_Solid.ttf"
-      },
-      {
-        "asset": "./assets/fonts/Fontisto.ttf"
-      },
-      {
-        "asset": "./assets/fonts/Foundation.ttf"
-      },
-      {
-        "asset": "./assets/fonts/Ionicons.ttf"
-      },
-      {
-        "asset": "./assets/fonts/MaterialCommunityIcons.ttf"
-      },
-      {
-        "asset": "./assets/fonts/MaterialIcons.ttf"
-      },
-      {
-        "asset": "./assets/fonts/Octicons.ttf"
-      },
-      {
-        "asset": "./assets/fonts/SimpleLineIcons.ttf"
-      },
-      {
-        "asset": "./assets/fonts/Zocial.ttf"
-      }
-    ]
+    "scheme": "frontend5",
+    "jsEngine": "hermes"
   }
 }

@@ -1,743 +1,338 @@
-Hier kommt die Vollversion: 12 Kategorien × 20 „Ich will …“-Kacheln = 240 starke, triggertaugliche Kacheln, ready für Umsetzung.
+Here are the categories with tiles for real entrepreneur problems.
 
-✅ 1. Steuern
-Ich will mehr Netto vom Brutto
+✅ 1. Taxes
+I want to minimize my taxes
 
+I want to fully utilize all depreciation
 
-Ich will meine Steuerlast halbieren
+I want to maximize private expense deductions
 
+I want a tax-optimized GmbH structure
 
-Ich will steuerfrei Rücklagen bilden
+I want to use investment deduction allowance correctly
 
+I want to finally understand my tax assessments
 
-Ich will meine Gewinne steuerfrei ausschütten
+I want to avoid disguised profit distributions
 
+I want to reduce trade tax through restructuring
 
-Ich will meine Firma steuerfrei verkaufen
+I want to file VAT returns error-free
 
+I want to find a competent tax advisor
 
-Ich will eine Holding gründen
+I want to manage my accounting tax-optimized
 
+I want to maximize all business expenses
 
-Ich will Gewerbesteuer vermeiden
+I want to use tax-free employee benefits
 
+I want to avoid inheritance tax
 
-Ich will Umsatzsteuer korrekt abführen
+I want to legally circumvent gift tax
 
+I want to defer my tax debt
 
-Ich will Rückzahlungen vom Finanzamt bekommen
+I want to confidently handle tax audits
 
+I want to avoid international double taxation
 
-Ich will verdeckte Gewinnausschüttungen vermeiden
+✅ 2. Real Estate
+I want to buy my first rental property
 
+I want to structure real estate through GmbH
 
-Ich will meine Entnahmen korrekt verbuchen
+I want to solve tenant problems professionally
 
+I want real estate with maximum financing
 
-Ich will private Ausgaben sauber absetzen
+I want to find off-market deals
 
+I want to digitize my real estate portfolio
 
-Ich will steuerfreie Gehaltsextras nutzen
+I want to depreciate real estate tax-optimized
 
+I want regular cashflow from real estate
 
-Ich will meine Steuerbescheide verstehen
+I want to manage real estate legally secure
 
+I want to profitably use foreclosure auctions
 
-Ich will meine Bilanz steuerlich optimieren
+I want to scale my real estate business
 
+I want to transfer real estate tax-free to children
 
-Ich will Investitionsabzugsbetrag clever nutzen
+✅ 3. Employees
+I want to finally win A-players for my team
 
+I want to drastically reduce my turnover rate
 
-Ich will Abschreibungen vollständig ausreizen
+I want to motivate employees without salary increases
 
+I want to safely avoid employment law traps
 
-Ich will steuerlich begünstigt spenden
+I want an efficient onboarding system
 
+I want to introduce performance-based bonus systems
 
-Ich will Steuern über Immobilien senken
+I want to successfully lead remote teams
 
+I want to conduct personnel interviews professionally
 
-Ich will meine Steuern international optimieren
+I want to reduce illness-related absences
 
+I want to make my team functional without me
 
+I want to intelligently optimize payroll costs
 
-✅ 2. Immobilien
-Ich will steuerfrei Immobilien verkaufen
+I want to predict employee turnover
 
+I want to develop leaders
 
-Ich will Immobilien über die GmbH kaufen
+✅ 4. Customer Acquisition
+I want to regularly win new customers
 
+I want a sales funnel that really converts
 
-Ich will Immobilien im Betriebsvermögen halten
+I want to grow independent of referrals
 
+I want to significantly increase my conversion rate
 
-Ich will Off-Market Immobilien finden
+I want to replace cold calling with content
 
+I want to turn existing customers into repeat buyers
 
-Ich will Immobilien mit Gewinn vermieten
+I want to confidently handle price negotiations
 
+I want to systematically use cross-selling
 
-Ich will einen Mieter rechtssicher kündigen
+I want to automatically fill online appointments
 
+I want to turn leads into paying customers
 
-Ich will Immobilien an meine Kinder übertragen
+I want to massively increase my closing rate
 
+I want customer acquisition without discount battles
 
-Ich will Immobilien steuerlich optimal abschreiben
+I want to precisely define my target audience
 
+✅ 5. Artificial Intelligence
+I want to automate repetitive tasks with AI
 
-Ich will mein Immobilien-Portfolio digitalisieren
+I want to optimize ChatGPT for my business
 
+I want to introduce AI-supported customer service
 
-Ich will Immobilien mit Holding kombinieren
+I want to automatically create offers
 
+I want to accelerate content creation with AI
 
-Ich will Immobilien günstig finanzieren
+I want to make my sales AI-supported
 
+I want to automatically summarize meetings
 
-Ich will Eigentümerstrukturen vereinfachen
+I want to use chatbots for standard inquiries
 
+I want to integrate AI into existing tools
 
-Ich will Immobiliengesellschaften gründen
+I want to completely automate invoicing
 
+I want to automatically plan social media content
 
-Ich will Immobilien international handeln
+I want to preselect applicants with AI
 
+✅ 6. Finance
+I want to significantly improve my liquidity
 
-Ich will Zwangsversteigerungen profitabel nutzen
+I want to use all available funding
 
+I want to drastically reduce my fixed costs
 
-Ich will mein Immobiliengeschäft skalieren
+I want to create bankable documents
 
+I want to get invoices paid faster
 
-Ich will Immobilien gewerblich entwickeln
+I want to digitize my cashflow management
 
+I want to completely outsource my accounting
 
-Ich will Immobilien steuerfrei verschenken
+I want to automate dunning processes
 
+I want to strategically increase my prices
 
-Ich will mein Immobilienvermögen absichern
+I want to systematically use discounts
 
+I want to have my numbers in view daily
 
-Ich will aus Immobilien flüssig werden
+I want to secure financing for growth
 
+I want to improve my creditworthiness
 
+I want to use factoring for better liquidity
 
-✅ 3. Mitarbeiter
-Ich will bessere Mitarbeiter einstellen
+I want to optimize my payment terms
 
+I want to hedge currency risks
 
-Ich will Mitarbeiter langfristig binden
+I want to measure my profitability per customer
 
+✅ 7. Legal & Security
+I want legally secure contracts without lawyers
 
-Ich will meine Kündigungsquote senken
+I want to terminate employees legally compliant
 
+I want to limit my liability as managing director
 
-Ich will Gehälter steuerlich optimieren
+I want to establish GDPR-compliant processes
 
+I want to create warning-proof terms and conditions
 
-Ich will ein starkes Team aufbauen
+I want IT security with minimal effort
 
+I want to be legally protected in customer disputes
 
-Ich will eine Führungskultur etablieren
+I want to make my website legally secure
 
+I want to systematically minimize contract risks
 
-Ich will Arbeitsrecht-Fallen vermeiden
+I want to enforce my trademark rights
 
+I want data protection without bureaucracy overkill
 
-Ich will meine Mitarbeiter effizient onboarden
+✅ 8. Corporate Structure
+I want to build a tax-optimized holding
 
+I want to make my company ready for sale
 
-Ich will leistungsorientierte Boni fair regeln
+I want to make my business manageable without me
 
+I want clear shareholder agreements
 
-Ich will krankheitsbedingte Ausfälle reduzieren
+I want to structure my succession planning
 
+I want to fairly and securely integrate co-founders
 
-Ich will meine Teams selbstorganisiert aufstellen
+I want the optimal legal form for my business
 
+I want to transfer shares tax-optimized
 
-Ich will A-Mitarbeiter systematisch halten
+I want to make my company attractive to investors
 
+I want to strategically use subsidiaries
 
-Ich will gute Mitarbeiter schneller finden
-
-
-Ich will Fluktuation kostenneutral auffangen
-
-
-Ich will mein Team entlasten ohne Kündigungen
-
-
-Ich will Lohnkosten gezielt steuern
-
-
-Ich will Mitarbeiter steuerfrei belohnen
-
-
-Ich will Remote-Teams richtig führen
-
-
-Ich will Personalgespräche professionell führen
-
-
-Ich will Wachstum ohne Überforderung
-
-
-
-✅ 4. Kundengewinnung
-Ich will regelmäßig neue Kunden
-
-
-Ich will planbare Leads pro Monat
-
-
-Ich will unabhängig von Empfehlungen verkaufen
-
-
-Ich will einen Funnel, der verkauft
-
-
-Ich will meinen Vertrieb digitalisieren
-
-
-Ich will einen Vertrieb, der abschließt
-
-
-Ich will Kundenbindung automatisieren
-
-
-Ich will Kaltakquise ersetzen
-
-
-Ich will Bestandskunden reaktivieren
-
-
-Ich will Referenzen strategisch nutzen
-
-
-Ich will Preisverhandlungen souverän führen
-
-
-Ich will nie wieder Rabatt geben müssen
-
-
-Ich will Neukunden zu Stammkunden machen
-
-
-Ich will Einwandbehandlung perfektionieren
-
-
-Ich will Online-Termine füllen
-
-
-Ich will aus Leads echte Kunden machen
-
-
-Ich will weniger Aufwand pro Abschluss
-
-
-Ich will Cross-Selling gezielt einsetzen
-
-
-Ich will keine Dead Leads mehr
-
-
-Ich will bessere Margen bei gleichem Umsatz
-
-
-
-✅ 5. Künstliche Intelligenz
-Ich will Aufgaben mit KI automatisieren
-
-
-Ich will mit GPT richtig Zeit sparen
-
-
-Ich will KI im Kundenservice einsetzen
-
-
-Ich will Angebote automatisch schreiben lassen
-
-
-Ich will Inhalte mit KI erstellen
-
-
-Ich will repetitive Aufgaben eliminieren
-
-
-Ich will meinen Vertriebsprozess KI-gestützt machen
-
-
-Ich will ein eigenes GPT-Agentensystem
-
-
-Ich will mit KI Meetings zusammenfassen
-
-
-Ich will Marketingtexte automatisch generieren
-
-
-Ich will KI in meine Tools integrieren
-
-
-Ich will Chatbots effizient einsetzen
-
-
-Ich will keine manuellen Follow-ups mehr
-
-
-Ich will Rechnungsstellung automatisieren
-
-
-Ich will KI für PR & Social Media nutzen
-
-
-Ich will Bewerber automatisch vorsortieren
-
-
-Ich will KI im Support rund um die Uhr
-
-
-Ich will Contentplanung mit KI abbilden
-
-
-Ich will Produktdaten automatisch pflegen
-
-
-Ich will KI-Tools strategisch kombinieren
-
-
-
-✅ 6. Finanzen
-Ich will kurzfristig meine Liquidität verbessern
-
-
-Ich will Förderung erhalten, die mir zusteht
-
-
-Ich will meine Kosten nachhaltig senken
-
-
-Ich will meine Buchhaltung auslagern
-
-
-Ich will bankfähig für einen Kredit werden
-
-
-Ich will meine Einnahmen optimieren
-
-
-Ich will meine Fixkosten radikal kürzen
-
-
-Ich will mein Pricing strategisch anheben
-
-
-Ich will Rechnungen schneller bezahlt bekommen
-
-
-Ich will meine Mahnungen automatisieren
-
-
-Ich will meine Bilanz verständlich machen
-
-
-Ich will mein Cashflow-Management vereinfachen
-
-
-Ich will meine Liquidität mit Tools steuern
-
-
-Ich will Verbindlichkeiten clever managen
-
-
-Ich will kein Zahlendrehen mehr
-
-
-Ich will Skontostrategien aktiv nutzen
-
-
-Ich will weniger Bürokratie in der Buchhaltung
-
-
-Ich will mein Unternehmen auf Investoren vorbereiten
-
-
-Ich will Finanzierung strategisch aufbauen
-
-
-Ich will meinen Steuerberater kontrollieren können
-
-
-
-✅ 7. Recht & Sicherheit
-Ich will rechtssichere Verträge aufsetzen
-
-
-Ich will arbeitsrechtlich sauber kündigen
-
-
-Ich will nicht haften, wenn etwas schiefläuft
-
-
-Ich will meine Daten vor Angriffen schützen
-
-
-Ich will IT-Sicherheit mit wenig Aufwand
-
-
-Ich will keine Abmahnungen mehr riskieren
-
-
-Ich will meinen Online-Auftritt rechtssicher machen
-
-
-Ich will DSGVO-konform agieren
-
-
-Ich will Vertragslücken schließen
-
-
-Ich will mein Unternehmen vor Klagen schützen
-
-
-Ich will rechtlich vorbereitet in die Expansion gehen
-
-
-Ich will bei Streit mit Kunden abgesichert sein
-
-
-Ich will meine AGB wasserdicht gestalten
-
-
-Ich will meine Geschäftsführung rechtlich absichern
-
-
-Ich will als GmbH sicher auftreten
-
-
-Ich will mein Markenrecht durchsetzen
-
-
-Ich will nie wieder Ärger mit Datenschutz haben
-
-
-Ich will keine Probleme bei der Rechnungsstellung
-
-
-Ich will faire, aber sichere Arbeitsverträge
-
-
-Ich will mein Unternehmen rechtlich überprüfen lassen
-
-
-
-✅ 8. Unternehmensstruktur
-Ich will eine Holding gründen
-
-
-Ich will mein Unternehmen verkaufen
-
-
-Ich will mein Unternehmen ohne mich führen
-
-
-Ich will meine Nachfolge regeln
-
-
-Ich will Anteile sauber übertragen
-
-
-Ich will stille Beteiligungen clever einsetzen
-
-
-Ich will mit Partnern klare Verhältnisse schaffen
-
-
-Ich will eine Exit-Strategie aufbauen
-
-
-Ich will mein Unternehmen teilverkaufen
-
-
-Ich will meine Gesellschaftsstruktur verschlanken
-
-
-Ich will Tochtergesellschaften gründen
-
-
-Ich will Co-Founder fair einbinden
-
-
-Ich will meine Struktur internationalisieren
-
-
-Ich will stille Reserven steuerfrei heben
-
-
-Ich will mein Unternehmen für Investoren attraktiv machen
-
-
-Ich will Umfirmierung ohne Chaos
-
-
-Ich will die beste Rechtsform für mein Modell
-
-
-Ich will mein Unternehmen systematisieren
-
-
-Ich will Struktur ohne Overhead
-
-
-Ich will meine Unternehmensanteile vertraglich absichern
-
-
+I want to prepare exit strategies
 
 ✅ 9. Investments
-Ich will in Startups investieren
+I want to invest my money intelligently
 
+I want to invest in profitable startups
 
-Ich will Immobilien als Investment nutzen
+I want passive income from participations
 
+I want to use real estate as capital investment
 
-Ich will mein Geld steueroptimiert anlegen
+I want to diversify my portfolio
 
+I want to systematically evaluate investment risks
 
-Ich will Beteiligungen aufbauen
+I want to invest tax-optimized
 
+I want to understand alternative investments
 
-Ich will alternative Investments verstehen
+I want to become a business angel
 
+I want to strategically build tangible assets
 
-Ich will sichere Investments mit hoher Rendite
+I want to structure investments legally secure
 
+✅ 10. Emigration
+I want to structure my business internationally
 
-Ich will investieren ohne Tagesgeschäft
+I want to expand abroad tax-optimized
 
+I want to legally build a Dubai structure
 
-Ich will Investmentrisiken minimieren
+I want to commute between Germany and abroad
 
+I want to run my company location-independent
 
-Ich will passives Einkommen mit Substanz
+I want to use international tax advantages
 
+I want to emigrate legally secure
 
-Ich will Beteiligungen steuerlich korrekt strukturieren
+I want to organize global accounting
 
+I want to avoid double taxation
 
-Ich will mein Portfolio diversifizieren
+I want to run remote business from abroad
 
+✅ 11. Strategy & Vision
+I want to make my business model scalable
 
-Ich will Kapital strategisch allokieren
+I want to clearly differentiate from competition
 
+I want to build strategic partnerships
 
-Ich will in Firmen investieren, die zu mir passen
+I want to structure my company crisis-proof
 
+I want to switch from operational to strategic
 
-Ich will Investment mit Einfluss
+I want to systematically develop new markets
 
+I want to strengthen my market position
 
-Ich will Sachwerte intelligent aufbauen
+I want to make complex decisions faster
 
+I want to bring my business to the next level
 
-Ich will meine Investments rechtssicher dokumentieren
+I want to create sustainable competitive advantages
 
+I want to grow profitably without quality loss
 
-Ich will Business Angel werden
+✅ 12. Personal Growth
+I want to appear more confident as a leader
 
+I want to better manage stress as entrepreneur
 
-Ich will mein Vermögen unabhängig machen
+I want to confidently handle negotiations
 
+I want to communicate clearer and more direct
 
-Ich will investieren ohne Bankverbindung
+I want to make decisions without doubt
 
+I want to better allocate my energy
 
-Ich will Investmentprojekte professionell prüfen
+I want work-life balance as entrepreneur
 
+I want emotional stability in crises
 
+I want to strengthen my self-confidence as boss
 
-✅ 10. Auswandern & Freiheit
-Ich will mein Unternehmen ins Ausland verlagern
+I want to carry responsibility more easily
 
+I want to learn to delegate better
 
-Ich will als Unternehmer auswandern
+I want to develop my entrepreneur personality
 
+✅ 13. Living Long and Healthy
+I want to stay healthy despite entrepreneur stress
 
-Ich will steuerfrei leben im Ausland
+I want to maintain my energy long-term
 
+I want to avoid burnout as entrepreneur
 
-Ich will mit Familie auswandern
+I want to integrate healthy routines into my daily life
 
+I want to exercise regularly despite time constraints
 
-Ich will ohne Wohnsitz leben
+I want to optimize my nutrition as busy CEO
 
+I want to sleep better despite business worries
 
-Ich will weltweit frei arbeiten
+I want to transform stress into positive energy
 
+I want to protect my health preventively
 
-Ich will mich abmelden in Deutschland
+I want to still be full of energy at 60+
 
-
-Ich will ein Business aus Dubai führen
-
-
-Ich will zwischen mehreren Ländern pendeln
-
-
-Ich will mein Unternehmen ortsunabhängig aufbauen
-
-
-Ich will ein steuerfreies Zweitmodell nutzen
-
-
-Ich will auswandern ohne Ärger mit dem Finanzamt
-
-
-Ich will ein Leben ohne Bürokratie
-
-
-Ich will mein Business auf Inseln führen
-
-
-Ich will auswandern mit Remote-Team
-
-
-Ich will meine Buchhaltung von überall steuern
-
-
-Ich will keinen deutschen Pass mehr brauchen
-
-
-Ich will meine Kinder im Ausland betreuen lassen
-
-
-Ich will meine Firma global betreiben
-
-
-Ich will in mehreren Ländern steuerlich optimieren
-
-
-
-✅ 11. Strategie & Vision
-Ich will mein Geschäftsmodell weiterentwickeln
-
-
-Ich will mein Unternehmen neu positionieren
-
-
-Ich will meine Vision schärfen
-
-
-Ich will meinen Markt neu definieren
-
-
-Ich will klarer entscheiden
-
-
-Ich will strategisch statt operativ denken
-
-
-Ich will mich vom Wettbewerb abheben
-
-
-Ich will mein Unternehmen krisenfest machen
-
-
-Ich will als Unternehmer radikal fokussieren
-
-
-Ich will meinen Tagesablauf strategisch planen
-
-
-Ich will bessere Entscheidungen treffen
-
-
-Ich will von 12 auf 24 Monate planen
-
-
-Ich will strategische Partnerschaften aufbauen
-
-
-Ich will meine Marke strategisch führen
-
-
-Ich will komplexe Probleme schneller lösen
-
-
-Ich will eine neue Zielgruppe erschließen
-
-
-Ich will mein Angebot smarter bündeln
-
-
-Ich will meinen Markt antizipieren
-
-
-Ich will Chancen erkennen, bevor andere es tun
-
-
-Ich will als Unternehmer strategisch wachsen
-
-
-
-✅ 12. Persönliches Wachstum
-Ich will besser kommunizieren
-
-
-Ich will klarer denken
-
-
-Ich will glücklicher leben als Unternehmer
-
-
-Ich will mehr Energie im Alltag
-
-
-Ich will Entscheidungen mit Ruhe treffen
-
-
-Ich will keine Angst vor Wachstum
-
-
-Ich will persönlich stabiler werden
-
-
-Ich will Klarheit in meiner Rolle
-
-
-Ich will mit Stress besser umgehen
-
-
-Ich will konsequenter handeln
-
-
-Ich will meine Kommunikation professionalisieren
-
-
-Ich will Verhandlungen souverän führen
-
-
-Ich will mich von Meinungen lösen
-
-
-Ich will entspannter führen
-
-
-Ich will meinen Selbstwert als Unternehmer festigen
-
-
-Ich will weniger innere Konflikte
-
-
-Ich will mein Denken auf Erfolg ausrichten
-
-
-Ich will emotional unabhängiger werden
-
-
-Ich will Verantwortung leichter tragen
-
-
-Ich will besser abschalten können
+I want work-life integration instead of balance
