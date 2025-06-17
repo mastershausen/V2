@@ -10,14 +10,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
-import FallstudieDetail from '@/features/chats/components/FallstudieDetail';
+import EditCasestudyDetailsView from '@/features/chats/components/EditCasestudyDetailsView';
 
 export default function CaseStudyCreationSplash() {
   const colors = useThemeColor();
   const router = useRouter();
   const { t } = useTranslation();
   const pulseAnim = useRef(new Animated.Value(1)).current;
-  const [showFallstudieDetail, setShowFallstudieDetail] = useState(false);
+  const [showEditCasestudyDetails, setShowEditCasestudyDetails] = useState(false);
 
   // Mock KI-generierte Fallstudie für Demo - jetzt i18n-kompatibel
   const mockKIFallstudie = {
@@ -70,7 +70,7 @@ export default function CaseStudyCreationSplash() {
     // Nach 5 Sekunden KI-generierte Fallstudie anzeigen
     const timer = setTimeout(() => {
       pulsing.stop();
-      setShowFallstudieDetail(true);
+      setShowEditCasestudyDetails(true);
     }, 5000);
 
     return () => {
@@ -79,8 +79,20 @@ export default function CaseStudyCreationSplash() {
     };
   }, [pulseAnim]);
 
-  const handleCloseFallstudie = () => {
-    setShowFallstudieDetail(false);
+  const handleSaveCasestudy = (editedData: {
+    titel: string;
+    kurzbeschreibung: string;
+    storyText: string;
+  }) => {
+    console.log('Fallstudie gespeichert:', editedData);
+    // Hier könnte eine Save-API-Call oder lokale Speicherung implementiert werden
+    setShowEditCasestudyDetails(false);
+    // Zurück zur vorherigen Seite navigieren
+    router.back();
+  };
+
+  const handleCancelEdit = () => {
+    setShowEditCasestudyDetails(false);
     // Zurück zur vorherigen Seite navigieren
     router.back();
   };
@@ -104,11 +116,12 @@ export default function CaseStudyCreationSplash() {
         </Animated.View>
       </View>
 
-      {/* KI-generierte Fallstudie Detail Modal */}
-      <FallstudieDetail 
-        visible={showFallstudieDetail}
-        onClose={handleCloseFallstudie}
+      {/* Neue EditCasestudyDetailsView für bearbeitbare KI-generierte Fallstudie */}
+      <EditCasestudyDetailsView 
+        visible={showEditCasestudyDetails}
         fallstudie={mockKIFallstudie}
+        onSave={handleSaveCasestudy}
+        onCancel={handleCancelEdit}
       />
     </SafeAreaView>
   );
