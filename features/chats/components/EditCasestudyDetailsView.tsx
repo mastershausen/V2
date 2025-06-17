@@ -141,18 +141,25 @@ export default function EditCasestudyDetailsView({
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}
           >
-            {/* Kurzbeschreibung mit Akzentlinie - EXAKT wie im Screenshot */}
+            {/* Kurzbeschreibung als ListCard-Preview - WYSIWYG */}
             <View style={styles.kurzbeschreibungContainer}>
-              <View style={styles.accentLine} />
-              <TextInput
-                style={[styles.kurzbeschreibungText, styles.editableText]}
-                value={editedKurzbeschreibung}
-                onChangeText={setEditedKurzbeschreibung}
-                placeholder="Kurzbeschreibung eingeben..."
-                placeholderTextColor="rgba(51, 51, 51, 0.5)"
-                multiline
-                textAlignVertical="top"
-              />
+              <View style={styles.kurzbeschreibungContent}>
+                {/* ListCard Preview Container */}
+                <View style={styles.listCardPreview}>
+                  <TextInput
+                    style={styles.listCardDescription}
+                    value={editedKurzbeschreibung}
+                    onChangeText={setEditedKurzbeschreibung}
+                    placeholder="Short description for the list view..."
+                    placeholderTextColor="rgba(51, 51, 51, 0.5)"
+                    multiline
+                    textAlignVertical="top"
+                  />
+                </View>
+                <Text style={styles.hintText}>
+                  This short version is only displayed in Olivia chat
+                </Text>
+              </View>
             </View>
             
             {/* Story-Text - EXAKT wie im Screenshot */}
@@ -318,12 +325,38 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     marginRight: 12,
   },
-  kurzbeschreibungText: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: '#333333',
+  kurzbeschreibungContent: {
     flex: 1,
-    fontWeight: '500',
+  },
+  listCardPreview: {
+    backgroundColor: '#FAFBFC',
+    borderLeftWidth: 3,
+    borderLeftColor: '#1E6B55',
+    borderRadius: 6,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(0, 0, 0, 0.08)',
+    padding: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 3,
+    marginBottom: 8,
+  },
+  listCardDescription: {
+    fontSize: 14,
+    color: '#333333',
+    opacity: 0.8,
+    lineHeight: 20,
+    backgroundColor: 'transparent',
+    padding: 0,
+    margin: 0,
+    textAlignVertical: 'top',
+  },
+  hintText: {
+    fontSize: 12,
+    color: 'rgba(51, 51, 51, 0.5)',
+    marginTop: 4,
   },
   storyTextContainer: {
     padding: 24,
