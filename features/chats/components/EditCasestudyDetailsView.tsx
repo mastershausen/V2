@@ -292,8 +292,6 @@ const styles = StyleSheet.create({
   editableTitle: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
     borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
   },
@@ -378,8 +376,6 @@ const styles = StyleSheet.create({
   editableStoryText: {
     backgroundColor: 'rgba(51, 51, 51, 0.03)',
     borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
     borderWidth: 1,
     borderColor: 'rgba(30, 107, 85, 0.2)',
     minHeight: 80,
